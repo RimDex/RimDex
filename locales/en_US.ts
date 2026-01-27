@@ -3434,7 +3434,7 @@ Alternative Dependencies:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save rules to communityRules.json</source>
+        <source>Save rules to RulesDatabase.json</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

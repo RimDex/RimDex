@@ -45,7 +45,7 @@ The Steam Workshop Database (Steam DB) is primarily used to provide additional d
 
 ### _**Prerequisite:**_ Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for your respective platform.
 
-This is used to download/upload a Steam Workshop Database (`SteamDatabase.json`) or a Community Rules Database (`communityRules.json`) so that it may be collaborated on and shared.
+This is used to download/upload a Steam Workshop Database (`SteamDatabase.json`) or a Community Rules Database (`RulesDatabase.json`) so that it may be collaborated on and shared.
 
 {: .important}
 > Step 3, setting up a GitHub identity is only required if you wish to upload your database directly to a configured GitHub repository via a pull request through RimDex. It is *not* required for simply downloading the database via Git from a public repository or for modifying the database locally. You can also just make a pull request yourself on GitHub without configuring GitHub within RimDex.

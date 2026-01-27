@@ -1279,7 +1279,7 @@ class MainContentController(QObject):
         if binary_diag.exec_is_positive():
             self._do_upload_db_to_repo(
                 repo_url=self.settings_controller.settings.external_steam_metadata_repo,
-                file_name="steamDB.json",
+                file_name="SteamDatabase.json",
             )
         else:
             logger.debug("User cancelled Steam Workshop database upload.")
@@ -1302,7 +1302,7 @@ class MainContentController(QObject):
         if binary_diag.exec_is_positive():
             self._do_upload_db_to_repo(
                 repo_url=self.settings_controller.settings.external_community_rules_repo,
-                file_name="communityRules.json",
+                file_name="RulesDatabase.json",
             )
         else:
             logger.debug("User cancelled Community Rules database upload.")
