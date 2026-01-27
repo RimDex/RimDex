@@ -1,0 +1,326 @@
+name: Build
+on:
+  workflow_call:
+    inputs:
+      version_format:
+        description: "Versioning format"
+        required: false
+        type: string
+        default: "v${major}.${minor}.${patch}"
+      attest:
+        description: "Generate attestations"
+        required: false
+        type: boolean
+        default: true
+  # checkov:skip=CKV_GHA_7
+  workflow_dispatch:
+    inputs:
+      version_format:
+        description: "Versioning format"
+        required: false
+        type: string
+        default: "v${major}.${minor}.${patch}"
+      attest:
+        description: "Generate attestations"
+        required: false
+        type: boolean
+        default: true
+
+permissions: {}
+
+jobs:
+  build:
+    permissions:
+      id-token: write
+      contents: read
+      attestations: write
+      packages: write
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-15-intel
+            platform: "Darwin"
+            arch: "i386"
+            env:
+              BUILD_OUTPUT: "app.app"
+              Executable: RimSort
+          - os: macos-latest
+            platform: "Darwin"
+            arch: "arm"
+            env:
+              BUILD_OUTPUT: "app.app"
+              Executable: RimSort
+          - os: ubuntu-22.04
+            platform: "Ubuntu-22.04"
+            arch: "x86_64"
+            env:
+              BUILD_OUTPUT: "app.dist"
+              Executable: "RimSort"
+          - os: ubuntu-24.04
+            platform: "Ubuntu-24.04"
+            arch: "x86_64"
+            env:
+              BUILD_OUTPUT: "app.dist"
+              Executable: RimSort
+          - os: ubuntu-latest
+            container: fedora:42
+            platform: "Fedora-42"
+            arch: "x86_64"
+            env:
+              BUILD_OUTPUT: "app.dist"
+              Executable: RimSort
+              BUILD_RPM: true
+          - os: ubuntu-latest
+            container: fedora:43
+            platform: "Fedora-43"
+            arch: "x86_64"
+            env:
+              BUILD_OUTPUT: "app.dist"
+              Executable: RimSort
+              BUILD_RPM: true
+          - os: windows-latest
+            platform: "Windows"
+            arch: "x86_64"
+            env:
+              BUILD_OUTPUT: "app.dist"
+              Executable: RimSort.exe
+    steps:
+      - name: Check-out repository
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Add submodules to pythonpath
+        id: pythonpath
+        run: |
+          if [ "${{ matrix.platform }}" == "Windows" ]; then
+            echo "PYTHONPATH=$PYTHONPATH;${{ github.workspace }}\submodules\SteamworksPy" >> "$GITHUB_OUTPUT"
+          else
+            echo "PYTHONPATH=$PYTHONPATH:${{ github.workspace }}/submodules/SteamworksPy" >> "$GITHUB_OUTPUT"
+          fi
+        shell: bash
+
+      - name: Remove problematic brew libs
+        run: |
+          brew remove --force --ignore-dependencies openssl@3
+          brew cleanup openssl@3
+        if: runner.os == 'macos' && matrix.arch == 'i386'
+
+      - name: Get semantic version
+        id: sem_version
+        uses: PaulHatch/semantic-version@v6.0.1
+        with:
+          version_format: "${{ inputs.version_format }}"
+          change_path: "app libs submodules themes"
+
+      - name: Make (overwrite) version.xml
+        id: version_xml
+        run: |
+          rm -f version.xml
+          {
+          echo "<version>"
+          echo "  <version>${{ steps.sem_version.outputs.version  }}</version>"
+          echo "  <major>${{ steps.sem_version.outputs.major }}</major>"
+          echo "  <minor>${{ steps.sem_version.outputs.minor }}</minor>"
+          echo "  <patch>${{ steps.sem_version.outputs.patch }}</patch>"
+          echo "  <increment>${{ steps.sem_version.outputs.increment }}</increment>"
+          echo "  <commit>${{ steps.sem_version.outputs.current_commit   }}</commit>"
+          echo "  <tag>${{ steps.sem_version.outputs.version_tag  }}</tag>"
+          echo "</version>"
+          } >> version.xml
+        shell: bash
+
+      - name: Setup Python
+        uses: actions/setup-python@main
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          activate-environment: true
+
+      - name: Install Dependencies
+        shell: bash
+        run: uv sync --locked --no-dev --group build
+
+      - name: Build Actions
+        shell: bash
+        run: |
+          set -e
+          uv run --frozen python \
+          ./distribute.py \
+          --product-version='${{ steps.sem_version.outputs.major }}.
+            ${{ steps.sem_version.outputs.minor }}.
+            ${{ steps.sem_version.outputs.patch }}.
+            ${{ steps.sem_version.outputs.increment }}' \
+          --skip-build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build
+        uses: Nuitka/Nuitka-Action@main
+        with:
+          nuitka-version: main
+          script-name: app/
+          python-flag: -m
+          mode: ${{ runner.os == 'macos' && 'app' || 'standalone' }}
+          static-libpython: auto
+          product-version: >-
+            ${{ steps.sem_version.outputs.major }}.
+            ${{ steps.sem_version.outputs.minor }}.
+            ${{ steps.sem_version.outputs.patch }}.
+            ${{ steps.sem_version.outputs.increment }}
+          file-description: "RimSort"
+          include-data-files: |
+            version.xml=version.xml
+          nofollow-import-to: "sqlalchemy.dialects.oracle"
+        env:
+          PYTHONPATH: ${{ steps.pythonpath.outputs.PYTHONPATH }}
+
+      - name: Set FILENAME
+        id: filename
+        run: |
+          FILENAME="${{ matrix.platform }}_"
+          FILENAME+="${{ matrix.arch }}"
+          echo "FILENAME=$FILENAME" >> "$GITHUB_OUTPUT"
+        shell: bash
+
+      - name: Find Executable
+        id: find_executable
+        run: |
+          executable=$(find . -name "${{ matrix.env.Executable }}" | head -n 1)
+          echo "EXECUTABLE=$executable" >> "$GITHUB_OUTPUT"
+          echo "Executable found at $executable"
+        shell: bash
+
+      - name: Create MSI Package
+        if: matrix.platform == 'Windows'
+        run: |
+          dotnet tool install --global wix --version 6.0.0
+          wix extension add WixToolset.UI.wixext
+          wix extension add WixToolset.Util.wixext
+
+          # Absolute paths for license and build output
+          $AbsoluteLicensePath = Resolve-Path "data\EULA.rtf" -ErrorAction Stop
+          $AbsoluteBuildOutput = Resolve-Path "build\${{ matrix.env.BUILD_OUTPUT }}" -ErrorAction Stop
+
+          # Validate executable exists
+          $ExecutablePath = Join-Path "$AbsoluteBuildOutput" "${{ matrix.env.Executable }}"
+          if (-not (Test-Path $ExecutablePath)) {
+            Write-Error "Executable not found at: $ExecutablePath"
+            exit 1
+          }
+
+          # Create MSI package using WiX Toolset
+          wix build data\RimSort.wxs `
+            -ext WixToolset.UI.wixext `
+            -ext WixToolset.Util.wixext `
+            -d PackageVersion="${{ steps.sem_version.outputs.major }}.${{ steps.sem_version.outputs.minor }}.${{ steps.sem_version.outputs.patch }}.${{ steps.sem_version.outputs.increment }}" `
+            -d License="$AbsoluteLicensePath" `
+            -d BuildOutput="$AbsoluteBuildOutput" `
+            -o "RimSort-${{ steps.sem_version.outputs.version }}-${{ matrix.platform }}-${{ matrix.arch }}.msi"
+        shell: powershell
+
+      - name: Generate executable attestations
+        uses: actions/attest-build-provenance@v3.2.0
+        if: ${{ inputs.attest }}
+        with:
+          subject-path: ${{ steps.find_executable.outputs.EXECUTABLE }}
+
+      - name: Generate MSI attestation
+        uses: actions/attest-build-provenance@v3.2.0
+        if: ${{ inputs.attest && matrix.platform == 'Windows' }}
+        with:
+          subject-path: ./RimSort-${{ steps.sem_version.outputs.version }}-${{ matrix.platform }}-${{ matrix.arch }}.msi
+
+      - name: Rename new build
+        run: |
+          cd build
+          mv "${{ matrix.env.BUILD_OUTPUT }}" "output"
+          tar -cvf "${{ steps.filename.outputs.FILENAME }}.tar" "output"
+          rm -rf "output"
+        shell: bash
+
+      - name: Install RPM build dependencies
+        if: matrix.env.BUILD_RPM == 'true'
+        run: |
+          dnf install -y rpm-build rpmdevtools git gcc gcc-c++ python3.12 python3.12-devel desktop-file-utils libappstream-glib
+        shell: bash
+
+      - name: Setup RPM build environment
+        if: matrix.env.BUILD_RPM == 'true'
+        run: |
+          mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+        shell: bash
+
+      - name: Create source tarball for RPM
+        if: matrix.env.BUILD_RPM == 'true'
+        run: |
+          bash packaging/rpm/make-tarball.sh "${{ steps.sem_version.outputs.version }}"
+        shell: bash
+
+      - name: Build RPM package
+        if: matrix.env.BUILD_RPM == 'true'
+        run: |
+          rpmbuild -bb packaging/rpm/rimsort.spec \
+            --define "version ${{ steps.sem_version.outputs.version }}"
+        shell: bash
+
+      - name: Find RPM file
+        if: matrix.env.BUILD_RPM == 'true'
+        id: find_rpm
+        run: |
+          RPM_FILE=$(find ~/rpmbuild/RPMS/x86_64/ -name "rimsort-*.rpm" | head -n 1)
+          echo "RPM_FILE=$RPM_FILE" >> "$GITHUB_OUTPUT"
+          echo "Found RPM: $RPM_FILE"
+        shell: bash
+
+      - name: Generate RPM attestation
+        uses: actions/attest-build-provenance@v3.2.0
+        if: ${{ inputs.attest && matrix.env.BUILD_RPM == 'true' }}
+        with:
+          subject-path: ${{ steps.find_rpm.outputs.RPM_FILE }}
+
+      - name: Upload RPM Package
+        if: matrix.env.BUILD_RPM == 'true'
+        uses: actions/upload-artifact@main
+        with:
+          name: ${{ matrix.platform }}_${{ matrix.arch }}_rpm
+          path: ${{ steps.find_rpm.outputs.RPM_FILE }}
+          if-no-files-found: error
+
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v3.2.0
+        if: ${{ inputs.attest }}
+        with:
+          subject-path: ./build/${{ steps.filename.outputs.FILENAME }}.tar
+
+        # Upload folder as artifact
+      - name: Upload folder as artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: ${{ steps.filename.outputs.FILENAME }}
+          path: ./build/${{ steps.filename.outputs.FILENAME }}.tar
+          if-no-files-found: error
+
+      # Upload the built executable
+      - name: Upload MSI Package
+        if: matrix.platform == 'Windows'
+        uses: actions/upload-artifact@main
+        with:
+          name: ${{ matrix.platform }}_${{ matrix.arch }}_msi
+          path: ./RimSort-${{ steps.sem_version.outputs.version }}-${{ matrix.platform }}-${{ matrix.arch }}.msi
+          if-no-files-found: error
+
+    outputs:
+      filename: ${{ steps.filename.outputs.FILENAME }}
+
+  post-build-test:
+    needs: build
+    uses: ./.github/workflows/test_builds.yml
