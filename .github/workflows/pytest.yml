@@ -1,0 +1,58 @@
+name: Run Pytest
+on:
+  workflow_call: null
+  workflow_dispatch: null
+  merge_group:
+
+permissions: {}
+
+jobs:
+  pytest:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - name: Setup Python
+        uses: actions/setup-python@main
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Install Dependencies
+        shell: bash
+        run: uv sync --locked --dev
+
+      - name: Install special python dependencies
+        shell: bash
+        run: |
+          set -e
+          uv run --frozen python \
+          ./distribute.py \
+          --skip-build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install missing Linux libs for gui tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libegl-dev libgl1 libglx-mesa0 libglib2.0-0 xvfb libxcb-cursor-dev
+          sudo apt-get install -y libxkbcommon-x11-0 libxcb-icccm4 libxcb-keysyms1 libxcb-shape0
+        shell: bash
+
+      - name: Test with pytest
+        run: |
+          export QT_DEBUG_PLUGINS=1
+          uv run pytest --doctest-modules --junitxml=junit/test-results.xml --cov=app --cov-report=xml --cov-report=html -s --no-qt-log
+
+      - name: Upload pytest test results
+        uses: actions/upload-artifact@v6
+        with:
+          name: pytest-results
+          path: junit/test-results.xml
+        # Use always() to always run this step to publish test results when there are test failures
+        if: ${{ always() }}

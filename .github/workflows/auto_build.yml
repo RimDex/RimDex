@@ -1,0 +1,68 @@
+# Auto build on push to main and PR.
+# Not recommended to release these builds due to versioning.
+
+name: Auto Build
+on:
+  pull_request:
+    types: [opened, synchronize]
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "app/**"
+      - "distribute.py"
+      - "requirements*.txt"
+  merge_group:
+
+permissions: {}
+
+jobs:
+  pre-test:
+    permissions:
+      contents: read
+    uses: ./.github/workflows/pytest.yml
+
+  pre-build:
+    uses: ./.github/workflows/get_version_info.yml
+    with:
+      format_only: true
+
+  attested-build:
+    needs: pre-build
+    if: github.event_name != 'pull_request'
+    permissions:
+      id-token: write
+      contents: read
+      attestations: write
+      packages: write
+    uses: ./.github/workflows/build.yml
+    with:
+      version_format: ${{ needs.pre-build.outputs.version_format }}
+      attest: true
+
+  non-attested-build:
+    needs: pre-build
+    if: github.event_name == 'pull_request'
+    permissions:
+      id-token: write
+      contents: read
+      attestations: write
+      packages: write
+    uses: ./.github/workflows/build.yml
+    with:
+      version_format: ${{ needs.pre-build.outputs.version_format }}
+      attest: false
+
+  status-check:
+    name: Status Check
+    runs-on: ubuntu-latest
+    needs:
+      - pre-test
+      - pre-build
+      - attested-build
+      - non-attested-build
+    if: always()
+    steps:
+      - name: Set status check
+        run: echo "All required jobs have completed."
