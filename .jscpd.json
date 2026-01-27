@@ -1,0 +1,12 @@
+{
+    "threshold": 0,
+    "ignore": [
+        "**/submodules/**",
+        "**/.git/**",
+        "**/*.md",
+        "**/*.xml",
+        "**/locales/**",
+        "**/.github/**",
+        "**/.venv/**"
+    ]
+}
