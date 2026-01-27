@@ -16,8 +16,8 @@ SOURCE_GIT_REPO = "Configured git repository"
 SOURCE_DISABLED = "Disabled"
 
 # Metadata file names
-STEAM_DB_FILE = "steamDB.json"
-COMMUNITY_RULES_FILE = "communityRules.json"
+STEAM_DATABASE_FILE = "SteamDatabase.json"
+COMMUNITY_RULES_FILE = "RulesDatabase.json"
 NO_VERSION_WARNING_FILE = "ModIdsToFix.xml"
 USE_THIS_INSTEAD_FILE = "replacements.json.gz"
 
@@ -109,7 +109,7 @@ class ExternalMetadataLoader:
             source: SOURCE_FILE_PATH, SOURCE_GIT_REPO, or SOURCE_DISABLED
             file_path: Path to file when using SOURCE_FILE_PATH
             repo_path: Path to git repo when using SOURCE_GIT_REPO
-            file_name: Name of the file to load (e.g., 'steamDB.json')
+            file_name: Name of the file to load (e.g., 'SteamDatabase.json')
             getter_func: Callable that loads and validates the file at given path
             subdir: Optional subdirectory within git repo path
 
@@ -155,7 +155,7 @@ class ExternalMetadataLoader:
                 f"Loaded {total_entries} additional sorting rules from User Rules"
             )
 
-    def _load_steam_db(
+    def _load_steam_database(
         self, life: int, path: str
     ) -> tuple[dict[str, Any] | None, str | None]:
         """Load and validate Steam database with expiry checking.
@@ -208,7 +208,7 @@ class ExternalMetadataLoader:
         )
 
         # Build packageid to name mapping for faster lookups
-        self.manager.steamdb_packageid_to_name = {
+        self.manager.steamdatabase_packageid_to_name = {
             metadata["packageid"]: metadata["name"]
             for metadata in db_json_data.values()
             if metadata.get("packageid") and metadata.get("name")
@@ -227,8 +227,8 @@ class ExternalMetadataLoader:
                 steam_source,
                 settings.external_steam_metadata_file_path,
                 settings.external_steam_metadata_repo,
-                STEAM_DB_FILE,
-                lambda p: self._load_steam_db(settings.database_expiry, p),
+                STEAM_DATABASE_FILE,
+                lambda p: self._load_steam_database(settings.database_expiry, p),
             )
             if steam_source != SOURCE_DISABLED
             else (None, None)

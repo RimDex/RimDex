@@ -23,7 +23,7 @@ from app.models.metadata.metadata_structure import (
     ModType,
     Rules,
     ScenarioMod,
-    SteamDbSchema,
+    SteamDatabaseSchema,
 )
 from app.utils.constants import RIMWORLD_DLC_METADATA
 from app.utils.xml import json_to_xml_write, xml_path_to_json
@@ -723,13 +723,13 @@ def write_rules_db(path: Path, external_rules: ExternalRulesSchema) -> None:
         raise e
 
 
-def read_steam_db(path: Path) -> SteamDbSchema | None:
-    """Reads the SteamDbSchema from the json file at the given path.
+def read_steam_database(path: Path) -> SteamDatabaseSchema | None:
+    """Reads the SteamDatabaseSchema from the json file at the given path.
 
     :param path: Path to the SteamDB file.
     :type path: Path
-    :return: The SteamDbSchema object if successful, otherwise None.
-    :rtype: SteamDbSchema | None
+    :return: The SteamDatabaseSchema object if successful, otherwise None.
+    :rtype: SteamDatabaseSchema | None
     """
     logger.info(f"Checking SteamDB at: {path}")
     if os.path.exists(path):  # Look for cached data & load it if available
@@ -739,23 +739,23 @@ def read_steam_db(path: Path) -> SteamDbSchema | None:
         with open(path, encoding="utf-8") as f:
             json_string = f.read()
             logger.info("Reading info from SteamDB")
-            steam_db = msgspec.json.decode(json_string, type=SteamDbSchema)
+            steam_database = msgspec.json.decode(json_string, type=SteamDatabaseSchema)
             logger.info(
-                f"Loaded {len(steam_db.database)} mods from SteamDB version: {steam_db.version}"
+                f"Loaded {len(steam_database.database)} mods from SteamDB version: {steam_database.version}"
             )
-            return steam_db
+            return steam_database
     else:  # Assume db_data_missing
         logger.warning("SteamDB not found at specified path.")
         return None
 
 
-def write_steam_db(path: Path, steam_db: SteamDbSchema) -> None:
-    """Writes the SteamDbSchema to a file. Raises an IOError/OSError if the file cannot be written.
+def write_steam_database(path: Path, steam_database: SteamDatabaseSchema) -> None:
+    """Writes the SteamDatabaseSchema to a file. Raises an IOError/OSError if the file cannot be written.
 
     :param path:
     :type path: Path
-    :param steam_db: _description_
-    :type steam_db: SteamDbSchema
+    :param steam_database: _description_
+    :type steam_database: SteamDatabaseSchema
     :return: _description_
     :rtype: bool
     :raises: IOError, OSError
@@ -763,7 +763,7 @@ def write_steam_db(path: Path, steam_db: SteamDbSchema) -> None:
     logger.info(f"Writing SteamDB to: {path}")
     try:
         with open(path, "wb") as f:
-            json_string = msgspec.json.encode(steam_db)
+            json_string = msgspec.json.encode(steam_database)
             f.write(json_string)
             logger.info("SteamDB written successfully")
     except (IOError, OSError) as e:

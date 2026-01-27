@@ -784,7 +784,7 @@ class ModListWidget(QListWidget):
     recalculate_warnings_signal = Signal()
     refresh_signal = Signal()
     update_git_mods_signal = Signal(list)
-    steamdb_blacklist_signal = Signal(list)
+    steamdatabase_blacklist_signal = Signal(list)
 
     def __init__(self, list_type: str, settings_controller: SettingsController) -> None:
         """
@@ -976,8 +976,8 @@ class ModListWidget(QListWidget):
 
             # STEAMDB BLACKLIST
             # A list to track any publishedfileids we want to blacklist / remove from blacklist
-            steamdb_add_blacklist = None
-            steamdb_remove_blacklist = None
+            steamdatabase_add_blacklist = None
+            steamdatabase_remove_blacklist = None
 
             # Define our QMenu & QActions
             context_menu = QMenu()
@@ -997,8 +997,8 @@ class ModListWidget(QListWidget):
             # Toggle warning action
             toggle_warning_action = None
             # Blacklist SteamDB options
-            add_to_steamdb_blacklist_action = None
-            remove_from_steamdb_blacklist_action = None
+            add_to_steamdatabase_blacklist_action = None
+            remove_from_steamdatabase_blacklist_action = None
             # Convert SteamCMD -> local
             convert_steamcmd_local_action = None
             # Convert local -> SteamCMD
@@ -1146,15 +1146,15 @@ class ModListWidget(QListWidget):
                         if self.metadata_manager.external_steam_metadata.get(
                             publishedfileid, {}
                         ).get("blacklist"):
-                            steamdb_remove_blacklist = publishedfileid
-                            remove_from_steamdb_blacklist_action = QAction()
-                            remove_from_steamdb_blacklist_action.setText(
+                            steamdatabase_remove_blacklist = publishedfileid
+                            remove_from_steamdatabase_blacklist_action = QAction()
+                            remove_from_steamdatabase_blacklist_action.setText(
                                 self.tr("Remove mod from SteamDB blacklist")
                             )
                         else:
-                            steamdb_add_blacklist = publishedfileid
-                            add_to_steamdb_blacklist_action = QAction()
-                            add_to_steamdb_blacklist_action.setText(
+                            steamdatabase_add_blacklist = publishedfileid
+                            add_to_steamdatabase_blacklist_action = QAction()
+                            add_to_steamdatabase_blacklist_action.setText(
                                 self.tr("Add mod to SteamDB blacklist")
                             )
                     # Copy packageId to clipboard
@@ -1341,8 +1341,8 @@ class ModListWidget(QListWidget):
                 or re_steamcmd_action
                 or re_steam_action
                 or unsubscribe_mod_steam_action
-                or add_to_steamdb_blacklist_action
-                or remove_from_steamdb_blacklist_action
+                or add_to_steamdatabase_blacklist_action
+                or remove_from_steamdatabase_blacklist_action
             ):
                 local_folder = self.settings_controller.settings.instances[
                     self.settings_controller.settings.current_instance
@@ -1361,15 +1361,17 @@ class ModListWidget(QListWidget):
                 if unsubscribe_mod_steam_action:
                     workshop_actions_menu.addAction(unsubscribe_mod_steam_action)
                 if (
-                    add_to_steamdb_blacklist_action
-                    or remove_from_steamdb_blacklist_action
+                    add_to_steamdatabase_blacklist_action
+                    or remove_from_steamdatabase_blacklist_action
                 ):
                     workshop_actions_menu.addSeparator()
-                if add_to_steamdb_blacklist_action:
-                    workshop_actions_menu.addAction(add_to_steamdb_blacklist_action)
-                if remove_from_steamdb_blacklist_action:
+                if add_to_steamdatabase_blacklist_action:
                     workshop_actions_menu.addAction(
-                        remove_from_steamdb_blacklist_action
+                        add_to_steamdatabase_blacklist_action
+                    )
+                if remove_from_steamdatabase_blacklist_action:
+                    workshop_actions_menu.addAction(
+                        remove_from_steamdatabase_blacklist_action
                     )
                 context_menu.addMenu(workshop_actions_menu)
             # Execute QMenu and return it's ACTION
@@ -1622,19 +1624,19 @@ class ModListWidget(QListWidget):
                         )
                     return True
                 elif (
-                    action == add_to_steamdb_blacklist_action
+                    action == add_to_steamdatabase_blacklist_action
                 ):  # ACTION: Blacklist workshop mod in SteamDB
                     if (
                         self.metadata_manager.external_steam_metadata is None
-                        or steamdb_add_blacklist is None
+                        or steamdatabase_add_blacklist is None
                     ):
                         logger.error(
-                            f"Unable to add mod to SteamDB blacklist: {steamdb_remove_blacklist}"
+                            f"Unable to add mod to SteamDB blacklist: {steamdatabase_remove_blacklist}"
                         )
                         show_warning(
                             "Warning",
                             "Unable to add mod to SteamDB blacklist",
-                            "Metadata manager or steamdb_add_blacklist was None type",
+                            "Metadata manager or steamdatabase_add_blacklist was None type",
                             parent=self,
                         )
                         return False
@@ -1645,11 +1647,11 @@ class ModListWidget(QListWidget):
                         self.tr(
                             "Enter a comment providing your reasoning for wanting to blacklist this mod: "
                         )
-                        + f"{self.metadata_manager.external_steam_metadata.get(steamdb_add_blacklist, {}).get('steamName', steamdb_add_blacklist)}",
+                        + f"{self.metadata_manager.external_steam_metadata.get(steamdatabase_add_blacklist, {}).get('steamName', steamdatabase_add_blacklist)}",
                     )
                     if ok:
-                        self.steamdb_blacklist_signal.emit(
-                            [steamdb_add_blacklist, True, args]
+                        self.steamdatabase_blacklist_signal.emit(
+                            [steamdatabase_add_blacklist, True, args]
                         )
                     else:
                         show_warning(
@@ -1660,19 +1662,19 @@ class ModListWidget(QListWidget):
                         )
                     return True
                 elif (
-                    action == remove_from_steamdb_blacklist_action
+                    action == remove_from_steamdatabase_blacklist_action
                 ):  # ACTION: Blacklist workshop mod in SteamDB
                     if (
                         self.metadata_manager.external_steam_metadata is None
-                        or steamdb_remove_blacklist is None
+                        or steamdatabase_remove_blacklist is None
                     ):
                         logger.error(
-                            f"Unable to remove mod from SteamDB blacklist: {steamdb_remove_blacklist}"
+                            f"Unable to remove mod from SteamDB blacklist: {steamdatabase_remove_blacklist}"
                         )
                         show_warning(
                             "Warning",
                             "Unable to remove mod from SteamDB blacklist",
-                            "Metadata manager or steamdb_remove_blacklist was None type",
+                            "Metadata manager or steamdatabase_remove_blacklist was None type",
                             parent=self,
                         )
                         return False
@@ -1680,13 +1682,13 @@ class ModListWidget(QListWidget):
                     answer = show_dialogue_conditional(
                         title=self.tr("Are you sure?"),
                         text=self.tr("This will remove the selected mod, ")
-                        + f"{self.metadata_manager.external_steam_metadata.get(steamdb_remove_blacklist, {}).get('steamName', steamdb_remove_blacklist)}, "
+                        + f"{self.metadata_manager.external_steam_metadata.get(steamdatabase_remove_blacklist, {}).get('steamName', steamdatabase_remove_blacklist)}, "
                         + "from your configured Steam DB blacklist."
                         + "\nDo you want to proceed?",
                     )
                     if answer == QMessageBox.StandardButton.Yes:
-                        self.steamdb_blacklist_signal.emit(
-                            [steamdb_remove_blacklist, False]
+                        self.steamdatabase_blacklist_signal.emit(
+                            [steamdatabase_remove_blacklist, False]
                         )
                     return True
                 # If user is changing mod color, display color picker once no matter how many mods are selected
@@ -2434,7 +2436,7 @@ class ModListWidget(QListWidget):
                             packageid_to_uuid.get(key, ""), {}
                         ).get(
                             "name",
-                            self.metadata_manager.steamdb_packageid_to_name.get(
+                            self.metadata_manager.steamdatabase_packageid_to_name.get(
                                 key, key
                             ),
                         )
@@ -2455,7 +2457,7 @@ class ModListWidget(QListWidget):
                             packageid_to_uuid.get(key, ""), {}
                         ).get(
                             "name",
-                            self.metadata_manager.steamdb_packageid_to_name.get(
+                            self.metadata_manager.steamdatabase_packageid_to_name.get(
                                 key, key
                             ),
                         )
@@ -3788,7 +3790,7 @@ class ModsPanel(QWidget):
         if list_type == "Active":
             # Ensure all visible items have their widgets properly loaded
             self.active_mods_list.check_widgets_visible()
-            
+
             # Calculate internal errors and warnings for all mods in the list
             total_error_text, total_warning_text, num_errors, num_warnings = (
                 self.active_mods_list.recalculate_internal_errors_warnings()

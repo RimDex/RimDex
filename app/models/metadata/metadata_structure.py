@@ -556,6 +556,6 @@ class SteamDbEntry(msgspec.Struct, omit_defaults=True):
     )
 
 
-class SteamDbSchema(msgspec.Struct):
+class SteamDatabaseSchema(msgspec.Struct):
     version: int
     database: dict[str, SteamDbEntry] = msgspec.field(default_factory=dict)

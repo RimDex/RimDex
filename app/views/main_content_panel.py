@@ -310,11 +310,11 @@ class MainContent(QObject):
             self.mods_panel.inactive_mods_list.edit_rules_signal.connect(
                 self._do_open_rule_editor
             )
-            self.mods_panel.active_mods_list.steamdb_blacklist_signal.connect(
-                self._do_blacklist_action_steamdb
+            self.mods_panel.active_mods_list.steamdatabase_blacklist_signal.connect(
+                self._do_blacklist_action_steamdatabase
             )
-            self.mods_panel.inactive_mods_list.steamdb_blacklist_signal.connect(
-                self._do_blacklist_action_steamdb
+            self.mods_panel.inactive_mods_list.steamdatabase_blacklist_signal.connect(
+                self._do_blacklist_action_steamdatabase
             )
             self.mods_panel.active_mods_list.refresh_signal.connect(self._do_refresh)
             self.mods_panel.inactive_mods_list.refresh_signal.connect(self._do_refresh)
@@ -2346,7 +2346,7 @@ class MainContent(QObject):
         if self.metadata_manager.external_steam_metadata is not None:
             publishedfileids = metadata.check_if_pfids_blacklisted(
                 publishedfileids=publishedfileids,
-                steamdb=self.metadata_manager.external_steam_metadata,
+                steamdatabase=self.metadata_manager.external_steam_metadata,
             )
         # No empty publishedfileids
         if len(publishedfileids) == 0:
@@ -2378,13 +2378,13 @@ class MainContent(QObject):
         ):
             if self.steam_browser:
                 self.steam_browser.close()
-            steam_db = self.metadata_manager.external_steam_metadata
-            if steam_db is None:
-                steam_db = {}
+            steam_database = self.metadata_manager.external_steam_metadata
+            if steam_database is None:
+                steam_database = {}
 
             self.steamcmd_runner = RunnerPanel(
                 steamcmd_download_tracking=publishedfileids,
-                steam_db=steam_db,
+                steam_database=steam_database,
             )
             self.steamcmd_runner.setWindowTitle("RimDex - SteamCMD downloader")
             self.steamcmd_runner.show()
@@ -2501,15 +2501,15 @@ class MainContent(QObject):
     ) -> None:
         publishedfileids = instruction[1]
         logger.debug(f"Attempting to download {len(publishedfileids)} mods with Steam")
-        steamdb = self.metadata_manager.external_steam_metadata
-        if steamdb is None:
-            steamdb = {}
+        steamdatabase = self.metadata_manager.external_steam_metadata
+        if steamdatabase is None:
+            steamdatabase = {}
         # Check for blacklisted mods for subscription actions
         if instruction[0] == "subscribe":
             assert isinstance(publishedfileids, list)
             publishedfileids = metadata.check_if_pfids_blacklisted(
                 publishedfileids=publishedfileids,
-                steamdb=steamdb,
+                steamdatabase=steamdatabase,
             )
         # No empty publishedfileids
         if len(publishedfileids) == 0:
@@ -2880,7 +2880,7 @@ class MainContent(QObject):
         self.ignore_json_editor.setWindowModality(Qt.WindowModality.ApplicationModal)
         self.ignore_json_editor.show()
 
-    def _do_configure_steam_db_file_path(self) -> None:
+    def _do_configure_steam_database_file_path(self) -> None:
         # Input file
         logger.info("Opening file dialog to specify Steam DB")
         input_path = dialogue.show_dialogue_file(
@@ -3007,7 +3007,7 @@ class MainContent(QObject):
         else:
             logger.debug("USER ACTION: cancelled selection...")
 
-    def _do_blacklist_action_steamdb(self, instruction: list[Any]) -> None:
+    def _do_blacklist_action_steamdatabase(self, instruction: list[Any]) -> None:
         if (
             self.metadata_manager.external_steam_metadata_path
             and self.metadata_manager.external_steam_metadata

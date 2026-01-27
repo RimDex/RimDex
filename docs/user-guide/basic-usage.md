@@ -45,7 +45,7 @@ Certain errors/warnings are produced based on dependency presence, incompatibili
 
 RimDex uses external metadata in order to enhance its functionality. The metadata provides it with additional information beyond the information present in a downloaded mod's `About.xml` file. External Metadata in RimDex is designed to be highly user extendable and sharable.
 
-### Steam Workshop Metadata (`steamDB.json`)
+### Steam Workshop Metadata (`SteamDatabase.json`)
 {: .d-inline-block}
 
 Steam Workshop Metadata
@@ -68,9 +68,9 @@ Steam Workshop Metadata
 Rules Metadata
 {: .label .label-red }
 
-  There are two external rules databases that RimDex uses, `userRules.json` and `communityRules.json`. They both provide the same functionality, but one is community driven and intended to be shared, and the other is intended for your own personal load order rules. 
+  There are two external rules databases that RimDex uses, `userRules.json` and `RulesDatabase.json`. They both provide the same functionality, but one is community driven and intended to be shared, and the other is intended for your own personal load order rules. 
   
-  Both of these databases uses a schema compatible with Paladin's RimPy Mod Manager Database communityRules.json.
+  Both of these databases uses a schema compatible with Paladin's RimPy Mod Manager Database RulesDatabase.json.
 
   {: .note}
   > While you can modify the databases directly as they are plain text files, it is recommended to use RimDex's built in [Rule Editor](../user-guide/rule-editor) utility to edit the rules defined in these databases.

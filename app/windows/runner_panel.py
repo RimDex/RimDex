@@ -42,7 +42,7 @@ class RunnerPanel(QWidget):
         self,
         todds_dry_run_support: bool = False,
         steamcmd_download_tracking: Optional[list[str]] = None,
-        steam_db: Optional[dict[str, Any]] = None,
+        steam_database: Optional[dict[str, Any]] = None,
         auto_close_on_complete: bool = False,
     ):
         """
@@ -51,7 +51,7 @@ class RunnerPanel(QWidget):
         Args:
             todds_dry_run_support: Whether to support TODDS dry run mode
             steamcmd_download_tracking: List of Steam Workshop IDs to track
-            steam_db: Dictionary of Steam mod information
+            steam_database: Dictionary of Steam mod information
             auto_close_on_complete: If True, automatically close window after process completes
         """
         super().__init__()
@@ -63,7 +63,7 @@ class RunnerPanel(QWidget):
         self.installEventFilter(self)
         self.previous_line = ""
         self.steamcmd_download_tracking = steamcmd_download_tracking or []
-        self.steam_db = steam_db or {}
+        self.steam_database = steam_database or {}
         self.todds_dry_run_support = todds_dry_run_support
         self.auto_close_on_complete = auto_close_on_complete
 
@@ -572,9 +572,9 @@ class RunnerPanel(QWidget):
         failed_mods_no_names = []
 
         # First try to resolve from local database
-        if self.steam_db:
+        if self.steam_database:
             for failed_mod_pfid in self.steamcmd_download_tracking:
-                mod_info = self.steam_db.get(failed_mod_pfid)
+                mod_info = self.steam_database.get(failed_mod_pfid)
                 if mod_info:
                     mod_name = mod_info.get("steamName") or mod_info.get("name")
                     if mod_name:

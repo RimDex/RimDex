@@ -94,7 +94,7 @@ class DBBuilderCore:
             database = self._init_empty_db_from_publishedfileids(
                 dynamic_query.publishedfileids
             )
-            dynamic_query.create_steam_db(
+            dynamic_query.create_steam_database(
                 database=database, publishedfileids=dynamic_query.publishedfileids
             )
             self._output_database(dynamic_query.database)

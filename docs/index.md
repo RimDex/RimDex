@@ -61,7 +61,7 @@ Features all the basic functionality you'd expect from a mod manager plus extras
   - Generate Steam Workshop Database (SteamDB) on the fly. This is compatible with & synonymous to Paladin's RimPy Community Mod Manager Database db.json schema
   - Tools to compare, merge, and publish databases using this tool
 - Rule Editor for configured Community Rules database, as well as User Rules
-  - Fully compatible with Paladin's RimPy Community Mod Manager Database `communityRules.json` schema
+  - Fully compatible with Paladin's RimPy Community Mod Manager Database `RulesDatabase.json` schema
   - Tools to compare, merge, and publish databases using this tool
 
 ## About the project

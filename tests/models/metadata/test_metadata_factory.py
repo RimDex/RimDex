@@ -13,11 +13,11 @@ from app.models.metadata.metadata_factory import (
     match_version,
     read_mods_config,
     read_rules_db,
-    read_steam_db,
+    read_steam_database,
     value_extractor,
     write_mods_config,
     write_rules_db,
-    write_steam_db,
+    write_steam_database,
 )
 from app.models.metadata.metadata_structure import (
     AboutXmlMod,
@@ -26,10 +26,10 @@ from app.models.metadata.metadata_structure import (
     ExternalRule,
     ExternalRulesSchema,
     ModType,
+    SteamDatabaseSchema,
     SteamDbEntry,
     SteamDbEntryBlacklist,
     SteamDbEntryDependency,
-    SteamDbSchema,
     SubExternalBoolRule,
     SubExternalRule,
 )
@@ -251,11 +251,11 @@ def test_create_base_rules_ludeon_core() -> None:
 
 
 def test_get_rules_db_large_db(tmp_path: Path) -> None:
-    repo = "https://github.com/RimDex/Community-Rules-Database.git"
+    repo = "https://github.com/RimDex/RimDex-Rules-Database.git"
     _ = pygit2.clone_repository(repo, str(tmp_path), depth=1)
-    file = tmp_path / "communityRules.json"
+    file = tmp_path / "RulesDatabase.json"
     if not file.exists():
-        warnings.warn("communityRules.json could not be found! Skipping test.")
+        warnings.warn("RulesDatabase.json could not be found! Skipping test.")
         return
     assert read_rules_db(file) is not None
 
@@ -314,10 +314,10 @@ def test_write_rules_db(tmp_path: Path) -> None:
     assert rules == new_rules
 
 
-def test_read_steam_db() -> None:
-    path = Path("tests/data/dbs/steamDB.json")
-    steam_db = read_steam_db(path)
-    expected_value = SteamDbSchema(
+def test_read_steam_database() -> None:
+    path = Path("tests/data/dbs/SteamDatabase.json")
+    steam_database = read_steam_database(path)
+    expected_value = SteamDatabaseSchema(
         version=12345,
         database={
             "basic_mod1-multiversion-multiauthor-nodependencies": SteamDbEntry(
@@ -410,24 +410,24 @@ def test_read_steam_db() -> None:
         },
     )
 
-    assert steam_db is not None
-    assert steam_db == expected_value
+    assert steam_database is not None
+    assert steam_database == expected_value
 
 
-def test_read_steam_db_large(tmp_path: Path) -> None:
-    repo = "https://github.com/RimDex/Steam-Workshop-Database.git"
+def test_read_steam_database_large(tmp_path: Path) -> None:
+    repo = "https://github.com/RimDex/RimDex-Steam-Database.git"
     _ = pygit2.clone_repository(repo, str(tmp_path), depth=1)
-    file = tmp_path / "steamDB.json"
+    file = tmp_path / "SteamDatabase.json"
     if not file.exists():
-        warnings.warn("steamDB.json could not be found! Skipping test.")
+        warnings.warn("SteamDatabase.json could not be found! Skipping test.")
         return
-    steam_db = read_steam_db(file)
-    assert steam_db is not None
+    steam_database = read_steam_database(file)
+    assert steam_database is not None
 
 
-def test_write_steam_db(tmp_path: Path) -> None:
+def test_write_steam_database(tmp_path: Path) -> None:
     path = tmp_path / "test.json"
-    steam_db = SteamDbSchema(
+    steam_database = SteamDatabaseSchema(
         version=12345,
         database={
             "a": SteamDbEntry(
@@ -439,22 +439,22 @@ def test_write_steam_db(tmp_path: Path) -> None:
         },
     )
 
-    write_steam_db(path, steam_db)
+    write_steam_database(path, steam_database)
 
-    new_steam_db = read_steam_db(path)
-    assert steam_db == new_steam_db
+    new_steam_database = read_steam_database(path)
+    assert steam_database == new_steam_database
 
 
-def test_read_write_steam_db(tmp_path: Path) -> None:
-    path = Path("tests/data/dbs/steamDB.json")
-    steam_db = read_steam_db(path)
-    assert steam_db is not None
+def test_read_write_steam_database(tmp_path: Path) -> None:
+    path = Path("tests/data/dbs/SteamDatabase.json")
+    steam_database = read_steam_database(path)
+    assert steam_database is not None
 
     new_path = tmp_path / "test.json"
-    write_steam_db(new_path, steam_db)
+    write_steam_database(new_path, steam_database)
 
-    new_steam_db = read_steam_db(new_path)
-    assert steam_db == new_steam_db
+    new_steam_database = read_steam_database(new_path)
+    assert steam_database == new_steam_database
 
 
 def test_create_scenario_mod_from_rsc_invalid_meta() -> None:

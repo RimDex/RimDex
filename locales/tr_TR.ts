@@ -3528,7 +3528,7 @@ An alternative updated mod is recommended:
         <translation>Yorum</translation>
     </message>
     <message>
-        <source>Save rules to communityRules.json</source>
+        <source>Save rules to RulesDatabase.json</source>
         <translation>Kuralları CommunityRules.json'a kaydedin</translation>
     </message>
     <message>

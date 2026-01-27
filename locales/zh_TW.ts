@@ -3548,8 +3548,8 @@ Alternative Dependencies:</source>
         <translation>備註</translation>
     </message>
     <message>
-        <source>Save rules to communityRules.json</source>
-        <translation>保存規則到 communityRules.json</translation>
+        <source>Save rules to RulesDatabase.json</source>
+        <translation>保存規則到 RulesDatabase.json</translation>
     </message>
     <message>
         <source>Save rules to userRules.json</source>

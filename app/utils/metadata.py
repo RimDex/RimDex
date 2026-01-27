@@ -117,7 +117,7 @@ class MetadataManager(QObject):
             self.mod_metadata_file_mapper: dict[str, str] = {}
             self.mod_metadata_dir_mapper: dict[str, str] = {}
             self.packageid_to_uuids: dict[str, set[str]] = {}
-            self.steamdb_packageid_to_name: dict[str, str] = {}
+            self.steamdatabase_packageid_to_name: dict[str, str] = {}
             # Empty game version string unless the data is populated
             self.game_version: str = ""
             # SteamCMD .acf file data
@@ -944,7 +944,9 @@ class MetadataManager(QObject):
                 if db_packageid:
                     db_packageid = db_packageid.lower()  # Normalize packageid
                     steam_id_to_package_id[publishedfileid] = db_packageid
-                    self.steamdb_packageid_to_name[db_packageid] = mod_data.get("name")
+                    self.steamdatabase_packageid_to_name[db_packageid] = mod_data.get(
+                        "name"
+                    )
                     potential_uuids = self.packageid_to_uuids.get(db_packageid)
                     if potential_uuids:  # Potential uuids is a set
                         for uuid in potential_uuids:
@@ -977,7 +979,7 @@ class MetadataManager(QObject):
                     # the metadata actually references a Steam ID that itself does not
                     # wire to a package_id defined in an installed & valid mod.
                     if dependency_steam_id in steam_id_to_package_id:
-                        add_dependency_to_mod_from_steamdb(
+                        add_dependency_to_mod_from_steamdatabase(
                             self.internal_local_metadata[installed_mod_uuid],
                             steam_id_to_package_id[dependency_steam_id],
                             self.internal_local_metadata,
@@ -2095,14 +2097,14 @@ def add_dependency_to_mod(
             )
 
 
-def add_dependency_to_mod_from_steamdb(
+def add_dependency_to_mod_from_steamdatabase(
     mod_data: dict[str, Any], dependency_id: Any, all_mods: dict[str, Any]
 ) -> None:
     mod_name = mod_data.get("name")
     # Store dependencies as a list to support rich entries
     mod_data.setdefault("dependencies", [])
 
-    # If the value is a single str (for steamDB)
+    # If the value is a single str (for SteamDatabase)
     if isinstance(dependency_id, str):
         # Avoid duplicates if present
         dep_list = mod_data["dependencies"]
@@ -2486,7 +2488,7 @@ class SteamDatabaseBuilder(QThread):
                         dynamic_query.dq_messaging_signal.connect(
                             self.db_builder_message_output_signal.emit
                         )
-                        dynamic_query.create_steam_db(database, publishedfileids)
+                        dynamic_query.create_steam_database(database, publishedfileids)
                         self._output_database(dynamic_query.database)
                         self.db_builder_message_output_signal.emit(
                             "SteamDatabasebuilder: Completed!"
@@ -2681,10 +2683,10 @@ class SteamDatabaseBuilder(QThread):
 
 
 def check_if_pfids_blacklisted(
-    publishedfileids: list[str], steamdb: dict[str, Any]
+    publishedfileids: list[str], steamdatabase: dict[str, Any]
 ) -> list[str]:
-    # None-check for steamdb
-    if not steamdb:
+    # None-check for steamdatabase
+    if not steamdatabase:
         show_warning(
             title="No SteamDB found",
             text="Unable to check for blacklisted mods. Please configure a SteamDB for RimDex to use in Settings.",
@@ -2695,17 +2697,17 @@ def check_if_pfids_blacklisted(
     publishedfileid = ""
     # Check if any of the mods are blacklisted
     for publishedfileid in publishedfileids:
-        if steamdb.get(publishedfileid, {}).get("blacklist"):
+        if steamdatabase.get(publishedfileid, {}).get("blacklist"):
             blacklisted_mods[publishedfileid] = {
-                "name": steamdb[publishedfileid]["steamName"],
-                "comment": steamdb[publishedfileid]["blacklist"]["comment"],
+                "name": steamdatabase[publishedfileid]["steamName"],
+                "comment": steamdatabase[publishedfileid]["blacklist"]["comment"],
             }
-        elif steamdb.get(str(publishedfileid), {}).get(
+        elif steamdatabase.get(str(publishedfileid), {}).get(
             "blacklist"
         ):  # TODO: Is this needed?
             blacklisted_mods[publishedfileid] = {
-                "name": steamdb[str(publishedfileid)]["steamName"],
-                "comment": steamdb[str(publishedfileid)]["blacklist"]["comment"],
+                "name": steamdatabase[str(publishedfileid)]["steamName"],
+                "comment": steamdatabase[str(publishedfileid)]["blacklist"]["comment"],
             }
     # Generate report if we have blacklisted mods found
     if blacklisted_mods:

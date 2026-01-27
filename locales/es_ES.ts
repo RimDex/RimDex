@@ -3519,7 +3519,7 @@ Alternative Dependencies:</source>
         <translation>Comentario</translation>
     </message>
     <message>
-        <source>Save rules to communityRules.json</source>
+        <source>Save rules to RulesDatabase.json</source>
         <translation>Guardar reglas a CommunityRules.json</translation>
     </message>
     <message>
