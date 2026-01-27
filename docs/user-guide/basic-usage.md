@@ -45,7 +45,7 @@ Certain errors/warnings are produced based on dependency presence, incompatibili
 
 RimDex uses external metadata in order to enhance its functionality. The metadata provides it with additional information beyond the information present in a downloaded mod's `About.xml` file. External Metadata in RimDex is designed to be highly user extendable and sharable.
 
-### Steam Workshop Metadata (`steamDB.json`)
+### Steam Workshop Metadata (`SteamDatabase.json`)
 {: .d-inline-block}
 
 Steam Workshop Metadata

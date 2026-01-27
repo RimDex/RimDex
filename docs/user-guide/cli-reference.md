@@ -76,13 +76,13 @@ You need a Steam WebAPI key (32 characters) to use this command. The DB Builder 
 ```bash
 # Using environment variable (recommended for security)
 export RIMSORT_STEAM_API_KEY=your_32_character_key_here
-RimDex build-db --output steamDB.json
+RimDex build-db --output SteamDatabase.json
 
 # Quick build without DLC data (faster)
-RimDex build-db --output steamDB.json --no-dlc-data --quiet
+RimDex build-db --output SteamDatabase.json --no-dlc-data --quiet
 
 # Update existing database instead of overwriting
-RimDex build-db --output steamDB.json --update
+RimDex build-db --output SteamDatabase.json --update
 ```
 
 #### Options Reference
@@ -132,10 +132,10 @@ You used `--update` mode but the target database file doesn't exist. For the fir
 
 ```bash
 # First build
-RimDex build-db --output steamDB.json --overwrite
+RimDex build-db --output SteamDatabase.json --overwrite
 
 # Subsequent updates
-RimDex build-db --output steamDB.json --update
+RimDex build-db --output SteamDatabase.json --update
 ```
 
 ##### **`DLC data collection fails silently`**
@@ -147,5 +147,5 @@ DLC dependency data requires the Steamworks API, which needs:
 If unavailable, use `--no-dlc-data` for headless environments:
 
 ```bash
-RimDex build-db --output steamDB.json --no-dlc-data
+RimDex build-db --output SteamDatabase.json --no-dlc-data
 ```

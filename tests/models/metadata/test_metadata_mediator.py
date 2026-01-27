@@ -11,7 +11,7 @@ def mediator() -> MetadataMediator:
     return MetadataMediator(
         user_rules_path=Path("tests/data/dbs/userRules.json"),
         community_rules_path=None,
-        steam_db_path=None,
+        steam_database_path=None,
         workshop_mods_path=None,
         local_mods_path=Path("tests/data/mod_examples/Local"),
         game_path=Path("tests/data/mod_examples/RimWorld"),
@@ -43,7 +43,7 @@ def test_refresh_metadata(mediator: MetadataMediator) -> None:
     assert mediator.game_version != "Unknown"
 
     mediator.workshop_mods_path = Path("tests/data/mod_examples/Steam")
-    mediator.steam_db_path = Path("tests/data/dbs/steamDB.json")
+    mediator.steam_database_path = Path("tests/data/dbs/SteamDatabase.json")
     mediator.refresh_metadata()
     assert mediator.user_rules is not None
     assert mediator.community_rules is None

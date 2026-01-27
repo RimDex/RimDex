@@ -177,7 +177,7 @@ class CollectionImport:
 
         Order:
 
-        * steamdb, if configured
+        * steamdatabase, if configured
         * internal metadata
         * internal metadata using mod folder name as pfid
         """
@@ -189,7 +189,7 @@ class CollectionImport:
                 f"PublishedFileId (pfid) is expected to be a numeric sequence, not {pfid_str}"
             )
         return (
-            self._get_package_id_from_pfid_using_steamdb(pfid_str)
+            self._get_package_id_from_pfid_using_steamdatabase(pfid_str)
             or self._get_package_id_from_pfid_using_metadata(pfid_str)
             or self._get_package_id_from_pfid_using_mod_folder_name(pfid_str)
         )
@@ -208,15 +208,15 @@ class CollectionImport:
             None,
         )
 
-    def _get_package_id_from_pfid_using_steamdb(self, pfid: str) -> str | None:
-        steamdb = (
+    def _get_package_id_from_pfid_using_steamdatabase(self, pfid: str) -> str | None:
+        steamdatabase = (
             self.metadata_manager.external_steam_metadata
             if self.metadata_manager
             else None
         )
-        if not steamdb:
+        if not steamdatabase:
             return None
-        mod = steamdb.get(pfid)
+        mod = steamdatabase.get(pfid)
         if not mod:
             return None
         return _find_value_in_dict(mod, "packageid")
@@ -338,7 +338,7 @@ class DynamicQuery(QObject):
                 + "\nAre you connected to the internet?\nIs your configured key invalid or revoked?\n"
             )
 
-    def create_steam_db(
+    def create_steam_database(
         self, database: Dict[str, Any], publishedfileids: list[str]
     ) -> None:
         """

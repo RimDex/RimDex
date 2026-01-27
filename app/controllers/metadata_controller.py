@@ -26,7 +26,7 @@ class MetadataController(QObject):
         self.metadata_mediator = MetadataMediator(
             user_rules_path=AppInfo().user_rules_file,
             community_rules_path=None,
-            steam_db_path=None,
+            steam_database_path=None,
             workshop_mods_path=None,
             local_mods_path=None,
             game_path=None,
@@ -83,13 +83,15 @@ class MetadataController(QObject):
         active_settings = self.settings_controller.settings
 
         cr_path = _get_path(active_settings.external_community_rules_file_path)
-        steam_db_path = _get_path(active_settings.external_steam_metadata_file_path)
+        steam_database_path = _get_path(
+            active_settings.external_steam_metadata_file_path
+        )
         workshop_mods_path = _get_path(active_instance.workshop_folder)
         local_mods_path = _get_path(active_instance.local_folder)
         game_path = _get_path(active_instance.game_folder)
 
         self.metadata_mediator.community_rules_path = cr_path
-        self.metadata_mediator.steam_db_path = steam_db_path
+        self.metadata_mediator.steam_database_path = steam_database_path
         self.metadata_mediator.workshop_mods_path = workshop_mods_path
         self.metadata_mediator.local_mods_path = local_mods_path
         self.metadata_mediator.game_path = game_path

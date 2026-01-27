@@ -84,7 +84,7 @@ def test_metadata_controller_creation(metadata_controller: MetadataController) -
 def metadata_controller_p(
     metadata_controller: MetadataController,
 ) -> MetadataController:
-    metadata_controller.settings_controller.settings.external_steam_metadata_file_path = "tests/data/dbs/steamDB.json"
+    metadata_controller.settings_controller.settings.external_steam_metadata_file_path = "tests/data/dbs/SteamDatabase.json"
     metadata_controller.settings_controller.active_instance.game_folder = (
         "tests/data/mod_examples/RimWorld"
     )

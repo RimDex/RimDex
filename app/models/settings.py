@@ -53,10 +53,10 @@ class Settings(QObject):
         # Databases
         self.external_steam_metadata_source: str = "None"
         self.external_steam_metadata_file_path: str = str(
-            AppInfo().app_storage_folder / "steamDB.json"
+            AppInfo().app_storage_folder / "SteamDatabase.json"
         )
         self.external_steam_metadata_repo: str = (
-            "https://github.com/RimDex/Steam-Workshop-Database"
+            "https://github.com/RimDex/RimDex-Steam-Database"
         )
 
         self.external_community_rules_metadata_source: str = "None"
