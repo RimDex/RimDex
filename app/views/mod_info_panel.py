@@ -242,7 +242,7 @@ class ModInfoPanel:
         )
         self.mod_info_external_times_value.setWordWrap(True)
         self.description = DescriptionWidget()
-        self.description_text = self.tr("Welcome to RimSort!")
+        self.description_text = self.tr("Welcome to RimDex!")
         self.description.setText(
             f"<br><br><br><center>{self.description_text}<h3></h3></center>",
             convert=False,

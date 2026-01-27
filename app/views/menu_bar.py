@@ -167,11 +167,11 @@ class MenuBar(QObject):
         self.shortcuts_submenu = QMenu(self.tr("Open..."))
         file_menu.addMenu(self.shortcuts_submenu)
         # Add submenu under Shortcuts
-        self.rimsort_shortcuts_submenu = QMenu(self.tr("RimSort"))
+        self.rimsort_shortcuts_submenu = QMenu(self.tr("RimDex"))
         self.shortcuts_submenu.addMenu(self.rimsort_shortcuts_submenu)
         self.rimworld_shortcuts_submenu = QMenu(self.tr("RimWorld"))
         self.shortcuts_submenu.addMenu(self.rimworld_shortcuts_submenu)
-        # Add actions to RimSort submenu
+        # Add actions to RimDex submenu
         self.open_app_directory_action = self._add_action(
             self.rimsort_shortcuts_submenu, self.tr("Root Directory")
         )
@@ -229,9 +229,9 @@ class MenuBar(QObject):
             return None
 
         logfile_submenu = QMenu(self.tr(menu_name))
-        create_entry("RimSort.log", lambda: AppInfo().user_log_folder / "RimSort.log")
+        create_entry("RimDex.log", lambda: AppInfo().user_log_folder / "RimDex.log")
         create_entry(
-            "RimSort.old.log", lambda: AppInfo().user_log_folder / "RimSort.old.log"
+            "RimDex.old.log", lambda: AppInfo().user_log_folder / "RimDex.old.log"
         )
         create_entry(
             "RimWorld Player.log",
@@ -360,8 +360,8 @@ class MenuBar(QObject):
             QMenu: The created "Help" menu.
         """
         help_menu = self.menu_bar.addMenu(self.tr("Help"))
-        self.wiki_action = self._add_action(help_menu, self.tr("RimSort Wiki…"))
-        self.github_action = self._add_action(help_menu, self.tr("RimSort GitHub…"))
+        self.wiki_action = self._add_action(help_menu, self.tr("RimDex Wiki…"))
+        self.github_action = self._add_action(help_menu, self.tr("RimDex GitHub…"))
         help_menu.addSeparator()
         return help_menu
 

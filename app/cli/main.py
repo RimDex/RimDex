@@ -1,5 +1,5 @@
 """
-Main CLI entry point for RimSort.
+Main CLI entry point for RimDex.
 
 This module defines the Click command group and registers all subcommands.
 """
@@ -11,9 +11,9 @@ from app.utils.app_info import AppInfo
 
 
 @click.group()
-@click.version_option(version=AppInfo().app_version, prog_name="RimSort")
+@click.version_option(version=AppInfo().app_version, prog_name="RimDex")
 def cli() -> None:
-    """RimSort - RimWorld mod manager CLI
+    """RimDex - RimWorld mod manager CLI
 
     Headless tools for managing RimWorld mods, building databases, and more.
 

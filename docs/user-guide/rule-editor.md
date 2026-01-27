@@ -13,7 +13,7 @@ To access the rule editor either navigate to `Edit > Rule Editor...` in the main
 
 ## Overview
 
-The Rule Editor is a powerful tool in RimSort that allows you to view, create, and modify load order rules for mods. These rules determine how mods are sorted and loaded in RimWorld, ensuring compatibility and proper functionality. The editor supports three types of rules:
+The Rule Editor is a powerful tool in RimDex that allows you to view, create, and modify load order rules for mods. These rules determine how mods are sorted and loaded in RimWorld, ensuring compatibility and proper functionality. The editor supports three types of rules:
 
 - **About.xml Rules**: Rules defined directly in a mod's `About.xml` file (read-only)
 - **Community Rules**: Shared rules contributed by the community
@@ -97,7 +97,7 @@ This mod must load after the specified mod(s). Useful when your mod depends on a
 This mod must load before the specified mod(s). Useful when other mods depend on your mod.
 
 ### incompatibleWith
-This mod cannot be loaded alongside the specified mod(s). RimSort will show warnings when incompatible mods are both active.
+This mod cannot be loaded alongside the specified mod(s). RimDex will show warnings when incompatible mods are both active.
 
 ### loadTop
 Forces this mod to load at the very top of the mod list, regardless of other rules.
@@ -134,7 +134,7 @@ Use the search bar above the mods list to quickly find specific mods by name. Th
 
 ### Rules Not Applying
 - Ensure you've saved the changes using the appropriate save button
-- Restart RimSort or refresh the metadata cache
+- Restart RimDex or refresh the metadata cache
 - Check that the mod's PackageId matches exactly
 
 ### Cannot Edit Certain Rules

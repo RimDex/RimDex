@@ -1,7 +1,7 @@
-title: RimSort Wiki
-description: A collection of guides, tutorials, and documentation for RimSort, an free, open source, multi-platform mod manager for RimWorld.
+title: RimDex Wiki
+description: A collection of guides, tutorials, and documentation for RimDex, an free, open source, multi-platform mod manager for RimWorld.
 theme: just-the-docs
-repository: RimSort/RimSort
+repository: RimDex/RimDex
 
 languages: ["en", "zh-cn"]
 default_lang: "en"
@@ -23,11 +23,11 @@ nav_sort: case_sensitive # Capital letters sorted before lowercase
 # External navigation links
 nav_external_links:
   - title: Releases
-    url: https://github.com/RimSort/RimSort/releases
+    url: https://github.com/RimDex/RimDex/releases
     hide_icon: false # set to true to hide the external link icon - defaults to false
     opens_in_new_tab: true # set to true to open this link in a new tab - defaults to false
-  - title: RimSort on GitHub
-    url: https://github.com/RimSort/RimSort
+  - title: RimDex on GitHub
+    url: https://github.com/RimDex/RimDex
     opens_in_new_tab: true
   - title: Discord
     url: https://discord.gg/aV7g69JmR2
@@ -91,7 +91,7 @@ color_scheme: main_scheme_dark
 # Footer "Edit this page on GitHub" link text
 gh_edit_link: true # show or hide edit this page link
 gh_edit_link_text: "Edit this page on GitHub."
-gh_edit_repository: "https://github.com/RimSort/RimSort" # the github URL for your repo
+gh_edit_repository: "https://github.com/RimDex/RimDex" # the github URL for your repo
 gh_edit_branch: "main" # the branch that your docs is served from
 # gh_edit_source: docs # the source that your files originate from
 gh_edit_view_mode: "tree" # "tree" or "edit" if you want the user to jump into the editor immediately

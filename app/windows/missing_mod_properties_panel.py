@@ -47,7 +47,7 @@ class MissingModPropertiesPanel(BaseModsPanel):
 
         super().__init__(
             object_name="missingModPropertiesPanel",
-            window_title=self.tr("RimSort - Mods with Missing Properties"),
+            window_title=self.tr("RimDex - Mods with Missing Properties"),
             title_text=self.tr("Mods with Missing Properties detected!"),
             details_text=self.tr(
                 "The following mods are missing important properties that may cause issues:\n\n"

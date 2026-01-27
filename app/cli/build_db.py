@@ -63,7 +63,7 @@ def build_db(
     \b
     1. --api-key command line argument
     2. RIMSORT_STEAM_API_KEY environment variable
-    3. Fallback to settings.json (if RimSort GUI is configured)
+    3. Fallback to settings.json (if RimDex GUI is configured)
 
     Examples:
 
@@ -111,7 +111,7 @@ def build_db(
         )
         click.echo("  1. --api-key option", err=True)
         click.echo("  2. RIMSORT_STEAM_API_KEY environment variable", err=True)
-        click.echo("  3. Configure in RimSort GUI (saved to settings.json)", err=True)
+        click.echo("  3. Configure in RimDex GUI (saved to settings.json)", err=True)
         sys.exit(1)
 
     if len(api_key) != 32:

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-This script is used to set up the environment and build the RimSort application.
+This script is used to set up the environment and build the RimDex application.
 It installs the required dependencies, initializes and updates submodules, and compiles the SteamworksPy library.
 The script supports different operating systems and architectures.
 
@@ -384,7 +384,7 @@ def get_latest_todds_release() -> None:
     else:
         print(f"Unsupported system {_SYSTEM} {_ARCH} {_PROCESSOR}")
         print(
-            "Skipping todds download. The resultant RimSort build will not include todds!"
+            "Skipping todds download. The resultant RimDex build will not include todds!"
         )
         return
     # Try to find a valid release
@@ -416,7 +416,7 @@ def get_latest_todds_release() -> None:
 
 
 def freeze_application() -> None:
-    """Build the RimSort application using Nuitka."""
+    """Build the RimDex application using Nuitka."""
     # Check if NUITKA_CACHE_DIR exists in environment
     if "NUITKA_CACHE_DIR" in os.environ:
         print(f"NUITKA_CACHE_DIR: {os.environ['NUITKA_CACHE_DIR']}")
@@ -508,12 +508,12 @@ def handle_request(
 
 def make_args() -> argparse.ArgumentParser:
     """
-    Create and configure the argument parser for the RimSort application setup script.
+    Create and configure the argument parser for the RimDex application setup script.
 
     Returns:
         argparse.ArgumentParser: The configured argument parser.
     """
-    description = """This script is used to set up the environment and build the RimSort application.
+    description = """This script is used to set up the environment and build the RimDex application.
     It installs the required dependencies, initializes and updates submodules, and compiles the SteamworksPy library.
     The script supports different operating systems and architectures."""
 
@@ -528,7 +528,7 @@ def make_args() -> argparse.ArgumentParser:
     parser.add_argument(
         "--skip-submodules",
         action="store_true",
-        help="skip installing RimSort submodules using git",
+        help="skip installing RimDex submodules using git",
     )
 
     # Skip SteamworksPy Copy
@@ -570,7 +570,7 @@ def make_args() -> argparse.ArgumentParser:
     parser.add_argument(
         "--skip-build",
         action="store_true",
-        help="skip building RimSort with Nuitka",
+        help="skip building RimDex with Nuitka",
     )
 
     parser.add_argument(
@@ -590,7 +590,7 @@ def main() -> None:
 
     print(f"Running on {_SYSTEM} {_ARCH} {_PROCESSOR}...")
     if not args.skip_submodules:
-        print("Getting RimSort submodules...")
+        print("Getting RimDex submodules...")
         get_rimsort_submodules()
     else:
         print("Skipped getting submodules")
@@ -619,7 +619,7 @@ def main() -> None:
             version = "".join(args.product_version.split())
             _NUITKA_CMD.extend(
                 [
-                    "--file-description=RimSort",
+                    "--file-description=RimDex",
                     f"--product-version={version}",
                 ]
             )
@@ -627,7 +627,7 @@ def main() -> None:
             print("In dev mode, enabling console in build")
             _NUITKA_CMD.append("--windows-console-mode=force")
 
-        print("Building RimSort application with Nuitka...")
+        print("Building RimDex application with Nuitka...")
         freeze_application()
         # After build, ensure the app bundle contains the generic Steamworks dylib
         post_build_fixup_macos_steamworks()

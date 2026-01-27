@@ -4,7 +4,7 @@
 
 # Core Development
 
-# Run the RimSort application
+# Run the RimDex application
 run: dev-setup
     uv run python -m app
 
@@ -73,11 +73,11 @@ clean:
 
 # Build/Distribution
 
-# Build RimSort executable
+# Build RimDex executable
 build *ARGS='': submodules-init check
     uv run python distribute.py {{ARGS}}
 
-# Build RimSort executable with specific version (e.g., "1.2.3.4")
+# Build RimDex executable with specific version (e.g., "1.2.3.4")
 build-version VERSION: submodules-init check
     uv run python distribute.py --product-version="{{VERSION}}"
 
@@ -103,14 +103,14 @@ rpm-tarball VERSION='1.0.0':
     trap 'rm -rf "$TMPDIR"' EXIT
 
     # Archive main repository
-    git archive --prefix="RimSort-$FULL_VERSION/" HEAD | tar -x -C "$TMPDIR"
+    git archive --prefix="RimDex-$FULL_VERSION/" HEAD | tar -x -C "$TMPDIR"
 
     # Archive submodules
-    git submodule foreach --quiet "git archive --prefix=\"RimSort-$FULL_VERSION/\$displaypath/\" HEAD | tar -x -C \"$TMPDIR\""
+    git submodule foreach --quiet "git archive --prefix=\"RimDex-$FULL_VERSION/\$displaypath/\" HEAD | tar -x -C \"$TMPDIR\""
 
     # Create the final tarball
     cd "$TMPDIR"
-    tar -czf "$TARBALL" "RimSort-$FULL_VERSION"
+    tar -czf "$TARBALL" "RimDex-$FULL_VERSION"
 
     echo "Tarball created: $TARBALL"
     ls -lh "$TARBALL"

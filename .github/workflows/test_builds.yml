@@ -20,35 +20,35 @@ jobs:
             env:
               ARTIFACT_KEY_GLOB: "*Darwin_i386*"
               ARTIFACT_KEY: "Darwin_i386"
-              EXPECTED_NAME: "RimSort"
+              EXPECTED_NAME: "RimDex"
           - os: macos-latest
             arch: "arm"
             platform: "Darwin"
             env:
               ARTIFACT_KEY_GLOB: "*Darwin_arm*"
               ARTIFACT_KEY: "Darwin_arm"
-              EXPECTED_NAME: "RimSort"
+              EXPECTED_NAME: "RimDex"
           - os: ubuntu-22.04
             platform: "Ubuntu-22.04"
             arch: "x86_64"
             env:
               ARTIFACT_KEY_GLOB: "*Ubuntu-22*"
               ARTIFACT_KEY: "Ubuntu-22.04_x86_64 "
-              EXPECTED_NAME: "RimSort"
+              EXPECTED_NAME: "RimDex"
           - os: ubuntu-24.04
             platform: "Ubuntu-24.04"
             arch: "x86_64"
             env:
               ARTIFACT_KEY_GLOB: "*Ubuntu-24*"
               ARTIFACT_KEY: "Ubuntu-24.04_x86_64"
-              EXPECTED_NAME: "RimSort"
+              EXPECTED_NAME: "RimDex"
           - os: windows-latest
             platform: "Windows"
             arch: "x86_64"
             env:
               ARTIFACT_KEY_GLOB: "*Windows_x86_64*"
               ARTIFACT_KEY: "Windows_x86_64"
-              EXPECTED_NAME: "RimSort.exe"
+              EXPECTED_NAME: "RimDex.exe"
     steps:
       - name: Download artifact from previous run
         if: ${{ github.event.inputs.run_id != null }}

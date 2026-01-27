@@ -11,7 +11,7 @@ lang: zh-cn
 
 {: .no_toc}
 
-本指南说明如何为 RimSort 贡献翻译。项目使用 PySide6 的 Qt 国际化 (i18n) 系统和 QTranslator。
+本指南说明如何为 RimDex 贡献翻译。项目使用 PySide6 的 Qt 国际化 (i18n) 系统和 QTranslator。
 
 ## 目录
 
@@ -22,7 +22,7 @@ lang: zh-cn
 
 ## 翻译系统概述
 
-RimSort 使用 Qt 翻译系统，包含以下组件：
+RimDex 使用 Qt 翻译系统，包含以下组件：
 
 - **`.ts` 文件**：源翻译文件（XML 格式），供翻译者编辑
 - **`.qm` 文件**：编译后的二进制翻译文件，供应用程序使用
@@ -31,7 +31,7 @@ RimSort 使用 Qt 翻译系统，包含以下组件：
 ## 项目结构
 
 ```
-RimSort/
+RimDex/
 ├── locales/           # 翻译文件目录
 │   ├── en_US.ts      # 英语（源语言）
 │   ├── zh_CN.ts      # 简体中文
@@ -250,12 +250,12 @@ python translation_helper.py auto-translate zh_CN --service google --no-cache
 
 ### 步骤 1：设置环境
 
-1. 在 GitHub 上 Fork RimSort 仓库
+1. 在 GitHub 上 Fork RimDex 仓库
 2. 克隆你的 fork：
 
    ```bash
-   git clone https://github.com/YOUR_USERNAME/RimSort.git
-   cd RimSort
+   git clone https://github.com/YOUR_USERNAME/RimDex.git
+   cd RimDex
    ```
 
 3. 为你的翻译创建新分支：
@@ -460,7 +460,7 @@ python translation_helper.py stats
 
 {: .no_toc}
 
-1. **启动 RimSort 并切换语言**：
+1. **启动 RimDex 并切换语言**：
    - 运行 `python -m app` 启动应用程序
    - 点击菜单栏的"设置"或"Settings"
    - 找到"语言"或"Language"选项
@@ -528,7 +528,7 @@ python translation_helper.py stats
 
 ### 当源代码更新时
 
-当 RimSort 的源代码更新后，可能会有新的可翻译字符串添加或现有字符串被修改。这时你需要更新翻译文件：
+当 RimDex 的源代码更新后，可能会有新的可翻译字符串添加或现有字符串被修改。这时你需要更新翻译文件：
 
 ```bash
 # 更新翻译文件以包含最新的可翻译字符串
@@ -558,4 +558,4 @@ python translation_helper.py update-ts YOUR_LANGUAGE
 </TS>
 ```
 
-感谢你帮助让 RimSort 为全世界用户提供服务！🌍
+感谢你帮助让 RimDex 为全世界用户提供服务！🌍

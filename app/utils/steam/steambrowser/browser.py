@@ -90,7 +90,7 @@ class SteamBrowser(QWidget):
             QWebEngineProfile.PersistentCookiesPolicy.ForcePersistentCookies
         )
         self.current_html = ""
-        self.current_title = "RimSort - Steam Browser"
+        self.current_title = "RimDex - Steam Browser"
         self.current_url = startpage
 
         self.downloader_list_mods_tracking: list[str] = []

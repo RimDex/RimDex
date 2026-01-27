@@ -38,7 +38,7 @@ class MissingModsPrompt(BaseModsPanel):
 
         super().__init__(
             object_name="missingModsPanel",
-            window_title=self.tr("RimSort - Missing mods found"),
+            window_title=self.tr("RimDex - Missing mods found"),
             title_text=self.tr("There are mods missing from the active mods list!"),
             details_text=self.tr(
                 "\nUser-configured SteamDB database was queried. The following table displays mods available for download from Steam. "

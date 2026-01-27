@@ -2,7 +2,7 @@ param(
     [string]$PackageVersion = "1.0.0.0",
     [string]$LicensePath = "data\EULA.rtf",
     [string]$BuildOutput = "build\__main__.dist",
-    [string]$OutputName = "RimSort-$PackageVersion-Windows-64"
+    [string]$OutputName = "RimDex-$PackageVersion-Windows-64"
 )
 
 $ErrorActionPreference = "Stop"
@@ -18,7 +18,7 @@ function Write-Status {
     Write-Host $Message -ForegroundColor Cyan
 }
 
-Write-Status "Building RimSort MSI..."
+Write-Status "Building RimDex MSI..."
 Write-Info "PackageVersion: $PackageVersion"
 Write-Info "LicensePath: $LicensePath"
 Write-Info "BuildOutput: $BuildOutput"
@@ -27,8 +27,8 @@ Write-Status "Validating prerequisites..."
 Write-Host ""
 
 # Validate required files exist
-if (-not (Test-Path "data\RimSort.wxs")) {
-    Write-Error "WIX source file not found: data\RimSort.wxs"
+if (-not (Test-Path "data\RimDex.wxs")) {
+    Write-Error "WIX source file not found: data\RimDex.wxs"
     exit 1
 }
 
@@ -52,7 +52,7 @@ Write-Host ""
 # Build the MSI using wix build
 $wixArgs = @(
     "build",
-    "data\RimSort.wxs",
+    "data\RimDex.wxs",
     "-ext", "WixToolset.UI.wixext",
     "-ext", "WixToolset.Util.wixext",
     "-d", "PackageVersion=$PackageVersion",

@@ -14,8 +14,8 @@ Release:        1%{?dist}
 Summary:        Mod manager for RimWorld
 
 License:        AGPL-3.0-only
-URL:            https://rimsort.github.io/RimSort/
-Source0:        https://github.com/RimSort/RimSort/archive/v%{version}/%{name}-%{version}.tar.gz
+URL:            https://rimsort.github.io/RimDex/
+Source0:        https://github.com/RimDex/RimDex/archive/v%{version}/%{name}-%{version}.tar.gz
 
 ExclusiveArch:  x86_64
 
@@ -31,14 +31,14 @@ BuildRequires:  libappstream-glib
 Requires:       glibc
 
 %description
-RimSort is an open source mod manager for the video game RimWorld.
+RimDex is an open source mod manager for the video game RimWorld.
 Built from the ground up to be reliable and community managed.
 
 This package contains a standalone Nuitka-compiled binary with all
 dependencies bundled.
 
 %prep
-%autosetup -n RimSort-%{version}
+%autosetup -n RimDex-%{version}
 
 # Generate version.xml (required by the build process)
 # Format matches GitHub Actions workflow
@@ -76,29 +76,29 @@ cp -pr build/app.dist/* %{buildroot}%{_datadir}/%{name}/
 # Create wrapper script in /usr/bin
 cat > %{buildroot}%{_bindir}/%{name} << 'EOF'
 #!/bin/bash
-exec %{_datadir}/%{name}/RimSort "$@"
+exec %{_datadir}/%{name}/RimDex "$@"
 EOF
 chmod 0755 %{buildroot}%{_bindir}/%{name}
 
 # Install desktop file
 desktop-file-install \
     --dir=%{buildroot}%{_datadir}/applications \
-    data/io.github.rimsort.RimSort.desktop
+    data/io.github.rimsort.RimDex.desktop
 
 # Install AppStream metadata
-install -Dpm 0644 data/io.github.rimsort.RimSort.metainfo.xml \
-    %{buildroot}%{_datadir}/metainfo/io.github.rimsort.RimSort.metainfo.xml
+install -Dpm 0644 data/io.github.rimsort.RimDex.metainfo.xml \
+    %{buildroot}%{_datadir}/metainfo/io.github.rimsort.RimDex.metainfo.xml
 
 # Install application icon
 install -Dpm 0644 themes/default-icons/AppIcon_a.png \
-    %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/io.github.rimsort.RimSort.png
+    %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/io.github.rimsort.RimDex.png
 
 %check
 # Validate desktop file
-desktop-file-validate %{buildroot}%{_datadir}/applications/io.github.rimsort.RimSort.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/io.github.rimsort.RimDex.desktop
 
 # Validate AppStream metadata
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/io.github.rimsort.RimSort.metainfo.xml
+appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/io.github.rimsort.RimDex.metainfo.xml
 
 %files
 %license LICENSE.md
@@ -111,9 +111,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/io.github
 %{_datadir}/%{name}/
 
 # Desktop integration
-%{_datadir}/applications/io.github.rimsort.RimSort.desktop
-%{_datadir}/metainfo/io.github.rimsort.RimSort.metainfo.xml
-%{_datadir}/icons/hicolor/256x256/apps/io.github.rimsort.RimSort.png
+%{_datadir}/applications/io.github.rimsort.RimDex.desktop
+%{_datadir}/metainfo/io.github.rimsort.RimDex.metainfo.xml
+%{_datadir}/icons/hicolor/256x256/apps/io.github.rimsort.RimDex.png
 
 %post
 # Update desktop database

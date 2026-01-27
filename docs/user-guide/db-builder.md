@@ -25,7 +25,7 @@ The Steam Database Builder is a special tool used to create and update your loca
 
 _**NOTE:**_ DB Builder has some "soft requirements". If you are not a RimWorld Steam user, sadly, you will likely be limited in your DB building capabilities.
 
-- You may need to have spent at least $5 USD on your Steam account to have general access to Steam WebAPI. This is a big part of how RimSort builds the full picture of mod dependency metadata, as well as some other things.
+- You may need to have spent at least $5 USD on your Steam account to have general access to Steam WebAPI. This is a big part of how RimDex builds the full picture of mod dependency metadata, as well as some other things.
 - In order to utilize SteamWorks, you also need to own RimWorld on Steam. This is required for Steam to allow access to certain mechanisms over the SteamWorks API.
 
 ### How to obtain your Steam WebAPI key for use with with DB Builder DynamicQuery
@@ -40,9 +40,9 @@ _**NOTE:**_ DB Builder has some "soft requirements". If you are not a RimWorld S
 
 3. _**Keep your new Steam key private and do not share with anyone.**_ After clicking the Register button, you will be shown your new Steam API key. To obtain a new Steam API key, it is as easy as clicking the Revoke button and then registering a new key.
 
-4. You can add this to RimSort by putting the key in the `Steam API Key` field under the `DB Builder` page of the settings panel.
+4. You can add this to RimDex by putting the key in the `Steam API Key` field under the `DB Builder` page of the settings panel.
 
-DB Builder has 2 "Include" modes available. These modes can be used to create, manage, maintain, and update a SteamDB for use with RimSort. You can even interface with RimPy db.json as the formats are compatible.
+DB Builder has 2 "Include" modes available. These modes can be used to create, manage, maintain, and update a SteamDB for use with RimDex. You can even interface with RimPy db.json as the formats are compatible.
 
 Please review the following sections describing each mode, and why it is useful:
 
@@ -84,17 +84,17 @@ If you choose to update, the existing database will be loaded into memory and up
 
 ## Process for creating your own SteamDB
 
-1. Open the DB Builder page within the RimSort Settings panel (`File > Settings > DB Builder`).
+1. Open the DB Builder page within the RimDex Settings panel (`File > Settings > DB Builder`).
 
 2. Ensure you have followed the steps above to configure your Steam WebAPI key!
 
-3. Optionally configure your database expiry in seconds. This is the expiry in seconds used for the "version" key in your database. This is an epoch timestamp set at the current time of your database creation + the expiry duration. This will have an effect on when RimSort will warn you about the database being out of date. Default is 1 week. Note, this setting is under the `Databases` page.
+3. Optionally configure your database expiry in seconds. This is the expiry in seconds used for the "version" key in your database. This is an epoch timestamp set at the current time of your database creation + the expiry duration. This will have an effect on when RimDex will warn you about the database being out of date. Default is 1 week. Note, this setting is under the `Databases` page.
 
 4. Select the settings you prefer. See the previous section [Options](#options) for more details and recommendations.
 
 5. Click "Build Database" to begin DB Builder process. DB Builder will prompt you to enter or select a JSON file path. This is where DB Builder will output your database when it is completed.
 
 {: .warning}
-> This video is outdated and may not be accurate for the latest versions of RimSort.
+> This video is outdated and may not be accurate for the latest versions of RimDex.
 
-<iframe width="420" height="300" src="https://github.com/RimSort/RimSort/assets/2766946/bfdc5115-e349-4c92-86bc-96a6fcd1e9c6"  allowfullscreen="true" alt="Build Database Demo Video"></iframe>
+<iframe width="420" height="300" src="https://github.com/RimDex/RimDex/assets/2766946/bfdc5115-e349-4c92-86bc-96a6fcd1e9c6"  allowfullscreen="true" alt="Build Database Demo Video"></iframe>

@@ -349,7 +349,7 @@ class RentryError:
             ),
             information=translate(
                 "RentryError",
-                "RimSort failed to fetch the content from the provided Rentry link. This may be due to an invalid link, your internet connection, or Rentry.co being down. It may also be the result of a captcha. Please try again later.",
+                "RimDex failed to fetch the content from the provided Rentry link. This may be due to an invalid link, your internet connection, or Rentry.co being down. It may also be the result of a captcha. Please try again later.",
             ),
             details=response.reason,
             icon=QMessageBox.Icon.Warning,
@@ -380,7 +380,7 @@ class RentryError:
             title=translate("RentryError", "Rentry Auth Code Not Found"),
             text=translate(
                 "Rentry Auth Code Not Found ",
-                "RimSort can work without rentry auth code. But "
+                "RimDex can work without rentry auth code. But "
                 "To enable full functionality of renry.co you need to email support@rentry.co and request an auth code. "
                 "Then paste it into Settings -> Advanced -> Rentry Auth.",
             ),

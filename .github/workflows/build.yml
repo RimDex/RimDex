@@ -46,32 +46,32 @@ jobs:
             arch: "i386"
             env:
               BUILD_OUTPUT: "app.app"
-              Executable: RimSort
+              Executable: RimDex
           - os: macos-latest
             platform: "Darwin"
             arch: "arm"
             env:
               BUILD_OUTPUT: "app.app"
-              Executable: RimSort
+              Executable: RimDex
           - os: ubuntu-22.04
             platform: "Ubuntu-22.04"
             arch: "x86_64"
             env:
               BUILD_OUTPUT: "app.dist"
-              Executable: "RimSort"
+              Executable: "RimDex"
           - os: ubuntu-24.04
             platform: "Ubuntu-24.04"
             arch: "x86_64"
             env:
               BUILD_OUTPUT: "app.dist"
-              Executable: RimSort
+              Executable: RimDex
           - os: ubuntu-latest
             container: fedora:42
             platform: "Fedora-42"
             arch: "x86_64"
             env:
               BUILD_OUTPUT: "app.dist"
-              Executable: RimSort
+              Executable: RimDex
               BUILD_RPM: true
           - os: ubuntu-latest
             container: fedora:43
@@ -79,14 +79,14 @@ jobs:
             arch: "x86_64"
             env:
               BUILD_OUTPUT: "app.dist"
-              Executable: RimSort
+              Executable: RimDex
               BUILD_RPM: true
           - os: windows-latest
             platform: "Windows"
             arch: "x86_64"
             env:
               BUILD_OUTPUT: "app.dist"
-              Executable: RimSort.exe
+              Executable: RimDex.exe
     steps:
       - name: Check-out repository
         uses: actions/checkout@main
@@ -176,7 +176,7 @@ jobs:
             ${{ steps.sem_version.outputs.minor }}.
             ${{ steps.sem_version.outputs.patch }}.
             ${{ steps.sem_version.outputs.increment }}
-          file-description: "RimSort"
+          file-description: "RimDex"
           include-data-files: |
             version.xml=version.xml
           nofollow-import-to: "sqlalchemy.dialects.oracle"
@@ -218,13 +218,13 @@ jobs:
           }
 
           # Create MSI package using WiX Toolset
-          wix build data\RimSort.wxs `
+          wix build data\RimDex.wxs `
             -ext WixToolset.UI.wixext `
             -ext WixToolset.Util.wixext `
             -d PackageVersion="${{ steps.sem_version.outputs.major }}.${{ steps.sem_version.outputs.minor }}.${{ steps.sem_version.outputs.patch }}.${{ steps.sem_version.outputs.increment }}" `
             -d License="$AbsoluteLicensePath" `
             -d BuildOutput="$AbsoluteBuildOutput" `
-            -o "RimSort-${{ steps.sem_version.outputs.version }}-${{ matrix.platform }}-${{ matrix.arch }}.msi"
+            -o "RimDex-${{ steps.sem_version.outputs.version }}-${{ matrix.platform }}-${{ matrix.arch }}.msi"
         shell: powershell
 
       - name: Generate executable attestations
@@ -237,7 +237,7 @@ jobs:
         uses: actions/attest-build-provenance@v3.1.0
         if: ${{ inputs.attest && matrix.platform == 'Windows' }}
         with:
-          subject-path: ./RimSort-${{ steps.sem_version.outputs.version }}-${{ matrix.platform }}-${{ matrix.arch }}.msi
+          subject-path: ./RimDex-${{ steps.sem_version.outputs.version }}-${{ matrix.platform }}-${{ matrix.arch }}.msi
 
       - name: Rename new build
         run: |
@@ -315,7 +315,7 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: ${{ matrix.platform }}_${{ matrix.arch }}_msi
-          path: ./RimSort-${{ steps.sem_version.outputs.version }}-${{ matrix.platform }}-${{ matrix.arch }}.msi
+          path: ./RimDex-${{ steps.sem_version.outputs.version }}-${{ matrix.platform }}-${{ matrix.arch }}.msi
           if-no-files-found: error
 
     outputs:

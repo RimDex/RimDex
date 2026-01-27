@@ -79,7 +79,7 @@ def validate_rimworld_mods_list(
             title=translate("validate_rimworld_mods_list", "Unable to read data"),
             text=translate(
                 "validate_rimworld_mods_list",
-                "RimSort was unable to read the supplied mods list.",
+                "RimDex was unable to read the supplied mods list.",
             ),
             information=translate(
                 "validate_rimworld_mods_list",
@@ -95,7 +95,7 @@ def validate_rimworld_mods_list(
             text=(
                 translate(
                     "validate_rimworld_mods_list",
-                    "RimSort was unable to read the supplied mods list because it may be invalid or missing.",
+                    "RimDex was unable to read the supplied mods list because it may be invalid or missing.",
                 )
             ),
         )

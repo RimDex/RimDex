@@ -124,25 +124,25 @@ jobs:
             file=${artifact##*/}
             if [[ "$file" == "msi" ]]; then
               cd "$artifact"
-              name="RimSort-${{ needs.pre-build.outputs.version }}-Windows_x86_64.msi"
+              name="RimDex-${{ needs.pre-build.outputs.version }}-Windows_x86_64.msi"
               mv ./*.msi "../$name"
               cd ..
             elif [[ "$file" == "rpm-f42" ]]; then
               cd "$artifact"
-              name="RimSort-${{ needs.pre-build.outputs.version }}-Fedora-42_x86_64.rpm"
+              name="RimDex-${{ needs.pre-build.outputs.version }}-Fedora-42_x86_64.rpm"
               mv ./*.rpm "../$name"
               cd ..
             elif [[ "$file" == "rpm-f43" ]]; then
               cd "$artifact"
-              name="RimSort-${{ needs.pre-build.outputs.version }}-Fedora-43_x86_64.rpm"
+              name="RimDex-${{ needs.pre-build.outputs.version }}-Fedora-43_x86_64.rpm"
               mv ./*.rpm "../$name"
               cd ..
             else
               base=${file%%.tar}
-              name="RimSort-${{ needs.pre-build.outputs.version }}-$base.zip"
-              rootname=RimSort
+              name="RimDex-${{ needs.pre-build.outputs.version }}-$base.zip"
+              rootname=RimDex
               if [[ $base == *"Darwin"* ]]; then
-                rootname=RimSort.app
+                rootname=RimDex.app
               fi
               echo "Will zip $artifact to $name"
               echo "Rootname $rootname"

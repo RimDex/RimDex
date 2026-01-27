@@ -251,7 +251,7 @@ def test_create_base_rules_ludeon_core() -> None:
 
 
 def test_get_rules_db_large_db(tmp_path: Path) -> None:
-    repo = "https://github.com/RimSort/Community-Rules-Database.git"
+    repo = "https://github.com/RimDex/Community-Rules-Database.git"
     _ = pygit2.clone_repository(repo, str(tmp_path), depth=1)
     file = tmp_path / "communityRules.json"
     if not file.exists():
@@ -415,7 +415,7 @@ def test_read_steam_db() -> None:
 
 
 def test_read_steam_db_large(tmp_path: Path) -> None:
-    repo = "https://github.com/RimSort/Steam-Workshop-Database.git"
+    repo = "https://github.com/RimDex/Steam-Workshop-Database.git"
     _ = pygit2.clone_repository(repo, str(tmp_path), depth=1)
     file = tmp_path / "steamDB.json"
     if not file.exists():

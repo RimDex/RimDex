@@ -330,7 +330,7 @@ class SettingsDialog(QDialog):
         )
         self.launch_via_steam_protocol_checkbox.setToolTip(
             self.tr(
-                "If enabled, RimSort will launch the game using the Steam protocol (steam://rungameid/294100) "
+                "If enabled, RimDex will launch the game using the Steam protocol (steam://rungameid/294100) "
                 "instead of directly running the executable. This enables the Steam overlay. "
                 "Note: This requires Steam to be running and will ignore custom launch arguments."
             )
@@ -430,7 +430,7 @@ class SettingsDialog(QDialog):
         )
         self.backup_saves_on_launch_checkbox.setToolTip(
             self.tr(
-                "If enabled, RimSort will automatically backup saves on the first daily launch."
+                "If enabled, RimDex will automatically backup saves on the first daily launch."
             )
         )
         tab_layout.addWidget(self.backup_saves_on_launch_checkbox)
@@ -686,7 +686,7 @@ class SettingsDialog(QDialog):
 After a mod is deleted, this is the time we wait until this mod item is deleted from the Auxiliary Metadata DB. 
 This Auxiliary DB contains info for mod colors, toggled warning, user notes etc. 
 This basically preserves your mod coloring, user notes etc. for this many seconds after deletion. 
-(This applies to deletion outside of RimSort too)""")
+(This applies to deletion outside of RimDex too)""")
         self.aux_db_time_limit_label.setToolTip(aux_db_tooltip)
         self.aux_db_time_limit_label.setFont(GUIInfo().emphasis_font)
 
@@ -1316,10 +1316,10 @@ This basically preserves your mod coloring, user notes etc. for this many second
         self.enable_themes_checkbox.setToolTip(
             self.tr(
                 "To add your own theme / stylesheet \n\n"
-                "1) Create a new-folder in 'themes' folder in your 'RimSort' config folder \n"
+                "1) Create a new-folder in 'themes' folder in your 'RimDex' config folder \n"
                 "2) Using the default 'RimPy' theme copy it to the folder you created \n"
                 "3) Edit the copied 'style.qss' as per your imagination \n"
-                "4) Start 'RimSort' and select your theme from dropdown \n"
+                "4) Start 'RimDex' and select your theme from dropdown \n"
                 "5) Click 'ok' to save settings and apply the selected theme \n\n"
                 "NOTE \n"
                 "Name of folder will be used as name of the theme and any invalid theme will be ignored \n"
@@ -1430,7 +1430,7 @@ This basically preserves your mod coloring, user notes etc. for this many second
         group_layout = QVBoxLayout()
         group_box.setLayout(group_layout)
 
-        user_note = QLabel(self.tr("RimSort restart required for some settings"))
+        user_note = QLabel(self.tr("RimDex restart required for some settings"))
         user_note.setFont(GUIInfo().emphasis_font)
         user_note.setAlignment(Qt.AlignmentFlag.AlignCenter)
         group_layout.addWidget(user_note)
@@ -1672,7 +1672,7 @@ This basically preserves your mod coloring, user notes etc. for this many second
         group_layout = QVBoxLayout()
         group_box.setLayout(group_layout)
 
-        user_note = QLabel(self.tr("RimSort restart required for some settings"))
+        user_note = QLabel(self.tr("RimDex restart required for some settings"))
         user_note.setFont(GUIInfo().emphasis_font)
         user_note.setAlignment(Qt.AlignmentFlag.AlignCenter)
         group_layout.addWidget(user_note)
@@ -1713,7 +1713,7 @@ This basically preserves your mod coloring, user notes etc. for this many second
         )
         self.update_databases_on_startup_checkbox.setToolTip(
             self.tr(
-                "Enable this option to automatically update enabled databases when RimSort starts. "
+                "Enable this option to automatically update enabled databases when RimDex starts. "
                 "This will check for updates and download them if available."
             )
         )
@@ -1722,11 +1722,11 @@ This basically preserves your mod coloring, user notes etc. for this many second
         # Put checkbox, label and spinbox on the same horizontal line
         backup_layout = QHBoxLayout()
         self.enable_backup_before_update_checkbox = QCheckBox(
-            self.tr("Create backup before RimSort update")
+            self.tr("Create backup before RimDex update")
         )
         self.enable_backup_before_update_checkbox.setToolTip(
             self.tr(
-                "Recommended to keep this enabled as it creates a backup before updating RimSort, "
+                "Recommended to keep this enabled as it creates a backup before updating RimDex, "
                 "This helps prevent any unwanted changes or data getting deleted."
             )
         )
