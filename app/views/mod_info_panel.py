@@ -142,10 +142,10 @@ class ModInfoPanel:
         self.missing_image_path = str(
             AppInfo().theme_data_folder / "default-icons" / "missing.png"
         )
-        self.rimsort_image_a_path = str(
+        self.rimdex_image_a_path = str(
             AppInfo().theme_data_folder / "default-icons" / "AppIcon_a.png"
         )
-        self.rimsort_image_b_path = str(
+        self.rimdex_image_b_path = str(
             AppInfo().theme_data_folder / "default-icons" / "AppIcon_b.png"
         )
         self.scenario_image_path = str(
@@ -158,7 +158,7 @@ class ModInfoPanel:
         )
         self.preview_picture.setMinimumSize(1, 1)
         self.preview_picture.setPixmap(
-            QPixmap(self.rimsort_image_a_path).scaled(
+            QPixmap(self.rimdex_image_a_path).scaled(
                 self.preview_picture.size(), Qt.AspectRatioMode.KeepAspectRatio
             )
         )
@@ -242,7 +242,7 @@ class ModInfoPanel:
         )
         self.mod_info_external_times_value.setWordWrap(True)
         self.description = DescriptionWidget()
-        self.description_text = self.tr("Welcome to RimSort!")
+        self.description_text = self.tr("Welcome to RimDex!")
         self.description.setText(
             f"<br><br><br><center>{self.description_text}<h3></h3></center>",
             convert=False,

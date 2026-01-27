@@ -164,7 +164,7 @@ bin/
 lib64
 pyvenv.cfg
 
-# RimSort
+# RimDex
 DEBUG
 .DS_Store
 *.build/

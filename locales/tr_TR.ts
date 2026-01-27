@@ -101,8 +101,8 @@ Try subscribing to the collection first</source>
 <context>
     <name>DuplicateModsPanel</name>
     <message>
-        <source>RimSort - Duplicate Mods Found</source>
-        <translation>RimSort - Yinelenen Modlar Bulundu</translation>
+        <source>RimDex - Duplicate Mods Found</source>
+        <translation>RimDex - Yinelenen Modlar Bulundu</translation>
     </message>
     <message>
         <source>Duplicate mods detected!</source>
@@ -192,16 +192,16 @@ The following table displays duplicate mods grouped by package ID. Select which 
         <translation>Dosya erişimi hatası</translation>
     </message>
     <message>
-        <source>RimSort doesn't have permission to access some files.</source>
-        <translation>RimSort'un bazı dosyala erişim izni yok</translation>
+        <source>RimDex doesn't have permission to access some files.</source>
+        <translation>RimDex'un bazı dosyala erişim izni yok</translation>
     </message>
     <message>
         <source>Memory Error</source>
         <translation>Bellek Hatası</translation>
     </message>
     <message>
-        <source>RimSort ran out of memory while searching.</source>
-        <translation>RimSort arama yaparken bellek yetersizliği yaşadı</translation>
+        <source>RimDex ran out of memory while searching.</source>
+        <translation>RimDex arama yaparken bellek yetersizliği yaşadı</translation>
     </message>
     <message>
         <source>Search Error</source>
@@ -234,10 +234,10 @@ Deseninizi basitleştirmeyi deneyin veya sözdizimi hatalarını kontrol edin.</
     <message>
         <source>{error_msg}
 
-Try running RimSort with administrator privileges or check folder permissions.</source>
+Try running RimDex with administrator privileges or check folder permissions.</source>
         <translation>{error_msg}
 
-Yönetici ayrıcalıklarıyla rimsort çalıştırmayı deneyin veya klasör izinlerini kontrol edin.</translation>
+Yönetici ayrıcalıklarıyla rimdex çalıştırmayı deneyin veya klasör izinlerini kontrol edin.</translation>
     </message>
     <message>
         <source>{error_msg}
@@ -472,8 +472,8 @@ Kontrol edilmediğinde, tüm dosya türlerini standart arama ile arayın.</trans
 <context>
     <name>IgnoreJsonEditor</name>
     <message>
-        <source>RimSort - Manage Ignore List</source>
-        <translation>RimSort - Yoksayılanlar listesini yönet</translation>
+        <source>RimDex - Manage Ignore List</source>
+        <translation>RimDex - Yoksayılanlar listesini yönet</translation>
     </message>
     <message>
         <source>Mods checked below will be removed from the ignore list.</source>
@@ -775,8 +775,8 @@ Kontrol edilmediğinde, tüm dosya türlerini standart arama ile arayın.</trans
         <translation>Bu özellik, Steam İstemcisi Entegrasyonunun Ayarlar'da etkinleştirilmesini gerektirir. Oyunun Steam'de sahibiyseniz lütfen Steam İstemci Entegrasyonunu etkinleştirin.</translation>
     </message>
     <message>
-        <source>RimSort - SteamCMD setup</source>
-        <translation>RimSort - SteamCMD Kurulumu</translation>
+        <source>RimDex - SteamCMD setup</source>
+        <translation>RimDex - SteamCMD Kurulumu</translation>
     </message>
     <message>
         <source>Unable to create SteamCMD runner!</source>
@@ -795,8 +795,8 @@ Kontrol edilmediğinde, tüm dosya türlerini standart arama ile arayın.</trans
         <translation>Kuruluma başlamadan önce lütfen yerel modlar için dosya yolunu ayarlayın.</translation>
     </message>
     <message>
-        <source>RimSort</source>
-        <translation>RimSort</translation>
+        <source>RimDex</source>
+        <translation>RimDex</translation>
     </message>
     <message>
         <source>No PublishedFileIds were supplied in operation.</source>
@@ -995,8 +995,8 @@ Kontrol edilmediğinde, tüm dosya türlerini standart arama ile arayın.</trans
         <translation>Yol:  {path}</translation>
     </message>
     <message>
-        <source>RimSort - DB Builder</source>
-        <translation>Rimsort - DB Builder</translation>
+        <source>RimDex - DB Builder</source>
+        <translation>RimDex - DB Builder</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -1040,10 +1040,10 @@ Kontrol edilmediğinde, tüm dosya türlerini standart arama ile arayın.</trans
         <translation>Temel yollar geçersiz veya ayarlanmamış!</translation>
     </message>
     <message>
-        <source>RimSort requires, at the minimum, for the game install folder and the config folder paths to be set, and that the paths both exist. Please set both of these manually or by using the autodetect functionality.
+        <source>RimDex requires, at the minimum, for the game install folder and the config folder paths to be set, and that the paths both exist. Please set both of these manually or by using the autodetect functionality.
 
 Would you like to configure them now?</source>
-        <translation>Rimsort, minimum olarak, oyun yükleme klasörü ve yapılandırma klasör yollarının ayarlanmasını ve yolların her ikisinin de var olmasını gerektirir.Lütfen bunların her ikisini de manuel olarak veya AutoDetect işlevini kullanarak ayarlayın.
+        <translation>RimDex, minimum olarak, oyun yükleme klasörü ve yapılandırma klasör yollarının ayarlanmasını ve yolların her ikisinin de var olmasını gerektirir.Lütfen bunların her ikisini de manuel olarak veya AutoDetect işlevini kullanarak ayarlayın.
 
 Şimdi bunları yapılandırmak ister misiniz?</translation>
     </message>
@@ -1052,8 +1052,8 @@ Would you like to configure them now?</source>
         <translation>Bu, hatalı biçimlendirilmiş ayarlardan veya sürümler veya farklı Mod Manager arasındaki yanlış geçişten kaynaklanabilir.Ayarlarınızı sıfırlamayı, farklı bir sıralama algoritması seçmeyi veya ayarlar dosyanızı silmeyi deneyin.Sorun devam ederse, lütfen geliştiricileri bildirin.</translation>
     </message>
     <message>
-        <source>You will need to redo Rentry import again after downloads complete. If there missing mods after download completes, they will be shown inside the missing mods panel. If RimSort is still not able to download some mods, It's due to the mod data not being available in both Rentry link and steam database.</source>
-        <translation>İndirmeler tamamlandıktan sonra Rentry Import'u tekrar tekrar yapmanız gerekecektir.İndirme tamamlandıktan sonra eksik modlar varsa, eksik modlar panelinde gösterilecektir.Rimsort hala bazı modları indiremiyorsa, MOD verilerinin hem Rentry Link hem de Steam veritabanında bulunmaması nedeniyle.</translation>
+        <source>You will need to redo Rentry import again after downloads complete. If there missing mods after download completes, they will be shown inside the missing mods panel. If RimDex is still not able to download some mods, It's due to the mod data not being available in both Rentry link and steam database.</source>
+        <translation>İndirmeler tamamlandıktan sonra Rentry Import'u tekrar tekrar yapmanız gerekecektir.İndirme tamamlandıktan sonra eksik modlar varsa, eksik modlar panelinde gösterilecektir.RimDex hala bazı modları indiremiyorsa, MOD verilerinin hem Rentry Link hem de Steam veritabanında bulunmaması nedeniyle.</translation>
     </message>
     <message>
         <source>Uploaded active mod list report to Rentry.co! The URL has been copied to your clipboard:
@@ -1084,9 +1084,9 @@ Would you like to configure them now?</source>
 {ret}</translation>
     </message>
     <message>
-        <source>RimSort was unable to query Steam WebAPI for update information!
+        <source>RimDex was unable to query Steam WebAPI for update information!
 </source>
-        <translation>Rimsort, güncelleme bilgileri için Steam Webapi'yi sorgulayamadı!</translation>
+        <translation>RimDex, güncelleme bilgileri için Steam Webapi'yi sorgulayamadı!</translation>
     </message>
     <message>
         <source>Please setup an existing SteamCMD prefix, or setup a new prefix with "Setup SteamCMD".</source>
@@ -1125,10 +1125,10 @@ How would you like to proceed?
     <message>
         <source>Git integration will not work without Git installed! Do you want to open download page for Git?
 
-If you just installed Git, please restart RimSort for the PATH changes to take effect.</source>
+If you just installed Git, please restart RimDex for the PATH changes to take effect.</source>
         <translation>Git entegrasyonu git yüklenmeden çalışmaz!Git için indirme sayfasını açmak istiyor musunuz?
 
-Git'i yeni yüklediyseniz, yol değişikliklerinin yürürlüğe girmesi için lütfen Rimsort'u yeniden başlatın.</translation>
+Git'i yeni yüklediyseniz, yol değişikliklerinin yürürlüğe girmesi için lütfen RimDex'u yeniden başlatın.</translation>
     </message>
     <message>
         <source>This is typically caused by invalid/missing Steam WebAPI key, or a connectivity issue to the Steam WebAPI.
@@ -1137,8 +1137,8 @@ PublishedFileIDs are needed to retrieve mods from Steam!</source>
 Steam'den modları almak için yayınlanmış fileidlere ihtiyaç vardır!</translation>
     </message>
     <message>
-        <source>WARNING: It is NOT recommended to subscribe to this many mods at once via Steam. Steam has limitations in place seemingly intentionally and unintentionally for API subscriptions. It is highly recommended that you instead download these mods to a SteamCMD prefix by using SteamCMD. This can take longer due to rate limits, but you can also re-use the script generated by RimSort with a separate, authenticated instance of SteamCMD, if you do not want to anonymously download via RimSort.</source>
-        <translation>Uyarı: Bu Steam aracılığıyla bir kerede bu birçok moda abone olmanız önerilmez.Steam, API abonelikleri için kasıtlı ve kasıtsız olarak görünüşte sınırlamalara sahiptir.Bunun yerine bu modları Steamcmd kullanarak bir Steamcmd önekine indirmeniz şiddetle tavsiye edilir.Bu, oran sınırları nedeniyle daha uzun sürebilir, ancak rimsort aracılığıyla anonim olarak indirmek istemiyorsanız, Rimsort tarafından oluşturulan komut dosyasını ayrı, kimliği doğrulanmış bir Steamcmd örneğiyle yeniden kullanabilirsiniz.</translation>
+        <source>WARNING: It is NOT recommended to subscribe to this many mods at once via Steam. Steam has limitations in place seemingly intentionally and unintentionally for API subscriptions. It is highly recommended that you instead download these mods to a SteamCMD prefix by using SteamCMD. This can take longer due to rate limits, but you can also re-use the script generated by RimDex with a separate, authenticated instance of SteamCMD, if you do not want to anonymously download via RimDex.</source>
+        <translation>Uyarı: Bu Steam aracılığıyla bir kerede bu birçok moda abone olmanız önerilmez.Steam, API abonelikleri için kasıtlı ve kasıtsız olarak görünüşte sınırlamalara sahiptir.Bunun yerine bu modları Steamcmd kullanarak bir Steamcmd önekine indirmeniz şiddetle tavsiye edilir.Bu, oran sınırları nedeniyle daha uzun sürebilir, ancak rimdex aracılığıyla anonim olarak indirmek istemiyorsanız, RimDex tarafından oluşturulan komut dosyasını ayrı, kimliği doğrulanmış bir Steamcmd örneğiyle yeniden kullanabilirsiniz.</translation>
     </message>
     <message>
         <source>This operation will compare 2 databases, A &amp; B, by checking dependencies from A with dependencies from B.</source>
@@ -1874,7 +1874,7 @@ Hata:  {error}</translation>
         <source>Workshop folder: {existing_instance_workshop_folder}
 
 Option 1: Convert to SteamCMD
-RimSort will copy all Workshop mods to the new instance's local mods folder, converting them to SteamCMD mods that you can manage inside the new instance. The Workshop folder will be ignored for this instance to prevent duplicate mods.
+RimDex will copy all Workshop mods to the new instance's local mods folder, converting them to SteamCMD mods that you can manage inside the new instance. The Workshop folder will be ignored for this instance to prevent duplicate mods.
 
 Option 2: Keep Workshop Folder
 The new instance will use the same Workshop folder as the original instance. You can change this later in the settings if needed.
@@ -2038,10 +2038,10 @@ Generated run arguments preview:
         <translation>ACF Günlük Okuyucu</translation>
     </message>
     <message>
-        <source>This will allow you to use RimSort features that require the Steam Client. This includes, among other things, unsubscribing from workshop mods and opening workshop links via the Steam Client. 
+        <source>This will allow you to use RimDex features that require the Steam Client. This includes, among other things, unsubscribing from workshop mods and opening workshop links via the Steam Client. 
                 &lt;br&gt;&lt;br&gt;
                 You can change this in the settings under the Advanced tab.</source>
-        <translation>Bu, Steam istemcisini gerektiren rimsort özelliklerini kullanmanıza olanak tanır. Bu, diğer şeylerin yanı sıra, atölye modlarından abone olmayı ve Steam istemcisi aracılığıyla atölye bağlantıları açmayı içerir. 
+        <translation>Bu, Steam istemcisini gerektiren rimdex özelliklerini kullanmanıza olanak tanır. Bu, diğer şeylerin yanı sıra, atölye modlarından abone olmayı ve Steam istemcisi aracılığıyla atölye bağlantıları açmayı içerir. 
                 &lt;br&gt; &lt;br&gt;
                 Bunu Gelişmiş sekmesinin altındaki ayarlarda değiştirebilirsiniz.</translation>
     </message>
@@ -2109,8 +2109,8 @@ Generated run arguments preview:
         <translation>Aç</translation>
     </message>
     <message>
-        <source>RimSort</source>
-        <translation>RimSort</translation>
+        <source>RimDex</source>
+        <translation>RimDex</translation>
     </message>
     <message>
         <source>RimWorld</source>
@@ -2253,12 +2253,12 @@ Generated run arguments preview:
         <translation>Yardım</translation>
     </message>
     <message>
-        <source>RimSort Wiki…</source>
-        <translation>RimSort Wiki</translation>
+        <source>RimDex Wiki…</source>
+        <translation>RimDex Wiki</translation>
     </message>
     <message>
-        <source>RimSort GitHub…</source>
-        <translation>RimSort GitHub...</translation>
+        <source>RimDex GitHub…</source>
+        <translation>RimDex GitHub...</translation>
     </message>
     <message>
         <source>From Save file…</source>
@@ -2287,8 +2287,8 @@ Generated run arguments preview:
         <translation>Eksik Versiyon.txt</translation>
     </message>
     <message>
-        <source>RimSort is unable to get the game version at the expected path: [{version_file_path}].</source>
-        <translation>Rimsort, oyun sürümünü beklenen yolda alamaz: []. {version_file_path}</translation>
+        <source>RimDex is unable to get the game version at the expected path: [{version_file_path}].</source>
+        <translation>RimDex, oyun sürümünü beklenen yolda alamaz: []. {version_file_path}</translation>
     </message>
     <message>
         <source>Steam DB is expired! Consider updating!
@@ -2355,8 +2355,8 @@ Etkin Modlar listenize hangi eksik bağımlılıkları ekleyeceğinizi seçin.</
 <context>
     <name>MissingModPropertiesPanel</name>
     <message>
-        <source>RimSort - Mods with Missing Properties</source>
-        <translation>RimSort - Eksik Özelliklere Sahip Modlar</translation>
+        <source>RimDex - Mods with Missing Properties</source>
+        <translation>RimDex - Eksik Özelliklere Sahip Modlar</translation>
     </message>
     <message>
         <source>Mods with Missing Properties detected!</source>
@@ -2388,8 +2388,8 @@ Bu özellikleri modlarına eklemek için lütfen mod yazarlarıyla iletişime ge
 <context>
     <name>MissingModsPrompt</name>
     <message>
-        <source>RimSort - Missing mods found</source>
-        <translation>Rimsort - Eksik Modlar Bulundu</translation>
+        <source>RimDex - Missing mods found</source>
+        <translation>RimDex - Eksik Modlar Bulundu</translation>
     </message>
     <message>
         <source>There are mods missing from the active mods list!</source>
@@ -2428,8 +2428,8 @@ Lütfen aşağıdaki tabloda tercih ettiğiniz Mod varyantı seçin. Doğrulamak
         <translation>Optimize edilmiş dokuları sil (yalnızca .dds dosyaları)</translation>
     </message>
     <message>
-        <source>RimSort</source>
-        <translation>Rimsort</translation>
+        <source>RimDex</source>
+        <translation>RimDex</translation>
     </message>
     <message>
         <source>Unable to delete mod</source>
@@ -2645,8 +2645,8 @@ Devam etmek ister misin? {action_capitalized}</translation>
         <translation>Atölye Saatleri:</translation>
     </message>
     <message>
-        <source>Welcome to RimSort!</source>
-        <translation>RimSort'a hoş geldiniz!</translation>
+        <source>Welcome to RimDex!</source>
+        <translation>RimDex'a hoş geldiniz!</translation>
     </message>
     <message>
         <source>Put your personal mod notes here!</source>
@@ -3404,8 +3404,8 @@ An alternative updated mod is recommended:
 <context>
     <name>Rentry Auth Code Not Found </name>
     <message>
-        <source>RimSort can work without rentry auth code. But To enable full functionality of renry.co you need to email support@rentry.co and request an auth code. Then paste it into Settings -&gt; Advanced -&gt; Rentry Auth.</source>
-        <translation>Rimsort, kira kimliği kodu olmadan çalışabilir. Ancak Renry.co'nun tam işlevselliğini etkinleştirmek için support@rentry.co adresine e -posta göndermeniz ve bir auth kod istemeniz gerekir. Ardından ayarlara yapıştırın -&gt; Gelişmiş -&gt; Rentry Auth.</translation>
+        <source>RimDex can work without rentry auth code. But To enable full functionality of renry.co you need to email support@rentry.co and request an auth code. Then paste it into Settings -&gt; Advanced -&gt; Rentry Auth.</source>
+        <translation>RimDex, kira kimliği kodu olmadan çalışabilir. Ancak Renry.co'nun tam işlevselliğini etkinleştirmek için support@rentry.co adresine e -posta göndermeniz ve bir auth kod istemeniz gerekir. Ardından ayarlara yapıştırın -&gt; Gelişmiş -&gt; Rentry Auth.</translation>
     </message>
 </context>
 <context>
@@ -3431,8 +3431,8 @@ An alternative updated mod is recommended:
         <translation>Rentry Auth kodu bulunamadı</translation>
     </message>
     <message>
-        <source>RimSort failed to fetch the content from the provided Rentry link. This may be due to an invalid link, your internet connection, or Rentry.co being down. It may also be the result of a captcha. Please try again later.</source>
-        <translation>Rimsort, içeriği sağlanan kira bağlantısından getiremedi. Bunun nedeni geçersiz bir bağlantı, internet bağlantınız veya rentry.co'nun aşağı olması olabilir. Aynı zamanda bir captcha'nın sonucu olabilir. Lütfen daha sonra tekrar deneyin.</translation>
+        <source>RimDex failed to fetch the content from the provided Rentry link. This may be due to an invalid link, your internet connection, or Rentry.co being down. It may also be the result of a captcha. Please try again later.</source>
+        <translation>RimDex, içeriği sağlanan kira bağlantısından getiremedi. Bunun nedeni geçersiz bir bağlantı, internet bağlantınız veya rentry.co'nun aşağı olması olabilir. Aynı zamanda bir captcha'nın sonucu olabilir. Lütfen daha sonra tekrar deneyin.</translation>
     </message>
 </context>
 <context>
@@ -3862,8 +3862,8 @@ Başarısız olan modların bir listesini görmek için 'Ayrıntıları Göster'
         <translation>İlk günlük başlatmada otomatik olarak yedekleme kaydedilir</translation>
     </message>
     <message>
-        <source>If enabled, RimSort will automatically backup saves on the first daily launch.</source>
-        <translation>Etkinleştirilirse, RimSort ilk günlük başlatmada kayıtları otomatik olarak yedekleyecektir.</translation>
+        <source>If enabled, RimDex will automatically backup saves on the first daily launch.</source>
+        <translation>Etkinleştirilirse, RimDex ilk günlük başlatmada kayıtları otomatik olarak yedekleyecektir.</translation>
     </message>
     <message>
         <source>Number of backups to keep:</source>
@@ -4156,8 +4156,8 @@ Bunu devre dışı bırakmak, ağır hesaplamalardan kaçınarak performansı ar
         <translation>Gelişmiş</translation>
     </message>
     <message>
-        <source>RimSort restart required for some settings</source>
-        <translation>Bazı ayarlar için gerekli olan rimsort yeniden başlatma</translation>
+        <source>RimDex restart required for some settings</source>
+        <translation>Bazı ayarlar için gerekli olan rimdex yeniden başlatma</translation>
     </message>
     <message>
         <source>Enable debug logging</source>
@@ -4296,8 +4296,8 @@ Bunu devre dışı bırakmak, ağır hesaplamalardan kaçınarak performansı ar
         <translation>Oyunu Steam protokolü aracılığıyla başlatın (Steam katmanını etkinleştirir)</translation>
     </message>
     <message>
-        <source>If enabled, RimSort will launch the game using the Steam protocol (steam://rungameid/294100) instead of directly running the executable. This enables the Steam overlay. Note: This requires Steam to be running and will ignore custom launch arguments.</source>
-        <translation>Etkinleştirilirse, RimSort oyunu doğrudan yürütülebilir dosyayı çalıştırmak yerine Steam protokolünü (steam://rungameid/294100) kullanarak başlatacaktır. Bu, Steam katmanını etkinleştirir. Not: Bu, Steam'in çalışıyor olmasını gerektirir ve özel başlatma argümanlarını göz ardı eder.</translation>
+        <source>If enabled, RimDex will launch the game using the Steam protocol (steam://rungameid/294100) instead of directly running the executable. This enables the Steam overlay. Note: This requires Steam to be running and will ignore custom launch arguments.</source>
+        <translation>Etkinleştirilirse, RimDex oyunu doğrudan yürütülebilir dosyayı çalıştırmak yerine Steam protokolünü (steam://rungameid/294100) kullanarak başlatacaktır. Bu, Steam katmanını etkinleştirir. Not: Bu, Steam'in çalışıyor olmasını gerektirir ve özel başlatma argümanlarını göz ardı eder.</translation>
     </message>
     <message>
         <source>Enter launch options using Steam-style syntax with optional %command% placeholder:
@@ -4360,12 +4360,12 @@ Bunu devre dışı bırakmak, ağır hesaplamalardan kaçınarak performansı ar
 After a mod is deleted, this is the time we wait until this mod item is deleted from the Auxiliary Metadata DB. 
 This Auxiliary DB contains info for mod colors, toggled warning, user notes etc. 
 This basically preserves your mod coloring, user notes etc. for this many seconds after deletion. 
-(This applies to deletion outside of RimSort too)</source>
+(This applies to deletion outside of RimDex too)</source>
         <translation>Bu zaman sınırının düzenlenmesini etkinleştirmek için ilgili onay kutusunu gelişmiş ayarlarda kontrol edin.
 Bir mod silindikten sonra, bu mod öğesi yardımcı meta veri db'den silinene kadar beklediğimiz zamandır. 
 Bu yardımcı DB, mod renkleri, değiştirilmiş uyarı, kullanıcı notları vb. İçin bilgi içerir. 
 Bu temel olarak MOD renklendirme, kullanıcı notları vb. Silme işleminden sonra bu çok saniye korur. 
-(Bu, rimsort dışındaki silme için de geçerlidir)</translation>
+(Bu, rimdex dışındaki silme için de geçerlidir)</translation>
     </message>
     <message>
         <source>Enable editing</source>
@@ -4410,10 +4410,10 @@ Bu, indirme hataları ve silinen modlar gibi indirme modlarının yeniden düzen
     <message>
         <source>To add your own theme / stylesheet 
 
-1) Create a new-folder in 'themes' folder in your 'RimSort' config folder 
+1) Create a new-folder in 'themes' folder in your 'RimDex' config folder 
 2) Using the default 'RimPy' theme copy it to the folder you created 
 3) Edit the copied 'style.qss' as per your imagination 
-4) Start 'RimSort' and select your theme from dropdown 
+4) Start 'RimDex' and select your theme from dropdown 
 5) Click 'ok' to save settings and apply the selected theme 
 
 NOTE 
@@ -4421,10 +4421,10 @@ Name of folder will be used as name of the theme and any invalid theme will be i
 </source>
         <translation>Kendi temanızı / stil sayfanızı eklemek için 
 
-1) 'Rimsort' Config klasörünüzde 'Temalar' klasöründe yeni bir klasör oluşturun 
+1) 'RimDex' Config klasörünüzde 'Temalar' klasöründe yeni bir klasör oluşturun 
 2) Varsayılan 'Rimpy' temasını kullanarak oluşturduğunuz klasöre kopyalayın 
 3) Hayal gücünüze göre kopyalanan 'Style.qss' i düzenleyin 
-4) 'Rimsort'u başlatın ve temanızı açığa çıkarın 
+4) 'RimDex'u başlatın ve temanızı açığa çıkarın 
 5) Ayarları kaydetmek ve seçilen temayı uygulamak için 'Tamam'a tıklayın 
 
 NOT 
@@ -4447,8 +4447,8 @@ Klasörün adı temanın adı olarak kullanılacak ve herhangi bir geçersiz tem
         <translation>Mod açıklamalarında Unity Zengin Metin oluşturmak için bu seçeneği etkinleştirin. Görüntüler görüntülenmeyecek.</translation>
     </message>
     <message>
-        <source>Enable this option to automatically update enabled databases when RimSort starts. This will check for updates and download them if available.</source>
-        <translation>Rimsort başladığında etkin veritabanlarını otomatik olarak güncellemek için bu seçeneği etkinleştirin. Bu, güncellemeleri kontrol eder ve varsa indirir.</translation>
+        <source>Enable this option to automatically update enabled databases when RimDex starts. This will check for updates and download them if available.</source>
+        <translation>RimDex başladığında etkin veritabanlarını otomatik olarak güncellemek için bu seçeneği etkinleştirin. Bu, güncellemeleri kontrol eder ve varsa indirir.</translation>
     </message>
     <message>
         <source>Custom todds command</source>
@@ -4517,12 +4517,12 @@ E.g., 'oels.vehiclemapframework', alternatives: 'oels.vehiclemapframework.dev'</
         <translation>XML ayrıştırma davranışı</translation>
     </message>
     <message>
-        <source>Create backup before RimSort update</source>
-        <translation>Rimsort güncellemesinden önce yedekleme oluştur</translation>
+        <source>Create backup before RimDex update</source>
+        <translation>RimDex güncellemesinden önce yedekleme oluştur</translation>
     </message>
     <message>
-        <source>Recommended to keep this enabled as it creates a backup before updating RimSort, This helps prevent any unwanted changes or data getting deleted.</source>
-        <translation>Rimsort'u güncellemeden önce bir yedek oluşturduğu için bunu etkin tutmanız önerilir, bu da istenmeyen değişikliklerin veya verilerin silinmesini önlemeye yardımcı olur.</translation>
+        <source>Recommended to keep this enabled as it creates a backup before updating RimDex, This helps prevent any unwanted changes or data getting deleted.</source>
+        <translation>RimDex'u güncellemeden önce bir yedek oluşturduğu için bunu etkin tutmanız önerilir, bu da istenmeyen değişikliklerin veya verilerin silinmesini önlemeye yardımcı olur.</translation>
     </message>
     <message>
         <source>Maximum number of backups to keep:</source>
@@ -4544,13 +4544,13 @@ E.g., 'oels.vehiclemapframework', alternatives: 'oels.vehiclemapframework.dev'</
         <translation>Ayarları Sıfırla</translation>
     </message>
     <message>
-        <source>Exit RimSort</source>
+        <source>Exit RimDex</source>
         <translation>Çıkış Çıkar</translation>
     </message>
     <message>
-        <source>Your RimSort settings file is corrupt.
+        <source>Your RimDex settings file is corrupt.
 Please choose one of the following options to proceed.</source>
-        <translation>Rimsort ayarları dosyanız bozuk.
+        <translation>RimDex ayarları dosyanız bozuk.
 Lütfen devam etmek için aşağıdaki seçeneklerden birini seçin.</translation>
     </message>
 </context>
@@ -4630,16 +4630,16 @@ Lütfen devam etmek için aşağıdaki seçeneklerden birini seçin.</translatio
     </message>
     <message>
         <source>Please reach out to us on Github Issues page or
-#rimsort-testing on the Rocketman/CAI discord</source>
+#rimdex-testing on the Rocketman/CAI discord</source>
         <translation>Lütfen GitHub sorunları sayfasında bize ulaşın veya
-#Rocketman/CAI Discord'da Rimsort testi</translation>
+#Rocketman/CAI Discord'da RimDex testi</translation>
     </message>
 </context>
 <context>
     <name>SteamcmdInterface</name>
     <message>
-        <source>RimSort - SteamCMD setup</source>
-        <translation>Rimsort - Steamcmd kurulumu</translation>
+        <source>RimDex - SteamCMD setup</source>
+        <translation>RimDex - Steamcmd kurulumu</translation>
     </message>
     <message>
         <source>Do you want to setup SteamCMD?</source>
@@ -4682,9 +4682,9 @@ Lütfen devam etmek için aşağıdaki seçeneklerden birini seçin.</translatio
         <translation>Tekrar sorma</translation>
     </message>
     <message>
-        <source>RimSort was unable to find SteamCMD installed in the configured prefix:
+        <source>RimDex was unable to find SteamCMD installed in the configured prefix:
 </source>
-        <translation>Rimsort, yapılandırılmış önekte kurulu Steamcmd'yi bulamadı:</translation>
+        <translation>RimDex, yapılandırılmış önekte kurulu Steamcmd'yi bulamadı:</translation>
     </message>
     <message>
         <source>The symlink makes SteamCMD download mods to the local mods folder and is required for SteamCMD mod downloads to work correctly.</source>
@@ -5150,8 +5150,8 @@ Ayrıntılar: {e}</translation>
         <translation>Oyununuzla ilgili sorunlar yaşıyorsanız, aşağıdaki kurtarma seçeneklerini deneyebilirsiniz. Steam, bir sonraki lansmanda silinen dosyaları otomatik olarak yeniden yükler.</translation>
     </message>
     <message>
-        <source>After resetting game configurations, launch the game directly through Steam to regenerate ModsConfig.xml, then restart RimSort.</source>
-        <translation>Oyun yapılandırmalarını sıfırladıktan sonra, modsconfig.xml'yi yenilemek için oyunu doğrudan Steam aracılığıyla başlatın, ardından Rimsort'u yeniden başlatın.</translation>
+        <source>After resetting game configurations, launch the game directly through Steam to regenerate ModsConfig.xml, then restart RimDex.</source>
+        <translation>Oyun yapılandırmalarını sıfırladıktan sonra, modsconfig.xml'yi yenilemek için oyunu doğrudan Steam aracılığıyla başlatın, ardından RimDex'u yeniden başlatın.</translation>
     </message>
     <message>
         <source>Manage your mod configurations and load order. These options help you organize and share your mod setup.</source>
@@ -5161,22 +5161,22 @@ Ayrıntılar: {e}</translation>
 <context>
     <name>UpdateManager</name>
     <message>
-        <source>RimSort update found</source>
-        <translation>Rimsort güncellemesi bulundu</translation>
+        <source>RimDex update found</source>
+        <translation>RimDex güncellemesi bulundu</translation>
     </message>
     <message>
-        <source>An update to RimSort has been released: {latest_tag_name}</source>
-        <translation>Rimsort için bir güncelleme yayınlandı:  {latest_tag_name}</translation>
+        <source>An update to RimDex has been released: {latest_tag_name}</source>
+        <translation>RimDex için bir güncelleme yayınlandı:  {latest_tag_name}</translation>
     </message>
     <message>
-        <source>You are running RimSort {current_version}
+        <source>You are running RimDex {current_version}
 Do you want to update now?</source>
-        <translation>Rimsort'u çalıştırıyorsunuz {current_version}
+        <translation>RimDex'u çalıştırıyorsunuz {current_version}
 Şimdi güncellemek istiyor musunuz?</translation>
     </message>
     <message>
-        <source>Downloading RimSort {tag_name} release...</source>
-        <translation>Rimsort {tag_name} sürümünü indirme ...</translation>
+        <source>Downloading RimDex {tag_name} release...</source>
+        <translation>RimDex {tag_name} sürümünü indirme ...</translation>
     </message>
     <message>
         <source>
@@ -5200,8 +5200,8 @@ The update will be installed from: {update_source_path}</source>
 <context>
     <name>UseThisInsteadPanel</name>
     <message>
-        <source>RimSort - Replacements found for Workshop mods</source>
-        <translation>Rimsort - Çalıştay modları için bulunan yedekler</translation>
+        <source>RimDex - Replacements found for Workshop mods</source>
+        <translation>RimDex - Çalıştay modları için bulunan yedekler</translation>
     </message>
     <message>
         <source>There are replacements available for Workshop mods!</source>
@@ -5259,8 +5259,8 @@ The update will be installed from: {update_source_path}</source>
 <context>
     <name>WorkshopModUpdaterPanel</name>
     <message>
-        <source>RimSort - Updates found for Workshop mods</source>
-        <translation>RimSort - Atölye modları için güncellemeler bulundu</translation>
+        <source>RimDex - Updates found for Workshop mods</source>
+        <translation>RimDex - Atölye modları için güncellemeler bulundu</translation>
     </message>
     <message>
         <source>There are updates available for Workshop mods!</source>
@@ -5325,8 +5325,8 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>Panoya kopyalayamadı.</translation>
     </message>
     <message>
-        <source>RimSort failed to copy the text to your clipboard. Please copy it manually.</source>
-        <translation>Rimsort metni panonuza kopyalayamadı. Lütfen manuel olarak kopyalayın.</translation>
+        <source>RimDex failed to copy the text to your clipboard. Please copy it manually.</source>
+        <translation>RimDex metni panonuza kopyalayamadı. Lütfen manuel olarak kopyalayın.</translation>
     </message>
 </context>
 <context>
@@ -5336,8 +5336,8 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>Sıralayamıyor</translation>
     </message>
     <message>
-        <source>RimSort found circular dependencies in your mods list. Please see the details for dependency loops.</source>
-        <translation>Rimsort, modlar listenizde dairesel bağımlılıklar buldu. Lütfen bağımlılık döngüleri için ayrıntılara bakın.</translation>
+        <source>RimDex found circular dependencies in your mods list. Please see the details for dependency loops.</source>
+        <translation>RimDex, modlar listenizde dairesel bağımlılıklar buldu. Lütfen bağımlılık döngüleri için ayrıntılara bakın.</translation>
     </message>
 </context>
 <context>
@@ -5355,12 +5355,12 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>Geçersiz oyun klasörü</translation>
     </message>
     <message>
-        <source>RimSort could not validate the RimWorld executable in the specified folder: {game_install_path}. Please check that this directory is correct and contains a valid RimWorld game executable.</source>
-        <translation>RimSort, belirtilen klasördeki RimWorld yürütülebilir dosyasını doğrulayamadı: {game_install_path}.Lütfen bu dizinin doğru olduğunu ve geçerli bir RimWorld oyunu çalıştırılabilir dosyası içerdiğini kontrol edin.</translation>
+        <source>RimDex could not validate the RimWorld executable in the specified folder: {game_install_path}. Please check that this directory is correct and contains a valid RimWorld game executable.</source>
+        <translation>RimDex, belirtilen klasördeki RimWorld yürütülebilir dosyasını doğrulayamadı: {game_install_path}.Lütfen bu dizinin doğru olduğunu ve geçerli bir RimWorld oyunu çalıştırılabilir dosyası içerdiğini kontrol edin.</translation>
     </message>
     <message>
-        <source>RimSort could not start RimWorld as the game folder is empty or invalid: [{game_install_path}] Please check that the game folder is properly set and that the RimWorld executable exists in it.</source>
-        <translation>Oyun klasörü boş veya geçersiz olduğu için Rimsort Rimworld'i başlatamadı: [{game_install_path}] Lütfen oyun klasörünün düzgün ayarlandığını ve Rimworld yürütülebilir dosyasının içinde bulunduğunu kontrol edin.</translation>
+        <source>RimDex could not start RimWorld as the game folder is empty or invalid: [{game_install_path}] Please check that the game folder is properly set and that the RimWorld executable exists in it.</source>
+        <translation>Oyun klasörü boş veya geçersiz olduğu için RimDex Rimworld'i başlatamadı: [{game_install_path}] Lütfen oyun klasörünün düzgün ayarlandığını ve Rimworld yürütülebilir dosyasının içinde bulunduğunu kontrol edin.</translation>
     </message>
 </context>
 <context>
@@ -5381,16 +5381,16 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>Dizin kaldırılamadı</translation>
     </message>
     <message>
-        <source>RimSort tried to remove a directory that does not exist.</source>
-        <translation>Rimsort var olmayan bir dizini kaldırmaya çalıştı.</translation>
+        <source>RimDex tried to remove a directory that does not exist.</source>
+        <translation>RimDex var olmayan bir dizini kaldırmaya çalıştı.</translation>
     </message>
     <message>
         <source>Directory does not exist: {path}</source>
         <translation>Dizin yok:  {path}</translation>
     </message>
     <message>
-        <source>RimSort tried to remove a directory that is not a directory.</source>
-        <translation>Rimsort dizin olmayan bir dizini kaldırmaya çalıştı.</translation>
+        <source>RimDex tried to remove a directory that is not a directory.</source>
+        <translation>RimDex dizin olmayan bir dizini kaldırmaya çalıştı.</translation>
     </message>
     <message>
         <source>Path is not a directory: {path}</source>
@@ -5412,12 +5412,12 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>Veri okuyamıyor</translation>
     </message>
     <message>
-        <source>RimSort was unable to read the supplied mods list.</source>
-        <translation>Rimsort, verilen modlar listesini okuyamadı.</translation>
+        <source>RimDex was unable to read the supplied mods list.</source>
+        <translation>RimDex, verilen modlar listesini okuyamadı.</translation>
     </message>
     <message>
-        <source>RimSort was unable to read the supplied mods list because it may be invalid or missing.</source>
-        <translation>Rimsort, geçersiz veya eksik olabileceği için verilen modlar listesini okuyamadı.</translation>
+        <source>RimDex was unable to read the supplied mods list because it may be invalid or missing.</source>
+        <translation>RimDex, geçersiz veya eksik olabileceği için verilen modlar listesini okuyamadı.</translation>
     </message>
     <message>
         <source>The supplied mods list may be missing or invalid. If you just (re)installed RimWorld, you may need to run it once to generate the mods list.</source>

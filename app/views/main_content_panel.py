@@ -177,8 +177,8 @@ class MainContent(QObject):
             EventBus().do_open_settings_directory.connect(
                 self._do_open_settings_directory
             )
-            EventBus().do_open_rimsort_logs_directory.connect(
-                self._do_open_rimsort_logs_directory
+            EventBus().do_open_rimdex_logs_directory.connect(
+                self._do_open_rimdex_logs_directory
             )
             EventBus().do_open_rimworld_directory.connect(
                 self._do_open_rimworld_directory
@@ -393,7 +393,7 @@ class MainContent(QObject):
                 text=self.tr("Essential path(s) are invalid or not set!\n"),
                 information=(
                     self.tr(
-                        "RimSort requires, at the minimum, for the game install folder and the "
+                        "RimDex requires, at the minimum, for the game install folder and the "
                         "config folder paths to be set, and that the paths both exist. Please set "
                         "both of these manually or by using the autodetect functionality.\n\n"
                         "Would you like to configure them now?"
@@ -753,7 +753,7 @@ class MainContent(QObject):
 
     def _do_check_for_update(self) -> None:
         """
-        Check for RimSort updates using UpdateManager.
+        Check for RimDex updates using UpdateManager.
         """
         update_manager = UpdateManager(
             self.settings_controller, self, self.mod_info_panel
@@ -762,7 +762,7 @@ class MainContent(QObject):
 
     def __do_get_github_release_info(self) -> dict[str, Any]:
         # Parse latest release
-        url = "https://api.github.com/repos/RimSort/RimSort/releases/latest"
+        url = "https://api.github.com/repos/RimDex/RimDex/releases/latest"
         logger.debug(f"Requesting GitHub release info from: {url}")
 
         raw = requests.get(url, timeout=10)
@@ -857,7 +857,7 @@ class MainContent(QObject):
             # Run expensive calculations to set cache data
             self.do_threaded_loading_animation(
                 gif_path=str(
-                    AppInfo().theme_data_folder / "default-icons" / "rimsort.gif"
+                    AppInfo().theme_data_folder / "default-icons" / "rimdex.gif"
                 ),
                 target=partial(
                     self.metadata_manager.refresh_cache, is_initial=is_initial
@@ -1228,7 +1228,7 @@ class MainContent(QObject):
                     text=self.tr(
                         "You will need to redo Rentry import again after downloads complete. "
                         "If there missing mods after download completes, they will be shown inside the missing mods panel. "
-                        "If RimSort is still not able to download some mods, "
+                        "If RimDex is still not able to download some mods, "
                         "It's due to the mod data not being available in both Rentry link and steam database."
                     ),
                 )
@@ -1401,7 +1401,7 @@ class MainContent(QObject):
         logger.info(f"Collected {len(active_mods)} active mods for export")
         # Build our report
         active_mods_clipboard_report = (
-            f"Created with RimSort {AppInfo().app_version}"
+            f"Created with RimDex {AppInfo().app_version}"
             + f"\nRimWorld game version this list was created for: {self.metadata_manager.game_version}"
             + f"\nTotal # of mods: {len(active_mods)}\n"
         )
@@ -1442,8 +1442,8 @@ class MainContent(QObject):
     ) -> str:
         truncated_note = " (truncated)" if truncated else ""
         active_mods_rentry_report = (
-            "# RimWorld mod list       ![](https://github.com/RimSort/RimSort/blob/main/docs/rentry_preview.png?raw=true)"
-            + f"\nCreated with RimSort {AppInfo().app_version}"
+            "# RimWorld mod list       ![](https://github.com/RimDex/RimDex/blob/main/docs/rentry_preview.png?raw=true)"
+            + f"\nCreated with RimDex {AppInfo().app_version}"
             + f"\nMod list was created for game version: `{self.metadata_manager.game_version}`"
             + "\n!!! info Local mods are marked as yellow labels with packageid in brackets."
             + f"\n\n\n\n!!! note Mod list length: `{len(mods)}`{truncated_note}\n"
@@ -1468,7 +1468,7 @@ class MainContent(QObject):
                         + "?imw=100&imh=100&impolicy=Letterbox"
                     )
                 else:
-                    preview_url = "https://github.com/RimSort/RimSort/blob/main/docs/rentry_steam_icon.png?raw=true"
+                    preview_url = "https://github.com/RimDex/RimDex/blob/main/docs/rentry_steam_icon.png?raw=true"
                 if self.metadata_manager.internal_local_metadata[uuid].get("steam_url"):
                     url = self.metadata_manager.internal_local_metadata[uuid][
                         "steam_url"
@@ -1726,9 +1726,9 @@ class MainContent(QObject):
         logger.info(f"Opening settings directory: {settings_directory}")
         platform_specific_open(settings_directory)
 
-    def _do_open_rimsort_logs_directory(self) -> None:
+    def _do_open_rimdex_logs_directory(self) -> None:
         logs_directory = AppInfo().user_log_folder
-        logger.info(f"Opening RimSort logs directory: {logs_directory}")
+        logger.info(f"Opening RimDex logs directory: {logs_directory}")
         platform_specific_open(logs_directory)
 
     def _do_open_rimworld_directory(self) -> None:
@@ -1803,7 +1803,7 @@ class MainContent(QObject):
             return
 
         success, ret = self.do_threaded_loading_animation(
-            gif_path=str(AppInfo().theme_data_folder / "default-icons" / "rimsort.gif"),
+            gif_path=str(AppInfo().theme_data_folder / "default-icons" / "rimdex.gif"),
             target=partial(upload_data_to_0x0_st, str(path)),
             text=self.tr("Uploading {path.name} to 0x0.st...").format(path=path),
         )
@@ -1991,7 +1991,7 @@ class MainContent(QObject):
             auto_close_on_complete=is_pre_launch,
         )
 
-        base_title = "RimSort - todds texture encoder"
+        base_title = "RimDex - todds texture encoder"
         suffix = " (pre-launch)" if is_pre_launch else ""
         runner.setWindowTitle(f"{base_title}{suffix}")
 
@@ -2129,7 +2129,7 @@ class MainContent(QObject):
             logger.debug("User confirmed ACF import")
             logger.info("Importing SteamCMD ACF data...")
             metadata.import_steamcmd_acf_data(
-                rimsort_storage_path=str(AppInfo().app_storage_folder),
+                rimdex_storage_path=str(AppInfo().app_storage_folder),
                 steamcmd_appworkshop_acf_path=self.steamcmd_wrapper.steamcmd_appworkshop_acf_path,
             )
 
@@ -2253,7 +2253,7 @@ class MainContent(QObject):
             dialogue.show_warning(
                 title=self.tr("Unable to check for updates"),
                 text=self.tr(
-                    "RimSort was unable to query Steam WebAPI for update information!\n"
+                    "RimDex was unable to query Steam WebAPI for update information!\n"
                 ),
                 information=self.tr("Are you connected to the Internet?"),
             )
@@ -2306,7 +2306,7 @@ class MainContent(QObject):
             and self.steamcmd_runner.process.state() == QProcess.ProcessState.Running
         ):
             dialogue.show_warning(
-                title=self.tr("RimSort - SteamCMD setup"),
+                title=self.tr("RimDex - SteamCMD setup"),
                 text=self.tr("Unable to create SteamCMD runner!"),
                 information=self.tr("There is an active process already running!"),
                 details=f"PID {self.steamcmd_runner.process.processId()} : "
@@ -2318,7 +2318,7 @@ class MainContent(QObject):
         ].local_folder
         if local_mods_path and os.path.exists(local_mods_path):
             self.steamcmd_runner = RunnerPanel()
-            self.steamcmd_runner.setWindowTitle("RimSort - SteamCMD setup")
+            self.steamcmd_runner.setWindowTitle("RimDex - SteamCMD setup")
             self.steamcmd_runner.show()
             self.steamcmd_runner.message("Setting up steamcmd...")
             self.steamcmd_wrapper.setup_steamcmd(
@@ -2329,7 +2329,7 @@ class MainContent(QObject):
             RunnerPanel().process_complete()
         else:
             dialogue.show_warning(
-                title=self.tr("RimSort - SteamCMD setup"),
+                title=self.tr("RimDex - SteamCMD setup"),
                 text=self.tr(
                     "Unable to initiate SteamCMD installation. Local mods path not set!"
                 ),
@@ -2351,7 +2351,7 @@ class MainContent(QObject):
         # No empty publishedfileids
         if len(publishedfileids) == 0:
             dialogue.show_warning(
-                title=self.tr("RimSort"),
+                title=self.tr("RimDex"),
                 text=self.tr("No PublishedFileIds were supplied in operation."),
                 information=self.tr(
                     "Please add mods to list before attempting to download."
@@ -2365,7 +2365,7 @@ class MainContent(QObject):
             and self.steamcmd_runner.process.state() == QProcess.ProcessState.Running
         ):
             dialogue.show_warning(
-                title=self.tr("RimSort"),
+                title=self.tr("RimDex"),
                 text=self.tr("Unable to create SteamCMD runner!"),
                 information=self.tr("There is an active process already running!"),
                 details=f"PID {self.steamcmd_runner.process.processId()} : "
@@ -2386,7 +2386,7 @@ class MainContent(QObject):
                 steamcmd_download_tracking=publishedfileids,
                 steam_db=steam_db,
             )
-            self.steamcmd_runner.setWindowTitle("RimSort - SteamCMD downloader")
+            self.steamcmd_runner.setWindowTitle("RimDex - SteamCMD downloader")
             self.steamcmd_runner.show()
             self.steamcmd_runner.message(
                 f"Downloading {len(publishedfileids)} mods with SteamCMD..."
@@ -2514,7 +2514,7 @@ class MainContent(QObject):
         # No empty publishedfileids
         if len(publishedfileids) == 0:
             dialogue.show_warning(
-                title=self.tr("RimSort"),
+                title=self.tr("RimDex"),
                 text=self.tr("No PublishedFileIds were supplied in operation."),
                 information=self.tr(
                     "Please add mods to list before attempting to download."
@@ -2853,7 +2853,7 @@ class MainContent(QObject):
             information=(
                 self.tr(
                     "Git integration will not work without Git installed! Do you want to open download page for Git?\n\n"
-                    "If you just installed Git, please restart RimSort for the PATH changes to take effect."
+                    "If you just installed Git, please restart RimDex for the PATH changes to take effect."
                 )
             ),
         )
@@ -2994,7 +2994,7 @@ class MainContent(QObject):
             self.query_runner = RunnerPanel()
             self.query_runner.closing_signal.connect(self.db_builder.terminate)
             self.query_runner.setWindowTitle(
-                f"RimSort - DB Builder ({self.settings_controller.settings.db_builder_include})"
+                f"RimDex - DB Builder ({self.settings_controller.settings.db_builder_include})"
             )
             self.query_runner.progress_bar.show()
             self.query_runner.show()
@@ -3070,7 +3070,7 @@ class MainContent(QObject):
         # Create query runner
         self.query_runner = RunnerPanel()
         self.query_runner.closing_signal.connect(self.db_builder.terminate)
-        self.query_runner.setWindowTitle("RimSort - DB Builder PublishedFileIDs query")
+        self.query_runner.setWindowTitle("RimDex - DB Builder PublishedFileIDs query")
         self.query_runner.progress_bar.show()
         self.query_runner.show()
         # Connect message signal
@@ -3116,8 +3116,8 @@ class MainContent(QObject):
                         "WARNING: It is NOT recommended to subscribe to this many mods at once via Steam. "
                         + "Steam has limitations in place seemingly intentionally and unintentionally for API subscriptions. "
                         + "It is highly recommended that you instead download these mods to a SteamCMD prefix by using SteamCMD. "
-                        + "This can take longer due to rate limits, but you can also re-use the script generated by RimSort with "
-                        + "a separate, authenticated instance of SteamCMD, if you do not want to anonymously download via RimSort."
+                        + "This can take longer due to rate limits, but you can also re-use the script generated by RimDex with "
+                        + "a separate, authenticated instance of SteamCMD, if you do not want to anonymously download via RimDex."
                     ),
                 )
                 if answer == QMessageBox.StandardButton.Yes:
@@ -3412,7 +3412,7 @@ class MainContent(QObject):
         )
         # Overwrite rules database
         answer = dialogue.show_dialogue_conditional(
-            title=self.tr("RimSort - DB Builder"),
+            title=self.tr("RimDex - DB Builder"),
             text=self.tr("Do you want to continue?"),
             information=self.tr(
                 "This operation will overwrite the {rules_source} database located at the following path:\n\n{path}"

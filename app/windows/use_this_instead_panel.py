@@ -81,7 +81,7 @@ class UseThisInsteadPanel(BaseModsPanel):
 
         super().__init__(
             object_name="useThisInsteadModsPanel",
-            window_title=self.tr("RimSort - Replacements found for Workshop mods"),
+            window_title=self.tr("RimDex - Replacements found for Workshop mods"),
             title_text=self.tr("There are replacements available for Workshop mods!"),
             details_text=self.tr(
                 "The following table displays Workshop mods with suggested replacements "

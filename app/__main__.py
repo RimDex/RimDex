@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # Compilation mode
 # nuitka-project: --assume-yes-for-downloads
-# nuitka-project: --output-filename=RimSort
+# nuitka-project: --output-filename=RimDex
 # nuitka-project: --output-dir={MAIN_DIRECTORY}/../build/
 # nuitka-project: --windows-console-mode=attach
 # nuitka-project: --noinclude-default-mode=error
 # nuitka-project: --include-package=steamworks
-# nuitka-project: --user-package-configuration-file={MAIN_DIRECTORY}/../rimsort.nuitka-package.config.yml
+# nuitka-project: --user-package-configuration-file={MAIN_DIRECTORY}/../rimdex.nuitka-package.config.yml
 # nuitka-project: --include-data-file={MAIN_DIRECTORY}/../steam_appid.txt=steam_appid.txt
 # nuitka-project: --windows-icon-from-ico={MAIN_DIRECTORY}/../themes/default-icons/AppIcon_alt.ico
 
@@ -77,8 +77,8 @@ def handle_exception(
             exc_info=(exc_type, exc_value, exc_traceback),
         )
         show_fatal_error(
-            title="RimSort crashed",
-            text="The RimSort application crashed! Sorry for the inconvenience!",
+            title="RimDex crashed",
+            text="The RimDex application crashed! Sorry for the inconvenience!",
             information="Please contact us on the Discord/Github to report the issue.",
             details="".join(
                 traceback.format_exception(exc_type, exc_value, exc_traceback)
@@ -95,7 +95,7 @@ sys.excepthook = handle_exception
 
 # Process --disable-updater flag if present (before any other initialization)
 if "--disable-updater" in sys.argv:
-    os.environ["RIMSORT_DISABLE_UPDATER"] = "1"
+    os.environ["RIMDEX_DISABLE_UPDATER"] = "1"
     # Remove all instances of the flag
     while "--disable-updater" in sys.argv:
         sys.argv.remove("--disable-updater")
@@ -147,7 +147,7 @@ def main_thread() -> None:
 
 
 if __name__ == "__main__":
-    # If RimSort is running from a --onefile Nuitka build, there are some nuances to consider:
+    # If RimDex is running from a --onefile Nuitka build, there are some nuances to consider:
     # https://nuitka.net/doc/user-manual.html#onefile-finding-files
     # You can override by passing --onefile-tempdir-spec to `nuitka`
     # See also: https://nuitka.net/doc/user-manual.html#use-case-4-program-distribution
@@ -238,5 +238,5 @@ if __name__ == "__main__":
 
         logger.debug("Running using Nuitka bundle")
 
-    logger.info(f"Initializing RimSort application: {AppInfo().app_version}")
+    logger.info(f"Initializing RimDex application: {AppInfo().app_version}")
     main_thread()

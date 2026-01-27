@@ -93,7 +93,7 @@ def copy_to_clipboard_safely(text: str) -> None:
             title=translate("copy_to_clipboard_safely", "Failed to copy to clipboard."),
             text=translate(
                 "copy_to_clipboard_safely",
-                "RimSort failed to copy the text to your clipboard. Please copy it manually.",
+                "RimDex failed to copy the text to your clipboard. Please copy it manually.",
             ),
             details=str(e),
         )
@@ -117,7 +117,7 @@ def rmtree(path: str | Path, **kwargs: Any) -> bool:
         dialogue.show_warning(
             title=translate("rmtree", "Failed to remove directory"),
             text=translate(
-                "rmtree", "RimSort tried to remove a directory that does not exist."
+                "rmtree", "RimDex tried to remove a directory that does not exist."
             ),
             details=translate("rmtree", "Directory does not exist: {path}").format(
                 path=path
@@ -130,7 +130,7 @@ def rmtree(path: str | Path, **kwargs: Any) -> bool:
         dialogue.show_warning(
             title=translate("rmtree", "Failed to remove directory"),
             text=translate(
-                "rmtree", "RimSort tried to remove a directory that is not a directory."
+                "rmtree", "RimDex tried to remove a directory that is not a directory."
             ),
             details=translate("rmtree", "Path is not a directory: {path}").format(
                 path=path
@@ -381,7 +381,7 @@ def launch_game_process(game_install_path: Path, args: list[str]) -> None:
             information=(
                 translate(
                     "launch_game_process",
-                    "RimSort could not start RimWorld as the game folder is empty or invalid: [{game_install_path}] "
+                    "RimDex could not start RimWorld as the game folder is empty or invalid: [{game_install_path}] "
                     "Please check that the game folder is properly set and that the RimWorld executable exists in it.",
                 ).format(game_install_path=game_install_path)
             ),
@@ -400,7 +400,7 @@ def launch_game_process(game_install_path: Path, args: list[str]) -> None:
             information=(
                 translate(
                     "launch_game_process",
-                    "RimSort could not validate the RimWorld executable in the specified folder: {game_install_path}. Please check that this directory is correct and contains a valid RimWorld game executable.",
+                    "RimDex could not validate the RimWorld executable in the specified folder: {game_install_path}. Please check that this directory is correct and contains a valid RimWorld game executable.",
                 ).format(game_install_path=game_install_path)
             ),
         )
@@ -653,7 +653,7 @@ def upload_data_to_0x0_st(path: str) -> tuple[bool, str]:
     logger.info(f"Uploading data to https://0x0.st/: {path}")
     try:
         with open(path, "rb") as f:
-            headers = {"User-Agent": f"RimSort/{AppInfo().app_version}"}
+            headers = {"User-Agent": f"RimDex/{AppInfo().app_version}"}
             request = requests.post(
                 url="https://0x0.st/",
                 files={"file": (Path(path).name, f)},

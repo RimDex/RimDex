@@ -288,7 +288,7 @@ class SteamcmdInterface:
 
         :param appid: a Steam AppID to pass to steamcmd
         :param publishedfileids: list of publishedfileids
-        :param runner: a RimSort RunnerPanel to interact with
+        :param runner: a RimDex RunnerPanel to interact with
         :param clear_cache: whether to clear the steamcmd depot cache before downloading
         """
         runner.message("Checking for steamcmd...")
@@ -358,10 +358,10 @@ class SteamcmdInterface:
             self.translate("SteamcmdInterface", btn) for btn in btn_text
         ]
         answer = show_dialogue_conditional(
-            title=self.translate("SteamcmdInterface", "RimSort - SteamCMD setup"),
+            title=self.translate("SteamcmdInterface", "RimDex - SteamCMD setup"),
             text=self.translate(
                 "SteamcmdInterface",
-                "RimSort was unable to find SteamCMD installed in the configured prefix:\n",
+                "RimDex was unable to find SteamCMD installed in the configured prefix:\n",
             ),
             information=f"{self.steamcmd_prefix if self.steamcmd_prefix else '<None>'}\n\n"
             + self.translate("SteamcmdInterface", "Do you want to setup SteamCMD?"),

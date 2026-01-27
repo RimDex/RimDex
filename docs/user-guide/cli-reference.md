@@ -8,7 +8,7 @@ permalink: user-guide/cli-reference
 # CLI Reference
 {: .no_toc}
 
-RimSort provides a command-line interface for headless operation of key features. This enables automation workflows, CI/CD integration, and scripting without requiring the graphical interface.
+RimDex provides a command-line interface for headless operation of key features. This enables automation workflows, CI/CD integration, and scripting without requiring the graphical interface.
 
 ## Table of Contents
 {: .no_toc .text-delta }
@@ -18,7 +18,7 @@ RimSort provides a command-line interface for headless operation of key features
 
 ## Overview
 
-The RimSort CLI is designed for users who need to automate RimSort functionality in headless environments. Unlike the graphical interface, the CLI:
+The RimDex CLI is designed for users who need to automate RimDex functionality in headless environments. Unlike the graphical interface, the CLI:
 
 - **Requires no display server** - Perfect for Docker containers, remote servers, and CI/CD pipelines
 - **Provides structured exit codes** - Enables reliable error handling in scripts and automation
@@ -28,19 +28,19 @@ The RimSort CLI is designed for users who need to automate RimSort functionality
 Currently available commands:
 - `build-db` - Build Steam Workshop metadata databases
 
-Additional commands may be added in future versions to support more RimSort functionality.
+Additional commands may be added in future versions to support more RimDex functionality.
 
 ## Running the CLI
 
-If you have RimSort installed from a release build:
+If you have RimDex installed from a release build:
 
 ```bash
-./RimSort build-db --help
+./RimDex build-db --help
 ```
 
 or on windows:
 ```bash
-RimSort.exe build-db --help
+RimDex.exe build-db --help
 ```
 
 If you're running from source:
@@ -54,7 +54,7 @@ uv run python -m app build-db --help
 ## Commands
 ### `build-db`
 
-Build a Steam Workshop metadata database by querying the Steam WebAPI. The resulting database contains mod names, URLs, dependencies, and optional DLC requirements in a JSON format compatible with RimSort and RimPy.
+Build a Steam Workshop metadata database by querying the Steam WebAPI. The resulting database contains mod names, URLs, dependencies, and optional DLC requirements in a JSON format compatible with RimDex and RimPy.
 
 #### Prerequisites
 
@@ -75,21 +75,21 @@ You need a Steam WebAPI key (32 characters) to use this command. The DB Builder 
 
 ```bash
 # Using environment variable (recommended for security)
-export RIMSORT_STEAM_API_KEY=your_32_character_key_here
-RimSort build-db --output steamDB.json
+export RIMDEX_STEAM_API_KEY=your_32_character_key_here
+RimDex build-db --output steamDB.json
 
 # Quick build without DLC data (faster)
-RimSort build-db --output steamDB.json --no-dlc-data --quiet
+RimDex build-db --output steamDB.json --no-dlc-data --quiet
 
 # Update existing database instead of overwriting
-RimSort build-db --output steamDB.json --update
+RimDex build-db --output steamDB.json --update
 ```
 
 #### Options Reference
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `--api-key TEXT` | String | (see below) | Steam WebAPI key (32 characters). Can also be set via `RIMSORT_STEAM_API_KEY` environment variable. |
+| `--api-key TEXT` | String | (see below) | Steam WebAPI key (32 characters). Can also be set via `RIMDEX_STEAM_API_KEY` environment variable. |
 | `--output PATH` | Path | **required** | Output JSON file path for the database. |
 | `--dlc-data/--no-dlc-data` | Boolean | dlc-data | Include DLC dependency data via Steamworks API. Requires Steam client running and RimWorld ownership. Significantly slower due to additional API calls. |
 | `--update/--overwrite` | Boolean | overwrite | Update existing database (merge new data) or overwrite completely. |
@@ -100,8 +100,8 @@ RimSort build-db --output steamDB.json --update
 The Steam API key can be provided in three ways, with the following priority order:
 
 1. **`--api-key` command line argument** - Highest priority, but may expose the key in shell history
-2. **`RIMSORT_STEAM_API_KEY` environment variable** - Recommended for security
-3. **Fallback to `settings.json`** - If you've configured RimSort GUI, the CLI will use that API key
+2. **`RIMDEX_STEAM_API_KEY` environment variable** - Recommended for security
+3. **Fallback to `settings.json`** - If you've configured RimDex GUI, the CLI will use that API key
 
 #### Exit Codes
 
@@ -117,8 +117,8 @@ The `build-db` command uses standard exit codes for automation:
 
 The command cannot find a valid API key. Provide it via:
 - `--api-key` command line option
-- `RIMSORT_STEAM_API_KEY` environment variable
-- Configure in RimSort GUI (saved to `settings.json`)
+- `RIMDEX_STEAM_API_KEY` environment variable
+- Configure in RimDex GUI (saved to `settings.json`)
 
 ##### **`Error: Invalid Steam WebAPI key! Key must be 32 characters`**
 
@@ -132,10 +132,10 @@ You used `--update` mode but the target database file doesn't exist. For the fir
 
 ```bash
 # First build
-RimSort build-db --output steamDB.json --overwrite
+RimDex build-db --output steamDB.json --overwrite
 
 # Subsequent updates
-RimSort build-db --output steamDB.json --update
+RimDex build-db --output steamDB.json --update
 ```
 
 ##### **`DLC data collection fails silently`**
@@ -147,5 +147,5 @@ DLC dependency data requires the Steamworks API, which needs:
 If unavailable, use `--no-dlc-data` for headless environments:
 
 ```bash
-RimSort build-db --output steamDB.json --no-dlc-data
+RimDex build-db --output steamDB.json --no-dlc-data
 ```

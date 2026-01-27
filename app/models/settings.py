@@ -47,7 +47,7 @@ class Settings(QObject):
         self._settings_file = AppInfo().app_settings_file
         self._debug_file = AppInfo().app_storage_folder / "DEBUG"
 
-        # RimSort Update check
+        # RimDex Update check
         self.check_for_update_startup: bool = True
 
         # Databases
@@ -56,7 +56,7 @@ class Settings(QObject):
             AppInfo().app_storage_folder / "steamDB.json"
         )
         self.external_steam_metadata_repo: str = (
-            "https://github.com/RimSort/Steam-Workshop-Database"
+            "https://github.com/RimDex/Steam-Workshop-Database"
         )
 
         self.external_community_rules_metadata_source: str = "None"
@@ -64,7 +64,7 @@ class Settings(QObject):
             AppInfo().app_storage_folder / "communityRules.json"
         )
         self.external_community_rules_repo: str = (
-            "https://github.com/RimSort/Community-Rules-Database"
+            "https://github.com/RimDex/Community-Rules-Database"
         )
 
         # Disable by default previously this was 7 days "604800"

@@ -17,11 +17,11 @@ lang: zh-cn
 
 ## 初始设置
 
-RimSort 会提示你配置游戏路径并安装 SteamCMD。它可能还会询问你对某些关键设置的偏好，例如是否启用 Steam 集成。除此之外的将使用默认设置，你可以通过 [设置](#设置) 自由调整配置。
+RimDex 会提示你配置游戏路径并安装 SteamCMD。它可能还会询问你对某些关键设置的偏好，例如是否启用 Steam 集成。除此之外的将使用默认设置，你可以通过 [设置](#设置) 自由调整配置。
 
 ## 菜单栏
 
-根据操作系统和桌面环境的不同，菜单栏可能位于 RimSort 主窗口顶部，或集成在全局菜单栏中。这里会显示当前运行的 RimSort 版本（如 v2.8.3），和包含更多选项的下拉菜单。你可以在此找到特定功能，例如导出 Mod 列表、上传日志、使用 todds 纹理优化工具或访问 Steam 创意工坊。
+根据操作系统和桌面环境的不同，菜单栏可能位于 RimDex 主窗口顶部，或集成在全局菜单栏中。这里会显示当前运行的 RimDex 版本（如 v2.8.3），和包含更多选项的下拉菜单。你可以在此找到特定功能，例如导出 Mod 列表、上传日志、使用 todds 纹理优化工具或访问 Steam 创意工坊。
 
 ## 设置
 
@@ -51,9 +51,9 @@ RimSort 会提示你配置游戏路径并安装 SteamCMD。它可能还会询问
 ## 外部元数据
 
 {: .note}
-> RimSort 发布版本不包含这些额外的外部元数据。有关可选（但强烈推荐）外部元数据库的信息，及其获取方式，请参阅 [数据库](../user-guide/databases.zh-cn)。
+> RimDex 发布版本不包含这些额外的外部元数据。有关可选（但强烈推荐）外部元数据库的信息，及其获取方式，请参阅 [数据库](../user-guide/databases.zh-cn)。
 
-RimSort 利用外部元数据来增强其功能，它们提供了已下载 Mod 的 `About.xml` 文件所含信息之外的附加数据。RimSort 中的外部元数据是用户可扩展的，可共享的。
+RimDex 利用外部元数据来增强其功能，它们提供了已下载 Mod 的 `About.xml` 文件所含信息之外的附加数据。RimDex 中的外部元数据是用户可扩展的，可共享的。
 
 ### Steam 创意工坊元数据（`steamDB.json`）
 {: .d-inline-block}
@@ -78,27 +78,27 @@ Steam 创意工坊元数据
 规则元数据
 {: .label .label-red }
 
-  RimSort 使用两个外部规则数据库：`userRules.json` 和 `communityRules.json`。两者功能相同，区别在于社区规则数据库由社区维护共享，用户规则数据库用于存储你个人的加载顺序规则。
+  RimDex 使用两个外部规则数据库：`userRules.json` 和 `communityRules.json`。两者功能相同，区别在于社区规则数据库由社区维护共享，用户规则数据库用于存储你个人的加载顺序规则。
 
   这两个数据库都采用与 Paladin RimPy Mod 管理器的社区规则数据库（communityRules.json）兼容的格式。
 
   {: .note}
-  > 虽然你可以直接修改这些纯文本格式的数据库，但建议使用 RimSort 内置的 [规则编辑器](../user-guide/rule-editor.zh-cn) 来编辑其中定义的规则。
+  > 虽然你可以直接修改这些纯文本格式的数据库，但建议使用 RimDex 内置的 [规则编辑器](../user-guide/rule-editor.zh-cn) 来编辑其中定义的规则。
 
   > 为什么需要这个？
 
-  通过自定义排序规则，我们可以解决 Mod 开发者响应不及时导致的兼容性问题。用户可以添加被社区广泛认可的额外排序规则。传统上 Paladin 通过 RimPy 社区数据库分发这些规则，而 RimSort 选择通过 git 进行分发。
+  通过自定义排序规则，我们可以解决 Mod 开发者响应不及时导致的兼容性问题。用户可以添加被社区广泛认可的额外排序规则。传统上 Paladin 通过 RimPy 社区数据库分发这些规则，而 RimDex 选择通过 git 进行分发。
    
    - `loadAfter` 和 `loadBefore`
       - RimWorld 原生支持的规则类型，通常定义在 Mod 的 About.xml 文件中
     - `loadBottom` - 由 Paladin 在 RimPy 社区规则数据库中首创
-      - 强制将 Mod 排序至列表底部。RimSort 从外部元数据中读取此标记，将被标记 Mod 视为「第三梯队 Mod」，在排序时置于未标记 Mod 之后
+      - 强制将 Mod 排序至列表底部。RimDex 从外部元数据中读取此标记，将被标记 Mod 视为「第三梯队 Mod」，在排序时置于未标记 Mod 之后
     - `loadTop`
-      - 强制将 Mod 排序至列表顶部。这是 RimSort 首创的自定义规则，将被标记 Mod 视为「第一梯队 Mod」，在排序时置于未标记 Mod 之前
+      - 强制将 Mod 排序至列表顶部。这是 RimDex 首创的自定义规则，将被标记 Mod 视为「第一梯队 Mod」，在排序时置于未标记 Mod 之前
     - _**开发中**_ `isFramework`
-      - 「框架 Mod」指为其他 Mod 提供扩展支持，但单独使用时无实际内容的 Mod。这是 RimSort 首创的自定义规则
+      - 「框架 Mod」指为其他 Mod 提供扩展支持，但单独使用时无实际内容的 Mod。这是 RimDex 首创的自定义规则
       - 典型示例：
         - Universum、Vanilla Expanded Framework、XMLExtensions 等
-      - RimSort 会标记带有此规则的 Mod，当检测到这些框架模组未被其他 Mod 依赖时发出警告。毕竟单独使用框架 Mod 没有意义！
+      - RimDex 会标记带有此规则的 Mod，当检测到这些框架模组未被其他 Mod 依赖时发出警告。毕竟单独使用框架 Mod 没有意义！
 
   有关使用规则编辑器创建和管理这些规则的详细说明，包括如何为特定 Mod 添加自定义加载顺序规则，请参阅 [规则编辑器](../user-guide/rule-editor.zh-cn) 页面。

@@ -299,7 +299,7 @@ class ModsPanelController(QObject):
         after a certain time limit they have not been touched.
 
         This is used at init phases of the applicaiton. Keeps DB
-        updated even if mods have been deleted etc. outside of RimSort.
+        updated even if mods have been deleted etc. outside of RimDex.
         """
         time_limit = self.settings_controller.settings.aux_db_time_limit
         if time_limit < 0:

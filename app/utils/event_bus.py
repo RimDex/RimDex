@@ -36,7 +36,7 @@ class EventBus(QObject):
     # Shortcuts submenu signals
     do_open_app_directory = Signal()
     do_open_settings_directory = Signal()
-    do_open_rimsort_logs_directory = Signal()
+    do_open_rimdex_logs_directory = Signal()
     do_open_rimworld_directory = Signal()
     do_open_rimworld_config_directory = Signal()
     do_open_rimworld_logs_directory = Signal()
@@ -125,6 +125,9 @@ class EventBus(QObject):
 
     # Help Menu bar signals
     do_check_for_application_update = Signal()
+
+    # Performance settings signals
+    enable_aux_db_performance_mode = Signal()
 
     # Loading animation signals
     do_threaded_loading_animation = Signal(str, object, str)

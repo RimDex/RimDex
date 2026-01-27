@@ -1,6 +1,6 @@
-"""RimSort Translation Helper - Comprehensive tool for managing Qt translations.
+"""RimDex Translation Helper - Comprehensive tool for managing Qt translations.
 
-A complete translation management system for RimSort that provides interactive and
+A complete translation management system for RimDex that provides interactive and
 command-line interfaces for all translation workflows. The tool supports multiple
 translation services and enables efficient batch operations across languages.
 
@@ -2147,7 +2147,7 @@ async def process_language(
 def interactive_mode() -> None:
     """Interactive guided workflow for new users."""
     print("\n" + "=" * 60)
-    print("🌍 RimSort Translation Helper - Interactive Mode")
+    print("🌍 RimDex Translation Helper - Interactive Mode")
     print("=" * 60)
     print("\nWelcome! This guided mode will help you manage translations.\n")
 
@@ -2173,7 +2173,7 @@ def interactive_mode() -> None:
         elif choice == "5":
             _interactive_process()
         elif choice == "6":
-            print("\n✨ Thank you for using RimSort Translation Helper!")
+            print("\n✨ Thank you for using RimDex Translation Helper!")
             break
         else:
             print("❌ Invalid option. Please try again.")
@@ -2495,7 +2495,7 @@ def main() -> None:
     (check, stats, validate, update-ts, compile, auto-translate, process).
     """
     parser = argparse.ArgumentParser(
-        description="Enhanced RimSort Translation Helper",
+        description="Enhanced RimDex Translation Helper",
         epilog="Use 'python translation_helper.py --interactive' for guided workflow",
     )
 

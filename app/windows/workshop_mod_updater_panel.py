@@ -36,7 +36,7 @@ class WorkshopModUpdaterPanel(BaseModsPanel):
 
         super().__init__(
             object_name="updateModsPanel",
-            window_title=self.tr("RimSort - Updates found for Workshop mods"),
+            window_title=self.tr("RimDex - Updates found for Workshop mods"),
             title_text=self.tr("There are updates available for Workshop mods!"),
             details_text=self.tr(
                 "\nThe following table displays Workshop mods available for update from Steam."

@@ -220,7 +220,7 @@ class TroubleshootingDialog(QDialog):
 
         note_label = QLabel(
             self.tr(
-                "After resetting game configurations, launch the game directly through Steam to regenerate ModsConfig.xml, then restart RimSort."
+                "After resetting game configurations, launch the game directly through Steam to regenerate ModsConfig.xml, then restart RimDex."
             )
         )
         note_label.setObjectName("noteLabel")

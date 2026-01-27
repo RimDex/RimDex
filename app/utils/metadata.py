@@ -175,7 +175,7 @@ class MetadataManager(QObject):
             self.show_warning_signal.emit(
                 self.tr("Missing Version.txt"),
                 self.tr(
-                    "RimSort is unable to get the game version at the expected path: [{version_file_path}]."
+                    "RimDex is unable to get the game version at the expected path: [{version_file_path}]."
                 ).format(version_file_path=str(version_file_path)),
                 self.tr(
                     "\nIs your game path {folder} set correctly? There should be a Version.txt file in the game install directory."
@@ -1875,9 +1875,7 @@ class ModParser(QRunnable):
                         f"Key <savedscenario><scenario> does not exist in this data: {scenario_metadata}"
                     )
                     data_malformed = True
-        if (
-            (invalid_about_file_path_found and not scenario_rsc_found) or data_malformed
-        ):  
+        if (invalid_about_file_path_found and not scenario_rsc_found) or data_malformed:
             # Final simple check to see if the leftover dir contains ONLY .dds files.
             # This is likely after a steam unsubscribe and is safe to delete to prevent invalid items
             if directory_path.is_dir():
@@ -1904,7 +1902,7 @@ class ModParser(QRunnable):
                 "packageid": "invalid.item",
                 "authors": "Not found",
                 "description": (
-                    "This mod is considered invalid by RimSort (and the RimWorld game)."
+                    "This mod is considered invalid by RimDex (and the RimWorld game)."
                     + "\n\nThis mod does NOT contain an ./About/About.xml and is likely leftover from previous usage."
                     + "\n\nThis can happen sometimes with Steam mods if there are leftover .dds textures or unexpected data."
                 ),
@@ -2453,7 +2451,7 @@ class SteamDatabaseBuilder(QThread):
 
         # Original implementation for other modes
         self.db_builder_message_output_signal.emit(
-            f"\nInitiating RimSort Steam Database Builder with mode : {self.mode}\n"
+            f"\nInitiating RimDex Steam Database Builder with mode : {self.mode}\n"
         )
         if len(self.apikey) == 32:  # If supplied WebAPI key is 32 characters
             self.db_builder_message_output_signal.emit(
@@ -2689,7 +2687,7 @@ def check_if_pfids_blacklisted(
     if not steamdb:
         show_warning(
             title="No SteamDB found",
-            text="Unable to check for blacklisted mods. Please configure a SteamDB for RimSort to use in Settings.",
+            text="Unable to check for blacklisted mods. Please configure a SteamDB for RimDex to use in Settings.",
         )
         return publishedfileids
     # Define defaults for blacklisted mods
@@ -2746,7 +2744,7 @@ def check_if_pfids_blacklisted(
 
 
 def import_steamcmd_acf_data(
-    rimsort_storage_path: str, steamcmd_appworkshop_acf_path: str
+    rimdex_storage_path: str, steamcmd_appworkshop_acf_path: str
 ) -> None:
     logger.info(f"SteamCMD acf data path to update: {steamcmd_appworkshop_acf_path}")
     if os.path.exists(steamcmd_appworkshop_acf_path):
@@ -2760,7 +2758,7 @@ def import_steamcmd_acf_data(
     acf_to_import_path = show_dialogue_file(
         mode="open",
         caption="Input appworkshop_294100.acf from another SteamCMD prefix",
-        _dir=rimsort_storage_path,
+        _dir=rimdex_storage_path,
         _filter="ACF (*.acf)",
     )
     logger.info(f"SteamCMD acf data path to import: {acf_to_import_path}")

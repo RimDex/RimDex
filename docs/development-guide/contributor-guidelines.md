@@ -10,7 +10,7 @@ permalink: development-guide/contributor-guidelines
 # Contributor Guidelines
 {: .no_toc}
 
-Please follow the following guidelines when contributing to RimSort.
+Please follow the following guidelines when contributing to RimDex.
 
 ## Table of Contents
 {: .no_toc .text-delta }
@@ -25,13 +25,13 @@ Please follow the following guidelines when contributing to RimSort.
 
 3. Make sure your Pull Request passes the basic linter and Pytest checks before asking for a review. If they don't, they will be the first thing we ask you to fix.
 
-4. There are GitHub Issue templates available on RimSort repository. Bug Reports and Feature Requests are to be submitted there, and if there is consensus on a request, it will become an "Implement ...." Issue. Please do not deviate from template and allow maintainers to modify the Issue to include relevant tasks and title information once consensus is reached.
+4. There are GitHub Issue templates available on RimDex repository. Bug Reports and Feature Requests are to be submitted there, and if there is consensus on a request, it will become an "Implement ...." Issue. Please do not deviate from template and allow maintainers to modify the Issue to include relevant tasks and title information once consensus is reached.
 
    - Consensus = consensus between maintainers. That being said, we rely on your feedback, so you will have a say.
    - You are also welcome to fork this repository and make whatever changes you deem fit privately.
 
 5. ALL PRs need to have a corresponding Issue and/or Issue sub-task(s) to reference. This is for transparency and overall will help anybody else helping to keep track of things.
-   - Anybody can contribute to RimSort. That being said, we are a community and these guidelines will help encourage and enforce consistency with RimSort growth.
+   - Anybody can contribute to RimDex. That being said, we are a community and these guidelines will help encourage and enforce consistency with RimDex growth.
    - Maintainer or not - you do not have to be a maintainer to submit PR! Please don't hesitate to work from a fork or something if that's how you roll.
 
 6. In 99% of situations, you should not submit pull requests that are only dependency bumps. Basic dependency bumps are handled automatically using dependabot.
@@ -92,7 +92,7 @@ To mitigate this issue, the version info for the release pipeline is grabbed fir
 
 ## Developing Features
 
-Please ensure if you have any feature request to check if there is already something planned. We are tracking features and issues related to RimSort in the GitHub repo's "Issues" tab. If it is not already in the issues tab, you can discuss this with maintainers first through the RimSort Discord server.
+Please ensure if you have any feature request to check if there is already something planned. We are tracking features and issues related to RimDex in the GitHub repo's "Issues" tab. If it is not already in the issues tab, you can discuss this with maintainers first through the RimDex Discord server.
 
 ## Misc Coding Style
 

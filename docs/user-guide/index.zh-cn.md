@@ -7,4 +7,4 @@ lang: zh-cn
 
 # 用户指南
 
-欢迎来到 RimSort 的用户指南！
+欢迎来到 RimDex 的用户指南！

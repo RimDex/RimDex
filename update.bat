@@ -1,13 +1,13 @@
 @echo off
 setlocal EnableDelayedExpansion
 REM Show the window
-title RimSort Update
+title RimDex Update
 mode con: cols=100 lines=30
-echo RimSort update in progress... Please wait.
+echo RimDex update in progress... Please wait.
 
 REM ========================================================================
-REM RimSort Updater Script (Windows 10 & 11 Compatible)
-REM Safely backs up and updates RimSort from provided temp path
+REM RimDex Updater Script (Windows 10 & 11 Compatible)
+REM Safely backs up and updates RimDex from provided temp path
 REM Usage: update.bat <temp_update_path> <log_path>
 REM ========================================================================
 
@@ -27,11 +27,11 @@ if "%TEMP_UPDATE_PATH%" == "" (
 
 REM Log start
 if defined LOG_PATH (
-    echo [%date% %time%] INFO: Starting RimSort update process... >> "%LOG_PATH%"
+    echo [%date% %time%] INFO: Starting RimDex update process... >> "%LOG_PATH%"
     echo [%date% %time%] INFO: Temp update path: %TEMP_UPDATE_PATH% >> "%LOG_PATH%"
     echo [%date% %time%] INFO: Log path: %LOG_PATH% >> "%LOG_PATH%"
 ) else (
-    echo [%date% %time%] INFO: Starting RimSort update process...
+    echo [%date% %time%] INFO: Starting RimDex update process...
     echo [%date% %time%] INFO: Temp update path: %TEMP_UPDATE_PATH%
 )
 
@@ -43,7 +43,7 @@ if "%current_dir:~-1%"=="\" (
     set "current_dir_no_slash=%current_dir%"
 )
 
-set "executable_path=%current_dir%\RimSort.exe"
+set "executable_path=%current_dir%\RimDex.exe"
 set "update_source_folder=%TEMP_UPDATE_PATH%"
 
 if defined LOG_PATH (
@@ -56,24 +56,24 @@ if defined LOG_PATH (
     echo [%date% %time%] INFO: Executable path: %executable_path%
 )
 
-REM Attempt to stop RimSort if it's already running
+REM Attempt to stop RimDex if it's already running
 if defined LOG_PATH (
-    echo [%date% %time%] INFO: Stopping RimSort process... >> "%LOG_PATH%"
+    echo [%date% %time%] INFO: Stopping RimDex process... >> "%LOG_PATH%"
 ) else (
-    echo [%date% %time%] INFO: Stopping RimSort process...
+    echo [%date% %time%] INFO: Stopping RimDex process...
 )
-taskkill /F /im RimSort.exe >nul 2>&1
+taskkill /F /im RimDex.exe >nul 2>&1
 if errorlevel 1 (
     if defined LOG_PATH (
-        echo [%date% %time%] INFO: No running RimSort process found. >> "%LOG_PATH%"
+        echo [%date% %time%] INFO: No running RimDex process found. >> "%LOG_PATH%"
     ) else (
-        echo [%date% %time%] INFO: No running RimSort process found.
+        echo [%date% %time%] INFO: No running RimDex process found.
     )
 ) else (
     if defined LOG_PATH (
-        echo [%date% %time%] INFO: RimSort process terminated. >> "%LOG_PATH%"
+        echo [%date% %time%] INFO: RimDex process terminated. >> "%LOG_PATH%"
     ) else (
-        echo [%date% %time%] INFO: RimSort process terminated.
+        echo [%date% %time%] INFO: RimDex process terminated.
     )
     ping -n 3 127.0.0.1 >nul
 )
@@ -89,12 +89,12 @@ if not exist "%update_source_folder%" (
     exit /b 1
 )
 
-REM Check if RimSort.exe exists in the update folder
-if not exist "%update_source_folder%\RimSort.exe" (
+REM Check if RimDex.exe exists in the update folder
+if not exist "%update_source_folder%\RimDex.exe" (
     if defined LOG_PATH (
-        echo [%date% %time%] ERROR: RimSort.exe not found in update source folder. >> "%LOG_PATH%"
+        echo [%date% %time%] ERROR: RimDex.exe not found in update source folder. >> "%LOG_PATH%"
     ) else (
-        echo [%date% %time%] ERROR: RimSort.exe not found in update source folder.
+        echo [%date% %time%] ERROR: RimDex.exe not found in update source folder.
     )
     pause
     exit /b 1
@@ -103,7 +103,7 @@ if not exist "%update_source_folder%\RimSort.exe" (
 REM Show update information
 echo.
 echo ========================================================================
-echo RimSort Update Ready
+echo RimDex Update Ready
 echo Source: %update_source_folder%
 echo Target: %current_dir%
 echo.
@@ -111,7 +111,7 @@ echo The update will start automatically...
 echo ========================================================================
 if defined LOG_PATH (
     echo. >> "%LOG_PATH%"
-    echo RimSort Update Ready >> "%LOG_PATH%"
+    echo RimDex Update Ready >> "%LOG_PATH%"
     echo Source: %update_source_folder% >> "%LOG_PATH%"
     echo Target: %current_dir% >> "%LOG_PATH%"
     echo. >> "%LOG_PATH%"
@@ -121,11 +121,11 @@ if defined LOG_PATH (
 
 REM Begin update by copying files from temp update folder to app folder
 if defined LOG_PATH (
-    echo [%date% %time%] INFO: Updating RimSort files... >> "%LOG_PATH%"
+    echo [%date% %time%] INFO: Updating RimDex files... >> "%LOG_PATH%"
     echo [%date% %time%] INFO: Source: %update_source_folder% >> "%LOG_PATH%"
     echo [%date% %time%] INFO: Target: %current_dir_no_slash% >> "%LOG_PATH%"
 ) else (
-    echo [%date% %time%] INFO: Updating RimSort files...
+    echo [%date% %time%] INFO: Updating RimDex files...
     echo [%date% %time%] INFO: Source: %update_source_folder%
     echo [%date% %time%] INFO: Target: %current_dir_no_slash%
 )
@@ -170,15 +170,15 @@ ping -n 4 127.0.0.1 >nul
 REM Verify the new executable exists
 if exist "%executable_path%" (
     if defined LOG_PATH (
-        echo [%date% %time%] INFO: RimSort.exe verified after update. >> "%LOG_PATH%"
+        echo [%date% %time%] INFO: RimDex.exe verified after update. >> "%LOG_PATH%"
     ) else (
-        echo [%date% %time%] INFO: RimSort.exe verified after update.
+        echo [%date% %time%] INFO: RimDex.exe verified after update.
     )
 ) else (
     if defined LOG_PATH (
-        echo [%date% %time%] ERROR: RimSort.exe not found after update. >> "%LOG_PATH%"
+        echo [%date% %time%] ERROR: RimDex.exe not found after update. >> "%LOG_PATH%"
     ) else (
-        echo [%date% %time%] ERROR: RimSort.exe not found after update.
+        echo [%date% %time%] ERROR: RimDex.exe not found after update.
     )
     pause
     exit /b 1
@@ -207,17 +207,17 @@ if exist "%update_source_folder%" (
     )
 )
 
-REM Launch updated RimSort
+REM Launch updated RimDex
 if defined LOG_PATH (
-    echo [%date% %time%] INFO: Launching RimSort from: %executable_path% >> "%LOG_PATH%"
+    echo [%date% %time%] INFO: Launching RimDex from: %executable_path% >> "%LOG_PATH%"
 ) else (
-    echo [%date% %time%] INFO: Launching RimSort from: %executable_path%
+    echo [%date% %time%] INFO: Launching RimDex from: %executable_path%
 )
 
 REM Give additional time for files to fully settle
 ping -n 2 127.0.0.1 >nul
 
-REM Start RimSort with better error handling
+REM Start RimDex with better error handling
 if exist "%executable_path%" (
     echo Launching: %executable_path%
     REM Change to app directory and launch with proper context
@@ -230,12 +230,12 @@ if exist "%executable_path%" (
     ping -n 6 127.0.0.1 >nul
 ) else (
     if defined LOG_PATH (
-        echo [%date% %time%] ERROR: RimSort.exe not found at: %executable_path% >> "%LOG_PATH%"
+        echo [%date% %time%] ERROR: RimDex.exe not found at: %executable_path% >> "%LOG_PATH%"
     ) else (
-        echo [%date% %time%] ERROR: RimSort.exe not found at: %executable_path%
+        echo [%date% %time%] ERROR: RimDex.exe not found at: %executable_path%
     )
     echo.
-    echo ERROR: RimSort.exe not found at expected location: %executable_path%
+    echo ERROR: RimDex.exe not found at expected location: %executable_path%
     echo.
     echo Press any key to close this window...
     pause >nul
@@ -249,7 +249,7 @@ set "attempt=0"
 set /a attempt+=1
 if !attempt! gtr 5 goto :launch_complete
 
-tasklist /fi "imagename eq RimSort.exe" /fo csv | find /i "RimSort.exe" >nul
+tasklist /fi "imagename eq RimDex.exe" /fo csv | find /i "RimDex.exe" >nul
 if not errorlevel 1 (
     set "launch_confirmed=1"
     goto :launch_success
@@ -262,24 +262,24 @@ goto :check_launch
 :launch_success
 if !launch_confirmed! EQU 1 (
     if defined LOG_PATH (
-        echo [%date% %time%] INFO: RimSort update completed and launched successfully! >> "%LOG_PATH%"
+        echo [%date% %time%] INFO: RimDex update completed and launched successfully! >> "%LOG_PATH%"
     ) else (
-        echo [%date% %time%] INFO: RimSort update completed and launched successfully!
+        echo [%date% %time%] INFO: RimDex update completed and launched successfully!
     )
     echo.
-    echo Update completed successfully! The new RimSort version is now running.
+    echo Update completed successfully! The new RimDex version is now running.
     echo This window will close automatically in 5 seconds...
     ping -n 6 127.0.0.1 >nul
 ) else (
     if defined LOG_PATH (
-        echo [%date% %time%] WARNING: RimSort may not have started. >> "%LOG_PATH%"
+        echo [%date% %time%] WARNING: RimDex may not have started. >> "%LOG_PATH%"
         echo [%date% %time%] INFO: You can start it manually from: %executable_path% >> "%LOG_PATH%"
     ) else (
-        echo [%date% %time%] WARNING: RimSort may not have started.
+        echo [%date% %time%] WARNING: RimDex may not have started.
         echo [%date% %time%] INFO: You can start it manually from: %executable_path%
     )
     echo.
-    echo Note: RimSort may still be starting in the background.
+    echo Note: RimDex may still be starting in the background.
     echo Press any key to close this window...
     pause >nul
 )

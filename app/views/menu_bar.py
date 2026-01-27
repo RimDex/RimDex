@@ -40,12 +40,12 @@ class MenuBar(QObject):
         self.export_to_rentry_action: QAction
         self.upload_log_actions: list[QAction] = []
         self.default_open_log_actions: list[QAction] = []
-        self.upload_rimsort_log_action: QAction
-        self.upload_rimsort_old_log_action: QAction
+        self.upload_rimdex_log_action: QAction
+        self.upload_rimdex_old_log_action: QAction
         self.upload_rimworld_log_action: QAction
         self.open_app_directory_action: QAction
         self.open_settings_directory_action: QAction
-        self.open_rimsort_logs_directory_action: QAction
+        self.open_rimdex_logs_directory_action: QAction
         self.open_rimworld_directory_action: QAction
         self.open_rimworld_config_directory_action: QAction
         self.open_rimworld_logs_directory_action: QAction
@@ -167,19 +167,19 @@ class MenuBar(QObject):
         self.shortcuts_submenu = QMenu(self.tr("Open..."))
         file_menu.addMenu(self.shortcuts_submenu)
         # Add submenu under Shortcuts
-        self.rimsort_shortcuts_submenu = QMenu(self.tr("RimSort"))
-        self.shortcuts_submenu.addMenu(self.rimsort_shortcuts_submenu)
+        self.rimdex_shortcuts_submenu = QMenu(self.tr("RimDex"))
+        self.shortcuts_submenu.addMenu(self.rimdex_shortcuts_submenu)
         self.rimworld_shortcuts_submenu = QMenu(self.tr("RimWorld"))
         self.shortcuts_submenu.addMenu(self.rimworld_shortcuts_submenu)
-        # Add actions to RimSort submenu
+        # Add actions to RimDex submenu
         self.open_app_directory_action = self._add_action(
-            self.rimsort_shortcuts_submenu, self.tr("Root Directory")
+            self.rimdex_shortcuts_submenu, self.tr("Root Directory")
         )
         self.open_settings_directory_action = self._add_action(
-            self.rimsort_shortcuts_submenu, self.tr("Config Directory")
+            self.rimdex_shortcuts_submenu, self.tr("Config Directory")
         )
-        self.open_rimsort_logs_directory_action = self._add_action(
-            self.rimsort_shortcuts_submenu, self.tr("Logs Directory")
+        self.open_rimdex_logs_directory_action = self._add_action(
+            self.rimdex_shortcuts_submenu, self.tr("Logs Directory")
         )
         # Add action to RimWorld submenu
         self.open_rimworld_directory_action = self._add_action(
@@ -229,9 +229,9 @@ class MenuBar(QObject):
             return None
 
         logfile_submenu = QMenu(self.tr(menu_name))
-        create_entry("RimSort.log", lambda: AppInfo().user_log_folder / "RimSort.log")
+        create_entry("RimDex.log", lambda: AppInfo().user_log_folder / "RimDex.log")
         create_entry(
-            "RimSort.old.log", lambda: AppInfo().user_log_folder / "RimSort.old.log"
+            "RimDex.old.log", lambda: AppInfo().user_log_folder / "RimDex.old.log"
         )
         create_entry(
             "RimWorld Player.log",
@@ -360,8 +360,8 @@ class MenuBar(QObject):
             QMenu: The created "Help" menu.
         """
         help_menu = self.menu_bar.addMenu(self.tr("Help"))
-        self.wiki_action = self._add_action(help_menu, self.tr("RimSort Wiki…"))
-        self.github_action = self._add_action(help_menu, self.tr("RimSort GitHub…"))
+        self.wiki_action = self._add_action(help_menu, self.tr("RimDex Wiki…"))
+        self.github_action = self._add_action(help_menu, self.tr("RimDex GitHub…"))
         help_menu.addSeparator()
         return help_menu
 
@@ -385,6 +385,6 @@ class MenuBar(QObject):
         self._create_download_menu()
         self._create_instances_menu()
         self._create_texture_menu()
-        if not os.getenv("RIMSORT_DISABLE_UPDATER"):
+        if not os.getenv("RIMDEX_DISABLE_UPDATER"):
             self._create_update_menu()
         self._create_help_menu()

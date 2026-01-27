@@ -48,7 +48,7 @@ class Status:
         """
         logger.info(f"Displaying fading text for action: {action}")
         if action == "check_for_rs_update":
-            self.status_text.start_pause_fade("Checking for RimSort updates")
+            self.status_text.start_pause_fade("Checking for RimDex updates")
         # actions panel actions
         elif action == "refresh":
             self.status_text.start_pause_fade(

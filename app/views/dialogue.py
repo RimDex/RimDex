@@ -35,7 +35,7 @@ from app.utils.app_info import AppInfo
 from app.utils.event_bus import EventBus
 
 # Constants
-DEFAULT_TITLE = "RimSort"
+DEFAULT_TITLE = "RimDex"
 
 
 def _get_parent_if_constrain_enabled(parent: QWidget | None = None) -> QWidget | None:
@@ -295,17 +295,17 @@ def show_internet_connection_error(
 
     show_information(
         title="No Internet Connection",
-        text="RimSort requires an active internet connection to perform this operation.",
+        text="RimDex requires an active internet connection to perform this operation.",
         information=(
             f"{failed_urls_str}\n\n"
-            "If you are connected but still see this message, your firewall or security software may be blocking RimSort. \n"
+            "If you are connected but still see this message, your firewall or security software may be blocking RimDex. \n"
             "To resolve this issue: \n\n"
-            "Add RimSort to your firewall's allowed applications. \n"
-            "You may need to add RimSort to your firewall's allowed list."
+            "Add RimDex to your firewall's allowed applications. \n"
+            "You may need to add RimDex to your firewall's allowed list."
         ),
         details=(
             "On Windows: Open Windows Security > Firewall & network protection > Allow an app through firewall. \n"
-            "Find RimSort or add it manually if needed. \n"
+            "Find RimDex or add it manually if needed. \n"
             "On other systems, check your firewall or security software settings. \n"
             "If you need more help, Please reach out to us on Github Issues page or Discord server."
         ),
@@ -698,7 +698,7 @@ class UploadLogTask(QRunnable):
     def run(self) -> None:
         # Perform the upload task
         result, url = generic.upload_data_to_0x0_st(
-            str(AppInfo().user_log_folder / "RimSort.log")
+            str(AppInfo().user_log_folder / "RimDex.log")
         )
 
         # Emit signal on completion
@@ -764,14 +764,14 @@ class SettingsFailureDialog(QDialog):
 
         # Add data
         self.text = self.tr(
-            "Your RimSort settings file is corrupt.\nPlease choose one of the following options to proceed."
+            "Your RimDex settings file is corrupt.\nPlease choose one of the following options to proceed."
         )
 
         # Buttons
         self.open_settings_file_btn = QPushButton(self.tr("Open Settings"))
         self.open_settings_folder_btn = QPushButton(self.tr("Open Settings Folder"))
         self.reset_settings_btn = QPushButton(self.tr("Reset Settings"))
-        self.close_application_btn = QPushButton(self.tr("Exit RimSort"))
+        self.close_application_btn = QPushButton(self.tr("Exit RimDex"))
 
         btn_layout = QHBoxLayout()
         btn_layout.addWidget(self.open_settings_file_btn)

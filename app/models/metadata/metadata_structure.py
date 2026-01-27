@@ -239,7 +239,7 @@ class ListedMod(BaseMod):
     Includes the minimum required fields for a mod to be displayed in a list.
 
     Attributes:
-        valid (bool): Whether the mod is considered valid by RimSort.
+        valid (bool): Whether the mod is considered valid by RimDex.
         description (str): A description of the mod.
         supported_versions (set[str]): A set of supported RimWorld versions.
         description (str): A description of the mod.
@@ -254,7 +254,7 @@ class ListedMod(BaseMod):
 
     supported_versions: set[str] = field(default_factory=set)
     description: str = (
-        "This mod is considered invalid by RimSort (and the RimWorld game)."
+        "This mod is considered invalid by RimDex (and the RimWorld game)."
         + "\n\nThis mod does NOT contain an ./About/About.xml and is likely leftover from previous usage."
         + "\n\nThis can happen sometimes with Steam mods if there are leftover .dds textures or unexpected data."
     )

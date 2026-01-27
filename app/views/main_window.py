@@ -326,7 +326,7 @@ class MainWindow(QMainWindow):
         EventBus().do_delete_outdated_entries_in_aux_db.emit()
 
     def __check_steam_integration(self) -> None:
-        """Ask the user if they would like to enable Steam Client Integration for the active instance if it is the first time they are setting up RimSort."""
+        """Ask the user if they would like to enable Steam Client Integration for the active instance if it is the first time they are setting up RimDex."""
         instance = self.settings_controller.active_instance
 
         if instance.initial_setup and not instance.steam_client_integration:
@@ -335,7 +335,7 @@ class MainWindow(QMainWindow):
                 text=self.tr(
                     "<h3>Would you like to enable Steam Client Integration for this instance?</h3>"
                 ),
-                information=self.tr("""This will allow you to use RimSort features that require the Steam Client. This includes, among other things, unsubscribing from workshop mods and opening workshop links via the Steam Client. 
+                information=self.tr("""This will allow you to use RimDex features that require the Steam Client. This includes, among other things, unsubscribing from workshop mods and opening workshop links via the Steam Client. 
                 <br><br>
                 You can change this in the settings under the Advanced tab."""),
                 negative_text="No",
@@ -384,7 +384,7 @@ class MainWindow(QMainWindow):
                 self.tr(
                     "Workshop folder: {existing_instance_workshop_folder}\n\n"
                     + "Option 1: Convert to SteamCMD\n"
-                    + "RimSort will copy all Workshop mods to the new instance's local mods folder, converting them to SteamCMD mods that you can manage inside the new instance. The Workshop folder will be ignored for this instance to prevent duplicate mods.\n\n"
+                    + "RimDex will copy all Workshop mods to the new instance's local mods folder, converting them to SteamCMD mods that you can manage inside the new instance. The Workshop folder will be ignored for this instance to prevent duplicate mods.\n\n"
                     + "Option 2: Keep Workshop Folder\n"
                     + "The new instance will use the same Workshop folder as the original instance. You can change this later in the settings if needed.\n\n"
                     + "How would you like to proceed?"
@@ -431,7 +431,7 @@ class MainWindow(QMainWindow):
         if output_path:
             try:
                 EventBus().do_threaded_loading_animation.emit(
-                    str(AppInfo().theme_data_folder / "default-icons" / "rimsort.gif"),
+                    str(AppInfo().theme_data_folder / "default-icons" / "rimdex.gif"),
                     partial(
                         instance_controller.compress_to_archive,
                         output_path,
@@ -512,7 +512,7 @@ class MainWindow(QMainWindow):
                 return
 
         EventBus().do_threaded_loading_animation.emit(
-            str(AppInfo().theme_data_folder / "default-icons" / "rimsort.gif"),
+            str(AppInfo().theme_data_folder / "default-icons" / "rimdex.gif"),
             partial(
                 instance_controller.extract_from_archive,
                 input_path,
@@ -1113,7 +1113,7 @@ class MainWindow(QMainWindow):
 
         :param instance: Name of the instance currently being used.
         """
-        self.setWindowTitle(f"RimSort {AppInfo().app_version} | {instance} Instance")
+        self.setWindowTitle(f"RimDex {AppInfo().app_version} | {instance} Instance")
 
     def initialize_watchdog(self) -> None:
         logger.info("Initializing watchdog FS Observer")

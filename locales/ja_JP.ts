@@ -101,8 +101,8 @@ Try subscribing to the collection first</source>
 <context>
     <name>DuplicateModsPanel</name>
     <message>
-        <source>RimSort - Duplicate Mods Found</source>
-        <translation>rimSort - 重複した Mod が見つかりました</translation>
+        <source>RimDex - Duplicate Mods Found</source>
+        <translation>RimDex - 重複した Mod が見つかりました</translation>
     </message>
     <message>
         <source>Duplicate mods detected!</source>
@@ -200,24 +200,24 @@ Try simplifying your pattern or check for syntax errors.</source>
         <translation>ファイルアクセスエラー</translation>
     </message>
     <message>
-        <source>RimSort doesn't have permission to access some files.</source>
-        <translation>RimSortは一部のファイルにアクセスする権限がありません。</translation>
+        <source>RimDex doesn't have permission to access some files.</source>
+        <translation>RimDexは一部のファイルにアクセスする権限がありません。</translation>
     </message>
     <message>
         <source>{error_msg}
 
-Try running RimSort with administrator privileges or check folder permissions.</source>
+Try running RimDex with administrator privileges or check folder permissions.</source>
         <translation>{error_msg}
 
-RimSortを管理者権限で実行するか、フォルダのアクセス許可を確認してください。</translation>
+RimDexを管理者権限で実行するか、フォルダのアクセス許可を確認してください。</translation>
     </message>
     <message>
         <source>Memory Error</source>
         <translation>メモリエラー</translation>
     </message>
     <message>
-        <source>RimSort ran out of memory while searching.</source>
-        <translation>RimSortは検索中にメモリ不足になりました。</translation>
+        <source>RimDex ran out of memory while searching.</source>
+        <translation>RimDexは検索中にメモリ不足になりました。</translation>
     </message>
     <message>
         <source>{error_msg}
@@ -471,8 +471,8 @@ When unchecked, search all file types with standard search.</source>
 <context>
     <name>IgnoreJsonEditor</name>
     <message>
-        <source>RimSort - Manage Ignore List</source>
-        <translation>rimSort - 無視リストの管理</translation>
+        <source>RimDex - Manage Ignore List</source>
+        <translation>RimDex - 無視リストの管理</translation>
     </message>
     <message>
         <source>Mods checked below will be removed from the ignore list.</source>
@@ -569,10 +569,10 @@ When unchecked, search all file types with standard search.</source>
         <translation>必須のパスが無効または設定されていません！</translation>
     </message>
     <message>
-        <source>RimSort requires, at the minimum, for the game install folder and the config folder paths to be set, and that the paths both exist. Please set both of these manually or by using the autodetect functionality.
+        <source>RimDex requires, at the minimum, for the game install folder and the config folder paths to be set, and that the paths both exist. Please set both of these manually or by using the autodetect functionality.
 
 Would you like to configure them now?</source>
-        <translation>RimSortを使用するには、ゲームのインストールフォルダーと設定フォルダーのパスを設定し、両方のパスが存在する必要があります。これらのパスを手動で設定するか、自動検出機能を使用してください。
+        <translation>RimDexを使用するには、ゲームのインストールフォルダーと設定フォルダーのパスを設定し、両方のパスが存在する必要があります。これらのパスを手動で設定するか、自動検出機能を使用してください。
 
 今すぐ構成しますか？</translation>
     </message>
@@ -605,8 +605,8 @@ Would you like to configure them now?</source>
         <translation>重要</translation>
     </message>
     <message>
-        <source>You will need to redo Rentry import again after downloads complete. If there missing mods after download completes, they will be shown inside the missing mods panel. If RimSort is still not able to download some mods, It's due to the mod data not being available in both Rentry link and steam database.</source>
-        <translation>ダウンロードが完了したら、Rentryインポートを再度実行する必要があります。ダウンロードが完了した後に不足しているモッドがある場合、それらは不足しているモッドパネルに表示されます。RimSortが一部のモッドをダウンロードできない場合、それはRentryリンクとSteamデータベースの両方でモッドデータが利用できないためです。</translation>
+        <source>You will need to redo Rentry import again after downloads complete. If there missing mods after download completes, they will be shown inside the missing mods panel. If RimDex is still not able to download some mods, It's due to the mod data not being available in both Rentry link and steam database.</source>
+        <translation>ダウンロードが完了したら、Rentryインポートを再度実行する必要があります。ダウンロードが完了した後に不足しているモッドがある場合、それらは不足しているモッドパネルに表示されます。RimDexが一部のモッドをダウンロードできない場合、それはRentryリンクとSteamデータベースの両方でモッドデータが利用できないためです。</translation>
     </message>
     <message>
         <source>Steam client integration not set up</source>
@@ -793,9 +793,9 @@ Would you like to configure them now?</source>
         <translation>アップデートを確認できませんでした</translation>
     </message>
     <message>
-        <source>RimSort was unable to query Steam WebAPI for update information!
+        <source>RimDex was unable to query Steam WebAPI for update information!
 </source>
-        <translation>RimSortはSteam WebAPIに対してアップデート情報を照会できませんでした！
+        <translation>RimDexはSteam WebAPIに対してアップデート情報を照会できませんでした！
 </translation>
     </message>
     <message>
@@ -815,8 +815,8 @@ Would you like to configure them now?</source>
         <translation>この機能を使用するには、設定で Steam クライアント統合を有効にする必要があります。 Steam でゲームを所有している場合は、Steam クライアント統合を有効にしてください。</translation>
     </message>
     <message>
-        <source>RimSort - SteamCMD setup</source>
-        <translation>RimSort - SteamCMDの設定</translation>
+        <source>RimDex - SteamCMD setup</source>
+        <translation>RimDex - SteamCMDの設定</translation>
     </message>
     <message>
         <source>Unable to create SteamCMD runner!</source>
@@ -835,8 +835,8 @@ Would you like to configure them now?</source>
         <translation>インストールを試みる前に、設定でローカルモッドのパスを設定してください。</translation>
     </message>
     <message>
-        <source>RimSort</source>
-        <translation>RimSort</translation>
+        <source>RimDex</source>
+        <translation>RimDex</translation>
     </message>
     <message>
         <source>No PublishedFileIds were supplied in operation.</source>
@@ -987,10 +987,10 @@ How would you like to proceed?
     <message>
         <source>Git integration will not work without Git installed! Do you want to open download page for Git?
 
-If you just installed Git, please restart RimSort for the PATH changes to take effect.</source>
+If you just installed Git, please restart RimDex for the PATH changes to take effect.</source>
         <translation>Gitがインストールされていないと、Git統合は機能しません！Gitのダウンロードページを開きますか？
 
-Gitをインストールしたばかりの場合は、PATHの変更を有効にするためにRimSortを再起動してください。</translation>
+Gitをインストールしたばかりの場合は、PATHの変更を有効にするためにRimDexを再起動してください。</translation>
     </message>
     <message>
         <source>Edit Steam DB repo</source>
@@ -1027,8 +1027,8 @@ PublishedFileIDは、SteamからMODを取得するために必要です！</tran
         <translation>ここにはドラゴンがいます。</translation>
     </message>
     <message>
-        <source>WARNING: It is NOT recommended to subscribe to this many mods at once via Steam. Steam has limitations in place seemingly intentionally and unintentionally for API subscriptions. It is highly recommended that you instead download these mods to a SteamCMD prefix by using SteamCMD. This can take longer due to rate limits, but you can also re-use the script generated by RimSort with a separate, authenticated instance of SteamCMD, if you do not want to anonymously download via RimSort.</source>
-        <translation>警告：Steamを介して一度にこれだけ多くのMODにサブスクライブすることはお勧めできません。Steamには、APIサブスクリプションに対して意図的および意図しない制限があります。これらのMODをSteamCMDを使用してSteamCMDプレフィックスにダウンロードすることを強くお勧めします。レート制限のために時間がかかる場合がありますが、RimSortを介して匿名でダウンロードしたくない場合は、別の認証済みのSteamCMDインスタンスでRimSortによって生成されたスクリプトを再利用することもできます。</translation>
+        <source>WARNING: It is NOT recommended to subscribe to this many mods at once via Steam. Steam has limitations in place seemingly intentionally and unintentionally for API subscriptions. It is highly recommended that you instead download these mods to a SteamCMD prefix by using SteamCMD. This can take longer due to rate limits, but you can also re-use the script generated by RimDex with a separate, authenticated instance of SteamCMD, if you do not want to anonymously download via RimDex.</source>
+        <translation>警告：Steamを介して一度にこれだけ多くのMODにサブスクライブすることはお勧めできません。Steamには、APIサブスクリプションに対して意図的および意図しない制限があります。これらのMODをSteamCMDを使用してSteamCMDプレフィックスにダウンロードすることを強くお勧めします。レート制限のために時間がかかる場合がありますが、RimDexを介して匿名でダウンロードしたくない場合は、別の認証済みのSteamCMDインスタンスでRimDexによって生成されたスクリプトを再利用することもできます。</translation>
     </message>
     <message>
         <source>Edit Steam WebAPI key</source>
@@ -1099,8 +1099,8 @@ The resultant database, C, is saved to a user-specified path. You will be prompt
         <translation>パス: {path}</translation>
     </message>
     <message>
-        <source>RimSort - DB Builder</source>
-        <translation>RimSort - DBビルダー</translation>
+        <source>RimDex - DB Builder</source>
+        <translation>RimDex - DBビルダー</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -1855,7 +1855,7 @@ GitHubで手動でプルリクエストを作成できます。
         <translation>&lt;h3&gt;このインスタンスにSteamクライアント統合を有効にしますか？&lt;/h3&gt;</translation>
     </message>
     <message>
-        <source>This will allow you to use RimSort features that require the Steam Client. This includes, among other things, unsubscribing from workshop mods and opening workshop links via the Steam Client. 
+        <source>This will allow you to use RimDex features that require the Steam Client. This includes, among other things, unsubscribing from workshop mods and opening workshop links via the Steam Client. 
                 &lt;br&gt;&lt;br&gt;
                 You can change this in the settings under the Advanced tab.</source>
         <translation>これにより、Steamクライアントの機能を使用できるようになります。これには、ワークショップモッドの購読解除や、Steamクライアントを介したワークショップリンクの開きなどが含まれます。
@@ -2041,7 +2041,7 @@ Generated run arguments preview:
         <source>Workshop folder: {existing_instance_workshop_folder}
 
 Option 1: Convert to SteamCMD
-RimSort will copy all Workshop mods to the new instance's local mods folder, converting them to SteamCMD mods that you can manage inside the new instance. The Workshop folder will be ignored for this instance to prevent duplicate mods.
+RimDex will copy all Workshop mods to the new instance's local mods folder, converting them to SteamCMD mods that you can manage inside the new instance. The Workshop folder will be ignored for this instance to prevent duplicate mods.
 
 Option 2: Keep Workshop Folder
 The new instance will use the same Workshop folder as the original instance. You can change this later in the settings if needed.
@@ -2113,8 +2113,8 @@ How would you like to proceed?</source>
         <translation>開く…</translation>
     </message>
     <message>
-        <source>RimSort</source>
-        <translation>RimSort</translation>
+        <source>RimDex</source>
+        <translation>RimDex</translation>
     </message>
     <message>
         <source>RimWorld</source>
@@ -2257,16 +2257,16 @@ How would you like to proceed?</source>
         <translation>ヘルプ</translation>
     </message>
     <message>
-        <source>RimSort Wiki…</source>
-        <translation>RimSort Wiki…</translation>
+        <source>RimDex Wiki…</source>
+        <translation>RimDex Wiki…</translation>
     </message>
     <message>
         <source>From Save file…</source>
         <translation>保存ファイルから…</translation>
     </message>
     <message>
-        <source>RimSort GitHub…</source>
-        <translation>rimsort github…</translation>
+        <source>RimDex GitHub…</source>
+        <translation>rimdex github…</translation>
     </message>
     <message>
         <source>Reset Mod Colors</source>
@@ -2305,8 +2305,8 @@ Falling back to cached, but EXPIRED Steam Database...</source>
         <translation>Version.txt が見つかりません</translation>
     </message>
     <message>
-        <source>RimSort is unable to get the game version at the expected path: [{version_file_path}].</source>
-        <translation>RimSort は、期待されるパス [{version_file_path}] でゲームバージョンを取得できません。</translation>
+        <source>RimDex is unable to get the game version at the expected path: [{version_file_path}].</source>
+        <translation>RimDex は、期待されるパス [{version_file_path}] でゲームバージョンを取得できません。</translation>
     </message>
     <message>
         <source>
@@ -2361,8 +2361,8 @@ Select which missing dependencies to add to your active mods list.</source>
 <context>
     <name>MissingModPropertiesPanel</name>
     <message>
-        <source>RimSort - Mods with Missing Properties</source>
-        <translation>rimSort - プロパティが欠落している MOD</translation>
+        <source>RimDex - Mods with Missing Properties</source>
+        <translation>RimDex - プロパティが欠落している MOD</translation>
     </message>
     <message>
         <source>Mods with Missing Properties detected!</source>
@@ -2394,8 +2394,8 @@ Please contact the mod authors to add these properties to their mods.</source>
 <context>
     <name>MissingModsPrompt</name>
     <message>
-        <source>RimSort - Missing mods found</source>
-        <translation>RimSort - 不足しているMODが見つかりました</translation>
+        <source>RimDex - Missing mods found</source>
+        <translation>RimDex - 不足しているMODが見つかりました</translation>
     </message>
     <message>
         <source>There are mods missing from the active mods list!</source>
@@ -2435,8 +2435,8 @@ Please select your preferred mod variant in the table below. You can also open e
         <translation>最適化されたテクスチャ（.ddsファイルのみ）を削除</translation>
     </message>
     <message>
-        <source>RimSort</source>
-        <translation>RimSort</translation>
+        <source>RimDex</source>
+        <translation>RimDex</translation>
     </message>
     <message>
         <source>Mod directory was not empty. Please close all programs accessing files or subfolders in the directory (including your file manager) and try again.</source>
@@ -2655,7 +2655,7 @@ Do you want to proceed?</source>
         <translation>ワークショップ時間:</translation>
     </message>
     <message>
-        <source>Welcome to RimSort!</source>
+        <source>Welcome to RimDex!</source>
         <translation>リムソートへようこそ！</translation>
     </message>
     <message>
@@ -3421,8 +3421,8 @@ Alternative Dependencies:</source>
 <context>
     <name>Rentry Auth Code Not Found </name>
     <message>
-        <source>RimSort can work without rentry auth code. But To enable full functionality of renry.co you need to email support@rentry.co and request an auth code. Then paste it into Settings -&gt; Advanced -&gt; Rentry Auth.</source>
-        <translation>RimSortはrentry認証コードなしで動作します。ただし、renry.coの完全な機能を有効にするには、support@rentry.coにメールを送り、認証コードをリクエストする必要があります。その後、設定 -&gt; 詳細 -&gt; Rentry Authに貼り付けてください。</translation>
+        <source>RimDex can work without rentry auth code. But To enable full functionality of renry.co you need to email support@rentry.co and request an auth code. Then paste it into Settings -&gt; Advanced -&gt; Rentry Auth.</source>
+        <translation>RimDexはrentry認証コードなしで動作します。ただし、renry.coの完全な機能を有効にするには、support@rentry.coにメールを送り、認証コードをリクエストする必要があります。その後、設定 -&gt; 詳細 -&gt; Rentry Authに貼り付けてください。</translation>
     </message>
 </context>
 <context>
@@ -3436,8 +3436,8 @@ Alternative Dependencies:</source>
         <translation>Rentryがステータスコード{code}を返しました。</translation>
     </message>
     <message>
-        <source>RimSort failed to fetch the content from the provided Rentry link. This may be due to an invalid link, your internet connection, or Rentry.co being down. It may also be the result of a captcha. Please try again later.</source>
-        <translation>RimSortが提供されたRentryリンクからコンテンツを取得できませんでした。これは無効なリンク、インターネット接続の問題、またはRentry.coのダウン、またはCAPTCHAの結果である可能性があります。後で再試行してください。</translation>
+        <source>RimDex failed to fetch the content from the provided Rentry link. This may be due to an invalid link, your internet connection, or Rentry.co being down. It may also be the result of a captcha. Please try again later.</source>
+        <translation>RimDexが提供されたRentryリンクからコンテンツを取得できませんでした。これは無効なリンク、インターネット接続の問題、またはRentry.coのダウン、またはCAPTCHAの結果である可能性があります。後で再試行してください。</translation>
     </message>
     <message>
         <source>Network Error</source>
@@ -3878,8 +3878,8 @@ Click 'Show Details' to see a list of mods that failed.</source>
         <translation>毎日の最初の起動時に自動的にバックアップ保存</translation>
     </message>
     <message>
-        <source>If enabled, RimSort will automatically backup saves on the first daily launch.</source>
-        <translation>有効にすると、RimSort は毎日の最初の起動時に自動的に保存をバックアップします。</translation>
+        <source>If enabled, RimDex will automatically backup saves on the first daily launch.</source>
+        <translation>有効にすると、RimDex は毎日の最初の起動時に自動的に保存をバックアップします。</translation>
     </message>
     <message>
         <source>Number of backups to keep:</source>
@@ -4159,10 +4159,10 @@ This may potentially prevent some issues with downloading mods such as download 
     <message>
         <source>To add your own theme / stylesheet 
 
-1) Create a new-folder in 'themes' folder in your 'RimSort' config folder 
+1) Create a new-folder in 'themes' folder in your 'RimDex' config folder 
 2) Using the default 'RimPy' theme copy it to the folder you created 
 3) Edit the copied 'style.qss' as per your imagination 
-4) Start 'RimSort' and select your theme from dropdown 
+4) Start 'RimDex' and select your theme from dropdown 
 5) Click 'ok' to save settings and apply the selected theme 
 
 NOTE 
@@ -4170,10 +4170,10 @@ Name of folder will be used as name of the theme and any invalid theme will be i
 </source>
         <translation>独自のテーマ /スタイルシートを追加するには
 
-1）「rimsort」構成フォルダーに「Themes」フォルダーに新しい倍率を作成する
+1）「rimdex」構成フォルダーに「Themes」フォルダーに新しい倍率を作成する
 2）デフォルトの「rimpy」テーマを使用して作成したフォルダーにコピーします
 3）あなたの想像力に従って、コピーされた「style.qss」を編集します
-4）「rimsort」を開始し、ドロップダウンからテーマを選択します
+4）「rimdex」を開始し、ドロップダウンからテーマを選択します
 5）[OK]をクリックして設定を保存し、選択したテーマを適用します
 
 注記
@@ -4216,8 +4216,8 @@ Name of folder will be used as name of the theme and any invalid theme will be i
         <translation>高度な</translation>
     </message>
     <message>
-        <source>RimSort restart required for some settings</source>
-        <translation>RimSortの設定を変更すると再起動が必要です</translation>
+        <source>RimDex restart required for some settings</source>
+        <translation>RimDexの設定を変更すると再起動が必要です</translation>
     </message>
     <message>
         <source>Enable debug logging</source>
@@ -4264,8 +4264,8 @@ Name of folder will be used as name of the theme and any invalid theme will be i
         <translation>起動時にデータベースを更新</translation>
     </message>
     <message>
-        <source>Enable this option to automatically update enabled databases when RimSort starts. This will check for updates and download them if available.</source>
-        <translation>このオプションを有効にすると、RimSortが起動したときに有効なデータベースが自動的に更新されます。これにより、更新がある場合はそれを確認し、ダウンロードします。</translation>
+        <source>Enable this option to automatically update enabled databases when RimDex starts. This will check for updates and download them if available.</source>
+        <translation>このオプションを有効にすると、RimDexが起動したときに有効なデータベースが自動的に更新されます。これにより、更新がある場合はそれを確認し、ダウンロードします。</translation>
     </message>
     <message>
         <source>Rentry Auth:</source>
@@ -4320,8 +4320,8 @@ Name of folder will be used as name of the theme and any invalid theme will be i
         <translation>Steam プロトコル経由でゲームを起動します (Steam オーバーレイを有効にします)</translation>
     </message>
     <message>
-        <source>If enabled, RimSort will launch the game using the Steam protocol (steam://rungameid/294100) instead of directly running the executable. This enables the Steam overlay. Note: This requires Steam to be running and will ignore custom launch arguments.</source>
-        <translation>有効にすると、RimSort は実行可能ファイルを直接実行するのではなく、Steam プロトコル (steam://rungameid/294100) を使用してゲームを起動します。これにより、Steam オーバーレイが有効になります。注: これには Steam が実行されている必要があり、カスタム起動引数は無視されます。</translation>
+        <source>If enabled, RimDex will launch the game using the Steam protocol (steam://rungameid/294100) instead of directly running the executable. This enables the Steam overlay. Note: This requires Steam to be running and will ignore custom launch arguments.</source>
+        <translation>有効にすると、RimDex は実行可能ファイルを直接実行するのではなく、Steam プロトコル (steam://rungameid/294100) を使用してゲームを起動します。これにより、Steam オーバーレイが有効になります。注: これには Steam が実行されている必要があり、カスタム起動引数は無視されます。</translation>
     </message>
     <message>
         <source>Enter launch options using Steam-style syntax with optional %command% placeholder:
@@ -4372,12 +4372,12 @@ Name of folder will be used as name of the theme and any invalid theme will be i
 After a mod is deleted, this is the time we wait until this mod item is deleted from the Auxiliary Metadata DB. 
 This Auxiliary DB contains info for mod colors, toggled warning, user notes etc. 
 This basically preserves your mod coloring, user notes etc. for this many seconds after deletion. 
-(This applies to deletion outside of RimSort too)</source>
+(This applies to deletion outside of RimDex too)</source>
         <translation>この時間制限の編集を有効にするには、高度な設定で関連するチェックボックスを確認してください。
 modが削除された後、これはこのmodアイテムが補助メタデータdbから削除されるまで待つ時間です。
 この補助DBには、mod色の情報、切り替えの警告、ユーザーノートなどが含まれています。
 これにより、基本的には、削除後何秒後に、MODの着色、ユーザーノートなどが保存されます。
-（これはRimsort以外の削除にも適用されます）</translation>
+（これはRimDex以外の削除にも適用されます）</translation>
     </message>
     <message>
         <source>Enable editing</source>
@@ -4532,12 +4532,12 @@ E.g., 'oels.vehiclemapframework', alternatives: 'oels.vehiclemapframework.dev'</
         <translation>XML解析動作</translation>
     </message>
     <message>
-        <source>Create backup before RimSort update</source>
-        <translation>RIMSORTアップデートの前にバックアップを作成します</translation>
+        <source>Create backup before RimDex update</source>
+        <translation>RIMDEXアップデートの前にバックアップを作成します</translation>
     </message>
     <message>
-        <source>Recommended to keep this enabled as it creates a backup before updating RimSort, This helps prevent any unwanted changes or data getting deleted.</source>
-        <translation>RIMSORTを更新する前にバックアップを作成するため、これを有効にすることをお勧めします。これにより、不要な変更やデータが削除されるのを防ぐのに役立ちます。</translation>
+        <source>Recommended to keep this enabled as it creates a backup before updating RimDex, This helps prevent any unwanted changes or data getting deleted.</source>
+        <translation>RIMDEXを更新する前にバックアップを作成するため、これを有効にすることをお勧めします。これにより、不要な変更やデータが削除されるのを防ぐのに役立ちます。</translation>
     </message>
     <message>
         <source>Maximum number of backups to keep:</source>
@@ -4547,9 +4547,9 @@ E.g., 'oels.vehiclemapframework', alternatives: 'oels.vehiclemapframework.dev'</
 <context>
     <name>SettingsFailureDialog</name>
     <message>
-        <source>Your RimSort settings file is corrupt.
+        <source>Your RimDex settings file is corrupt.
 Please choose one of the following options to proceed.</source>
-        <translation>RimSortの設定ファイルが破損しています。
+        <translation>RimDexの設定ファイルが破損しています。
 次のオプションのいずれかを選択してください。</translation>
     </message>
     <message>
@@ -4565,8 +4565,8 @@ Please choose one of the following options to proceed.</source>
         <translation>設定をリセット</translation>
     </message>
     <message>
-        <source>Exit RimSort</source>
-        <translation>RimSortを終了</translation>
+        <source>Exit RimDex</source>
+        <translation>RimDexを終了</translation>
     </message>
 </context>
 <context>
@@ -4633,9 +4633,9 @@ Please choose one of the following options to proceed.</source>
     </message>
     <message>
         <source>Please reach out to us on Github Issues page or
-#rimsort-testing on the Rocketman/CAI discord</source>
+#rimdex-testing on the Rocketman/CAI discord</source>
         <translation>GithubのIssuesページまたは
-Rocketman/CAIのDiscordの#rimsort-testingでお問い合わせください。</translation>
+Rocketman/CAIのDiscordの#rimdex-testingでお問い合わせください。</translation>
     </message>
     <message>
         <source>You already have these mods in your download list!</source>
@@ -4653,13 +4653,13 @@ Rocketman/CAIのDiscordの#rimsort-testingでお問い合わせください。</
 <context>
     <name>SteamcmdInterface</name>
     <message>
-        <source>RimSort - SteamCMD setup</source>
-        <translation>RimSort - SteamCMDの設定</translation>
+        <source>RimDex - SteamCMD setup</source>
+        <translation>RimDex - SteamCMDの設定</translation>
     </message>
     <message>
-        <source>RimSort was unable to find SteamCMD installed in the configured prefix:
+        <source>RimDex was unable to find SteamCMD installed in the configured prefix:
 </source>
-        <translation>RimSortは、設定されたプレフィックスにインストールされたSteamCMDを見つけることができませんでした：
+        <translation>RimDexは、設定されたプレフィックスにインストールされたSteamCMDを見つけることができませんでした：
 </translation>
     </message>
     <message>
@@ -5070,8 +5070,8 @@ Details: {e}</source>
         <translation>ModsConfig.xml, Prefs.xml, KeyPrefs.xmlを含むゲームの設定ファイルを削除します。</translation>
     </message>
     <message>
-        <source>After resetting game configurations, launch the game directly through Steam to regenerate ModsConfig.xml, then restart RimSort.</source>
-        <translation>ゲームの設定をリセットした後、Steamを直接起動してModsConfig.xmlを再生成し、RimSortを再起動します。</translation>
+        <source>After resetting game configurations, launch the game directly through Steam to regenerate ModsConfig.xml, then restart RimDex.</source>
+        <translation>ゲームの設定をリセットした後、Steamを直接起動してModsConfig.xmlを再生成し、RimDexを再起動します。</translation>
     </message>
     <message>
         <source>Apply Recovery</source>
@@ -5177,22 +5177,22 @@ Details: {e}</source>
 <context>
     <name>UpdateManager</name>
     <message>
-        <source>RimSort update found</source>
-        <translation>RIMSORTアップデートが見つかりました</translation>
+        <source>RimDex update found</source>
+        <translation>RIMDEXアップデートが見つかりました</translation>
     </message>
     <message>
-        <source>An update to RimSort has been released: {latest_tag_name}</source>
-        <translation>rimsortのアップデートがリリースされました： {latest_tag_name}</translation>
+        <source>An update to RimDex has been released: {latest_tag_name}</source>
+        <translation>rimdexのアップデートがリリースされました： {latest_tag_name}</translation>
     </message>
     <message>
-        <source>You are running RimSort {current_version}
+        <source>You are running RimDex {current_version}
 Do you want to update now?</source>
-        <translation>rimsort {current_version}を実行しています
+        <translation>rimdex {current_version}を実行しています
 今すぐ更新しますか？</translation>
     </message>
     <message>
-        <source>Downloading RimSort {tag_name} release...</source>
-        <translation>rimsort {tag_name}リリースのダウンロード...</translation>
+        <source>Downloading RimDex {tag_name} release...</source>
+        <translation>rimdex {tag_name}リリースのダウンロード...</translation>
     </message>
     <message>
         <source>
@@ -5216,8 +5216,8 @@ The update will be installed from: {update_source_path}</source>
 <context>
     <name>UseThisInsteadPanel</name>
     <message>
-        <source>RimSort - Replacements found for Workshop mods</source>
-        <translation>RimSort - ワークショップMODの置き換えが見つかりました</translation>
+        <source>RimDex - Replacements found for Workshop mods</source>
+        <translation>RimDex - ワークショップMODの置き換えが見つかりました</translation>
     </message>
     <message>
         <source>There are replacements available for Workshop mods!</source>
@@ -5275,8 +5275,8 @@ The update will be installed from: {update_source_path}</source>
 <context>
     <name>WorkshopModUpdaterPanel</name>
     <message>
-        <source>RimSort - Updates found for Workshop mods</source>
-        <translation>rimSort - ワークショップ MOD のアップデートが見つかりました</translation>
+        <source>RimDex - Updates found for Workshop mods</source>
+        <translation>RimDex - ワークショップ MOD のアップデートが見つかりました</translation>
     </message>
     <message>
         <source>There are updates available for Workshop mods!</source>
@@ -5341,8 +5341,8 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>クリップボードへのコピーに失敗しました。</translation>
     </message>
     <message>
-        <source>RimSort failed to copy the text to your clipboard. Please copy it manually.</source>
-        <translation>RimSortはテキストをクリップボードにコピーできませんでした。手動でコピーしてください。</translation>
+        <source>RimDex failed to copy the text to your clipboard. Please copy it manually.</source>
+        <translation>RimDexはテキストをクリップボードにコピーできませんでした。手動でコピーしてください。</translation>
     </message>
 </context>
 <context>
@@ -5352,8 +5352,8 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>ソートできません</translation>
     </message>
     <message>
-        <source>RimSort found circular dependencies in your mods list. Please see the details for dependency loops.</source>
-        <translation>RimSortはMODリストに循環依存関係を見つけました。依存関係のループの詳細を確認してください。</translation>
+        <source>RimDex found circular dependencies in your mods list. Please see the details for dependency loops.</source>
+        <translation>RimDexはMODリストに循環依存関係を見つけました。依存関係のループの詳細を確認してください。</translation>
     </message>
 </context>
 <context>
@@ -5367,16 +5367,16 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>RimWorldを起動できません</translation>
     </message>
     <message>
-        <source>RimSort could not start RimWorld as the game folder is empty or invalid: [{game_install_path}] Please check that the game folder is properly set and that the RimWorld executable exists in it.</source>
-        <translation>RimSortはRimWorldを起動できませんでした。ゲームフォルダーが空であるか無効です: [{game_install_path}]。ゲームフォルダーが正しく設定されており、RimWorldの実行可能ファイルが存在することを確認してください。</translation>
+        <source>RimDex could not start RimWorld as the game folder is empty or invalid: [{game_install_path}] Please check that the game folder is properly set and that the RimWorld executable exists in it.</source>
+        <translation>RimDexはRimWorldを起動できませんでした。ゲームフォルダーが空であるか無効です: [{game_install_path}]。ゲームフォルダーが正しく設定されており、RimWorldの実行可能ファイルが存在することを確認してください。</translation>
     </message>
     <message>
         <source>Invalid game folder</source>
         <translation>無効なゲームフォルダー</translation>
     </message>
     <message>
-        <source>RimSort could not validate the RimWorld executable in the specified folder: {game_install_path}. Please check that this directory is correct and contains a valid RimWorld game executable.</source>
-        <translation>rimSort は、指定されたフォルダー {game_install_path} にあるrimWorld 実行可能ファイルを検証できませんでした。このディレクトリが正しく、有効なRimWorld ゲーム実行可能ファイルが含まれていることを確認してください。</translation>
+        <source>RimDex could not validate the RimWorld executable in the specified folder: {game_install_path}. Please check that this directory is correct and contains a valid RimWorld game executable.</source>
+        <translation>RimDex は、指定されたフォルダー {game_install_path} にあるrimWorld 実行可能ファイルを検証できませんでした。このディレクトリが正しく、有効なRimWorld ゲーム実行可能ファイルが含まれていることを確認してください。</translation>
     </message>
 </context>
 <context>
@@ -5397,16 +5397,16 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>ディレクトリの削除に失敗しました</translation>
     </message>
     <message>
-        <source>RimSort tried to remove a directory that does not exist.</source>
-        <translation>RimSortは存在しないディレクトリを削除しようとしました。</translation>
+        <source>RimDex tried to remove a directory that does not exist.</source>
+        <translation>RimDexは存在しないディレクトリを削除しようとしました。</translation>
     </message>
     <message>
         <source>Directory does not exist: {path}</source>
         <translation>ディレクトリが存在しません: {path}</translation>
     </message>
     <message>
-        <source>RimSort tried to remove a directory that is not a directory.</source>
-        <translation>RimSortはディレクトリではないものを削除しようとしました。</translation>
+        <source>RimDex tried to remove a directory that is not a directory.</source>
+        <translation>RimDexはディレクトリではないものを削除しようとしました。</translation>
     </message>
     <message>
         <source>Path is not a directory: {path}</source>
@@ -5428,16 +5428,16 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>データを読み取れませんでした</translation>
     </message>
     <message>
-        <source>RimSort was unable to read the supplied mods list.</source>
-        <translation>RimSortは提供されたMODリストを読み取れませんでした。</translation>
+        <source>RimDex was unable to read the supplied mods list.</source>
+        <translation>RimDexは提供されたMODリストを読み取れませんでした。</translation>
     </message>
     <message>
         <source>The supplied mods list may be missing or invalid. If you just (re)installed RimWorld, you may need to run it once to generate the mods list.</source>
         <translation>提供されたMODリストが見つからないか無効である可能性があります。RimWorldを再インストールしたばかりの場合は、MODリストを生成するために一度実行する必要があるかもしれません。</translation>
     </message>
     <message>
-        <source>RimSort was unable to read the supplied mods list because it may be invalid or missing.</source>
-        <translation>RimSortは提供されたMODリストを読み取れませんでした。無効であるか、見つからない可能性があります。</translation>
+        <source>RimDex was unable to read the supplied mods list because it may be invalid or missing.</source>
+        <translation>RimDexは提供されたMODリストを読み取れませんでした。無効であるか、見つからない可能性があります。</translation>
     </message>
 </context>
 </TS>

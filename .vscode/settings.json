@@ -45,7 +45,7 @@
     "publishedfileids",
     "redistributables",
     "Rentry",
-    "rimsort",
+    "rimdex",
     "savedatafolder",
     "savedscenario",
     "scandir",
@@ -85,7 +85,7 @@
     "mypy",
     "redistributables",
     "rest",
-    "rimsort",
+    "rimdex",
     "shfmt",
     "steamfiles",
     "steamworks",
@@ -95,7 +95,7 @@
     "virtualenv"
   ],
   "yaml.schemas": {
-    "https://json.schemastore.org/github-issue-config.json": "file:///c%3A/Code%20Repos/RimSort/.github/ISSUE_TEMPLATE/config.yml"
+    "https://json.schemastore.org/github-issue-config.json": "file:///c%3A/Code%20Repos/RimDex/.github/ISSUE_TEMPLATE/config.yml"
   },
   "python.testing.pytestArgs": ["."],
   "python.testing.unittestEnabled": false,

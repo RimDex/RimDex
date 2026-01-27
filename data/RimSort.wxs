@@ -6,8 +6,8 @@
     <!-- Package Configuration -->
     <!-- ===================================================== -->
 
-    <Package Name="RimSort" Language="1033" Version="$(PackageVersion)"
-        Manufacturer="RimSort Team" UpgradeCode="d4f7c3b9-8a5e-4e52-bb9f-3c2d1f7a9e24"
+    <Package Name="RimDex" Language="1033" Version="$(PackageVersion)"
+        Manufacturer="RimDex Team" UpgradeCode="d4f7c3b9-8a5e-4e52-bb9f-3c2d1f7a9e24"
         InstallerVersion="500" Compressed="yes">
 
         <!-- ===================================================== -->
@@ -45,14 +45,14 @@
         <!-- Custom Actions -->
         <!-- ===================================================== -->
 
-        <!-- Automatically launch RimSort after installation -->
-        <Property Id="RIMSORTTARGET" Secure="yes" />
-        <CustomAction Id="SetRimSortTarget"
-            Property="RIMSORTTARGET"
-            Value="[INSTALLFOLDER]RimSort.exe"
+        <!-- Automatically launch RimDex after installation -->
+        <Property Id="RIMDEXTARGET" Secure="yes" />
+        <CustomAction Id="SetRimDexTarget"
+            Property="RIMDEXTARGET"
+            Value="[INSTALLFOLDER]RimDex.exe"
             Execute="immediate" />
-        <CustomAction Id="LaunchRimSortAfterInstall"
-            Property="RIMSORTTARGET"
+        <CustomAction Id="LaunchRimDexAfterInstall"
+            Property="RIMDEXTARGET"
             ExeCommand=""
             Return="asyncNoWait"
             Execute="deferred"
@@ -63,9 +63,9 @@
         <!-- ===================================================== -->
 
         <InstallExecuteSequence>
-            <Custom Action="SetRimSortTarget" After="InstallFiles"
+            <Custom Action="SetRimDexTarget" After="InstallFiles"
                 Condition="NOT Installed" />
-            <Custom Action="LaunchRimSortAfterInstall" After="SetRimSortTarget"
+            <Custom Action="LaunchRimDexAfterInstall" After="SetRimDexTarget"
                 Condition="NOT REMOVE" />
         </InstallExecuteSequence>
 
@@ -74,11 +74,11 @@
         <!-- ===================================================== -->
 
         <StandardDirectory Id="ProgramFiles6432Folder">
-            <Directory Id="INSTALLFOLDER" Name="RimSort" />
+            <Directory Id="INSTALLFOLDER" Name="RimDex" />
         </StandardDirectory>
 
         <StandardDirectory Id="ProgramMenuFolder">
-            <Directory Id="RimSortProgramMenu" Name="RimSort" />
+            <Directory Id="RimDexProgramMenu" Name="RimDex" />
         </StandardDirectory>
 
         <!-- ===================================================== -->
@@ -97,11 +97,11 @@
         <!-- Desktop Shortcut Component -->
         <ComponentGroup Id="DesktopShortcutComponent" Directory="DesktopFolder">
             <Component Id="DesktopShortcut" Guid="DA2459A4-6821-4143-A427-02A4786845B2">
-                <Shortcut Id="ApplicationDesktopShortcut" Name="RimSort"
-                    Target="[INSTALLFOLDER]RimSort.exe"
+                <Shortcut Id="ApplicationDesktopShortcut" Name="RimDex"
+                    Target="[INSTALLFOLDER]RimDex.exe"
                     WorkingDirectory="INSTALLFOLDER"
                     Icon="AppIcon.ico" />
-                <RegistryValue Root="HKCU" Key="Software\RimSort" Name="DesktopShortcut"
+                <RegistryValue Root="HKCU" Key="Software\RimDex" Name="DesktopShortcut"
                     Type="integer" Value="1" KeyPath="yes" />
                 <!-- Remove shortcut on uninstall -->
                 <RemoveFolder Id="RemoveDesktopShortcut" Directory="DesktopFolder" On="uninstall" />
@@ -109,20 +109,20 @@
         </ComponentGroup>
 
         <!-- Start Menu Shortcuts Component -->
-        <ComponentGroup Id="StartMenuShortcutComponent" Directory="RimSortProgramMenu">
+        <ComponentGroup Id="StartMenuShortcutComponent" Directory="RimDexProgramMenu">
             <Component Id="StartMenuShortcuts" Guid="AA2459A4-6821-4143-A427-02A4786845B3">
-                <Shortcut Id="StartMenuShortcut" Name="RimSort"
-                    Target="[INSTALLFOLDER]RimSort.exe"
+                <Shortcut Id="StartMenuShortcut" Name="RimDex"
+                    Target="[INSTALLFOLDER]RimDex.exe"
                     WorkingDirectory="INSTALLFOLDER"
                     Icon="AppIcon.ico" />
-                <Shortcut Id="UninstallShortcut" Name="Uninstall RimSort"
+                <Shortcut Id="UninstallShortcut" Name="Uninstall RimDex"
                     Target="[System64Folder]msiexec.exe"
                     Arguments="/x [ProductCode]"
-                    Description="Uninstalls RimSort" />
-                <RegistryValue Root="HKCU" Key="Software\RimSort" Name="StartMenuShortcut"
+                    Description="Uninstalls RimDex" />
+                <RegistryValue Root="HKCU" Key="Software\RimDex" Name="StartMenuShortcut"
                     Type="integer" Value="1" KeyPath="yes" />
                 <!-- Remove start menu folder on uninstall -->
-                <RemoveFolder Id="RemoveStartMenuFolder" Directory="RimSortProgramMenu"
+                <RemoveFolder Id="RemoveStartMenuFolder" Directory="RimDexProgramMenu"
                     On="uninstall" />
             </Component>
         </ComponentGroup>
@@ -131,7 +131,7 @@
         <!-- Features -->
         <!-- ===================================================== -->
 
-        <Feature Id="MainFeature" Title="RimSort" Level="1" ConfigurableDirectory="INSTALLFOLDER">
+        <Feature Id="MainFeature" Title="RimDex" Level="1" ConfigurableDirectory="INSTALLFOLDER">
             <ComponentGroupRef Id="MainApplication" />
             <ComponentGroupRef Id="DesktopShortcutComponent" />
             <ComponentGroupRef Id="StartMenuShortcutComponent" />

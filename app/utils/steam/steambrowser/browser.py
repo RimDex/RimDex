@@ -90,7 +90,7 @@ class SteamBrowser(QWidget):
             QWebEngineProfile.PersistentCookiesPolicy.ForcePersistentCookies
         )
         self.current_html = ""
-        self.current_title = "RimSort - Steam Browser"
+        self.current_title = "RimDex - Steam Browser"
         self.current_url = startpage
 
         self.downloader_list_mods_tracking: list[str] = []
@@ -333,7 +333,7 @@ class SteamBrowser(QWidget):
                         "Empty list of mods returned, unable to add collection to list!"
                     ),
                     information=self.tr(
-                        "Please reach out to us on Github Issues page or\n#rimsort-testing on the Rocketman/CAI discord"
+                        "Please reach out to us on Github Issues page or\n#rimdex-testing on the Rocketman/CAI discord"
                     ),
                 )
         if len(self.downloader_list_dupe_tracking.keys()) > 0:

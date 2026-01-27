@@ -19,8 +19,8 @@ from app.utils.db_builder_core import DBBuilderCore
 @click.command("build-db")
 @click.option(
     "--api-key",
-    envvar="RIMSORT_STEAM_API_KEY",
-    help="Steam WebAPI key (32 characters). Can also be set via RIMSORT_STEAM_API_KEY environment variable.",
+    envvar="RIMDEX_STEAM_API_KEY",
+    help="Steam WebAPI key (32 characters). Can also be set via RIMDEX_STEAM_API_KEY environment variable.",
 )
 @click.option(
     "--output",
@@ -62,27 +62,27 @@ def build_db(
 
     \b
     1. --api-key command line argument
-    2. RIMSORT_STEAM_API_KEY environment variable
-    3. Fallback to settings.json (if RimSort GUI is configured)
+    2. RIMDEX_STEAM_API_KEY environment variable
+    3. Fallback to settings.json (if RimDex GUI is configured)
 
     Examples:
 
     \b
       # Using environment variable (recommended for security)
-      export RIMSORT_STEAM_API_KEY=your_32_character_key_here
-      rimsort build-db --output workshop.json
+      export RIMDEX_STEAM_API_KEY=your_32_character_key_here
+      rimdex build-db --output workshop.json
 
     \b
       # Using command line argument
-      rimsort build-db --api-key ABC123... --output workshop.json
+      rimdex build-db --api-key ABC123... --output workshop.json
 
     \b
       # Update existing database with new data
-      rimsort build-db --output workshop.json --update
+      rimdex build-db --output workshop.json --update
 
     \b
       # Skip DLC data for faster builds
-      rimsort build-db --output workshop.json --no-dlc-data --quiet
+      rimdex build-db --output workshop.json --no-dlc-data --quiet
     """
     # API key resolution (priority order)
     if not api_key:
@@ -110,8 +110,8 @@ def build_db(
             err=True,
         )
         click.echo("  1. --api-key option", err=True)
-        click.echo("  2. RIMSORT_STEAM_API_KEY environment variable", err=True)
-        click.echo("  3. Configure in RimSort GUI (saved to settings.json)", err=True)
+        click.echo("  2. RIMDEX_STEAM_API_KEY environment variable", err=True)
+        click.echo("  3. Configure in RimDex GUI (saved to settings.json)", err=True)
         sys.exit(1)
 
     if len(api_key) != 32:

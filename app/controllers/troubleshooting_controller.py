@@ -423,7 +423,7 @@ class TroubleshootingController:
             title=self.translate("TroubleshootingController", "Export Mod List"),
             directory=str(config_dir),
             file_type="File",
-            file_filter="RimSort Mod List (*.xml)",
+            file_filter="RimDex Mod List (*.xml)",
             is_save=True,
         )
         if not save_path:
@@ -524,7 +524,7 @@ class TroubleshootingController:
             title=self.translate("TroubleshootingController", "Import Mod List"),
             directory=str(config_dir),
             file_type="File",
-            file_filter="RimSort Mod List (*.xml *.rws *.xml)",
+            file_filter="RimDex Mod List (*.xml *.rws *.xml)",
         )
         if not import_path:
             return

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # ========================================================================
-# RimSort Update Script for macOS and Linux
-# This script safely updates RimSort by replacing the current installation
+# RimDex Update Script for macOS and Linux
+# This script safely updates RimDex by replacing the current installation
 # with files from a temporary directory.
 # Usage: update.sh <temp_update_path> [log_path] [install_dir]
 # ========================================================================
@@ -102,15 +102,15 @@ log_error() {
     echo -e "${RED}[$(date '+%Y-%m-%d %H:%M:%S') ERROR]${NC} $1"
 }
 
-# Function to kill RimSort process safely
-kill_rimsort() {
-    log_info "Stopping RimSort process..."
+# Function to kill RimDex process safely
+kill_rimdex() {
+    log_info "Stopping RimDex process..."
     
     if [ "$OS" = "Darwin" ]; then
-        if killall -q RimSort 2>/dev/null; then
-            log_success "RimSort process stopped"
+        if killall -q RimDex 2>/dev/null; then
+            log_success "RimDex process stopped"
         else
-            log_warning "RimSort process not found or could not be killed"
+            log_warning "RimDex process not found or could not be killed"
         fi
     else
         if killall -q "$EXECUTABLE_NAME" 2>/dev/null; then
@@ -133,7 +133,7 @@ set_permissions() {
     log_info "Setting executable permissions..."
     
     if [ "$OS" = "Darwin" ]; then
-        chmod +x "$target_dir/Contents/MacOS/RimSort" 2>/dev/null || log_warning "Could not set permissions for RimSort"
+        chmod +x "$target_dir/Contents/MacOS/RimDex" 2>/dev/null || log_warning "Could not set permissions for RimDex"
         chmod +x "$target_dir/Contents/MacOS/todds/todds" 2>/dev/null || log_warning "Could not set permissions for todds"
         chmod +x "$target_dir/Contents/MacOS/QtWebEngineProcess" 2>/dev/null || log_warning "Could not set permissions for QtWebEngineProcess"
     else
@@ -147,14 +147,14 @@ set_permissions() {
 launch_app() {
     local app_path="$1"
 
-    log_info "Launching updated RimSort..."
+    log_info "Launching updated RimDex..."
 
     if [ "$OS" = "Darwin" ]; then
         open "$app_path" &
     else
         # Check if running as root - GUI apps cannot run as root
         if [ "$EUID" -eq 0 ]; then
-            log_warning "Cannot launch GUI application as root. Please launch RimSort manually as a regular user."
+            log_warning "Cannot launch GUI application as root. Please launch RimDex manually as a regular user."
             read -r -p "Press any key to continue..."
             return
         fi
@@ -166,14 +166,14 @@ launch_app() {
 
     # Verify the application started
     if [ "$OS" = "Darwin" ]; then
-        if pgrep -f "RimSort" >/dev/null; then
-            log_success "RimSort started successfully!"
+        if pgrep -f "RimDex" >/dev/null; then
+            log_success "RimDex started successfully!"
         else
-            log_warning "RimSort may not have started successfully"
+            log_warning "RimDex may not have started successfully"
         fi
     else
         if pgrep -f "$EXECUTABLE_NAME" >/dev/null; then
-            log_success "RimSort started successfully!"
+            log_success "RimDex started successfully!"
         else
             log_warning "$EXECUTABLE_NAME may not have started successfully"
         fi
@@ -183,7 +183,7 @@ launch_app() {
 # Main script starts here
 echo "========================================================================
 "
-echo "RimSort Update Script"
+echo "RimDex Update Script"
 echo "========================================================================
 "
 
@@ -197,9 +197,9 @@ log_info "TMPDIR: ${TMPDIR:-not set}"
 # Set variables based on OS
 if [ "$OS" = "Darwin" ]; then
     # macOS detected
-    EXECUTABLE_NAME="RimSort.app"
-    SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"               # .../RimSort.app/Contents/MacOS
-    APP_BUNDLE_DIR="$(dirname "$(dirname "$SCRIPT_DIR")")"      # .../RimSort.app
+    EXECUTABLE_NAME="RimDex.app"
+    SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"               # .../RimDex.app/Contents/MacOS
+    APP_BUNDLE_DIR="$(dirname "$(dirname "$SCRIPT_DIR")")"      # .../RimDex.app
     INSTALL_PARENT_DIR="$(dirname "$APP_BUNDLE_DIR")"            # Parent of .app (e.g. /Applications)
     INSTALL_DIR="$APP_BUNDLE_DIR"                                  # For common messaging
     UPDATE_SOURCE_FOLDER="$TEMP_UPDATE_PATH"
@@ -210,7 +210,7 @@ if [ "$OS" = "Darwin" ]; then
     log_info "Update source: $UPDATE_SOURCE_FOLDER"
 else
     # Assume Linux if not macOS
-    EXECUTABLE_NAME="RimSort"
+    EXECUTABLE_NAME="RimDex"
     SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
     INSTALL_DIR="${3:-$SCRIPT_DIR}"
     UPDATE_SOURCE_FOLDER="$TEMP_UPDATE_PATH"
@@ -221,7 +221,7 @@ else
 fi
 
 # Kill running processes
-kill_rimsort
+kill_rimdex
 
 # Check if update source exists
 if [ ! -d "$UPDATE_SOURCE_FOLDER" ]; then
@@ -231,9 +231,9 @@ fi
 
 log_info "Update source folder exists: $UPDATE_SOURCE_FOLDER"
 
-# Adjust source folder if it contains a RimSort subdirectory (unwrapped structure)
-if [ -d "$UPDATE_SOURCE_FOLDER/RimSort" ]; then
-    UPDATE_SOURCE_FOLDER="$UPDATE_SOURCE_FOLDER/RimSort"
+# Adjust source folder if it contains a RimDex subdirectory (unwrapped structure)
+if [ -d "$UPDATE_SOURCE_FOLDER/RimDex" ]; then
+    UPDATE_SOURCE_FOLDER="$UPDATE_SOURCE_FOLDER/RimDex"
     log_info "Adjusted update source to subdirectory: $UPDATE_SOURCE_FOLDER"
 fi
 
@@ -242,9 +242,9 @@ checksum_file="$UPDATE_SOURCE_FOLDER/checksum.sha256"
 if [ -f "$checksum_file" ]; then
     # Find the main file to verify (assuming it's the executable or app bundle)
     if [ "$OS" = "Darwin" ]; then
-        main_file="$UPDATE_SOURCE_FOLDER/RimSort.app"
+        main_file="$UPDATE_SOURCE_FOLDER/RimDex.app"
     else
-        main_file="$UPDATE_SOURCE_FOLDER/RimSort"
+        main_file="$UPDATE_SOURCE_FOLDER/RimDex"
     fi
     if [ -e "$main_file" ]; then
         verify_checksum "$main_file" "$checksum_file" || exit 1
@@ -259,7 +259,7 @@ fi
 echo
 echo "========================================================================
 "
-echo "RimSort Update Ready"
+echo "RimDex Update Ready"
 echo "========================================================================
 "
 echo "Source: $UPDATE_SOURCE_FOLDER"
@@ -341,7 +341,7 @@ fi
 
 
 
-log_success "RimSort update completed successfully!"
+log_success "RimDex update completed successfully!"
 echo "========================================================================
 "
 

@@ -265,7 +265,7 @@ class InstanceController(QObject):
         # Check if path is writable (try to create a test file)
         try:
             override_path.mkdir(parents=True, exist_ok=True)
-            test_file = override_path / ".rimsort_test"
+            test_file = override_path / ".rimdex_test"
             test_file.touch()
             test_file.unlink()
         except PermissionError:

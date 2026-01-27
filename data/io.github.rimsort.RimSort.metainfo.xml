@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-    <id>io.github.rimsort.RimSort</id>
-    <url type="homepage">https://rimsort.github.io/RimSort/</url>
-    <url type="vcs-browser">https://github.com/RimSort/RimSort</url>
+    <id>io.github.rimdex.RimDex</id>
+    <url type="homepage">https://rimdex.github.io/RimDex/</url>
+    <url type="vcs-browser">https://github.com/RimDex/RimDex</url>
 
-    <name>RimSort</name>
+    <name>RimDex</name>
     <summary>Mod manager for RimWorld</summary>
 
     <metadata_license>MIT</metadata_license>
@@ -18,30 +18,30 @@
             Includes support for Windows, Linux, and Mac.</p>
     </description>
 
-    <launchable type="desktop-id">io.github.rimsort.RimSort.desktop</launchable>
+    <launchable type="desktop-id">io.github.rimdex.RimDex.desktop</launchable>
     <screenshots>
         <screenshot type="default">
             <image>
-                https://github.com/RimSort/RimSort/blob/ee31753515320201493597e12aa80f4c92aa00d4/docs/rimsort_preview.png?raw=true</image>
-            <caption>A Rimsort preview image</caption>
+                https://github.com/RimDex/RimDex/blob/ee31753515320201493597e12aa80f4c92aa00d4/docs/rimdex_preview.png?raw=true</image>
+            <caption>A RimDex preview image</caption>
         </screenshot>
     </screenshots>
 
     <releases>
         <release version="1.0.52" date="2025-11-04">
-            <url type="details">https://github.com/RimSort/RimSort/releases/tag/v1.0.52</url>
+            <url type="details">https://github.com/RimDex/RimDex/releases/tag/v1.0.52</url>
             <description>
                 <p>Bug fixes and dependency updates.</p>
             </description>
         </release>
         <release version="1.0.51" date="2025-11-04">
-            <url type="details">https://github.com/RimSort/RimSort/releases/tag/v1.0.51</url>
+            <url type="details">https://github.com/RimDex/RimDex/releases/tag/v1.0.51</url>
             <description>
                 <p>Features and improvements, including a new Duplicate Mods panel.</p>
             </description>
         </release>
         <release version="1.0.50" date="2025-10-25">
-            <url type="details">https://github.com/RimSort/RimSort/releases/tag/v1.0.50</url>
+            <url type="details">https://github.com/RimDex/RimDex/releases/tag/v1.0.50</url>
             <description>
                 <p>Update optimizations, translation updates, and sorting fixes.</p>
             </description>
@@ -62,7 +62,7 @@
     </content_rating>
 
 
-    <developer id="io.github.rimsort">
-        <name>RimSort Team</name>
+    <developer id="io.github.rimdex">
+        <name>RimDex Team</name>
     </developer>
 </component>

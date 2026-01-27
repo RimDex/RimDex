@@ -65,7 +65,7 @@ class DBBuilderCore:
         mode = "no_local"
 
         self.progress_callback(
-            f"\nInitiating RimSort Steam Database Builder with mode : {mode}\n"
+            f"\nInitiating RimDex Steam Database Builder with mode : {mode}\n"
         )
 
         if len(self.apikey) == 32:  # If supplied WebAPI key is 32 characters

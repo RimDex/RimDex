@@ -5,7 +5,7 @@ documentation 📚:
 DevOps 💻:
   - changed-files:
       - any-glob-to-any-file:
-          [".github/**", "distribute.py", "rimsort.nuitka-package.config.yml"]
+          [".github/**", "distribute.py", "rimdex.nuitka-package.config.yml"]
 
 macOS 🍏:
   - changed-files:

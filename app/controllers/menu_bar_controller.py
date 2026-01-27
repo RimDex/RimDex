@@ -91,8 +91,8 @@ class MenuBarController(QObject):
         self.menu_bar.open_settings_directory_action.triggered.connect(
             EventBus().do_open_settings_directory
         )
-        self.menu_bar.open_rimsort_logs_directory_action.triggered.connect(
-            EventBus().do_open_rimsort_logs_directory
+        self.menu_bar.open_rimdex_logs_directory_action.triggered.connect(
+            EventBus().do_open_rimdex_logs_directory
         )
         self.menu_bar.open_rimworld_directory_action.triggered.connect(
             EventBus().do_open_rimworld_directory
@@ -259,11 +259,11 @@ class MenuBarController(QObject):
 
     @Slot()
     def _on_menu_bar_wiki_triggered(self) -> None:
-        open_url_browser("https://rimsort.github.io/RimSort/")
+        open_url_browser("https://rimdex.github.io/RimDex/")
 
     @Slot()
     def _on_menu_bar_github_triggered(self) -> None:
-        open_url_browser("https://github.com/RimSort/RimSort")
+        open_url_browser("https://github.com/RimDex/RimDex")
 
     @Slot()
     def _on_refresh_started(self) -> None:
