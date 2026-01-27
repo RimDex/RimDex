@@ -1,0 +1,5550 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="ja_JP">
+<context>
+    <name>AcfLogReader</name>
+    <message>
+        <source>Import ACF Data</source>
+        <translation>ACFデータをインポートします</translation>
+    </message>
+    <message>
+        <source>Export ACF Data</source>
+        <translation>ACFデータをエクスポートします</translation>
+    </message>
+    <message>
+        <source>Export to CSV</source>
+        <translation>CSVへのエクスポート</translation>
+    </message>
+    <message>
+        <source>Search:</source>
+        <translation>検索：</translation>
+    </message>
+    <message>
+        <source>All Searchable Columns</source>
+        <translation>検索可能なすべての列</translation>
+    </message>
+    <message>
+        <source>Searches selected column or all searchable columns if set to &apos;All&apos;</source>
+        <translation>選択した列、または「すべて」に設定されている場合はすべての検索可能な列を検索します。</translation>
+    </message>
+</context>
+<context>
+    <name>BaseModsPanel</name>
+    <message>
+        <source>Refresh</source>
+        <translation>リフレッシュ</translation>
+    </message>
+    <message>
+        <source>SteamCMD</source>
+        <translation>SteamCMD</translation>
+    </message>
+    <message>
+        <source>Download with SteamCMD</source>
+        <translation>SteamCMD でダウンロード</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation>選択</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation>すべて選択</translation>
+    </message>
+    <message>
+        <source>Deselect all</source>
+        <translation>すべての選択を解除します</translation>
+    </message>
+    <message>
+        <source>Steam</source>
+        <translation>スチーム</translation>
+    </message>
+    <message>
+        <source>Subscribe selected</source>
+        <translation>選択した購読を購読する</translation>
+    </message>
+    <message>
+        <source>Unsubscribe selected</source>
+        <translation>選択した購読を解除する</translation>
+    </message>
+</context>
+<context>
+    <name>ButtonsMixin</name>
+    <message>
+        <source>Open Page</source>
+        <translation>ページを開く</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>消去</translation>
+    </message>
+</context>
+<context>
+    <name>CollectionImport</name>
+    <message>
+        <source>Add Workshop collection link</source>
+        <translation>ワークショップコレクションリンクを追加</translation>
+    </message>
+    <message>
+        <source>Invalid Link</source>
+        <translation>無効なリンク</translation>
+    </message>
+    <message>
+        <source>Invalid Workshop collection link. Please enter a valid Workshop collection link.</source>
+        <translation>無効なワークショップコレクションリンクです。有効なワークショップコレクションリンクを入力してください。</translation>
+    </message>
+    <message>
+        <source>Incomplete import</source>
+        <translation>不完全なインポート</translation>
+    </message>
+    <message>
+        <source>{len(failed_mods)} mods could not be imported due to missing package ids. This may happen if you don&apos;t have all the mods downloaded.&lt;br&gt;&lt;br&gt;Try subscribing to the collection first</source>
+        <translation>パッケージ ID が見つからないため、{len(failed_mods)} 個の MOD をインポートできませんでした。これは、すべての MOD をダウンロードしていない場合に発生する可能性があります。&lt;br&gt;&lt;br&gt;まずコレクションに登録してみてください。</translation>
+    </message>
+</context>
+<context>
+    <name>ColumnsMixin</name>
+    <message>
+        <source>Name</source>
+        <translation>名前</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation>著者</translation>
+    </message>
+    <message>
+        <source>Package ID</source>
+        <translation>パッケージID</translation>
+    </message>
+    <message>
+        <source>Published File Id</source>
+        <translation>公開されたファイルID</translation>
+    </message>
+    <message>
+        <source>Supported Versions</source>
+        <translation>サポートされているバージョン</translation>
+    </message>
+    <message>
+        <source>Mod Downloaded</source>
+        <translation>Modのダウンロード</translation>
+    </message>
+    <message>
+        <source>Updated on Workshop</source>
+        <translation>ワークショップについて更新しました</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>ソース</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>パス</translation>
+    </message>
+    <message>
+        <source>Workshop Page</source>
+        <translation>ワークショップページ</translation>
+    </message>
+</context>
+<context>
+    <name>CsvExportUtils</name>
+    <message>
+        <source>Invalid File Path</source>
+        <translation>無効なファイルパス</translation>
+    </message>
+    <message>
+        <source>Export Permission Denied</source>
+        <translation>輸出許可が拒否されました</translation>
+    </message>
+    <message>
+        <source>Export File System Error</source>
+        <translation>エクスポート ファイル システム エラー</translation>
+    </message>
+    <message>
+        <source>Export Unknown Error</source>
+        <translation>エクスポートの不明なエラー</translation>
+    </message>
+    <message>
+        <source>Export Success</source>
+        <translation>エクスポートの成功</translation>
+    </message>
+    <message>
+        <source>Successfully exported {count} items to {file_path}</source>
+        <translation>{count} 個のアイテムを {file_path} に正常にエクスポートしました</translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseBuilder</name>
+    <message>
+        <source>No PublishedFileIDs</source>
+        <translation>PublishedFileID がありません</translation>
+    </message>
+    <message>
+        <source>DB Builder query did not return any PublishedFileIDs!</source>
+        <translation>DB ビルダーのクエリは PublishedFileID を返しませんでした。</translation>
+    </message>
+    <message>
+        <source>This is typically caused by invalid/missing Steam WebAPI key, or a connectivity issue to the Steam WebAPI.&lt;br&gt;PublishedFileIDs are needed to retrieve mods from Steam!</source>
+        <translation>これは通常、Steam WebAPI キーが無効または欠落していること、または Steam WebAPI への接続の問題が原因で発生します。&lt;br&gt;Steam から MOD を取得するには、PublishedFileID が必要です。</translation>
+    </message>
+    <message>
+        <source>Are you sure?</source>
+        <translation>本気ですか？</translation>
+    </message>
+    <message>
+        <source>Here be dragons.</source>
+        <translation>ここにドラゴンがいます。</translation>
+    </message>
+    <message>
+        <source>WARNING: It is NOT recommended to subscribe to this many mods at once via Steam. Steam has limitations in place seemingly intentionally and unintentionally for API subscriptions. It is highly recommended that you instead download these mods to a SteamCMD prefix by using SteamCMD. This can take longer due to rate limits, but you can also re-use the script generated by RimDex with a separate, authenticated instance of SteamCMD, if you do not want to anonymously download via RimDex.</source>
+        <translation>警告: Steam 経由でこれほど多くの MOD を一度にサブスクライブすることはお勧めできません。 Steam には、API サブスクリプションに対して意図的または非意図的に制限が設けられています。代わりに、SteamCMD を使用して、これらの MOD を SteamCMD プレフィックスにダウンロードすることを強くお勧めします。レート制限によりこれにはさらに時間がかかることがありますが、RimDex 経由で匿名でダウンロードしたくない場合は、SteamCMD の別の認証されたインスタンスを使用して、RimDex によって生成されたスクリプトを再利用することもできます。</translation>
+    </message>
+    <message>
+        <source>Steam DB Builder</source>
+        <translation>Steam DBビルダー</translation>
+    </message>
+    <message>
+        <source>This operation will compare 2 databases, A &amp; B, by checking dependencies from A with dependencies from B.</source>
+        <translation>この操作では、A の依存関係と B の依存関係をチェックすることにより、2 つのデータベース A と B を比較します。</translation>
+    </message>
+    <message>
+        <source>- This will produce an accurate comparison of dependency data between 2 Steam DBs.&lt;br&gt;A report of discrepancies is generated. You will be prompted for these paths in order:&lt;br&gt;&lt;br&gt;	1) Select input A&lt;br&gt;	2) Select input B</source>
+        <translation>- これにより、2 つの Steam DB 間の依存関係データの正確な比較が生成されます。&lt;br&gt;不一致のレポートが生成されます。これらのパスを順番に入力するよう求められます:&lt;br&gt;&lt;br&gt; 1) 入力 A を選択します&lt;br&gt; 2) 入力 B を選択します</translation>
+    </message>
+    <message>
+        <source>- This will effectively recursively overwrite A&apos;s key/value with B&apos;s key/value to the resultant database.&lt;br&gt;- Exceptions will not be recursively updated. Instead, they will be overwritten with B&apos;s key entirely.&lt;br&gt;- The following exceptions will be made:&lt;br&gt;&lt;br&gt;	{DB_BUILDER_RECURSE_EXCEPTIONS}&lt;br&gt;&lt;br&gt;The resultant database, C, is saved to a user-specified path. You will be prompted for these paths in order:&lt;br&gt;&lt;br&gt;	1) Select input A (db to-be-updated)&lt;br&gt;	2) Select input B (update source)&lt;br&gt;	3) Select output C (resultant db)</source>
+        <translation>- これにより、結果として得られるデータベースに対して、A のキー/値が B のキー/値で再帰的に上書きされます。&lt;br&gt;- 例外は再帰的に更新されません。代わりに、B のキーで完全に上書きされます。&lt;br&gt;- 次の例外が発生します。&lt;br&gt;&lt;br&gt; {DB_BUILDER_RECURSE_EXCEPTIONS}&lt;br&gt;&lt;br&gt;結果のデータベース C は、ユーザー指定のパスに保存されます。これらのパスを順番に入力するよう求められます。&lt;br&gt;&lt;br&gt; 1) 入力 A (更新されるデータベース) を選択します。&lt;br&gt; 2) 入力 B (更新ソース) を選択します。&lt;br&gt; 3) 出力 C (結果のデータベース) を選択します。</translation>
+    </message>
+    <message>
+        <source>Error: {}</source>
+        <translation>エラー： {}</translation>
+    </message>
+    <message>
+        <source>Steam DB comparison report: {count} found</source>
+        <translation>Steam DB 比較レポート: {count} 個が見つかりました</translation>
+    </message>
+    <message>
+        <source>Click &apos;Show Details&apos; to see the full report!</source>
+        <translation>レポート全体を表示するには、[詳細を表示] をクリックしてください。</translation>
+    </message>
+    <message>
+        <source>This operation will merge 2 databases, A &amp; B, by recursively updating A with B, barring exceptions.</source>
+        <translation>この操作は、例外を除いて、A を B で再帰的に更新することにより、2 つのデータベース A と B をマージします。</translation>
+    </message>
+    <message>
+        <source>Save Error</source>
+        <translation>保存エラー</translation>
+    </message>
+    <message>
+        <source>Failed to save merged database</source>
+        <translation>マージされたデータベースの保存に失敗しました</translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseBuilderDialog</name>
+    <message>
+        <source>Database Builder</source>
+        <translation>データベースビルダー</translation>
+    </message>
+    <message>
+        <source>When building the database:</source>
+        <translation>データベースを構築するとき:</translation>
+    </message>
+    <message>
+        <source>Get PublishedFileIDs from locally installed mods.</source>
+        <translation>ローカルにインストールされた MOD から PublishedFileID を取得します。</translation>
+    </message>
+    <message>
+        <source>Mods you wish to update must be installed, as the initial DB is built including data from mods&apos; About.xml files.</source>
+        <translation>初期 DB は MOD の About.xml ファイルのデータを含めて構築されるため、更新したい MOD をインストールする必要があります。</translation>
+    </message>
+    <message>
+        <source>Get PublishedFileIDs from the Steam Workshop.</source>
+        <translation>Steam ワークショップから PublishedFileID を取得します。</translation>
+    </message>
+    <message>
+        <source>Mods to be updated don&apos;t have to be installed, as the initial DB is built by scraping the Steam Workshop.</source>
+        <translation>初期DBはSteamワークショップをスクレイピングして構築されるため、更新するModをインストールする必要はありません。</translation>
+    </message>
+    <message>
+        <source>Query DLC dependency data with Steamworks API</source>
+        <translation>Steamworks API を使用して DLC 依存関係データをクエリする</translation>
+    </message>
+    <message>
+        <source>Update database instead of overwriting</source>
+        <translation>データベースを上書きせずに更新する</translation>
+    </message>
+    <message>
+        <source>Steam API key:</source>
+        <translation>Steam APIキー:</translation>
+    </message>
+    <message>
+        <source>Download all published Workshop mods via:</source>
+        <translation>公開されているすべてのワークショップ MOD を次の方法でダウンロードします。</translation>
+    </message>
+    <message>
+        <source>SteamCMD</source>
+        <translation>SteamCMD</translation>
+    </message>
+    <message>
+        <source>Steam</source>
+        <translation>スチーム</translation>
+    </message>
+    <message>
+        <source>Compare Databases</source>
+        <translation>データベースの比較</translation>
+    </message>
+    <message>
+        <source>Merge Databases</source>
+        <translation>データベースのマージ</translation>
+    </message>
+    <message>
+        <source>Build Database</source>
+        <translation>データベースの構築</translation>
+    </message>
+</context>
+<context>
+    <name>DuplicateModsPanel</name>
+    <message>
+        <source>RimDex - Duplicate Mods Found</source>
+        <translation>RimDex - 重複した Mod が見つかりました</translation>
+    </message>
+    <message>
+        <source>Duplicate mods detected!</source>
+        <translation>重複した MOD が検出されました。</translation>
+    </message>
+    <message>
+        <source>
+The following table displays duplicate mods grouped by package ID. Select which versions to keep and choose an action.</source>
+        <translation>次の表は、重複する MOD をパッケージ ID ごとにグループ化して表示します。保持するバージョンを選択し、アクションを選択します。</translation>
+    </message>
+</context>
+<context>
+    <name>FatalErrorDialog</name>
+    <message>
+        <source>Show Details</source>
+        <translation>詳細を表示</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>閉じる</translation>
+    </message>
+    <message>
+        <source>Open Log Directory</source>
+        <translation>ログディレクトリを開く</translation>
+    </message>
+    <message>
+        <source>Upload Log</source>
+        <translation>ログをアップロード</translation>
+    </message>
+    <message>
+        <source>Upload the log file to 0x0.st</source>
+        <translation>ログファイルを0x0.stにアップロード</translation>
+    </message>
+    <message>
+        <source>Hide Details</source>
+        <translation>詳細を非表示</translation>
+    </message>
+</context>
+<context>
+    <name>FileSearchController</name>
+    <message>
+        <source>Preparing search...</source>
+        <translation>検索を準備中...</translation>
+    </message>
+    <message>
+        <source>Starting new search...</source>
+        <translation>新しい検索を開始しています...</translation>
+    </message>
+    <message>
+        <source>Active Mods Error</source>
+        <translation>アクティブモッドエラー</translation>
+    </message>
+    <message>
+        <source>No active mods found</source>
+        <translation>アクティブなモッドが見つかりませんでした</translation>
+    </message>
+    <message>
+        <source>Inactive Mods Error</source>
+        <translation>非アクティブモッドエラー</translation>
+    </message>
+    <message>
+        <source>No inactive mods found</source>
+        <translation>非アクティブなモッドが見つかりませんでした</translation>
+    </message>
+    <message>
+        <source>Stopping search...</source>
+        <translation>検索を停止しています...</translation>
+    </message>
+    <message>
+        <source>Search stopped by user</source>
+        <translation>ユーザーによって検索が停止されました</translation>
+    </message>
+    <message>
+        <source>Regular Expression Error</source>
+        <translation>正規表現エラー</translation>
+    </message>
+    <message>
+        <source>There was an error with your regular expression pattern.</source>
+        <translation>正規表現パターンにエラーがあります。</translation>
+    </message>
+    <message>
+        <source>{error_msg}&lt;br&gt;&lt;br&gt;Try simplifying your pattern or check for syntax errors.</source>
+        <translation>{error_msg}&lt;br&gt;&lt;br&gt;パターンを単純化するか、構文エラーを確認してください。</translation>
+    </message>
+    <message>
+        <source>{error_msg}&lt;br&gt;&lt;br&gt;Try running RimDex with administrator privileges or check folder permissions.</source>
+        <translation>{error_msg}&lt;br&gt;&lt;br&gt;管理者権限でRimDexを実行するか、フォルダの権限を確認してください。</translation>
+    </message>
+    <message>
+        <source>{error_msg}&lt;br&gt;&lt;br&gt;Try searching in smaller batches or use the &apos;streaming search&apos; method for very large files.</source>
+        <translation>{error_msg}&lt;br&gt;&lt;br&gt;小さいバッチで検索するか、非常に大きなファイルの場合は「ストリーミング検索」方法を使用してください。</translation>
+    </message>
+    <message>
+        <source>{error_msg}&lt;br&gt;&lt;br&gt;Please check your settings and try again.</source>
+        <translation>{error_msg}&lt;br&gt;&lt;br&gt;設定を確認して、もう一度お試しください。</translation>
+    </message>
+    <message>
+        <source>File Access Error</source>
+        <translation>ファイルアクセスエラー</translation>
+    </message>
+    <message>
+        <source>RimDex doesn&apos;t have permission to access some files.</source>
+        <translation>RimDexは一部のファイルにアクセスする権限がありません。</translation>
+    </message>
+    <message>
+        <source>Memory Error</source>
+        <translation>メモリエラー</translation>
+    </message>
+    <message>
+        <source>RimDex ran out of memory while searching.</source>
+        <translation>RimDexは検索中にメモリ不足になりました。</translation>
+    </message>
+    <message>
+        <source>Search Error</source>
+        <translation>検索エラー</translation>
+    </message>
+    <message>
+        <source>An error occurred during the search.</source>
+        <translation>検索中にエラーが発生しました。</translation>
+    </message>
+    <message>
+        <source>Search failed: {error_msg[:100]}...</source>
+        <translation>検索に失敗しました: {error_msg[:100]}...</translation>
+    </message>
+    <message>
+        <source>Filter: {visible_rows} of {rowCount} results visible</source>
+        <translation>フィルター: {visible_rows} / {rowCount} の結果が表示されています</translation>
+    </message>
+    <message>
+        <source>Location Not Set</source>
+        <translation>場所が設定されていません</translation>
+    </message>
+    <message>
+        <source>No valid search location is available for the selected scope. Please configure your game folders in the settings.</source>
+        <translation>選択したスコープに対して有効な検索場所が利用できません。設定でゲームフォルダを構成してください。</translation>
+    </message>
+</context>
+<context>
+    <name>FileSearchDialog</name>
+    <message>
+        <source>Search for:</source>
+        <translation>検索する:</translation>
+    </message>
+    <message>
+        <source>Enter text to search for in files</source>
+        <translation>ファイル内で検索するテキストを入力してください</translation>
+    </message>
+    <message>
+        <source>Recent Searches</source>
+        <translation>最近の検索</translation>
+    </message>
+    <message>
+        <source>Search in:</source>
+        <translation>検索する:</translation>
+    </message>
+    <message>
+        <source>active mods</source>
+        <translation>アクティブなモッド</translation>
+    </message>
+    <message>
+        <source>inactive mods</source>
+        <translation>非アクティブなモッド</translation>
+    </message>
+    <message>
+        <source>all mods</source>
+        <translation>すべてのモッド</translation>
+    </message>
+    <message>
+        <source>configs folder</source>
+        <translation>設定フォルダ</translation>
+    </message>
+    <message>
+        <source>Search Options:</source>
+        <translation>検索オプション:</translation>
+    </message>
+    <message>
+        <source>Case sensitive</source>
+        <translation>大文字と小文字を区別</translation>
+    </message>
+    <message>
+        <source>Match exact case when searching</source>
+        <translation>検索時に大文字と小文字を区別</translation>
+    </message>
+    <message>
+        <source>Use regex (pattern search)</source>
+        <translation>正規表現を使用</translation>
+    </message>
+    <message>
+        <source>Enable to use regular expressions in search
+Examples:
+- &apos;def.*\(&apos; to find function definitions
+- &apos;&lt;[^&gt;]+&gt;&apos; to find XML tags
+- &apos;\d+\.\d+(\.\d+)?&apos; to find version numbers</source>
+        <translation>正規表現を使用すると、次のような例が見つかります:
+- &apos;def.*\(&apos; to find function definitions
+- &apos;&lt;[^&gt;]+&gt;&apos; to find XML tags
+- &apos;\d+\.\d+(\.\d+)?&apos; to find version numbers</translation>
+    </message>
+    <message>
+        <source>XML files only</source>
+        <translation>XMLファイルのみ</translation>
+    </message>
+    <message>
+        <source>When checked, search only XML files and use optimized XML search.
+When unchecked, search all file types with standard search.</source>
+        <translation>チェックされている場合、XMLファイルのみを検索し、最適化されたXML検索を使用します。
+チェックされていない場合、標準の検索を使用してすべてのファイルタイプを検索します。</translation>
+    </message>
+    <message>
+        <source>Exclude from Search:</source>
+        <translation>検索から除外:</translation>
+    </message>
+    <message>
+        <source>Skip translations</source>
+        <translation>翻訳をスキップ</translation>
+    </message>
+    <message>
+        <source>Skip translation files to improve search speed</source>
+        <translation>翻訳ファイルをスキップして検索速度を向上させる</translation>
+    </message>
+    <message>
+        <source>Skip .git folder</source>
+        <translation> .gitフォルダをスキップ</translation>
+    </message>
+    <message>
+        <source>Skip Git repository folders</source>
+        <translation>Gitリポジトリフォルダをスキップ</translation>
+    </message>
+    <message>
+        <source>Skip Source folder</source>
+        <translation>ソースフォルダをスキップ</translation>
+    </message>
+    <message>
+        <source>Skip Source folders containing C# code</source>
+        <translation>C#コードを含むソースフォルダをスキップ</translation>
+    </message>
+    <message>
+        <source>Skip Textures folder</source>
+        <translation>テクスチャフォルダをスキップ</translation>
+    </message>
+    <message>
+        <source>Skip Textures folders containing images</source>
+        <translation>画像を含むテクスチャフォルダをスキップ</translation>
+    </message>
+    <message>
+        <source>Search method is automatically selected based on options</source>
+        <translation>オプションに基づいて自動的に検索方法が選択されます</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>検索</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>停止</translation>
+    </message>
+    <message>
+        <source>Ready to search</source>
+        <translation>検索準備完了</translation>
+    </message>
+    <message>
+        <source>Filter results:</source>
+        <translation>結果をフィルタリング:</translation>
+    </message>
+    <message>
+        <source>Filter results by mod name, file name, or path</source>
+        <translation>モッド名、ファイル名、またはパスで結果をフィルタリング</translation>
+    </message>
+    <message>
+        <source>Search Results:</source>
+        <translation>検索結果:</translation>
+    </message>
+    <message>
+        <source>Mod Name</source>
+        <translation>モッド名</translation>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation>ファイル名</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>パス</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>プレビュー</translation>
+    </message>
+    <message>
+        <source>Found {result_count} results</source>
+        <translation>見つかった結果: {result_count}</translation>
+    </message>
+    <message>
+        <source>No results found</source>
+        <translation>結果が見つかりません</translation>
+    </message>
+    <message>
+        <source>Open File (Enter)</source>
+        <translation>ファイルを開く(Enter)</translation>
+    </message>
+    <message>
+        <source>Open Containing Folder (Ctrl+O)</source>
+        <translation>含むフォルダを開く(Ctrl+O)</translation>
+    </message>
+    <message>
+        <source>Copy Path (Ctrl+C)</source>
+        <translation>パスをコピー(Ctrl+C)</translation>
+    </message>
+    <message>
+        <source>Open With...</source>
+        <translation>開く(Ctrl+O)</translation>
+    </message>
+    <message>
+        <source>Notepad</source>
+        <translation>メモ帳</translation>
+    </message>
+    <message>
+        <source>VS Code</source>
+        <translation>VS Code</translation>
+    </message>
+    <message>
+        <source>Default Editor</source>
+        <translation>デフォルトのエディタ</translation>
+    </message>
+    <message>
+        <source>Clear Recent Searches</source>
+        <translation>最近の検索をクリア</translation>
+    </message>
+    <message>
+        <source>Filter: {visible_rows} of {total_rows} results visible</source>
+        <translation>フィルター: {visible_rows} / {total_rows} の結果が表示されています</translation>
+    </message>
+    <message>
+        <source>Found {total_rows} results</source>
+        <translation>見つかった結果: {total_rows}</translation>
+    </message>
+    <message>
+        <source>Right-click a result for actions</source>
+        <translation>アクションの結果を右クリックします</translation>
+    </message>
+    <message>
+        <source>Right-click for actions</source>
+        <translation>アクションを右クリックします</translation>
+    </message>
+</context>
+<context>
+    <name>GitHubModsPanel</name>
+    <message>
+        <source>RimDex - GitHub Mods</source>
+        <translation>リムソート - GitHub Mods</translation>
+    </message>
+    <message>
+        <source>GitHub Mods</source>
+        <translation>GitHub モッド</translation>
+    </message>
+    <message>
+        <source>
+Manage mods installed from GitHub releases.</source>
+        <translation>GitHub リリースからインストールされた MOD を管理します。</translation>
+    </message>
+    <message>
+        <source>Check for Updates</source>
+        <translation>アップデートをチェックする</translation>
+    </message>
+    <message>
+        <source>Update Selected</source>
+        <translation>選択したものを更新します</translation>
+    </message>
+    <message>
+        <source>Checking for updates...</source>
+        <translation>アップデートをチェックしています...</translation>
+    </message>
+    <message>
+        <source>{count} update(s) available: {names}{suffix}</source>
+        <translation>{count} 件のアップデートが利用可能: {names}{suffix}</translation>
+    </message>
+    <message>
+        <source>All mods are up to date.</source>
+        <translation>すべての MOD は最新です。</translation>
+    </message>
+    <message>
+        <source>Update check failed: {error}</source>
+        <translation>更新チェックに失敗しました:  {error}</translation>
+    </message>
+</context>
+<context>
+    <name>IgnoreJsonEditor</name>
+    <message>
+        <source>RimDex - Manage Ignore List</source>
+        <translation>RimDex - 無視リストの管理</translation>
+    </message>
+    <message>
+        <source>No mods in ignore list.</source>
+        <translation>無視リストにMODはありません。</translation>
+    </message>
+    <message>
+        <source>Mods checked below will be removed from the ignore list.</source>
+        <translation>以下でチェックされた MOD は無視リストから削除されます。</translation>
+    </message>
+    <message>
+        <source>Remove Selected</source>
+        <translation>選択したものを削除</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>エラー</translation>
+    </message>
+    <message>
+        <source>Failed to load ignored mods: {}</source>
+        <translation>無視された MOD をロードできませんでした: {}</translation>
+    </message>
+    <message>
+        <source>Error saving changes: {}</source>
+        <translation>変更の保存中にエラーが発生しました: {}</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>成功</translation>
+    </message>
+    <message>
+        <source>Ignore list has been saved successfully.</source>
+        <translation>無視リストが正常に保存されました。</translation>
+    </message>
+    <message>
+        <source>Failed to save changes to ignore list.</source>
+        <translation>無視リストへの変更を保存できませんでした。</translation>
+    </message>
+</context>
+<context>
+    <name>InstanceController</name>
+    <message>
+        <source>Invalid archive path</source>
+        <translation>無効なアーカイブ パス</translation>
+    </message>
+    <message>
+        <source>The provided archive path is invalid.</source>
+        <translation>指定されたアーカイブ パスが無効です。</translation>
+    </message>
+    <message>
+        <source>Please provide a valid archive path.</source>
+        <translation>有効なアーカイブ パスを指定してください。</translation>
+    </message>
+    <message>
+        <source>Error restoring instance</source>
+        <translation>インスタンスの復元中にエラーが発生しました</translation>
+    </message>
+    <message>
+        <source>An error occurred while reading instance archive: {e}</source>
+        <translation>インスタンスアーカイブの読み取り中にエラーが発生しました: {e}</translation>
+    </message>
+</context>
+<context>
+    <name>InstanceService</name>
+    <message>
+        <source>Essential path(s)</source>
+        <translation>必須のパス</translation>
+    </message>
+    <message>
+        <source>Essential path(s) are invalid or not set!</source>
+        <translation>必須のパスが無効であるか、設定されていません。</translation>
+    </message>
+    <message>
+        <source>RimDex requires the below paths to be set.&lt;br/&gt;&lt;br/&gt;1) Game folder (Folder where RimWorld is installed).&lt;br/&gt;&lt;br/&gt;2) Config folder (Folder where ModsConfig.xml is located)&lt;br/&gt;&lt;br/&gt;3) Local mods folder (Mods folder inside the RimWorld installation).&lt;br/&gt;&lt;br/&gt;4) Steam mods folder (Only set if you use Steam user also enable Steam Client Integration)&lt;br/&gt;&lt;br/&gt;Try Using the autodetect functionality to set all paths automatically.&lt;br/&gt;&lt;br/&gt;Would you like to open the settings to configure them now?</source>
+        <translation>rimDex では、以下のパスを設定する必要があります。&lt;br/&gt;&lt;br/&gt;1) ゲーム フォルダー (RimWorld がインストールされているフォルダー)。&lt;br/&gt;&lt;br/&gt;2) Config フォルダー (ModsConfig.xml があるフォルダー)。&lt;br/&gt;&lt;br/&gt;3) ローカル mods フォルダー (RimWorld インストール内の Mods フォルダー)。&lt;br/&gt;&lt;br/&gt;4) Steam mods フォルダー (Steam ユーザーも Steam クライアントを有効にしている場合にのみ設定します)統合)&lt;br/&gt;&lt;br/&gt;自動検出機能を使用してすべてのパスを自動的に設定してみてください。&lt;br/&gt;&lt;br/&gt;今すぐ設定を開いて構成しますか?</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>はい</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>いいえ</translation>
+    </message>
+    <message>
+        <source>Provide instance name</source>
+        <translation>インスタンス名を指定します</translation>
+    </message>
+    <message>
+        <source>Input a unique name for the backed up instance that is not &quot;{name}&quot;</source>
+        <translation>「{name}」ではない、バックアップされたインスタンスの一意の名前を入力してください</translation>
+    </message>
+    <message>
+        <source>Invalid name</source>
+        <translation>無効な名前です</translation>
+    </message>
+    <message>
+        <source>&quot;{name}&quot; is not allowed. Please choose a different name.</source>
+        <translation>「」は許可されていません。別の名前を選択してください。 {name}</translation>
+    </message>
+    <message>
+        <source>Compressing [{instance_name}] instance folder to archive...</source>
+        <translation>[{instance_name}] インスタンス フォルダを圧縮してアーカイブしています...</translation>
+    </message>
+    <message>
+        <source>Error restoring instance</source>
+        <translation>インスタンスの復元中にエラーが発生しました</translation>
+    </message>
+    <message>
+        <source>Archive not found at path: {input_path}</source>
+        <translation>パス: {input_path} でアーカイブが見つかりません</translation>
+    </message>
+    <message>
+        <source>An error occurred while reading instance archive: {e}</source>
+        <translation>インスタンス アーカイブの読み取り中にエラーが発生しました: {e}</translation>
+    </message>
+    <message>
+        <source>Instance folder exists</source>
+        <translation>インスタンスフォルダーが存在します</translation>
+    </message>
+    <message>
+        <source>Instance folder already exists: {instance_folder_path}</source>
+        <translation>インスタンス フォルダーはすでに存在します: {instance_folder_path}</translation>
+    </message>
+    <message>
+        <source>Do you want to continue and replace the existing instance folder?</source>
+        <translation>続行して既存のインスタンス フォルダーを置き換えますか?</translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation>交換する</translation>
+    </message>
+    <message>
+        <source>Restoring instance [{name}] from archive...</source>
+        <translation>インスタンス [{name}] をアーカイブから復元しています...</translation>
+    </message>
+    <message>
+        <source>Invalid instance folder paths</source>
+        <translation>無効なインスタンス フォルダー パス</translation>
+    </message>
+    <message>
+        <source>Some folder paths from the restored instance are invalid and were cleared. Please reconfigure them in the settings</source>
+        <translation>復元されたインスタンスの一部のフォルダー パスは無効であり、クリアされました。設定で再設定してください</translation>
+    </message>
+    <message>
+        <source>Invalid paths: {path}</source>
+        <translation>無効なパス: {path}</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t restore steamcmd symlink/junction</source>
+        <translation>steamcmd シンボリックリンク/ジャンクションを復元できませんでした</translation>
+    </message>
+    <message>
+        <source>The steamcmd symlink/junction could not be restored as the local folder is not set or invalid. The symlink/junction will need to be manually recreated.</source>
+        <translation>ローカル フォルダーが設定されていないか無効であるため、steamcmd シンボリックリンク/ジャンクションを復元できませんでした。シンボリックリンク/ジャンクションは手動で再作成する必要があります。</translation>
+    </message>
+    <message>
+        <source>An error occurred while restoring instance [{name}].</source>
+        <translation>インスタンス [{name}] の復元中にエラーが発生しました。</translation>
+    </message>
+    <message>
+        <source>The instance folder was not found after extracting the archive. Perhaps the archive is corrupt or the instance name is invalid.</source>
+        <translation>アーカイブを解凍した後、インスタンス フォルダーが見つかりませんでした。おそらく、アーカイブが破損しているか、インスタンス名が無効です。</translation>
+    </message>
+    <message>
+        <source>Create new instance</source>
+        <translation>新しいインスタンスを作成する</translation>
+    </message>
+    <message>
+        <source>Input a unique name of new instance that is not already used:</source>
+        <translation>まだ使用されていない新しいインスタンスの一意の名前を入力します。</translation>
+    </message>
+    <message>
+        <source>Clone instance [{name}]</source>
+        <translation>クローン インスタンス [{name}]</translation>
+    </message>
+    <message>
+        <source>What would you like to do with the configured Workshop mods folder?</source>
+        <translation>構成された Workshop mods フォルダーをどうしますか?</translation>
+    </message>
+    <message>
+        <source>Workshop folder: {folder}&lt;br&gt;&lt;br&gt;Option 1: Convert to SteamCMD&lt;br&gt;RimDex will copy all Workshop mods to the new instance&apos;s local mods folder, converting them to SteamCMD mods that you can manage inside the new instance. The Workshop folder will be ignored for this instance to prevent duplicate mods.&lt;br&gt;&lt;br&gt;Option 2: Keep Workshop Folder&lt;br&gt;The new instance will use the same Workshop folder as the original instance. You can change this later in the settings if needed.&lt;br&gt;&lt;br&gt;How would you like to proceed?</source>
+        <translation>ワークショップ フォルダー: &lt;br&gt;&lt;br&gt;オプション 1: SteamCMD に変換&lt;br&gt;RimDex はすべてのワークショップ MOD を新しいインスタンスのローカル MOD フォルダーにコピーし、新しいインスタンス内で管理できる SteamCMD MOD に変換します。 MOD の重複を防ぐため、このインスタンスではワークショップ フォルダーは無視されます。&lt;br&gt;&lt;br&gt;オプション 2: ワークショップ フォルダーを保持する&lt;br&gt;新しいインスタンスは、元のインスタンスと同じワークショップ フォルダーを使用します。必要に応じて、後で設定でこれを変更できます。&lt;br&gt;&lt;br&gt;次にどうしますか? {folder}</translation>
+    </message>
+    <message>
+        <source>Convert to SteamCMD</source>
+        <translation>SteamCMDに変換する</translation>
+    </message>
+    <message>
+        <source>Keep Workshop Folder</source>
+        <translation>ワークショップフォルダーを保持する</translation>
+    </message>
+    <message>
+        <source>Workshop folder not configured</source>
+        <translation>ワークショップフォルダーが構成されていません</translation>
+    </message>
+    <message>
+        <source>Workshop folder was not configured for the cloned instance. You can set it later in settings.</source>
+        <translation>クローンインスタンス用にワークショップフォルダーが構成されていませんでした。後から設定で設定することもできます。</translation>
+    </message>
+    <message>
+        <source>Workshop mods not found</source>
+        <translation>ワークショップ MOD が見つかりません</translation>
+    </message>
+    <message>
+        <source>Workshop mods folder at [{existing_instance_workshop_folder}] not found.</source>
+        <translation>[{existing_instance_workshop_folder}] のワークショップ MOD フォルダーが見つかりません。</translation>
+    </message>
+    <message>
+        <source>Error cloning instance</source>
+        <translation>インスタンスのクローン作成エラー</translation>
+    </message>
+    <message>
+        <source>Unable to clone instance.</source>
+        <translation>インスタンスのクローンを作成できません。</translation>
+    </message>
+    <message>
+        <source>Please enter a valid, unique instance name. It cannot be &apos;{name}&apos; or empty.</source>
+        <translation>有効な一意のインスタンス名を入力してください。 「{name}」または空にすることはできません。</translation>
+    </message>
+    <message>
+        <source>Create new instance [{instance_name}]</source>
+        <translation>新しいインスタンス [{instance_name}] を作成します</translation>
+    </message>
+    <message>
+        <source>Would you like to automatically generate run args for the new instance?</source>
+        <translation>新しいインスタンスの実行引数を自動的に生成しますか?</translation>
+    </message>
+    <message>
+        <source>This will try to generate run args for the new instance based on the configured Game/Config folders.&lt;br&gt;&lt;br&gt;Generated run arguments preview:&lt;br&gt;{preview}</source>
+        <translation>これにより、構成された Game/Config フォルダーに基づいて新しいインスタンスの実行引数の生成が試行されます。&lt;br&gt;&lt;br&gt;生成された実行引数のプレビュー:&lt;br&gt;{preview}</translation>
+    </message>
+    <message>
+        <source>Error creating instance</source>
+        <translation>インスタンスの作成中にエラーが発生しました</translation>
+    </message>
+    <message>
+        <source>Unable to create new instance.</source>
+        <translation>新しいインスタンスを作成できません。</translation>
+    </message>
+    <message>
+        <source>Problem deleting instance</source>
+        <translation>インスタンスの削除中に問題が発生しました</translation>
+    </message>
+    <message>
+        <source>Unable to delete instance {current_instance}.</source>
+        <translation>インスタンス {current_instance} を削除できません。</translation>
+    </message>
+    <message>
+        <source>The default instance cannot be deleted.</source>
+        <translation>デフォルトのインスタンスは削除できません。</translation>
+    </message>
+    <message>
+        <source>Error deleting instance</source>
+        <translation>インスタンスの削除中にエラーが発生しました</translation>
+    </message>
+    <message>
+        <source>The selected instance does not exist.</source>
+        <translation>選択したインスタンスは存在しません。</translation>
+    </message>
+    <message>
+        <source>Delete instance {current_instance}</source>
+        <translation>インスタンス {current_instance} を削除します</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete the selected instance and all of its data?</source>
+        <translation>選択したインスタンスとそのすべてのデータを削除してもよろしいですか?</translation>
+    </message>
+    <message>
+        <source>This action cannot be undone.</source>
+        <translation>この操作は元に戻すことができません。</translation>
+    </message>
+</context>
+<context>
+    <name>LanguageController</name>
+    <message>
+        <source>Language Changed</source>
+        <translation>言語が変更されました</translation>
+    </message>
+    <message>
+        <source>The language has been updated.</source>
+        <translation>言語が更新されました。</translation>
+    </message>
+    <message>
+        <source>Restart the application to apply the change. Restart now?</source>
+        <translation>アプリケーションを再起動して変更を適用します。今再起動しますか？</translation>
+    </message>
+    <message>
+        <source>Restart</source>
+        <translation>再起動</translation>
+    </message>
+</context>
+<context>
+    <name>LocationsTabController</name>
+    <message>
+        <source>Invalid Game Location</source>
+        <translation>無効なゲームの場所</translation>
+    </message>
+    <message>
+        <source>Invalid Config Folder</source>
+        <translation>無効な構成フォルダー</translation>
+    </message>
+    <message>
+        <source>Invalid Local Mods Folder</source>
+        <translation>無効なローカル Mods フォルダー</translation>
+    </message>
+    <message>
+        <source>Clear all locations</source>
+        <translation>すべての場所をクリアする</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to clear all locations?</source>
+        <translation>すべての場所をクリアしてもよろしいですか?</translation>
+    </message>
+</context>
+<context>
+    <name>MainContent</name>
+    <message>
+        <source>Essential path(s)</source>
+        <translation>必須のパス</translation>
+    </message>
+    <message>
+        <source>Scanning mod sources and populating metadata...</source>
+        <translation>モッドソースをスキャンしてメタデータを追加しています...</translation>
+    </message>
+    <message>
+        <source>Metadata not loaded</source>
+        <translation>メタデータがロードされていません</translation>
+    </message>
+    <message>
+        <source>Mod metadata has not finished loading. Please wait and try again.</source>
+        <translation>Mod メタデータの読み込みが完了していません。しばらく待ってからもう一度お試しください。</translation>
+    </message>
+    <message>
+        <source>Sorting algorithm not implemented</source>
+        <translation>ソートアルゴリズムが実装されていません</translation>
+    </message>
+    <message>
+        <source>The selected sorting algorithm is not implemented</source>
+        <translation>選択されたソートアルゴリズムは実装されていません</translation>
+    </message>
+    <message>
+        <source>Could not open directory</source>
+        <translation>ディレクトリを開けませんでした</translation>
+    </message>
+    <message>
+        <source>{directory_name} path does not exist or is not set.</source>
+        <translation>{directory_name}パスが存在しないか、設定されていません。</translation>
+    </message>
+    <message>
+        <source>Would you like to set the path now?</source>
+        <translation>今すぐパスを設定しますか？</translation>
+    </message>
+    <message>
+        <source>Open settings</source>
+        <translation>設定を開く</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translation>ファイルが見つかりません</translation>
+    </message>
+    <message>
+        <source>The file you are trying to upload does not exist.</source>
+        <translation>アップロードしようとしているファイルは存在しません。</translation>
+    </message>
+    <message>
+        <source>File: {path}</source>
+        <translation>ファイル: {path}</translation>
+    </message>
+    <message>
+        <source>Uploading {path.name} to 0x0.st...</source>
+        <translation>{path.name}を0x0.stにアップロード中...</translation>
+    </message>
+    <message>
+        <source>Uploaded file</source>
+        <translation>ファイルをアップロードしました</translation>
+    </message>
+    <message>
+        <source>You may experience longer loading times or higher memory usage.&lt;br&gt;&lt;br&gt;Check the todds output window for details.</source>
+        <translation>読み込み時間が長くなったり、メモリ使用量が増加したりする可能性があります。&lt;br&gt;&lt;br&gt;詳細については、todds 出力ウィンドウを確認してください。</translation>
+    </message>
+    <message>
+        <source>Failed to upload file.</source>
+        <translation>ファイルのアップロードに失敗しました。</translation>
+    </message>
+    <message>
+        <source>Failed to upload the file to 0x0.st</source>
+        <translation>ファイルを0x0.stにアップロードできませんでした。</translation>
+    </message>
+    <message>
+        <source>Could not save active mods</source>
+        <translation>アクティブなモッドを保存できませんでした</translation>
+    </message>
+    <message>
+        <source>Failed to save active mods to file:</source>
+        <translation>アクティブなモッドをファイルに保存できませんでした:</translation>
+    </message>
+    <message>
+        <source>Confirm texture deletion</source>
+        <translation>テクスチャの削除を確認する</translation>
+    </message>
+    <message>
+        <source>This will delete all optimized .dds textures from your active mods</source>
+        <translation>これにより、アクティブな MOD から最適化された .dds テクスチャがすべて削除されます。</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete all .dds textures? You can re-optimize them later if needed.</source>
+        <translation>すべての .dds テクスチャを削除してもよろしいですか?必要に応じて、後で再最適化できます。</translation>
+    </message>
+    <message>
+        <source>Delete textures</source>
+        <translation>テクスチャの削除</translation>
+    </message>
+    <message>
+        <source>No valid paths for todds</source>
+        <translation>トッズに有効なパスがありません</translation>
+    </message>
+    <message>
+        <source>todds could not find any valid mod folders to process.</source>
+        <translation>todds は処理する有効な MOD フォルダーを見つけることができませんでした。</translation>
+    </message>
+    <message>
+        <source>Steam Client Integration is disabled</source>
+        <translation>Steam クライアント統合が無効になっています</translation>
+    </message>
+    <message>
+        <source>Edit Steam DB repo</source>
+        <translation>Steam DBリポジトリを編集</translation>
+    </message>
+    <message>
+        <source>Enter URL (https://github.com/AccountName/RepositoryName):</source>
+        <translation>URLを入力してください（https://github.com/AccountName/RepositoryName）：</translation>
+    </message>
+    <message>
+        <source>Edit Community Rules DB repo</source>
+        <translation>コミュニティルールDBリポジトリを編集</translation>
+    </message>
+    <message>
+        <source>Edit Steam WebAPI key</source>
+        <translation>Steam WebAPIキーを編集</translation>
+    </message>
+    <message>
+        <source>Enter your personal 32 character Steam WebAPI key here:</source>
+        <translation>ここに個人の32文字のSteam WebAPIキーを入力してください：</translation>
+    </message>
+    <message>
+        <source>Path: {path}</source>
+        <translation>パス: {path}</translation>
+    </message>
+    <message>
+        <source>RimDex - DB Builder</source>
+        <translation>RimDex - DBビルダー</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>続行しますか？</translation>
+    </message>
+    <message>
+        <source>Edit SteamDB expiry:</source>
+        <translation>SteamDBの有効期限を編集:</translation>
+    </message>
+    <message>
+        <source>Enter your preferred expiry duration in seconds (default 1 week/604800 sec):</source>
+        <translation>希望する有効期限を秒単位で入力してください（デフォルトは1週間/604800秒）:</translation>
+    </message>
+    <message>
+        <source>Tried configuring Dynamic Query with a value that is not an integer.</source>
+        <translation>整数ではない値で動的クエリを構成しようとしました。</translation>
+    </message>
+    <message>
+        <source>Please reconfigure the expiry value with an integer in terms of the seconds from epoch you would like your query to expire.</source>
+        <translation>クエリの有効期限を切れるまでのエポックからの秒数を整数で再構成してください。</translation>
+    </message>
+    <message>
+        <source>todds Optimization Failed</source>
+        <translation>toddsの最適化に失敗しました</translation>
+    </message>
+    <message>
+        <source>todds texture optimization failed (exit code: {exit_code}), but the game will launch anyway.</source>
+        <translation>todds テクスチャの最適化に失敗しました (終了コード: {exit_code}) が、ゲームは起動します。</translation>
+    </message>
+    <message>
+        <source>Steam protocol launch requires Steam Client Integration to be enabled.</source>
+        <translation>Steam プロトコルを起動するには、Steam クライアント統合を有効にする必要があります。</translation>
+    </message>
+    <message>
+        <source>Please enable Steam Client Integration in Settings → Steam to use this feature.</source>
+        <translation>この機能を使用するには、「設定」→「Steam」で Steam クライアント統合を有効にしてください。</translation>
+    </message>
+    <message>
+        <source>Use This Instead</source>
+        <translation>これを代わりに使用</translation>
+    </message>
+    <message>
+        <source>Please configure &quot;Use This Instead&quot; database in settings.</source>
+        <translation>設定で「代わりにこれを使用する」データベースを構成してください。</translation>
+    </message>
+    <message>
+        <source>No suggestions were found in the &quot;Use This Instead&quot; database.</source>
+        <translation>「これを代わりに使用」データベースに提案は見つかりませんでした。</translation>
+    </message>
+    <message>
+        <source>Failed to read existing database</source>
+        <translation>既存のデータベースの読み込みに失敗しました</translation>
+    </message>
+    <message>
+        <source>Essential path(s) are invalid or not set!</source>
+        <translation>必須のパスが無効であるか、設定されていません。</translation>
+    </message>
+    <message>
+        <source>RimDex requires the below paths to be set.&lt;br/&gt;&lt;br/&gt;1) Game folder (Folder where RimWorld is installed).&lt;br/&gt;&lt;br/&gt;2) Config folder (Folder where ModsConfig.xml is located)&lt;br/&gt;&lt;br/&gt;3) Local mods folder (Mods folder inside the RimWorld installation).&lt;br/&gt;&lt;br/&gt;4) Steam mods folder (Only set if you use Steam user also enable Steam Client Integration)&lt;br/&gt;&lt;br/&gt;Try Using the autodetect functionality to set all paths automatically.&lt;br/&gt;&lt;br/&gt;Would you like to open the settings to configure them now?</source>
+        <translation>RimDex では以下のパスを設定する必要があります。&lt;br/&gt;&lt;br/&gt;1) ゲーム フォルダー (RimWorld がインストールされているフォルダー)。&lt;br/&gt;&lt;br/&gt;2) Config フォルダー (ModsConfig.xml があるフォルダー)&lt;br/&gt;&lt;br/&gt;3) ローカル mods フォルダー (RimWorld インストール内の Mods フォルダー)。&lt;br/&gt;&lt;br/&gt;4) Steam mods フォルダー (Steam ユーザーも Steam クライアントを有効にしている場合にのみ設定します)統合)&lt;br/&gt;&lt;br/&gt;自動検出機能を使用してすべてのパスを自動的に設定してみてください。&lt;br/&gt;&lt;br/&gt;今すぐ設定を開いて構成しますか?</translation>
+    </message>
+    <message>
+        <source>This may be caused by malformed settings or improper migration between versions or different mod manager.&lt;br&gt;&lt;br&gt;Try resetting your settings, selecting a different sorting algorithm, or deleting your settings file.&lt;br&gt;&lt;br&gt;If the issue persists, please report it to the developers.</source>
+        <translation>これは、不正な設定、バージョン間または異なる MOD マネージャー間の不適切な移行が原因である可能性があります。&lt;br&gt;&lt;br&gt;設定をリセットするか、別の並べ替えアルゴリズムを選択するか、設定ファイルを削除してみてください。&lt;br&gt;&lt;br&gt;問題が解決しない場合は、開発者に報告してください。</translation>
+    </message>
+    <message>
+        <source>The URL has been copied to your clipboard:&lt;br&gt;&lt;br&gt;{ret}</source>
+        <translation>URL がクリップボードにコピーされました:&lt;br&gt;&lt;br&gt;{ret}</translation>
+    </message>
+    <message>
+        <source>None of the configured mod folder paths exist on disk.&lt;br&gt;&lt;br&gt;Please verify your Local Mods and Workshop folders are correctly set in Settings, then try again.</source>
+        <translation>設定された MOD フォルダのパスがディスク上に存在しません。&lt;br&gt;&lt;br&gt;ローカル Mod フォルダとワークショップ フォルダが設定で正しく設定されていることを確認して、もう一度お試しください。</translation>
+    </message>
+    <message>
+        <source>Failed to read the existing database!</source>
+        <translation>既存のデータベースの読み込みに失敗しました！</translation>
+    </message>
+    <message>
+        <source>This operation will overwrite the {rules_source} database located at the following path:&lt;br&gt;&lt;br&gt;{path}</source>
+        <translation>この操作により、次のパスにある {rules_source} データベースが上書きされます:&lt;br&gt;&lt;br&gt;{path}</translation>
+    </message>
+    <message>
+        <source>Unsaved Changes</source>
+        <translation>未保存の変更</translation>
+    </message>
+    <message>
+        <source>You have unsaved changes. What would you like to do?</source>
+        <translation>未保存の変更があります。どうしますか？</translation>
+    </message>
+    <message>
+        <source>Save and Run</source>
+        <translation>保存して実行</translation>
+    </message>
+    <message>
+        <source>Run Anyway</source>
+        <translation>とにかく実行</translation>
+    </message>
+    <message>
+        <source>Uploaded {path.name} to https://0x0.st/</source>
+        <translation>{path.name}をhttps://0x0.st/にアップロードしました</translation>
+    </message>
+    <message>
+        <source>Failed to open file.</source>
+        <translation>ファイルを開くことができませんでした。</translation>
+    </message>
+    <message>
+        <source>Failed to open the file with default text editor. It may not exist.</source>
+        <translation>デフォルトのテキストエディターでファイルを開くことに失敗しました。存在しない可能性があります。</translation>
+    </message>
+</context>
+<context>
+    <name>MainWindow</name>
+    <message>
+        <source>Refresh</source>
+        <translation>更新</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>クリア</translation>
+    </message>
+    <message>
+        <source>Restore</source>
+        <translation>復元</translation>
+    </message>
+    <message>
+        <source>Sort</source>
+        <translation>ソート</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Run</source>
+        <translation>実行</translation>
+    </message>
+    <message>
+        <source>Main Content</source>
+        <translation>メインコンテンツ</translation>
+    </message>
+    <message>
+        <source>File Search</source>
+        <translation>ファイル検索</translation>
+    </message>
+    <message>
+        <source>Troubleshooting</source>
+        <translation>トラブルシューティング</translation>
+    </message>
+    <message>
+        <source>Steam Client Integration</source>
+        <translation>Steamクライアント統合</translation>
+    </message>
+    <message>
+        <source>&lt;h3&gt;Would you like to enable Steam Client Integration for this instance?&lt;/h3&gt;</source>
+        <translation>&lt;h3&gt;このインスタンスにSteamクライアント統合を有効にしますか？&lt;/h3&gt;</translation>
+    </message>
+    <message>
+        <source>This will allow you to use RimDex features that require the Steam Client. This includes, among other things, unsubscribing from workshop mods and opening workshop links via the Steam Client. 
+                &lt;br&gt;&lt;br&gt;
+                You can change this in the settings under the Advanced tab.</source>
+        <translation>これにより、Steamクライアントの機能を使用できるようになります。これには、ワークショップモッドの購読解除や、Steamクライアントを介したワークショップリンクの開きなどが含まれます。
+                &lt;br&gt;&lt;br&gt;
+                これは、設定の高度なタブの下で変更できます。</translation>
+    </message>
+    <message>
+        <source>ACF Log Reader</source>
+        <translation>ACFログリーダー</translation>
+    </message>
+    <message>
+        <source>Player Log</source>
+        <translation>プレーヤーログ</translation>
+    </message>
+</context>
+<context>
+    <name>MenuBar</name>
+    <message>
+        <source>File</source>
+        <translation>ファイル</translation>
+    </message>
+    <message>
+        <source>Open Mod List…</source>
+        <translation>モッドリストを開く…</translation>
+    </message>
+    <message>
+        <source>Save Mod List As…</source>
+        <translation>モッドリストを保存…</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>インポート</translation>
+    </message>
+    <message>
+        <source>From Rentry.co</source>
+        <translation>Rentry.coから</translation>
+    </message>
+    <message>
+        <source>From Workshop collection</source>
+        <translation>クリエイティブワークショップコレクションから</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation>エクスポート</translation>
+    </message>
+    <message>
+        <source>To Clipboard…</source>
+        <translation>クリップボードにコピー…</translation>
+    </message>
+    <message>
+        <source>To Rentry.co…</source>
+        <translation>Rentry.coにエクスポート…</translation>
+    </message>
+    <message>
+        <source>Upload Log</source>
+        <translation>アップロードログ</translation>
+    </message>
+    <message>
+        <source>Open Log in Default Editor</source>
+        <translation>デフォルトエディタでログインを開く</translation>
+    </message>
+    <message>
+        <source>Open...</source>
+        <translation>開く…</translation>
+    </message>
+    <message>
+        <source>RimDex</source>
+        <translation>RimDex</translation>
+    </message>
+    <message>
+        <source>RimWorld</source>
+        <translation>RimWorld</translation>
+    </message>
+    <message>
+        <source>Root Directory</source>
+        <translation>ルートディレクトリ</translation>
+    </message>
+    <message>
+        <source>Config Directory</source>
+        <translation>設定ディレクトリ</translation>
+    </message>
+    <message>
+        <source>Logs Directory</source>
+        <translation>ログディレクトリ</translation>
+    </message>
+    <message>
+        <source>Local Mods Directory</source>
+        <translation>ローカルモッドディレクトリ</translation>
+    </message>
+    <message>
+        <source>Steam Mods Directory</source>
+        <translation>Steamモッドディレクトリ</translation>
+    </message>
+    <message>
+        <source>Settings…</source>
+        <translation>設定…</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation>終了</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>編集</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation>切り取り</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>コピー</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation>貼り付け</translation>
+    </message>
+    <message>
+        <source>Rule Editor…</source>
+        <translation>ルールエディタ…</translation>
+    </message>
+    <message>
+        <source>Ignore JSON Editor…</source>
+        <translation>JSON エディターを無視します…</translation>
+    </message>
+    <message>
+        <source>Reset Warning Toggles</source>
+        <translation>警告トグルをリセット</translation>
+    </message>
+    <message>
+        <source>Auto-add Translations</source>
+        <translation>翻訳の自動追加</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation>ビュー</translation>
+    </message>
+    <message>
+        <source>Show Translation Status</source>
+        <translation>翻訳ステータスを表示</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>ダウンロード</translation>
+    </message>
+    <message>
+        <source>Add Git Mod</source>
+        <translation>Gitモッドを追加</translation>
+    </message>
+    <message>
+        <source>Add Zip Mod</source>
+        <translation>Zipモッドを追加</translation>
+    </message>
+    <message>
+        <source>Browse Workshop</source>
+        <translation>クリエイティブワークショップを閲覧</translation>
+    </message>
+    <message>
+        <source>Update Workshop Mods</source>
+        <translation>クリエイティブワークショップを更新</translation>
+    </message>
+    <message>
+        <source>GitHub Mods</source>
+        <translation>GitHub モッド</translation>
+    </message>
+    <message>
+        <source>Verify Game Files</source>
+        <translation>ゲームファイルの検証</translation>
+    </message>
+    <message>
+        <source>Instances</source>
+        <translation>インスタンス</translation>
+    </message>
+    <message>
+        <source>Current: &quot;Default&quot;</source>
+        <translation>現在: &quot;Default&quot;</translation>
+    </message>
+    <message>
+        <source>Backup Instance…</source>
+        <translation>インスタンスをバックアップ</translation>
+    </message>
+    <message>
+        <source>Restore Instance…</source>
+        <translation>インスタンスを復元</translation>
+    </message>
+    <message>
+        <source>Clone Instance…</source>
+        <translation>インスタンスをクローン</translation>
+    </message>
+    <message>
+        <source>Create Instance…</source>
+        <translation>インスタンスを作成</translation>
+    </message>
+    <message>
+        <source>Delete Instance…</source>
+        <translation>インスタンスを削除</translation>
+    </message>
+    <message>
+        <source>Textures</source>
+        <translation>テクスチャ</translation>
+    </message>
+    <message>
+        <source>Optimize Textures</source>
+        <translation>テクスチャを最適化</translation>
+    </message>
+    <message>
+        <source>Delete .dds Textures</source>
+        <translation>DDSテクスチャを削除</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>更新</translation>
+    </message>
+    <message>
+        <source>Check for Updates…</source>
+        <translation>更新を確認…</translation>
+    </message>
+    <message>
+        <source>Check for Updates on Startup</source>
+        <translation>起動時に更新を確認</translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation>ツール</translation>
+    </message>
+    <message>
+        <source>Database Builder…</source>
+        <translation>データベースビルダー…</translation>
+    </message>
+    <message>
+        <source>Translation Manager…</source>
+        <translation>翻訳マネージャー…</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>ヘルプ</translation>
+    </message>
+    <message>
+        <source>RimDex Wiki…</source>
+        <translation>RimDex Wiki…</translation>
+    </message>
+    <message>
+        <source>From Save file…</source>
+        <translation>保存ファイルから…</translation>
+    </message>
+    <message>
+        <source>RimDex GitHub…</source>
+        <translation>RimDex github…</translation>
+    </message>
+    <message>
+        <source>Reset Mod Colors</source>
+        <translation>mod色をリセットします</translation>
+    </message>
+</context>
+<context>
+    <name>MenuBarController</name>
+    <message>
+        <source>Current: {current_instance}</source>
+        <translation>現在: {current_instance}</translation>
+    </message>
+</context>
+<context>
+    <name>MissingDependenciesDialog</name>
+    <message>
+        <source>Showing dependencies of your active mods.
+Select which missing dependencies to add to your active mods list.</source>
+        <translation>アクティブな MOD の依存関係を表示します。
+アクティブな MOD リストに追加する不足している依存関係を選択します。</translation>
+    </message>
+    <message>
+        <source>Select All</source>
+        <translation>すべて選択</translation>
+    </message>
+    <message>
+        <source>Add Selected &amp;&amp; Sort</source>
+        <translation>選択したものを追加して並べ替え</translation>
+    </message>
+    <message>
+        <source>Sort Without Adding</source>
+        <translation>追加せずに並べ替え</translation>
+    </message>
+    <message>
+        <source>No dependencies found for any active mod.</source>
+        <translation>アクティブな MOD の依存関係が見つかりません。</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Summary:&lt;/b&gt; {total_deps} total dependencies across {mods_with_deps} mods — ✅ {total_satisfied} fulfilled, ⚠️ {total_missing} missing ({total_local} local, {total_download} download) across {total_missing_per_mod} mod(s)</source>
+        <translation>&lt;b&gt;概要:&lt;/b&gt; {mods_with_deps} 個の MOD 全体で合計 {total_deps} 個の依存関係 — ✅ {total_satisfied} 個が満たされていますが、⚠️ {total_missing_per_mod} 個の MOD 全体で {total_missing} 個が欠落しています (ローカルでは {total_local}、ダウンロードでは {total_download} 個)</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Summary:&lt;/b&gt; {total_deps} total dependencies across {mods_with_deps} mods — ✅ All {total_satisfied} dependencies fulfilled</source>
+        <translation>&lt;b&gt;概要:&lt;/b&gt; {mods_with_deps} 個の MOD にわたる合計 {total_deps} 個の依存関係 — ✅ すべての {total_satisfied} 個の依存関係が満たされました</translation>
+    </message>
+    <message>
+        <source>  ✅ Satisfied: </source>
+        <translation>✅ 満足:</translation>
+    </message>
+    <message>
+        <source>Available locally - add to active list</source>
+        <translation>ローカルで利用可能 - アクティブなリストに追加</translation>
+    </message>
+    <message>
+        <source>Needs to be downloaded - requires SteamCMD</source>
+        <translation>ダウンロードする必要があります - SteamCMD が必要です</translation>
+    </message>
+    <message>
+        <source>
+All dependencies are satisfied. No missing dependencies found.</source>
+        <translation>すべての依存関係が満たされています。欠落している依存関係は見つかりませんでした。</translation>
+    </message>
+    <message>
+        <source>Dependency Manager</source>
+        <translation>依存関係マネージャー</translation>
+    </message>
+</context>
+<context>
+    <name>MissingModPropertiesPanel</name>
+    <message>
+        <source>RimDex - Mods with Missing Properties</source>
+        <translation>RimDex - プロパティが欠落している MOD</translation>
+    </message>
+    <message>
+        <source>Mods with Missing Properties detected!</source>
+        <translation>プロパティが欠落している Mod が検出されました。</translation>
+    </message>
+    <message>
+        <source>The following mods are missing important properties that may cause issues:
+
+• Missing Package ID: Mods without a valid Package ID in About.xml may have dependency and compatibility issues.
+• Missing Publish Field ID: Workshop mods without a Publish Field ID may not support redownloads and update checking.
+
+Please contact the mod authors to add these properties to their mods.</source>
+        <translation>次の MOD には、問題を引き起こす可能性がある重要なプロパティが欠落しています。
+
+• パッケージ ID がありません: About.xml に有効なパッケージ ID がない MOD には、依存関係や互換性の問題がある可能性があります。
+• パブリッシュ フィールド ID の欠落: パブリッシュ フィールド ID のないワークショップ MOD は、再ダウンロードと更新チェックをサポートしていない可能性があります。
+
+これらのプロパティを MOD に追加するには、MOD 作成者に問い合わせてください。</translation>
+    </message>
+    <message>
+        <source>Add to Ignore List</source>
+        <translation>無視リストに追加</translation>
+    </message>
+    <message>
+        <source>No Selection</source>
+        <translation>選択なし</translation>
+    </message>
+    <message>
+        <source>Please select mods to add to the ignore list.</source>
+        <translation>無視リストに追加する MOD を選択してください。</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>エラー</translation>
+    </message>
+    <message>
+        <source>Failed to add mods to ignore list.</source>
+        <translation>無視リストに MOD を追加できませんでした。</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>成功</translation>
+    </message>
+    <message>
+        <source>Mods added to ignore list. Panel will refresh.</source>
+        <translation>Mod が無視リストに追加されました。パネルが更新されます。</translation>
+    </message>
+    <message>
+        <source>Cannot add mods with missing Package IDs to the ignore list.
+These mods need valid Package IDs first:
+</source>
+        <translation>パッケージ ID が欠落している MOD を無視リストに追加することはできません。
+これらの MOD には、まず有効なパッケージ ID が必要です。</translation>
+    </message>
+    <message>
+        <source>Cannot Add</source>
+        <translation>追加できません</translation>
+    </message>
+    <message>
+        <source>Could not extract package IDs from selected mods.</source>
+        <translation>選択した MOD からパッケージ ID を抽出できませんでした。</translation>
+    </message>
+</context>
+<context>
+    <name>MissingModsPrompt</name>
+    <message>
+        <source>RimDex - Missing mods found</source>
+        <translation>RimDex - 不足しているMODが見つかりました</translation>
+    </message>
+    <message>
+        <source>There are mods missing from the active mods list!</source>
+        <translation>アクティブMODリストに不足しているMODがあります！</translation>
+    </message>
+    <message>
+        <source>
+User-configured SteamDB database was queried. The following table displays mods available for download from Steam. 
+
+Rimworld mods on Steam Workshop that share a packageId are &quot;variants&quot;. Please keep this in mind before downloading. 
+
+Please select your preferred mod variant in the table below. You can also open each variant in Steam/Web browser to verify.</source>
+        <translation>
+ユーザーが構成したSteamDBデータベースがクエリされました。以下の表には、Steamからダウンロード可能なMODが表示されます。
+
+パッケージIDを共有するRimworldのSteamワークショップMODは「バリアント」と呼ばれます。ダウンロードする前にこれを考慮してください。
+
+以下の表から好みのMODバリアントを選択してください。また、各バリアントをSteam/Webブラウザで開いて確認することもできます。</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名前</translation>
+    </message>
+    <message>
+        <source>Package ID</source>
+        <translation>パッケージID</translation>
+    </message>
+    <message>
+        <source>Supported Versions</source>
+        <translation>サポートされているバージョン</translation>
+    </message>
+    <message>
+        <source># Variants</source>
+        <translation># バリアント</translation>
+    </message>
+    <message>
+        <source>Published File Id</source>
+        <translation>公開されたファイルID</translation>
+    </message>
+    <message>
+        <source>Workshop Page</source>
+        <translation>ワークショップページ</translation>
+    </message>
+    <message>
+        <source>Download with SteamCMD</source>
+        <translation>SteamCMDでダウンロード</translation>
+    </message>
+    <message>
+        <source>Download with Steam client</source>
+        <translation>Steamクライアントでダウンロード</translation>
+    </message>
+</context>
+<context>
+    <name>ModDeletionMenu</name>
+    <message>
+        <source>Delete optimized textures (.dds files only)</source>
+        <translation>最適化されたテクスチャ（.ddsファイルのみ）を削除</translation>
+    </message>
+    <message>
+        <source>Mod directory was not empty. Please close all programs accessing files or subfolders in the directory (including your file manager) and try again.</source>
+        <translation>モッドディレクトリが空ではありません。ファイルやサブフォルダにアクセスしているすべてのプログラムを閉じて（ファイルマネージャーを含む）、再試行してください。</translation>
+    </message>
+    <message>
+        <source>Unable to delete mod</source>
+        <translation>モッドを削除できません</translation>
+    </message>
+    <message>
+        <source>Delete mod completely</source>
+        <translation>MODを完全に削除</translation>
+    </message>
+    <message>
+        <source>Delete mod (keep .dds textures)</source>
+        <translation>MODを削除（.ddsテクスチャを保持）</translation>
+    </message>
+    <message>
+        <source>Delete mod and unsubscribe from Steam</source>
+        <translation>MODを削除し、Steamから解除します</translation>
+    </message>
+    <message>
+        <source>Delete mod and resubscribe using Steam</source>
+        <translation>MODを削除し、Steamを使用して再購読します</translation>
+    </message>
+    <message>
+        <source>An OS error occurred while deleting the mod.</source>
+        <translation>MODを削除中にOSエラーが発生しました。</translation>
+    </message>
+    <message>
+        <source>No mods selected</source>
+        <translation>MODが選択されていません</translation>
+    </message>
+    <message>
+        <source>Confirm Complete Deletion</source>
+        <translation>完全削除の確認</translation>
+    </message>
+    <message>
+        <source>Please select at least one mod to process.</source>
+        <translation>処理するMODを少なくとも1つ選択してください。</translation>
+    </message>
+    <message>
+        <source>Confirm DDS Deletion</source>
+        <translation>DDS削除の確認</translation>
+    </message>
+    <message>
+        <source>Confirm Selective Deletion</source>
+        <translation>選択的削除の確認</translation>
+    </message>
+    <message>
+        <source>An error occurred while trying to {action} from Steam Workshop mods.</source>
+        <translation>SteamワークショップMODからの{action}中にエラーが発生しました。</translation>
+    </message>
+    <message>
+        <source>Deletion options</source>
+        <translation>削除オプション</translation>
+    </message>
+    <message>
+        <source>RimSort</source>
+        <translation>リムソート</translation>
+    </message>
+    <message>
+        <source>You have selected {len(selected_mods)} mod(s) for complete deletion.</source>
+        <translation>完全に削除するために  mods) を選択しました。 {len(selected_mods)}</translation>
+    </message>
+    <message>
+        <source>You have selected {len(selected_mods)} mod(s) for DDS texture deletion.</source>
+        <translation>DDS テクスチャ削除用に {len(selected_mods)} 個の mod を選択しました。</translation>
+    </message>
+    <message>
+        <source>You have selected {len(selected_mods)} mod(s) for selective deletion.</source>
+        <translation>選択的削除の対象として {len(selected_mods)} 個の mod を選択しました。</translation>
+    </message>
+    <message>
+        <source>Steam {action}</source>
+        <translation>Steam  {action}</translation>
+    </message>
+    <message>
+        <source>{action} Error</source>
+        <translation>エラー {action}</translation>
+    </message>
+    <message>
+        <source>unsubscribe</source>
+        <translation>登録解除</translation>
+    </message>
+    <message>
+        <source>resubscribe</source>
+        <translation>再登録します</translation>
+    </message>
+    <message>
+        <source>unsubscribed</source>
+        <translation>登録解除</translation>
+    </message>
+    <message>
+        <source>resubscribed</source>
+        <translation>再サブスクライブ</translation>
+    </message>
+    <message>
+        <source>Successfully deleted {result.success_count} selected mods.</source>
+        <translation>正常に削除された{result.success_count}選択されたmod。</translation>
+    </message>
+    <message>
+        <source>Deletion Incomplete</source>
+        <translation>削除不完全</translation>
+    </message>
+    <message>
+        <source>Failed to delete {result.failed_count} mod(s). Check logs for details.</source>
+        <translation>{result.failed_count} mod（s）を削除できませんでした。詳細については、ログを確認してください。</translation>
+    </message>
+    <message>
+        <source>{e.strerror or &apos;Unknown error&apos;} occurred at {e.filename or mod_path} with error code {error_code}.</source>
+        <translation>は、でエラーコード{error_code}で発生しました。 {e.filename or mod_path} {e.strerror or &apos;Unknown error&apos;}</translation>
+    </message>
+    <message>
+        <source>&lt;br&gt;This operation will permanently delete the selected mod directories from the filesystem.&lt;br&gt;&lt;br&gt;Do you want to proceed?</source>
+        <translation>&lt;br&gt;この操作により、選択した MOD ディレクトリがファイル システムから完全に削除されます。&lt;br&gt;&lt;br&gt;続行しますか?</translation>
+    </message>
+    <message>
+        <source>&lt;br&gt;This operation will only delete optimized textures (.dds files) from the selected mods.&lt;br&gt;&lt;br&gt;Do you want to proceed?</source>
+        <translation>&lt;br&gt;この操作では、選択した MOD から最適化されたテクスチャ (.dds ファイル) のみが削除されます。&lt;br&gt;&lt;br&gt;続行しますか?</translation>
+    </message>
+    <message>
+        <source>&lt;br&gt;This operation will delete all mod files except for .dds texture files.&lt;br&gt;The .dds files will be preserved.&lt;br&gt;&lt;br&gt;Do you want to proceed?</source>
+        <translation>&lt;br&gt;この操作により、.dds テクスチャ ファイルを除くすべての MOD ファイルが削除されます。&lt;br&gt;.dds ファイルは保持されます。&lt;br&gt;&lt;br&gt;続行しますか?</translation>
+    </message>
+    <message>
+        <source>Unsubscribe</source>
+        <translation>購読を解除する</translation>
+    </message>
+    <message>
+        <source>Resubscribe</source>
+        <translation>再購読</translation>
+    </message>
+    <message>
+        <source>Successfully initiated {action} from {len} Steam Workshop mod(s).&lt;br&gt;The process may take a few moments to complete.</source>
+        <translation>{len} 個の Steam ワークショップ MOD から {action} を正常に開始しました。&lt;br&gt;プロセスが完了するまでに少し時間がかかる場合があります。</translation>
+    </message>
+    <message>
+        <source>Confirm Deletion and {}</source>
+        <translation>削除を確認し、{}</translation>
+    </message>
+    <message>
+        <source>You have selected {} mod(s) for deletion.&lt;br&gt;{} of these are Steam Workshop mods that will also be {}.</source>
+        <translation>削除対象として {} 個の MOD を選択しました。&lt;br&gt;{} これらのうち、Steam ワークショップの MOD は、{} になります。</translation>
+    </message>
+    <message>
+        <source>&lt;br&gt;This operation will:&lt;br&gt;• Delete the selected mod directories from your filesystem&lt;br&gt;• {} Steam Workshop mods from your Steam account&lt;br&gt;&lt;br&gt;Do you want to proceed?</source>
+        <translation>&lt;br&gt;この操作により次のことが行われます。&lt;br&gt;• 選択した MOD ディレクトリをファイル システムから削除します&lt;br&gt;• {} Steam アカウントから Steam ワークショップ MOD を削除します&lt;br&gt;&lt;br&gt;続行しますか?</translation>
+    </message>
+</context>
+<context>
+    <name>ModInfo</name>
+    <message>
+        <source>Name:</source>
+        <translation>名前：</translation>
+    </message>
+    <message>
+        <source>Summary:</source>
+        <translation>まとめ：</translation>
+    </message>
+    <message>
+        <source>PackageID:</source>
+        <translation>パッケージID:</translation>
+    </message>
+    <message>
+        <source>Authors:</source>
+        <translation>著者:</translation>
+    </message>
+    <message>
+        <source>Tags:</source>
+        <translation>タグ:</translation>
+    </message>
+    <message>
+        <source>Color:</source>
+        <translation>色：</translation>
+    </message>
+    <message>
+        <source>Mod Version:</source>
+        <translation>モジュールのバージョン:</translation>
+    </message>
+    <message>
+        <source>Supported Version:</source>
+        <translation>サポートされているバージョン:</translation>
+    </message>
+    <message>
+        <source>Folder Size:</source>
+        <translation>フォルダーのサイズ:</translation>
+    </message>
+    <message>
+        <source>Path:</source>
+        <translation>パス：</translation>
+    </message>
+    <message>
+        <source>Steam URL:</source>
+        <translation>スチームURL:</translation>
+    </message>
+    <message>
+        <source>GitHub:</source>
+        <translation>GitHub:</translation>
+    </message>
+    <message>
+        <source>Version:</source>
+        <translation>バージョン:</translation>
+    </message>
+    <message>
+        <source>Last Touched:</source>
+        <translation>最後に触れた時間:</translation>
+    </message>
+    <message>
+        <source>Filesystem Modified:</source>
+        <translation>変更されたファイルシステム:</translation>
+    </message>
+    <message>
+        <source>Workshop Times:</source>
+        <translation>ワークショップ時間:</translation>
+    </message>
+    <message>
+        <source>Welcome to RimDex!</source>
+        <translation>リムデックスへようこそ！</translation>
+    </message>
+    <message>
+        <source>Put your personal mod notes here!</source>
+        <translation>個人的な MOD メモをここに記入してください。</translation>
+    </message>
+    <message>
+        <source>(Update available)</source>
+        <translation>(アップデートが利用可能)</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>なし</translation>
+    </message>
+</context>
+<context>
+    <name>ModListItemInner</name>
+    <message>
+        <source>Contains custom C# assemblies (custom code)</source>
+        <translation>カスタムC#アセンブリ（カスタムコード）を含む</translation>
+    </message>
+    <message>
+        <source>Contains custom content (textures / XML)</source>
+        <translation>カスタムコンテンツ（テクスチャ/XML）を含む</translation>
+    </message>
+    <message>
+        <source>Local mod that contains a git repository</source>
+        <translation>Gitリポジトリを含むローカルMOD</translation>
+    </message>
+    <message>
+        <source>Local mod that can be used with SteamCMD</source>
+        <translation>SteamCMDで使用できるローカルMOD</translation>
+    </message>
+    <message>
+        <source>Recently updated on Workshop</source>
+        <translation>最近更新されたワークショップ</translation>
+    </message>
+    <message>
+        <source>Official RimWorld content by Ludeon Studios</source>
+        <translation>Ludeon Studiosによる公式RimWorldコンテンツ</translation>
+    </message>
+    <message>
+        <source>Installed locally</source>
+        <translation>ローカルにインストール済み</translation>
+    </message>
+    <message>
+        <source>Subscribed via Steam</source>
+        <translation>Steamを通じて購読中</translation>
+    </message>
+    <message>
+        <source>Translation available - This mod has a translation or is already localized</source>
+        <translation>翻訳が利用可能 - この MOD には翻訳があるか、すでにローカライズされています</translation>
+    </message>
+    <message>
+        <source>No translation found - This mod does not have a translation installed</source>
+        <translation>翻訳が見つかりません - この MOD には翻訳がインストールされていません</translation>
+    </message>
+    <message>
+        <source>Not in latest save</source>
+        <translation>最新のセーブではありません</translation>
+    </message>
+    <message>
+        <source>In latest save</source>
+        <translation>最新の保存で</translation>
+    </message>
+</context>
+<context>
+    <name>ModListWidget</name>
+    <message>
+        <source>Open folder</source>
+        <translation>フォルダを開く</translation>
+    </message>
+    <message>
+        <source>Add new tags...</source>
+        <translation>新しいタグを追加...</translation>
+    </message>
+    <message>
+        <source>Replace all tags...</source>
+        <translation>すべてのタグを置き換えます...</translation>
+    </message>
+    <message>
+        <source>Remove all tags</source>
+        <translation>すべてのタグを削除します</translation>
+    </message>
+    <message>
+        <source>Open URL in browser</source>
+        <translation>ブラウザでURLを開く</translation>
+    </message>
+    <message>
+        <source>Copy URL to clipboard</source>
+        <translation>URLをクリップボードにコピー</translation>
+    </message>
+    <message>
+        <source>Open mod in Steam</source>
+        <translation>Steamでモッドを開く</translation>
+    </message>
+    <message>
+        <source>Convert local mod to SteamCMD</source>
+        <translation>ローカルモッドをSteamCMDに変換</translation>
+    </message>
+    <message>
+        <source>Convert SteamCMD mod to local</source>
+        <translation>SteamCMDモッドをローカルに変換</translation>
+    </message>
+    <message>
+        <source>Re-download mod with SteamCMD</source>
+        <translation>SteamCMDでモッドを再ダウンロード</translation>
+    </message>
+    <message>
+        <source>Update mod with git</source>
+        <translation>Gitでモッドを更新</translation>
+    </message>
+    <message>
+        <source>Convert Steam mod to local</source>
+        <translation>Steamモッドをローカルに変換</translation>
+    </message>
+    <message>
+        <source>Re-subscribe mod with Steam</source>
+        <translation>Steamでモッドを再購読</translation>
+    </message>
+    <message>
+        <source>Unsubscribe mod with Steam</source>
+        <translation>Steamでモッドを購読解除</translation>
+    </message>
+    <message>
+        <source>Remove mod from SteamDB blacklist</source>
+        <translation>SteamDBブラックリストからモッドを削除</translation>
+    </message>
+    <message>
+        <source>Add mod to SteamDB blacklist</source>
+        <translation>SteamDBブラックリストにモッドを追加</translation>
+    </message>
+    <message>
+        <source>Copy packageId to clipboard</source>
+        <translation>packageIdをクリップボードにコピー</translation>
+    </message>
+    <message>
+        <source>Edit mod with Rule Editor</source>
+        <translation>ルールエディタでモッドを編集</translation>
+    </message>
+    <message>
+        <source>Toggle warning</source>
+        <translation>警告を切り替え</translation>
+    </message>
+    <message>
+        <source>Find translations</source>
+        <translation>翻訳を探す</translation>
+    </message>
+    <message>
+        <source>Open folder(s)</source>
+        <translation>フォルダを開く</translation>
+    </message>
+    <message>
+        <source>Open URL(s) in browser</source>
+        <translation>ブラウザでURLを開く</translation>
+    </message>
+    <message>
+        <source>Convert local mod(s) to SteamCMD</source>
+        <translation>ローカルモッドをSteamCMDに変換</translation>
+    </message>
+    <message>
+        <source>Convert SteamCMD mod(s) to local</source>
+        <translation>SteamCMDモッドをローカルに変換</translation>
+    </message>
+    <message>
+        <source>Re-download mod(s) with SteamCMD</source>
+        <translation>SteamCMDでモッドを再ダウンロード</translation>
+    </message>
+    <message>
+        <source>Update mod(s) with git</source>
+        <translation>Gitでモッドを更新</translation>
+    </message>
+    <message>
+        <source>Toggle warning(s)</source>
+        <translation>警告を切り替え</translation>
+    </message>
+    <message>
+        <source>Convert Steam mod(s) to local</source>
+        <translation>Steamモッドをローカルに変換</translation>
+    </message>
+    <message>
+        <source>Re-subscribe mod(s) with Steam</source>
+        <translation>Steamでモッドを再購読</translation>
+    </message>
+    <message>
+        <source>Unsubscribe mod(s) with Steam</source>
+        <translation>Steamでモッドを購読解除</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>タグ</translation>
+    </message>
+    <message>
+        <source>Miscellaneous options</source>
+        <translation>その他のオプション</translation>
+    </message>
+    <message>
+        <source>Clipboard options</source>
+        <translation>クリップボードのオプション</translation>
+    </message>
+    <message>
+        <source>Workshop mods options</source>
+        <translation>Workshopモッドのオプション</translation>
+    </message>
+    <message>
+        <source>Add divider here</source>
+        <translation>ここに仕切りを追加します</translation>
+    </message>
+    <message>
+        <source>Add Divider</source>
+        <translation>ディバイダの追加</translation>
+    </message>
+    <message>
+        <source>Divider name:</source>
+        <translation>ディバイダー名:</translation>
+    </message>
+    <message>
+        <source>Are you sure?</source>
+        <translation>本当によろしいですか？</translation>
+    </message>
+    <message>
+        <source>You have selected {len} git mods to be updated.</source>
+        <translation>更新するgitモッドを{len}個選択しました。</translation>
+    </message>
+    <message>
+        <source>Do you want to proceed?</source>
+        <translation>続行しますか？</translation>
+    </message>
+    <message>
+        <source>You have selected {len} mods for deletion + re-download.</source>
+        <translation>削除して再ダウンロードするモッドを{len}個選択しました。</translation>
+    </message>
+    <message>
+        <source>You have selected {len} mods for unsubscribe.</source>
+        <translation>購読解除するモッドを{len}個選択しました。</translation>
+    </message>
+    <message>
+        <source>Database not available</source>
+        <translation>データベースが利用できません</translation>
+    </message>
+    <message>
+        <source>Steam Workshop metadata database is not loaded. Please build the database first using the Database Builder.</source>
+        <translation>Steam ワークショップのメタデータ データベースがロードされていません。最初にデータベース ビルダーを使用してデータベースを構築してください。</translation>
+    </message>
+    <message>
+        <source>No translations found</source>
+        <translation>翻訳が見つかりませんでした</translation>
+    </message>
+    <message>
+        <source>No translation mods were found for this mod in the Steam Workshop database.</source>
+        <translation>Steam ワークショップ データベースには、この MOD の翻訳 MOD が見つかりませんでした。</translation>
+    </message>
+    <message>
+        <source>Select Translation</source>
+        <translation>翻訳を選択</translation>
+    </message>
+    <message>
+        <source>Found {len(translation_mods)} translation(s). Select one to open:</source>
+        <translation>{len(translation_mods)} 件の翻訳が見つかりました。開くものを 1 つ選択してください:</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>開ける</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
+        <source>&lt;br&gt;This operation will recursively delete all mod files, except for .dds textures found, and attempt to re-download the mods via SteamCMD. Do you want to proceed?</source>
+        <translation>&lt;br&gt;この操作は、見つかった .dds テクスチャを除くすべての MOD ファイルを再帰的に削除し、SteamCMD 経由で MOD を再ダウンロードしようとします。続行しますか?</translation>
+    </message>
+    <message>
+        <source>You have selected {len} mods for resubscribe:(unsubscribe + subscribe).</source>
+        <translation>再購読するために {len} 個の MOD を選択しました:(購読解除 + 購読)。</translation>
+    </message>
+    <message>
+        <source>Add comment</source>
+        <translation>コメントを追加</translation>
+    </message>
+    <message>
+        <source>Enter a comment providing your reasoning for wanting to blacklist this mod: </source>
+        <translation>このMODをブラックリストに追加したい理由をコメントとして入力してください：</translation>
+    </message>
+    <message>
+        <source>Unable to add to blacklist</source>
+        <translation>ブラックリストに追加できませんでした</translation>
+    </message>
+    <message>
+        <source>Comment was not provided or entry was cancelled. Comments are REQUIRED for this action!</source>
+        <translation>コメントが提供されていないか、エントリがキャンセルされました。このアクションにはコメントが必要です！</translation>
+    </message>
+    <message>
+        <source>This will remove the selected mod, </source>
+        <translation>これにより、選択したMODが削除されます。</translation>
+    </message>
+    <message>
+        <source>Replace tags</source>
+        <translation>タグを置換する</translation>
+    </message>
+    <message>
+        <source>Add tags</source>
+        <translation>タグを追加する</translation>
+    </message>
+    <message>
+        <source>Rename divider</source>
+        <translation>区切り線の名前を変更する</translation>
+    </message>
+    <message>
+        <source>Expand</source>
+        <translation>拡大する</translation>
+    </message>
+    <message>
+        <source>Collapse</source>
+        <translation>崩壊</translation>
+    </message>
+    <message>
+        <source>Delete divider</source>
+        <translation>区切り線の削除</translation>
+    </message>
+    <message>
+        <source>Rename Divider</source>
+        <translation>ディバイダーの名前を変更</translation>
+    </message>
+    <message>
+        <source>New name:</source>
+        <translation>新しい名前:</translation>
+    </message>
+    <message>
+        <source>
+Missing Dependencies:</source>
+        <translation>
+不足している依存関係:</translation>
+    </message>
+    <message>
+        <source>
+Incompatibilities:</source>
+        <translation>
+非互換性:</translation>
+    </message>
+    <message>
+        <source>
+Incompatible (per other mod&apos;s rules):</source>
+        <translation>互換性がありません (他の MOD のルールによる):</translation>
+    </message>
+    <message>
+        <source>
+Should be Loaded After:</source>
+        <translation>
+後に読み込む必要があります:</translation>
+    </message>
+    <message>
+        <source>
+Should be Loaded Before:</source>
+        <translation>
+前に読み込む必要があります:</translation>
+    </message>
+    <message>
+        <source>Change mod color</source>
+        <translation>mod色を変更します</translation>
+    </message>
+    <message>
+        <source>Reset mod color</source>
+        <translation>mod色をリセットします</translation>
+    </message>
+    <message>
+        <source>&lt;br&gt;This operation will potentially delete .dds textures leftover. Steam is unreliable for this. Do you want to proceed?</source>
+        <translation>&lt;br&gt;この操作により、残った .dds テクスチャが削除される可能性があります。これに関しては Steam は信頼できません。続行しますか?</translation>
+    </message>
+    <message>
+        <source>&lt;br&gt;Do you want to proceed?</source>
+        <translation>&lt;br&gt;続行しますか?</translation>
+    </message>
+    <message>
+        <source>
+Mod and Game Version Mismatch</source>
+        <translation>MODおよびゲームバージョンの不一致</translation>
+    </message>
+    <message>
+        <source>
+An alternative updated mod is recommended:
+{alternative}</source>
+        <translation>別の更新されたmodが推奨されます：
+ {alternative}</translation>
+    </message>
+    <message>
+        <source>
+Alternative Dependencies:</source>
+        <translation>代替依存関係：</translation>
+    </message>
+    <message>
+        <source>Open folder in text editor</source>
+        <translation>テキストエディターの開いたフォルダー</translation>
+    </message>
+    <message>
+        <source>Open folder(s) in text editor</source>
+        <translation>テキストエディターのオープンフォルダー</translation>
+    </message>
+</context>
+<context>
+    <name>ModsPanel</name>
+    <message>
+        <source>Hide Filter Disabled</source>
+        <translation>フィルターを非表示にする</translation>
+    </message>
+    <message>
+        <source>Active [0]</source>
+        <translation>アクティブ[0]</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>タグ</translation>
+    </message>
+    <message>
+        <source>Colors</source>
+        <translation>色</translation>
+    </message>
+    <message>
+        <source>0 updated</source>
+        <translation>0 件が更新されました</translation>
+    </message>
+    <message>
+        <source>Click to only show mods recently updated on the Workshop</source>
+        <translation>クリックすると、ワークショップで最近更新された MOD のみが表示されます</translation>
+    </message>
+    <message>
+        <source>Workshop Updated</source>
+        <translation>ワークショップを更新しました</translation>
+    </message>
+    <message>
+        <source>{padding}{count} updated</source>
+        <translation>{padding}{count} が更新されました</translation>
+    </message>
+    <message>
+        <source>Database not available</source>
+        <translation>データベースが利用できません</translation>
+    </message>
+    <message>
+        <source>Steam Workshop metadata database is not loaded. Please build the database first using the Database Builder.</source>
+        <translation>Steam ワークショップのメタデータ データベースがロードされていません。最初にデータベース ビルダーを使用してデータベースを構築してください。</translation>
+    </message>
+    <message>
+        <source>No Translations Found</source>
+        <translation>翻訳が見つかりませんでした</translation>
+    </message>
+    <message>
+        <source>No applicable translation mods were found for your active mod list.</source>
+        <translation>アクティブな MOD リストに該当する翻訳 MOD が見つかりませんでした。</translation>
+    </message>
+    <message>
+        <source>Translations Added</source>
+        <translation>翻訳を追加しました</translation>
+    </message>
+    <message>
+        <source>Successfully added {count} translation mods to the active list.</source>
+        <translation>{count} 個の翻訳 MOD をアクティブ リストに追加しました。</translation>
+    </message>
+    <message>
+        <source>No New Translations</source>
+        <translation>新しい翻訳はありません</translation>
+    </message>
+    <message>
+        <source>All found translation mods are already active.</source>
+        <translation>見つかった翻訳 MOD はすべてすでに有効になっています。</translation>
+    </message>
+    <message>
+        <source>Hide Filter Enabled</source>
+        <translation>フィルターを表示する</translation>
+    </message>
+    <message>
+        <source>Inactive [0]</source>
+        <translation>非アクティブ[0]</translation>
+    </message>
+    <message>
+        <source>Modified Time</source>
+        <translation>更新時刻</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation>作者</translation>
+    </message>
+    <message>
+        <source>Folder Size</source>
+        <translation>フォルダーサイズ</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>注意事項</translation>
+    </message>
+    <message>
+        <source>Toggle sort order</source>
+        <translation>並び順を切り替え</translation>
+    </message>
+    <message>
+        <source>Desc</source>
+        <translation>降順</translation>
+    </message>
+    <message>
+        <source>Asc</source>
+        <translation>昇順</translation>
+    </message>
+    <message>
+        <source>Calculating folder sizes...</source>
+        <translation>フォルダーサイズを計算中...</translation>
+    </message>
+    <message>
+        <source>Search by...</source>
+        <translation>検索</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名前</translation>
+    </message>
+    <message>
+        <source>PackageId</source>
+        <translation>パッケージID</translation>
+    </message>
+    <message>
+        <source>Author(s)</source>
+        <translation>作者</translation>
+    </message>
+    <message>
+        <source>PublishedFileId</source>
+        <translation>公開ファイルID</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation>バージョン</translation>
+    </message>
+    <message>
+        <source>0 warnings</source>
+        <translation>警告0</translation>
+    </message>
+    <message>
+        <source>Click to only show mods with warnings</source>
+        <translation>警告を表示するモッドのみを表示</translation>
+    </message>
+    <message>
+        <source>Click to only show mods with errors</source>
+        <translation>エラーを表示するモッドのみを表示</translation>
+    </message>
+    <message>
+        <source>Check &quot;Use This Instead&quot; Database</source>
+        <translation>このデータベースを使用</translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation>色</translation>
+    </message>
+    <message>
+        <source>Check Dependencies</source>
+        <translation>依存関係を確認</translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation>アクティブ</translation>
+    </message>
+    <message>
+        <source>Inactive</source>
+        <translation>非アクティブ</translation>
+    </message>
+    <message>
+        <source>Sort inactive mods by</source>
+        <translation>非アクティブなmodsを並べ替えます</translation>
+    </message>
+    <message>
+        <source>0 new</source>
+        <translation>0新しい</translation>
+    </message>
+    <message>
+        <source>Click to only show active mods not in latest save</source>
+        <translation>クリックして、最新の保存にないアクティブMODのみを表示する</translation>
+    </message>
+    <message>
+        <source>{padding}{num} warning(s)</source>
+        <translation>{padding}{num} 件の警告</translation>
+    </message>
+    <message>
+        <source>{padding}{num} error(s)</source>
+        <translation>{padding}{num} 個のエラー</translation>
+    </message>
+    <message>
+        <source>{padding}{count} new</source>
+        <translation>{count} new {padding}</translation>
+    </message>
+</context>
+<context>
+    <name>ModsPanelController</name>
+    <message>
+        <source>Confirm Resetting Warning Toggles</source>
+        <translation>警告トグルのリセットを確認する</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to reset all warning/error toggles?</source>
+        <translation>すべての警告/エラーの切り替えをリセットしてもよろしいですか?</translation>
+    </message>
+    <message>
+        <source>Reset All</source>
+        <translation>すべてリセット</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
+        <source>Confirm Resetting Mod Colors</source>
+        <translation>MODカラーのリセットを確認する</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to reset all mod colors?</source>
+        <translation>すべての MOD カラーをリセットしてもよろしいですか?</translation>
+    </message>
+</context>
+<context>
+    <name>PlayerLogTab</name>
+    <message>
+        <source>File Info</source>
+        <translation>ファイル情報</translation>
+    </message>
+    <message>
+        <source>Path:</source>
+        <translation>パス：</translation>
+    </message>
+    <message>
+        <source>Size:</source>
+        <translation>サイズ：</translation>
+    </message>
+    <message>
+        <source>Modified:</source>
+        <translation>修正：</translation>
+    </message>
+    <message>
+        <source>Statistics</source>
+        <translation>統計</translation>
+    </message>
+    <message>
+        <source>Loading file... %p%</source>
+        <translation>ファイルをロード中... %p%</translation>
+    </message>
+    <message>
+        <source>Total Lines: {total_lines}</source>
+        <translation>合計行：{total_lines}</translation>
+    </message>
+    <message>
+        <source>Infos: {infos}</source>
+        <translation>infos：{infos}</translation>
+    </message>
+    <message>
+        <source>Keybinds: {keybinds}</source>
+        <translation>keybinds：{keybinds}</translation>
+    </message>
+    <message>
+        <source>Mod Issues: {mod_issues}</source>
+        <translation>modの問題：{mod_issues}</translation>
+    </message>
+    <message>
+        <source>Warnings: {warnings}</source>
+        <translation>警告： {warnings}</translation>
+    </message>
+    <message>
+        <source>Errors: {errors}</source>
+        <translation>エラー： {errors}</translation>
+    </message>
+    <message>
+        <source>Exceptions: {exceptions}</source>
+        <translation>例外： {exceptions}</translation>
+    </message>
+    <message>
+        <source>All Issues: {all_issues}</source>
+        <translation>すべての問題：{all_issues}</translation>
+    </message>
+    <message>
+        <source>Auto Load Game Log on Startup</source>
+        <translation>起動の自動ロードゲームログ</translation>
+    </message>
+    <message>
+        <source>If checked, the Game log will be loaded automatically on startup.</source>
+        <translation>チェックした場合、ゲームログは起動時に自動的にロードされます。</translation>
+    </message>
+    <message>
+        <source>Enable Real-Time Log Monitoring</source>
+        <translation>リアルタイムログ監視を有効にします</translation>
+    </message>
+    <message>
+        <source>Enable real-time monitoring of Player.log file changes.</source>
+        <translation>player.logファイルの変更のリアルタイム監視を有効にします。</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>リフレッシュします</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation>輸出</translation>
+    </message>
+    <message>
+        <source>Clear Log Display</source>
+        <translation>ログ表示をクリアします</translation>
+    </message>
+    <message>
+        <source>Load Game Log</source>
+        <translation>ゲームログをロードします</translation>
+    </message>
+    <message>
+        <source>Loads the game&apos;s Player.log file.</source>
+        <translation>ゲームのplayer.logファイルをロードします。</translation>
+    </message>
+    <message>
+        <source>Load Log from File</source>
+        <translation>ファイルからログを読み込みます</translation>
+    </message>
+    <message>
+        <source>Open a file dialog to select a log file</source>
+        <translation>[ファイル]ダイアログを開き、ログファイルを選択します</translation>
+    </message>
+    <message>
+        <source>Load Log from Link</source>
+        <translation>リンクからログをロードします</translation>
+    </message>
+    <message>
+        <source>Load log content from a URL</source>
+        <translation>URLからログコンテンツをロードします</translation>
+    </message>
+    <message>
+        <source>Search and Filter</source>
+        <translation>検索とフィルター</translation>
+    </message>
+    <message>
+        <source>Search log entries...</source>
+        <translation>ログエントリを検索...</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>すべてのエントリ</translation>
+    </message>
+    <message>
+        <source>Infos Only</source>
+        <translation>Infosのみ</translation>
+    </message>
+    <message>
+        <source>Keybinds Only</source>
+        <translation>keybindsのみ</translation>
+    </message>
+    <message>
+        <source>Mod Issues</source>
+        <translation>modの問題</translation>
+    </message>
+    <message>
+        <source>Warnings Only</source>
+        <translation>警告のみ</translation>
+    </message>
+    <message>
+        <source>Errors Only</source>
+        <translation>エラーのみ</translation>
+    </message>
+    <message>
+        <source>Exceptions Only</source>
+        <translation>例外のみ</translation>
+    </message>
+    <message>
+        <source>All Issues</source>
+        <translation>すべての問題</translation>
+    </message>
+    <message>
+        <source>Filter by mod name...</source>
+        <translation>mod名でフィルター...</translation>
+    </message>
+    <message>
+        <source>Highlight Color</source>
+        <translation>色を強調表示します</translation>
+    </message>
+    <message>
+        <source>Pick color for search and navigation highlighting</source>
+        <translation>検索とナビゲーションの強調表示のために色を選択します</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translation>前の</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation>次</translation>
+    </message>
+    <message>
+        <source>Quick Navigation</source>
+        <translation>クイックナビゲーション</translation>
+    </message>
+    <message>
+        <source>Scroll to End</source>
+        <translation>スクロールして終了します</translation>
+    </message>
+    <message>
+        <source>Scroll to the end of the log display</source>
+        <translation>ログディスプレイの端までスクロールします</translation>
+    </message>
+    <message>
+        <source>Reading file... %p%</source>
+        <translation>ファイルを読み取り中... %p%</translation>
+    </message>
+    <message>
+        <source>Path: Loaded from URL: {url}</source>
+        <translation>パス：urlからロード：{url}</translation>
+    </message>
+    <message>
+        <source>Path: Loaded from URL</source>
+        <translation>パス：URLからロード</translation>
+    </message>
+    <message>
+        <source>Size: {size:,} bytes</source>
+        <translation>サイズ：バイト {size:,}</translation>
+    </message>
+    <message>
+        <source>Modified: N/A</source>
+        <translation>修正：n/a</translation>
+    </message>
+    <message>
+        <source>Path: N/A</source>
+        <translation>パス：n/a</translation>
+    </message>
+    <message>
+        <source>Size: N/A</source>
+        <translation>サイズ：n/a</translation>
+    </message>
+    <message>
+        <source>Player log file not found.</source>
+        <translation>プレーヤーログファイルが見つかりません。</translation>
+    </message>
+    <message>
+        <source>Reading log from URL... %p%</source>
+        <translation>URL からログを読み取り中... %p%</translation>
+    </message>
+    <message>
+        <source>Enter URL:</source>
+        <translation>URLを入力してください：</translation>
+    </message>
+    <message>
+        <source>Log loaded successfully from URL</source>
+        <translation>URLから正常にロードされたログ</translation>
+    </message>
+    <message>
+        <source>Failed to load log from URL</source>
+        <translation>URLからログをロードできませんでした</translation>
+    </message>
+    <message>
+        <source>Failed due to error: {error}</source>
+        <translation>エラーのために失敗： {error}</translation>
+    </message>
+    <message>
+        <source>Path: {path_str}</source>
+        <translation>パス：{path_str}</translation>
+    </message>
+    <message>
+        <source>Size: {size_str}</source>
+        <translation>サイズ：{size_str}</translation>
+    </message>
+    <message>
+        <source>Modified: {modified_str}</source>
+        <translation>修正：{modified_str}</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation>情報</translation>
+    </message>
+    <message>
+        <source>Keybind</source>
+        <translation>keybind</translation>
+    </message>
+    <message>
+        <source>Mod_issue</source>
+        <translation>mod_issue</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>エラー</translation>
+    </message>
+    <message>
+        <source>Exception</source>
+        <translation>例外</translation>
+    </message>
+    <message>
+        <source>Jump to previous {lower} entry</source>
+        <translation>前のエントリにジャンプします {lower}</translation>
+    </message>
+    <message>
+        <source>Jump to next {lower} entry</source>
+        <translation>次の{lower}エントリにジャンプします</translation>
+    </message>
+    <message>
+        <source>Total Lines: 0</source>
+        <translation>合計行：0</translation>
+    </message>
+    <message>
+        <source>Infos: 0</source>
+        <translation>infos：0</translation>
+    </message>
+    <message>
+        <source>Keybinds: 0</source>
+        <translation>keybinds：0</translation>
+    </message>
+    <message>
+        <source>Mod Issues: 0</source>
+        <translation>MODの問題：0</translation>
+    </message>
+    <message>
+        <source>Warnings: 0</source>
+        <translation>警告：0</translation>
+    </message>
+    <message>
+        <source>Errors: 0</source>
+        <translation>エラー：0</translation>
+    </message>
+    <message>
+        <source>Exceptions: 0</source>
+        <translation>例外：0</translation>
+    </message>
+    <message>
+        <source>All Issues: 0</source>
+        <translation>すべての問題：0</translation>
+    </message>
+    <message>
+        <source>Controls</source>
+        <translation>コントロール</translation>
+    </message>
+    <message>
+        <source>Pick Highlight Color</source>
+        <translation>ハイライトの色を選択します</translation>
+    </message>
+</context>
+<context>
+    <name>Rentry Auth Code Not Found </name>
+    <message>
+        <source>RimDex can work without rentry auth code. But To enable full functionality of renry.co you need to email support@rentry.co and request an auth code. Then paste it into Settings -&gt; Advanced -&gt; Rentry Auth.</source>
+        <translation>RimDexはrentry認証コードなしで動作します。ただし、renry.coの完全な機能を有効にするには、support@rentry.coにメールを送り、認証コードをリクエストする必要があります。その後、設定 -&gt; 詳細 -&gt; Rentry Authに貼り付けてください。</translation>
+    </message>
+</context>
+<context>
+    <name>RentryError</name>
+    <message>
+        <source>Failed to fetch Rentry Content</source>
+        <translation>Rentryコンテンツの取得に失敗しました</translation>
+    </message>
+    <message>
+        <source>Rentry returned status code: {code}</source>
+        <translation>Rentryがステータスコード{code}を返しました。</translation>
+    </message>
+    <message>
+        <source>RimDex failed to fetch the content from the provided Rentry link. This may be due to an invalid link, your internet connection, or Rentry.co being down. It may also be the result of a captcha. Please try again later.</source>
+        <translation>RimDexが提供されたRentryリンクからコンテンツを取得できませんでした。これは無効なリンク、インターネット接続の問題、またはRentry.coのダウン、またはCAPTCHAの結果である可能性があります。後で再試行してください。</translation>
+    </message>
+    <message>
+        <source>Network Error</source>
+        <translation>ネットワークエラー</translation>
+    </message>
+    <message>
+        <source>Network error occurred while processing Rentry, Please check your internet connection.</source>
+        <translation>Rentryの処理中にネットワークエラーが発生しました。インターネット接続を確認してください。</translation>
+    </message>
+    <message>
+        <source>Rentry Auth Code Not Found</source>
+        <translation>Rentry Authコードが見つかりません</translation>
+    </message>
+</context>
+<context>
+    <name>RentryImport</name>
+    <message>
+        <source>Enter Rentry.co link</source>
+        <translation>Rentry.coリンクを入力</translation>
+    </message>
+    <message>
+        <source>Enter the Rentry.co link:</source>
+        <translation>Rentry.coリンクを入力:</translation>
+    </message>
+    <message>
+        <source>Invalid Rentry Link</source>
+        <translation>無効なRentryリンク</translation>
+    </message>
+    <message>
+        <source>Invalid Rentry link, Please enter a valid Rentry link.</source>
+        <translation>無効なRentryリンク、有効なRentryリンクを入力してください。</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>エラー</translation>
+    </message>
+    <message>
+        <source>An error occurred: {e}</source>
+        <translation>エラーが発生しました: {e}</translation>
+    </message>
+</context>
+<context>
+    <name>RentryUpload</name>
+    <message>
+        <source>Error</source>
+        <translation>エラー</translation>
+    </message>
+    <message>
+        <source>An error occurred: {e}</source>
+        <translation>エラーが発生しました: {e}</translation>
+    </message>
+</context>
+<context>
+    <name>RuleEditor</name>
+    <message>
+        <source>No mod currently being edited</source>
+        <translation>編集中のモッドはありません</translation>
+    </message>
+    <message>
+        <source>About.xml (loadAfter)</source>
+        <translation>About.xml (loadAfter)</translation>
+    </message>
+    <message>
+        <source>About.xml (loadBefore)</source>
+        <translation>About.xml (loadBefore)</translation>
+    </message>
+    <message>
+        <source>Community Rules (loadAfter)</source>
+        <translation>コミュニティルール (loadAfter)</translation>
+    </message>
+    <message>
+        <source>Community Rules (loadBefore)</source>
+        <translation>コミュニティルール (loadBefore)</translation>
+    </message>
+    <message>
+        <source>Force load at bottom of list</source>
+        <translation>リストの下部に強制的に読み込む</translation>
+    </message>
+    <message>
+        <source>User Rules (loadAfter)</source>
+        <translation>ユーザールール (loadAfter)</translation>
+    </message>
+    <message>
+        <source>User Rules (loadBefore)</source>
+        <translation>ユーザールール (loadBefore)</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名前</translation>
+    </message>
+    <message>
+        <source>PackageId</source>
+        <translation>パッケージID</translation>
+    </message>
+    <message>
+        <source>Rule source</source>
+        <translation>ルールソース</translation>
+    </message>
+    <message>
+        <source>Rule type</source>
+        <translation>ルールタイプ</translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation>コメント</translation>
+    </message>
+    <message>
+        <source>Save rules to communityRules.json</source>
+        <translation>コミュニティルールを保存</translation>
+    </message>
+    <message>
+        <source>Save rules to userRules.json</source>
+        <translation>ユーザールールを保存</translation>
+    </message>
+    <message>
+        <source>Search mods by name</source>
+        <translation>名前でMODを検索</translation>
+    </message>
+    <message>
+        <source>Duplicate rule</source>
+        <translation>重複するルール</translation>
+    </message>
+    <message>
+        <source>Tried to add duplicate rule.</source>
+        <translation>重複するルールを追加しようとしました。</translation>
+    </message>
+    <message>
+        <source>Skipping creation of duplicate rule!</source>
+        <translation>重複するルールの作成をスキップします！</translation>
+    </message>
+    <message>
+        <source>Enter comment</source>
+        <translation>コメントを入力</translation>
+    </message>
+    <message>
+        <source>Enter a comment to annotate why this rule exists.
+                      This is useful for your own records, as well as others.</source>
+        <translation>これは自分の記録に有用であり、他の人にも有用です。</translation>
+    </message>
+    <message>
+        <source>Rules from mods&apos;s About.xml cannot be modified. Only &apos;Community Rules&apos; and &apos;User Rules&apos; are allowed.</source>
+        <translation>モッドのAbout.xmlからのルールは変更できません。「コミュニティルール」と「ユーザールール」のみが許可されています。</translation>
+    </message>
+    <message>
+        <source>Rules can be Modified.</source>
+        <translation>ルールを変更できます。</translation>
+    </message>
+    <message>
+        <source>Editing rules for: {name}</source>
+        <translation>ルールを編集: {name}</translation>
+    </message>
+    <message>
+        <source>Show About.xml rules</source>
+        <translation>About.xmlのルールを表示</translation>
+    </message>
+    <message>
+        <source>Edit Community Rules</source>
+        <translation>コミュニティルールを編集</translation>
+    </message>
+    <message>
+        <source>Edit User Rules</source>
+        <translation>ユーザールールを編集</translation>
+    </message>
+    <message>
+        <source>Hide About.xml rules</source>
+        <translation>About.xmlのルールを非表示</translation>
+    </message>
+    <message>
+        <source>Lock Community Rules</source>
+        <translation>コミュニティルールをロック</translation>
+    </message>
+    <message>
+        <source>Lock User Rules</source>
+        <translation>ユーザールールをロック</translation>
+    </message>
+    <message>
+        <source>Enter a comment to annotate why this rule exists.This is useful for your own records, as well as others.</source>
+        <translation>これは自分の記録に有用であり、他の人にも有用です。</translation>
+    </message>
+    <message>
+        <source>Enter a comment to annotate why this rule exists. This is useful for your own records, as well as others.</source>
+        <translation>これは自分の記録に有用であり、他の人にも有用です。</translation>
+    </message>
+    <message>
+        <source>Open this mod in the editor</source>
+        <translation>このモッドをエディタで開く</translation>
+    </message>
+    <message>
+        <source>Remove this rule</source>
+        <translation>このルールを削除</translation>
+    </message>
+    <message>
+        <source>About.xml (incompatibilitiesWith)</source>
+        <translation>about.xml（非互換性）</translation>
+    </message>
+    <message>
+        <source>Community Rules (incompatibilitiesWith)</source>
+        <translation>コミュニティルール（非互換性）</translation>
+    </message>
+    <message>
+        <source>User Rules (incompatibilitiesWith)</source>
+        <translation>ユーザールール（非互換性）</translation>
+    </message>
+    <message>
+        <source>Force load at top of list</source>
+        <translation>リストの上部に強制荷重</translation>
+    </message>
+</context>
+<context>
+    <name>RunnerPanel</name>
+    <message>
+        <source>Clear the text currently displayed by the runner</source>
+        <translation>実行者が表示しているテキストをクリア</translation>
+    </message>
+    <message>
+        <source>Re-run the process last used by the runner</source>
+        <translation>実行者が最後に使用したプロセスを再実行</translation>
+    </message>
+    <message>
+        <source>Kill a process currently being executed by the runner</source>
+        <translation>実行者が現在実行中のプロセスを強制終了</translation>
+    </message>
+    <message>
+        <source>Save the current output to a file</source>
+        <translation>現在の出力をファイルに保存</translation>
+    </message>
+    <message>
+        <source>Save Runner Output</source>
+        <translation>実行者の出力を保存</translation>
+    </message>
+    <message>
+        <source>Text files (*.txt)</source>
+        <translation>テキストファイル (*.txt)</translation>
+    </message>
+    <message>
+        <source>SteamCMD downloader</source>
+        <translation>SteamCMDダウンローダー</translation>
+    </message>
+    <message>
+        <source>SteamCMD failed to download mod(s)! Would you like to retry download of the mods that failed?&lt;br&gt;&lt;br&gt;Click &apos;Show Details&apos; to see a list of mods that failed.</source>
+        <translation>SteamCMD は MOD のダウンロードに失敗しました!失敗した MOD のダウンロードを再試行しますか?&lt;br&gt;&lt;br&gt;[詳細を表示] をクリックして、失敗した MOD のリストを表示します。</translation>
+    </message>
+    <message>
+        <source>Process Complete</source>
+        <translation>プロセスが完了しました</translation>
+    </message>
+    <message>
+        <source>Process complete, you can close the window.</source>
+        <translation>プロセスが完了しました、ウィンドウを閉じることができます。</translation>
+    </message>
+    <message>
+        <source>Close Window</source>
+        <translation>ウィンドウを閉じる</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>SteamCMD Downloader Login error</source>
+        <translation>Steamcmdダウンローダーログインエラー</translation>
+    </message>
+    <message>
+        <source>SteamCMD reported a login error. Please ensure you are connected to internet and steamcmd is not blocked by your firewall.</source>
+        <translation>SteamCMDはログインエラーを報告しました。インターネットに接続されていることを確認してください。SteamCMDがファイアウォールによってブロックされていないことを確認してください。</translation>
+    </message>
+</context>
+<context>
+    <name>SearchWorker</name>
+    <message>
+        <source>Searching in: {root_path}</source>
+        <translation>検索中: {root_path}</translation>
+    </message>
+    <message>
+        <source>Search complete</source>
+        <translation>検索が完了しました</translation>
+    </message>
+</context>
+<context>
+    <name>Settings</name>
+    <message>
+        <source>Settings Load Error</source>
+        <translation>設定読み込みエラー</translation>
+    </message>
+    <message>
+        <source>Your settings file seems to be corrupted and cannot be loaded. RimDex found a backup at {}. Do you want to attempt to recover your settings from this backup?</source>
+        <translation>設定ファイルが破損しているようで、ロードできません。 rimDex は {} でバックアップを見つけました。このバックアップから設定を復元しますか?</translation>
+    </message>
+    <message>
+        <source>Your settings file seems to be corrupted and cannot be loaded. RimDex found an old backup at {}. Do you want to attempt to recover your settings from this backup?</source>
+        <translation>設定ファイルが破損しているようで、ロードできません。 rimDex は、{} で古いバックアップを見つけました。このバックアップから設定を復元しますか?</translation>
+    </message>
+    <message>
+        <source>Your settings file seems to be corrupted and cannot be loaded. No backup file was found, RimDex will reset your settings to defaults.</source>
+        <translation>設定ファイルが破損しているようで、ロードできません。バックアップ ファイルが見つかりませんでした。RimDex は設定をデフォルトにリセットします。</translation>
+    </message>
+    <message>
+        <source>If you proceed, a backup of the corrupted file will be saved to {}.</source>
+        <translation>続行すると、破損したファイルのバックアップが {} に保存されます。</translation>
+    </message>
+    <message>
+        <source>Proceed</source>
+        <translation>進む</translation>
+    </message>
+    <message>
+        <source>Exit RimDex</source>
+        <translation>リムソートを終了する</translation>
+    </message>
+    <message>
+        <source>Settings Recovery Failed</source>
+        <translation>設定の回復に失敗しました</translation>
+    </message>
+    <message>
+        <source>RimDex failed to recover your settings from the backup. You may be able to manually recover your settings by restoring &quot;settings.json.backup&quot; or &quot;settings.json.backup.old&quot; from {} to {}.</source>
+        <translation>rimDex はバックアップから設定を復元できませんでした。 「settings.json.backup」または「settings.json.backup.old」を {} から {} に復元することで、設定を手動で復元できる場合があります。</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsController</name>
+    <message>
+        <source>Steam Integration</source>
+        <translation>Steamの統合</translation>
+    </message>
+    <message>
+        <source>Reset to defaults</source>
+        <translation>デフォルトに戻す</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to reset all settings to their default values?</source>
+        <translation>すべての設定をデフォルト値に戻しますか？</translation>
+    </message>
+    <message>
+        <source>The selected game folder does not contain a valid RimWorld executable.&lt;br&gt;&lt;br&gt;Please select a valid game location.&lt;br&gt;&lt;br&gt;Windows: RimWorldWin64.exe or RimWorldWin.exe&lt;br&gt;&lt;br&gt;Mac: RimworldMac.app&lt;br&gt;&lt;br&gt;Linux: RimWorldLinux&lt;br&gt;&lt;br&gt;RimWorldWin64.exe or RimWorldWin.exe if you using windows version of the game on Linux</source>
+        <translation>選択したゲーム フォルダには有効なrimWorld実行可能ファイルが含まれていません。&lt;br&gt;&lt;br&gt;有効なゲームの場所を選択してください。&lt;br&gt;&lt;br&gt;Windows:RimWorldWin64.exeまたはRimWorldWin.exe&lt;br&gt;&lt;br&gt;Mac:RimworldMac.app&lt;br&gt;&lt;br&gt;Linux:RimWorldLinux&lt;br&gt;&lt;br&gt;LinuxでWindowsバージョンのゲームを使用している場合は、RimWorldWin64.exeまたはRimWorldWin.exe</translation>
+    </message>
+    <message>
+        <source>The selected config folder does not contain ModsConfig.xml.&lt;br&gt;&lt;br&gt;Please select a valid config folder.&lt;br&gt;&lt;br&gt;If you have not launched the game before,&lt;br&gt;&lt;br&gt;Please launch the game at least once to generate the necessary config files.</source>
+        <translation>選択した構成フォルダーには ModsConfig.xml が含まれていません。&lt;br&gt;&lt;br&gt;有効な構成フォルダーを選択してください。&lt;br&gt;&lt;br&gt;これまでにゲームを起動したことがない場合は、&lt;br&gt;&lt;br&gt;必要な構成ファイルを生成するために、少なくとも 1 回ゲームを起動してください。</translation>
+    </message>
+    <message>
+        <source>The selected local mods folder location is not a valid directory.&lt;br&gt;&lt;br&gt;Please select a valid folder for local mods.&lt;br&gt;&lt;br&gt;The local mods folder should be a &apos;Mods&apos; subfolder within the game folder.</source>
+        <translation>選択したローカル MOD フォルダの場所は有効なディレクトリではありません。&lt;br&gt;&lt;br&gt;ローカル MOD 用に有効なフォルダを選択してください。&lt;br&gt;&lt;br&gt;ローカル MOD フォルダは、ゲーム フォルダ内の「Mods」サブフォルダである必要があります。</translation>
+    </message>
+    <message>
+        <source>Invalid Game Location</source>
+        <translation>無効なゲームの場所</translation>
+    </message>
+    <message>
+        <source>Invalid Local Mods Folder</source>
+        <translation>無効なローカル Mods フォルダー</translation>
+    </message>
+    <message>
+        <source>Invalid Config Folder</source>
+        <translation>無効な構成フォルダー</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog</name>
+    <message>
+        <source>Settings</source>
+        <translation>設定</translation>
+    </message>
+    <message>
+        <source>Reset to Defaults</source>
+        <translation>デフォルトに戻す</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Locations</source>
+        <translation>場所</translation>
+    </message>
+    <message>
+        <source>Clear All Locations</source>
+        <translation>すべての場所をクリア</translation>
+    </message>
+    <message>
+        <source>Autodetect</source>
+        <translation>自動検出</translation>
+    </message>
+    <message>
+        <source>Open…</source>
+        <translation>開く</translation>
+    </message>
+    <message>
+        <source>Choose…</source>
+        <translation>選択…</translation>
+    </message>
+    <message>
+        <source>Clear…</source>
+        <translation>クリア…</translation>
+    </message>
+    <message>
+        <source>Use Default</source>
+        <translation>デフォルトを使用</translation>
+    </message>
+    <message>
+        <source>Leave empty to use default location</source>
+        <translation>デフォルトの場所を使用するには空のままにしてください</translation>
+    </message>
+    <message>
+        <source>Game Launch</source>
+        <translation>ゲームの起動</translation>
+    </message>
+    <message>
+        <source>Databases</source>
+        <translation>データベース</translation>
+    </message>
+    <message>
+        <source>Automatically backup saves on first daily launch</source>
+        <translation>毎日の最初の起動時に自動的にバックアップ保存</translation>
+    </message>
+    <message>
+        <source>If enabled, RimDex will automatically backup saves on the first daily launch.</source>
+        <translation>有効にすると、RimDex は毎日の最初の起動時に自動的に保存をバックアップします。</translation>
+    </message>
+    <message>
+        <source>Number of backups to keep:</source>
+        <translation>保持するバックアップの数:</translation>
+    </message>
+    <message>
+        <source>The number of backups to keep. Set to -1 to keep all backups, 0 to delete all.</source>
+        <translation>保持するバックアップの数。すべてのバックアップを保持するには -1 に設定し、すべてを削除するには 0 に設定します。</translation>
+    </message>
+    <message>
+        <source>Number of saves to compress:</source>
+        <translation>圧縮する保存の数:</translation>
+    </message>
+    <message>
+        <source>The number of recent saves to include in the backup. Set to -1 to compress all saves, 0 to compress none.</source>
+        <translation>バックアップに含める最近の保存の数。すべての保存を圧縮するには -1 に設定し、何も圧縮しない場合は 0 に設定します。</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>なし</translation>
+    </message>
+    <message>
+        <source>No {none_lbl} will be used.</source>
+        <translation>なしの{none_lbl}が使用されます。</translation>
+    </message>
+    <message>
+        <source>GitHub</source>
+        <translation>GitHub</translation>
+    </message>
+    <message>
+        <source>Upload…</source>
+        <translation>アップロード…</translation>
+    </message>
+    <message>
+        <source>Download…</source>
+        <translation>ダウンロード…</translation>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <source>https://github.com/.../archive/refs/heads/main.zip</source>
+        <translation>https://github.com/.../archive/refs/heads/main.zip</translation>
+    </message>
+    <message>
+        <source>Local File</source>
+        <translation>ローカルファイル</translation>
+    </message>
+    <message>
+        <source>Community Rules database</source>
+        <translation>コミュニティルールデータベース</translation>
+    </message>
+    <message>
+        <source>community rules database</source>
+        <translation>コミュニティルールデータベース</translation>
+    </message>
+    <message>
+        <source>Steam Workshop database</source>
+        <translation>Steamワークショップデータベース</translation>
+    </message>
+    <message>
+        <source>&quot;No Version Warning&quot; Database</source>
+        <translation>&quot;バージョン警告なし&quot;データベース</translation>
+    </message>
+    <message>
+        <source>&quot;Use This Instead&quot; Database</source>
+        <translation>&quot;これを使用してください&quot;データベース</translation>
+    </message>
+    <message>
+        <source>Sorting</source>
+        <translation>ソート</translation>
+    </message>
+    <message>
+        <source>Alphabetically</source>
+        <translation>アルファベット順</translation>
+    </message>
+    <message>
+        <source>Topologically</source>
+        <translation>トポロジカル</translation>
+    </message>
+    <message>
+        <source>Game location</source>
+        <translation>ゲームの場所</translation>
+    </message>
+    <message>
+        <source>Config location</source>
+        <translation>構成の場所</translation>
+    </message>
+    <message>
+        <source>Steam mods location</source>
+        <translation>Steam MOD の場所</translation>
+    </message>
+    <message>
+        <source>Local mods location</source>
+        <translation>ローカルMODの場所</translation>
+    </message>
+    <message>
+        <source>Instance folder location (optional)</source>
+        <translation>インスタンスフォルダーの場所 (オプション)</translation>
+    </message>
+    <message>
+        <source>Backup Settings</source>
+        <translation>バックアップ設定</translation>
+    </message>
+    <message>
+        <source>Integration with recent save</source>
+        <translation>最近の保存との統合</translation>
+    </message>
+    <message>
+        <source>Auxiliary Metadata DB deletion time limit in seconds. (Delete instantly 0, Never Delete -1)</source>
+        <translation>補助メタデータ DB の削除時間制限 (秒単位)。 (すぐに削除 0、絶対に削除しない -1)</translation>
+    </message>
+    <message>
+        <source>To enable editing of this time limit, enable the checkbox (Enable editing) on the right.
+After a mod is deleted, this is the time we wait until this mod item is deleted from the Auxiliary Metadata DB.
+This Auxiliary DB contains info for mod colors, toggled warning, user notes etc.
+This basically preserves your mod coloring, user notes etc. for this many seconds after deletion.
+(This applies to deletion outside of RimDex too)</source>
+        <translation>この制限時間の編集を有効にするには、右側のチェックボックス (編集を有効にする) を有効にします。
+MOD が削除された後、この MOD アイテムが補助メタデータ DB から削除されるまで待機する時間です。
+この補助 DB には、MOD カラー、切り替えられた警告、ユーザーメモなどの情報が含まれています。
+これは基本的に、MOD のカラーリングやユーザー ノートなどを、削除後この数秒間保持します。
+(これはRimDex外の削除にも当てはまります)</translation>
+    </message>
+    <message>
+        <source>Sorting Method</source>
+        <translation>選別方法</translation>
+    </message>
+    <message>
+        <source>Dependencies Handling Behavior</source>
+        <translation>依存関係の処理動作</translation>
+    </message>
+    <message>
+        <source>Use dependency rules for sorting.</source>
+        <translation>依存関係ルールをソートに使用します。</translation>
+    </message>
+    <message>
+        <source>If enabled, also uses moddependencies as loadTheseBefore, and mods will be sorted such that dependencies are loaded before the dependent mod.</source>
+        <translation>有効にすると、moddependenciesをloadTheseBeforeとして使用し、依存関係が依存モッドの前に読み込まれるようにモッドがソートされます。</translation>
+    </message>
+    <message>
+        <source>Prompt user to download dependencies when click in Sort</source>
+        <translation>ソート時に依存関係をダウンロードするかどうかをユーザーに確認する</translation>
+    </message>
+    <message>
+        <source>XML Parsing Behavior</source>
+        <translation>XML 解析動作</translation>
+    </message>
+    <message>
+        <source>When enabled, *ByVersion tags take precedence over the base tags, 
+If a matching version tag exists but is empty, the base tag is ignored. 
+e.g.(modDependenciesByVersion, loadAfterByVersion, loadBeforeByVersion, incompatibleWithByVersion, descriptionsByVersion)</source>
+        <translation>有効にすると、*ByVersion タグが基本タグよりも優先されます。 
+一致するバージョン タグが存在するが空の場合、ベース タグは無視されます。 
+例: (modDependencyByVersion、loadAfterByVersion、loadBeforeByVersion、incompatibilityWithByVersion、descriptionsByVersion)</translation>
+    </message>
+    <message>
+        <source>Case-insensitive About.xml lookup</source>
+        <translation>大文字と小文字を区別しない About.xml 検索</translation>
+    </message>
+    <message>
+        <source>Enable case-insensitive lookup for About/About.xml.
+Some mods use incorrect casing (e.g., about/about.xml) which breaks on
+case-sensitive filesystems (Linux). Per the RimWorld modding spec, the
+correct path is About/About.xml.
+See: https://www.rimworldwiki.com/wiki/Modding_Tutorials/About.xml</source>
+        <translation>About/About.xml の大文字と小文字を区別しない検索を有効にします。
+一部の MOD は間違った大文字小文字を使用しており (例: about/about.xml)、壊れます。
+大文字と小文字を区別するファイルシステム (Linux)。 rimWorld の改造仕様によれば、
+正しいパスは About/About.xml です。
+参照: https://www.rimworldwiki.com/wiki/Modding_Tutorials/About.xml</translation>
+    </message>
+    <message>
+        <source>Mod list options</source>
+        <translation>MODリストのオプション</translation>
+    </message>
+    <message>
+        <source>Notifies to download mods that may be missing in the active modlist</source>
+        <translation>アクティブな MOD リストにない可能性のある MOD をダウンロードするように通知します</translation>
+    </message>
+    <message>
+        <source>Notifies and displays the mods that have the same packageid</source>
+        <translation>同じパッケージIDを持つMODを通知して表示します</translation>
+    </message>
+    <message>
+        <source>Show recently updated mods indicator</source>
+        <translation>最近更新された MOD インジケーターを表示する</translation>
+    </message>
+    <message>
+        <source>Shows an icon on Steam Workshop mods that were updated within the configured number of days. The update time is refreshed when RimDex refreshes its metadata.</source>
+        <translation>設定された日数以内に更新された Steam ワークショップ MOD にアイコンを表示します。更新時間は、RimDex がメタデータを更新すると更新されます。</translation>
+    </message>
+    <message>
+        <source>Days to consider a mod recently updated:</source>
+        <translation>最近更新された MOD を検討する日数:</translation>
+    </message>
+    <message>
+        <source>Hides invalid mods, not recommended to enable</source>
+        <translation>無効な MOD を非表示にします。有効にすることはお勧めしません</translation>
+    </message>
+    <message>
+        <source>Inactive Mods Sorting</source>
+        <translation>非アクティブな MOD の並べ替え</translation>
+    </message>
+    <message>
+        <source>Save inactive mods sort state</source>
+        <translation>非アクティブなMODのソート状態を保存する</translation>
+    </message>
+    <message>
+        <source>SteamCMD</source>
+        <translation>SteamCMD</translation>
+    </message>
+    <message>
+        <source>Database expiry in seconds for example, 604800 for 7 days. and 0 for no expiry.</source>
+        <translation>データベースの有効期限 (秒単位)。たとえば、7 日間の場合は 604800 です。有効期限がない場合は 0。</translation>
+    </message>
+    <message>
+        <source>Internal Tools</source>
+        <translation>内部ツール</translation>
+    </message>
+    <message>
+        <source>Validate downloaded mods</source>
+        <translation>ダウンロードされたモッドを検証</translation>
+    </message>
+    <message>
+        <source>Automatically clear depot cache</source>
+        <translation>自動的にデポットキャッシュをクリア</translation>
+    </message>
+    <message>
+        <source>Automatically clear the depot cache before downloading mods through SteamCMD.
+This may potentially prevent some issues with downloading mods such as download failures and deleted mods repopulating.</source>
+        <translation>これは、ダウンロードの失敗や削除されたモッドの再出現などのダウンロードモッドの問題を防ぐ可能性があります。</translation>
+    </message>
+    <message>
+        <source>SteamCMD installation location</source>
+        <translation>SteamCMD のインストール場所</translation>
+    </message>
+    <message>
+        <source>Clear depot cache</source>
+        <translation>デポットキャッシュをクリア</translation>
+    </message>
+    <message>
+        <source>Clear the depot cache manually. This may be useful if you encounter issues with downloading mods through SteamCMD.</source>
+        <translation>手動でデポットキャッシュをクリアします。SteamCMDを使用してモッドをダウンロードする際に問題が発生した場合に便利です。</translation>
+    </message>
+    <message>
+        <source>Import .acf</source>
+        <translation>Import .acf</translation>
+    </message>
+    <message>
+        <source>Delete .acf</source>
+        <translation>Delete .acf</translation>
+    </message>
+    <message>
+        <source>Install SteamCMD</source>
+        <translation>SteamCMDをインストール</translation>
+    </message>
+    <message>
+        <source>todds</source>
+        <translation>トッズ</translation>
+    </message>
+    <message>
+        <source>Quality preset</source>
+        <translation>品質プリセット</translation>
+    </message>
+    <message>
+        <source>Optimized - Recommended for RimWorld</source>
+        <translation>最適化 - RimWorldに推奨</translation>
+    </message>
+    <message>
+        <source>If -p as in path is not specified, path from current active or all mods selection will be used.</source>
+        <translation>-p as in path が指定されていない場合は、現在アクティブなパスまたはすべての MOD 選択からのパスが使用されます。</translation>
+    </message>
+    <message>
+        <source>When optimizing textures</source>
+        <translation>テクスチャを最適化する場合</translation>
+    </message>
+    <message>
+        <source>Optimize active mods only</source>
+        <translation>アクティブなモッドのみを最適化</translation>
+    </message>
+    <message>
+        <source>Optimize all mods</source>
+        <translation>すべてのモッドを最適化</translation>
+    </message>
+    <message>
+        <source>Enable dry-run mode</source>
+        <translation>乾燥実行モードを有効にする</translation>
+    </message>
+    <message>
+        <source>Overwrite existing optimized textures</source>
+        <translation>既存の最適化されたテクスチャを上書き</translation>
+    </message>
+    <message>
+        <source>Automatically run todds before launching the game</source>
+        <translation>ゲームを起動する前に自動的に todds を実行します</translation>
+    </message>
+    <message>
+        <source>Text Editor command location</source>
+        <translation>テキスト エディターのコマンドの場所</translation>
+    </message>
+    <message>
+        <source>Theme Settings</source>
+        <translation>テーマの設定</translation>
+    </message>
+    <message>
+        <source>Enable to use theme / stylesheet instead of system Theme</source>
+        <translation>システムのテーマの代わりにテーマ/スタイルシートを使用する</translation>
+    </message>
+    <message>
+        <source>To add your own theme / stylesheet 
+
+1) Create a new-folder in &apos;themes&apos; folder in your &apos;RimDex&apos; config folder 
+2) Using the default &apos;RimPy&apos; theme copy it to the folder you created 
+3) Edit the copied &apos;style.qss&apos; as per your imagination 
+4) Start &apos;RimDex&apos; and select your theme from dropdown 
+5) Click &apos;ok&apos; to save settings and apply the selected theme 
+
+NOTE 
+Name of folder will be used as name of the theme and any invalid theme will be ignored 
+</source>
+        <translation>独自のテーマ /スタイルシートを追加するには
+
+1）「RimDex」構成フォルダーに「Themes」フォルダーに新しい倍率を作成する
+2）デフォルトの「rimpy」テーマを使用して作成したフォルダーにコピーします
+3）あなたの想像力に従って、コピーされた「style.qss」を編集します
+4）「RimDex」を開始し、ドロップダウンからテーマを選択します
+5）[OK]をクリックして設定を保存し、選択したテーマを適用します
+
+注記
+フォルダの名前はテーマの名前として使用され、無効なテーマは無視されます</translation>
+    </message>
+    <message>
+        <source>Open Theme Location</source>
+        <translation>テーマの場所を開く</translation>
+    </message>
+    <message>
+        <source>Font Settings</source>
+        <translation>フォント設定</translation>
+    </message>
+    <message>
+        <source>Font Family</source>
+        <translation>フォントファミリー</translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation>フォントサイズ</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>リセット</translation>
+    </message>
+    <message>
+        <source>Language Setting</source>
+        <translation>言語設定</translation>
+    </message>
+    <message>
+        <source>Select Language (Restart required to apply changes)</source>
+        <translation>言語を選択します（変更を適用するには再起動が必要です）</translation>
+    </message>
+    <message>
+        <source>RimDex restart required for some settings</source>
+        <translation>一部の設定では、RimDex の再起動が必要です</translation>
+    </message>
+    <message>
+        <source>Constrain dialogues to main window monitor</source>
+        <translation>ダイアログをメイン ウィンドウ モニターに制限する</translation>
+    </message>
+    <message>
+        <source>Main Window Launch State</source>
+        <translation>メインウィンドウの起動状態</translation>
+    </message>
+    <message>
+        <source>Browser Window Launch State</source>
+        <translation>ブラウザウィンドウの起動状態</translation>
+    </message>
+    <message>
+        <source>Settings Window Launch State</source>
+        <translation>設定ウィンドウの起動状態</translation>
+    </message>
+    <message>
+        <source>Custom Width:</source>
+        <translation>カスタム幅:</translation>
+    </message>
+    <message>
+        <source>Custom Height:</source>
+        <translation>カスタム高さ:</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>高度な</translation>
+    </message>
+    <message>
+        <source>Enable debug logging</source>
+        <translation>デバッグログを有効にする</translation>
+    </message>
+    <message>
+        <source>Enable watchdog file monitor daemon</source>
+        <translation>監視ファイル監視デーモンを有効にする</translation>
+    </message>
+    <message>
+        <source>Hide invalid mods when filtering</source>
+        <translation>フィルタリング時に無効なモッドを非表示にする</translation>
+    </message>
+    <message>
+        <source>Show duplicate mods warning</source>
+        <translation>重複モッド警告を表示</translation>
+    </message>
+    <message>
+        <source>Check for mod updates on refresh</source>
+        <translation>更新時にモッドの更新を確認</translation>
+    </message>
+    <message>
+        <source>Enable Steam client integration</source>
+        <translation>Steamクライアント統合を有効にする</translation>
+    </message>
+    <message>
+        <source>Download missing mods automatically</source>
+        <translation>不足しているモッドを自動的にダウンロード</translation>
+    </message>
+    <message>
+        <source>Appearance</source>
+        <translation>外観</translation>
+    </message>
+    <message>
+        <source>Render Unity Rich Text in mod descriptions</source>
+        <translation>モッドの説明でUnityのリッチテキストをレンダリング</translation>
+    </message>
+    <message>
+        <source>Enable this option to render Unity Rich Text in mod descriptions. Images will not be displayed.</source>
+        <translation>このオプションを有効にすると、モッドの説明でUnityのリッチテキストをレンダリングします。画像は表示されません。</translation>
+    </message>
+    <message>
+        <source>Update databases on startup</source>
+        <translation>起動時にデータベースを更新</translation>
+    </message>
+    <message>
+        <source>Enable this option to automatically update enabled databases when RimDex starts. This will check for updates and download them if available.</source>
+        <translation>このオプションを有効にすると、RimDexが起動したときに有効なデータベースが自動的に更新されます。これにより、更新がある場合はそれを確認し、ダウンロードします。</translation>
+    </message>
+    <message>
+        <source>Rentry Auth:</source>
+        <translation>Rentry Auth:</translation>
+    </message>
+    <message>
+        <source>Obtain rentry auth code by emailing: support@rentry.co</source>
+        <translation>support@rentry.coにメールを送信してrentry authコードを取得します。</translation>
+    </message>
+    <message>
+        <source>GitHub username:</source>
+        <translation>GitHubユーザー名:</translation>
+    </message>
+    <message>
+        <source>GitHub personal access token:</source>
+        <translation>GitHub個人アクセストークン:</translation>
+    </message>
+    <message>
+        <source>Edit Game Run Arguments:</source>
+        <translation>ゲーム実行引数を編集:</translation>
+    </message>
+    <message>
+        <source>Should be like: C:\Program Files (x86)\Steam\steamapps\common\RimWorld</source>
+        <translation>C：\ Program Files（x86）\ Steam \ SteamApps \ common \ rimworldのようなものです</translation>
+    </message>
+    <message>
+        <source>Should be like: C:\Users\UserName\AppData\LocalLow\Ludeon Studios\RimWorld by Ludeon Studios\Config</source>
+        <translation>c：\ uses \ username \ appdata \ locallow \ ludeon studios \ rimworld by ludeon studios \ config</translation>
+    </message>
+    <message>
+        <source>Only if you use steam should be like: C:\Program Files (x86)\Steam\steamapps\workshop\content\294100</source>
+        <translation>Steamを使用する場合のみ：C：\ Program Files（x86）\ Steam \ SteamApps \ Workshop \ content \ 294100</translation>
+    </message>
+    <message>
+        <source>should be like: C:\Program Files (x86)\Steam\steamapps\common\Rimworld\Mods</source>
+        <translation>C：\ Program Files（x86）\ Steam \ SteamApps \ common \ rimworld \ modsのようなものです</translation>
+    </message>
+    <message>
+        <source>Launch game via Steam protocol (enables Steam overlay)</source>
+        <translation>Steam プロトコル経由でゲームを起動します (Steam オーバーレイを有効にします)</translation>
+    </message>
+    <message>
+        <source>If enabled, RimDex will launch the game using the Steam protocol (steam://rungameid/294100) instead of directly running the executable. This enables the Steam overlay. Note: This requires Steam to be running and will ignore custom launch arguments.</source>
+        <translation>有効にすると、RimDex は実行可能ファイルを直接実行するのではなく、Steam プロトコル (steam://rungameid/294100) を使用してゲームを起動します。これにより、Steam オーバーレイが有効になります。注: これには Steam が実行されている必要があり、カスタム起動引数は無視されます。</translation>
+    </message>
+    <message>
+        <source>Enter launch options using Steam-style syntax with optional %command% placeholder:
+
+ Basic examples (game arguments only):
+
+   -logfile /tmp/log -popupwindow
+
+   -savedatafolder=/path/to/savedata
+
+ Advanced examples (with %command%, env vars, wrappers):
+
+   PROTON_LOG=1 %command%
+
+   gamemoderun %command% -logfile /tmp/log
+
+   DXVK_HUD=1 mangohud %command% -popupwindow
+
+ NOTE: wrapper commands will be ignored on macOS
+
+ NOTE: These arguments are ignored if &apos;Launch game via Steam protocol&apos; is enabled</source>
+        <translation>オプションの %command% プレースホルダーを使用して、Steam スタイルの構文を使用して起動オプションを入力します。
+
+ 基本的な例 (ゲーム引数のみ):
+
+   -logfile /tmp/log -popupwindow
+
+   -savedatafolder=/パス/への/セーブデータ
+
+ 高度な例 (%command%、環境変数、ラッパーを使用):
+
+   PROTON_LOG=1 %コマンド%
+
+   gamemoderun %command% -logfile /tmp/log
+
+   DXVK_HUD=1 mangohud %command% -popupwindow
+
+ 注: ラッパーコマンドは macOS では無視されます。
+
+ 注: 「Steam プロトコル経由でゲームを起動」が有効になっている場合、これらの引数は無視されます。</translation>
+    </message>
+    <message>
+        <source>Enable editing</source>
+        <translation>編集を有効にします</translation>
+    </message>
+    <message>
+        <source>This enables the editing of the time limit for Aux Metadata DB data deletion.</source>
+        <translation>これにより、AUXメタデータDBデータ削除の時間制限の編集が可能になります。</translation>
+    </message>
+    <message>
+        <source>Alphabetical sorting may produce incorrect results with complex mod lists. Topological sorting is recommended.</source>
+        <translation>複雑な MOD リストでは、アルファベット順に並べ替えると不正確な結果が生じる可能性があります。トポロジカルソートが推奨されます。</translation>
+    </message>
+    <message>
+        <source>(Deprecated — use Topological instead)</source>
+        <translation>(非推奨 — 代わりにトポロジカルを使用してください)</translation>
+    </message>
+    <message>
+        <source>Delete before update</source>
+        <translation>更新する前に削除します</translation>
+    </message>
+    <message>
+        <source>This is useful if you want to ensure clean mod updates.</source>
+        <translation>これは、クリーンなmodの更新を確保する場合に便利です。</translation>
+    </message>
+    <message>
+        <source>Min is {MIN_SIZE} and Max is {MAX_SIZE}. Values outside this range will be reset to defaults.</source>
+        <translation>minはで、maxはです。この範囲外の値はデフォルトにリセットされます。 {MIN_SIZE} {MAX_SIZE}</translation>
+    </message>
+    <message>
+        <source>Maximized</source>
+        <translation>最大化</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation>普通</translation>
+    </message>
+    <message>
+        <source>Custom size</source>
+        <translation>カスタムサイズ</translation>
+    </message>
+    <message>
+        <source>Apply mod coloring to background instead of text</source>
+        <translation>テキストの代わりにMODの色を背景に適用します</translation>
+    </message>
+    <message>
+        <source>Compare mod lists with the recent save file</source>
+        <translation>modリストを最近の保存ファイルと比較します</translation>
+    </message>
+    <message>
+        <source>Clear also moves DLC</source>
+        <translation>クリアもDLCを移動します</translation>
+    </message>
+    <message>
+        <source>Custom todds command</source>
+        <translation>カスタムTODDSコマンド</translation>
+    </message>
+    <message>
+        <source>eg: {todds_example}</source>
+        <translation>例：{todds_example}</translation>
+    </message>
+    <message>
+        <source>Automatically delete .dds files if no corresponding .png file exists</source>
+        <translation>対応する.pngファイルが存在しない場合、.ddsファイルを自動的に削除します</translation>
+    </message>
+    <message>
+        <source>This will delete .dds files that are not paired with a .png file,
+
+This checks may take few seconds depending on the number of .dds files present.</source>
+        <translation>これにより、.pngファイルとペアリングされていない.ddsファイルが削除されます。
+
+このチェックには、存在する.DDSファイルの数に応じて数秒かかる場合があります。</translation>
+    </message>
+    <message>
+        <source>Prefer versioned About.xml tags over base tags</source>
+        <translation>ベースタグよりもabout.xmlタグについてバージョンを好む</translation>
+    </message>
+    <message>
+        <source>External Tools</source>
+        <translation>外部ツール</translation>
+    </message>
+    <message>
+        <source>Additional Arguments (Opening Folders)</source>
+        <translation>追加の引数（フォルダーを開く）</translation>
+    </message>
+    <message>
+        <source>Additional Arguments (Opening Single File)</source>
+        <translation>追加の引数（単一のファイルを開く）</translation>
+    </message>
+    <message>
+        <source>Use alternativePackageIds as satisfying dependencies</source>
+        <translation>代替PackageIdsを満足のいく依存関係として使用します</translation>
+    </message>
+    <message>
+        <source>If enabled, an alternativePackageIds entry in About.xml can satisfy a mod&apos;s dependency when the main dependency is missing. 
+E.g., &apos;oels.vehiclemapframework&apos;, alternatives: &apos;oels.vehiclemapframework.dev&apos;</source>
+        <translation>有効にすると、about.xmlの代替PackageIDSエントリは、主な依存関係が欠落しているときにMODの依存関係を満たすことができます。
+例えば、「oels.vehiclemapframework」、代替： &apos;oels.vehiclemapframework.dev&apos;</translation>
+    </message>
+    <message>
+        <source>Include mod notes in mod name search filter</source>
+        <translation>MOD名検索フィルターにMODノートを含める</translation>
+    </message>
+    <message>
+        <source>This option will include searching mod notes when searching by mod name.</source>
+        <translation>このオプションには、MOD 名で検索するときに MOD ノートの検索が含まれます。</translation>
+    </message>
+    <message>
+        <source>Create backup before RimDex update</source>
+        <translation>RIMDEXアップデートの前にバックアップを作成します</translation>
+    </message>
+    <message>
+        <source>Recommended to keep this enabled as it creates a backup before updating RimDex, This helps prevent any unwanted changes or data getting deleted.</source>
+        <translation>RIMDEXを更新する前にバックアップを作成するため、これを有効にすることをお勧めします。これにより、不要な変更やデータが削除されるのを防ぐのに役立ちます。</translation>
+    </message>
+    <message>
+        <source>Maximum number of backups to keep:</source>
+        <translation>保持するバックアップの最大数：</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsFailureDialog</name>
+    <message>
+        <source>Your RimDex settings file is corrupt.
+Please choose one of the following options to proceed.</source>
+        <translation>RimDexの設定ファイルが破損しています。
+次のオプションのいずれかを選択してください。</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation>設定を開く</translation>
+    </message>
+    <message>
+        <source>Open Settings Folder</source>
+        <translation>設定フォルダーを開く</translation>
+    </message>
+    <message>
+        <source>Reset Settings</source>
+        <translation>設定をリセット</translation>
+    </message>
+    <message>
+        <source>Exit RimDex</source>
+        <translation>RimDexを終了</translation>
+    </message>
+</context>
+<context>
+    <name>SteamBrowser</name>
+    <message>
+        <source>Add Mods by Workshop ID</source>
+        <translation>ワークショップIDでMODを追加</translation>
+    </message>
+    <message>
+        <source>Mod Downloader</source>
+        <translation>MODダウンローダー</translation>
+    </message>
+    <message>
+        <source>Add to List</source>
+        <translation>リストに追加</translation>
+    </message>
+    <message>
+        <source>Clear List</source>
+        <translation>リストをクリア</translation>
+    </message>
+    <message>
+        <source>Download mod(s) (SteamCMD)</source>
+        <translation>MODをダウンロード（SteamCMD）</translation>
+    </message>
+    <message>
+        <source>Download mod(s) (Steam app)</source>
+        <translation>MODをダウンロード（Steamアプリ）</translation>
+    </message>
+    <message>
+        <source>Add to list</source>
+        <translation>リストに追加</translation>
+    </message>
+    <message>
+        <source>Enter one or more Workshop IDs (one per line or separated by commas):</source>
+        <translation>1 つ以上のワークショップ ID を入力します (1 行に 1 つ、またはカンマで区切ります)。</translation>
+    </message>
+    <message>
+        <source>No publishedfileid found</source>
+        <translation>publishedfileidが見つかりません</translation>
+    </message>
+    <message>
+        <source>Unable to parse publishedfileid from url, Please check if url is in the correct format</source>
+        <translation>URLからpublishedfileidを解析できませんでした。URLが正しい形式であることを確認してください。</translation>
+    </message>
+    <message>
+        <source>Please reach out to us on Github Issues page or &lt;br&gt;#rimdex-testing on the Rocketman/CAI discord</source>
+        <translation>Github の問題ページ、または Rocketman/CAI discord の&lt;br&gt;#rimdex-testing からご連絡ください。</translation>
+    </message>
+    <message>
+        <source>Add Collection</source>
+        <translation>コレクションを追加</translation>
+    </message>
+    <message>
+        <source>How would you like to add the collection?</source>
+        <translation>コレクションをどのように追加しますか？</translation>
+    </message>
+    <message>
+        <source>You can choose to add all mods from the collection or only the ones you don&apos;t have installed.</source>
+        <translation>コレクションからすべてのMODを追加するか、インストールされていないMODのみを追加するかを選択できます。</translation>
+    </message>
+    <message>
+        <source>Add All Mods</source>
+        <translation>すべてのMODを追加</translation>
+    </message>
+    <message>
+        <source>Add Missing Mods</source>
+        <translation>欠落しているMODを追加</translation>
+    </message>
+    <message>
+        <source>SteamCMD downloader</source>
+        <translation>SteamCMDダウンローダー</translation>
+    </message>
+    <message>
+        <source>Empty list of mods returned, unable to add collection to list!</source>
+        <translation>MODの空のリストが返されました。コレクションをリストに追加できません！</translation>
+    </message>
+    <message>
+        <source>You already have these mods in your download list!</source>
+        <translation>これらのMODはすでにダウンロードリストにあります！</translation>
+    </message>
+    <message>
+        <source>Skipping the following mods which are already present in your download list!</source>
+        <translation>ダウンロードリストにすでに存在する以下のMODをスキップします！</translation>
+    </message>
+</context>
+<context>
+    <name>SteamcmdInterface</name>
+    <message>
+        <source>RimDex - SteamCMD setup</source>
+        <translation>RimDex - SteamCMDの設定</translation>
+    </message>
+    <message>
+        <source>RimDex was unable to find SteamCMD installed in the configured prefix:&lt;br&gt;</source>
+        <translation>RimDex は、構成されたプレフィックスにインストールされている SteamCMD を見つけることができませんでした:&lt;br&gt;</translation>
+    </message>
+    <message>
+        <source>Do you want to setup SteamCMD?</source>
+        <translation>SteamCMDを設定しますか？</translation>
+    </message>
+    <message>
+        <source>Depot Cache Cleared</source>
+        <translation>デポキャッシュがクリアされました</translation>
+    </message>
+    <message>
+        <source>SteamCMD depot cache was already cleared.</source>
+        <translation>SteamCMDのデポキャッシュはすでにクリアされています。</translation>
+    </message>
+    <message>
+        <source>SteamCMD depot cache has been cleared.</source>
+        <translation>SteamCMDのデポキャッシュがクリアされました。</translation>
+    </message>
+    <message>
+        <source>Re-create Symlink?</source>
+        <translation>シンボリックリンクを再作成しますか？</translation>
+    </message>
+    <message>
+        <source>An existing symlink already exists. Would you like to delete and re-create the symlink?</source>
+        <translation>既存のシンボリックリンクがすでに存在します。削除して再作成しますか？</translation>
+    </message>
+    <message>
+        <source>The symlink makes SteamCMD download mods to the local mods folder and is required for SteamCMD mod downloads to work correctly.</source>
+        <translation>このシンボリックリンクにより、SteamCMDはMODをローカルのMODフォルダーにダウンロードし、SteamCMDのMODダウンロードが正しく機能するために必要です。</translation>
+    </message>
+    <message>
+        <source>Existing symlink: {symlink_destination_path}&lt;br&gt;&lt;br&gt;New symlink:&lt;br&gt;[{symlink_source_path}] -&gt; </source>
+        <translation>既存のシンボリックリンク: {symlink_destination_path}&lt;br&gt;&lt;br&gt;新しいシンボリックリンク:&lt;br&gt;[{symlink_source_path}] -&gt;</translation>
+    </message>
+    <message>
+        <source>Existing destination: {symlink_destination_path}&lt;br&gt;&lt;br&gt;New symlink:&lt;br&gt;[{symlink_source_path}] -&gt; </source>
+        <translation>既存の宛先: {symlink_destination_path}&lt;br&gt;&lt;br&gt;新しいシンボリックリンク:&lt;br&gt;[{symlink_source_path}] -&gt;</translation>
+    </message>
+    <message>
+        <source>New symlink:&lt;br&gt;[{symlink_source_path}] -&gt; </source>
+        <translation>新しいシンボリックリンク:&lt;br&gt;[{symlink_source_path}] -&gt;</translation>
+    </message>
+    <message>
+        <source>The symlink destination path already exists. Would you like to remove the existing destination and create a new symlink in it&apos;s place?</source>
+        <translation>シンボリックリンクの宛先パスはすでに存在します。既存の宛先を削除して、その場所に新しいシンボリックリンクを作成しますか？</translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation>＆いいえ</translation>
+    </message>
+    <message>
+        <source>Create Symlink?</source>
+        <translation>シンボリックリンクを作成しますか？</translation>
+    </message>
+    <message>
+        <source>Do you want to create a symlink?</source>
+        <translation>シンボリックリンクを作成しますか？</translation>
+    </message>
+    <message>
+        <source>&amp;Yes</source>
+        <translation>＆はい</translation>
+    </message>
+    <message>
+        <source>&amp;Don&apos;t Ask Again</source>
+        <translation>二度と聞かないでください</translation>
+    </message>
+</context>
+<context>
+    <name>SteamworksInterface</name>
+    <message>
+        <source>Steam Not Detected</source>
+        <translation>蒸気が検出されない</translation>
+    </message>
+    <message>
+        <source>Steam Integration Unavailable</source>
+        <translation>Steam 統合は利用できません</translation>
+    </message>
+    <message>
+        <source>RimDex could not detect Steam client or it may be unresponsive.&lt;br&gt;&lt;br&gt;Please make sure Steam is installed and running.&lt;br&gt;&lt;br&gt;If you are a Steam user, please check that Steam is running and that you are logged in.&lt;br&gt;&lt;br&gt;Try restarting Steam.</source>
+        <translation>RimDex が Steam クライアントを検出できなかったか、応答していない可能性があります。&lt;br&gt;&lt;br&gt;Steam がインストールされ、実行中であることを確認してください。&lt;br&gt;&lt;br&gt;Steam ユーザーの場合は、Steam が実行中であり、ログインしていることを確認してください。&lt;br&gt;&lt;br&gt;Steam を再起動してみてください。</translation>
+    </message>
+    <message>
+        <source>If you are still facing issues even after Steam is installed and running, please report this issue to https://github.com/RimDex/RimDex/issues</source>
+        <translation>Steam をインストールして実行した後でも問題が解決しない場合は、この問題を https://github.com/RimDex/RimDex/issues に報告してください。</translation>
+    </message>
+    <message>
+        <source>Snap Steam Detected</source>
+        <translation>スナップスチームを検出しました</translation>
+    </message>
+    <message>
+        <source>For full Steam support, please install native Steam from the official repository.</source>
+        <translation>Steam を完全にサポートするには、公式リポジトリからネイティブ Steam をインストールしてください。</translation>
+    </message>
+    <message>
+        <source>Snap Steam is sandboxed and incompatible with Steamworks API</source>
+        <translation>Snap Steam はサンドボックス化されており、Steamworks API と互換性がありません</translation>
+    </message>
+</context>
+<context>
+    <name>TagEditDialog</name>
+    <message>
+        <source>Select existing tags and/or enter new tags separated by commas:</source>
+        <translation>既存のタグを選択するか、カンマで区切って新しいタグを入力します。</translation>
+    </message>
+    <message>
+        <source>new-tag, qol, framework</source>
+        <translation>新しいタグ、QOL、フレームワーク</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation>すべて選択</translation>
+    </message>
+    <message>
+        <source>Select none</source>
+        <translation>何も選択しない</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>わかりました</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>キャンセル</translation>
+    </message>
+</context>
+<context>
+    <name>ThemeController</name>
+    <message>
+        <source>Theme path Error</source>
+        <translation>テーマパスエラー</translation>
+    </message>
+    <message>
+        <source>Stylesheet path does not exist for theme &apos;{theme_name}&apos; Resetting to default theme &apos;{default_theme}&apos;.</source>
+        <translation>テーマ&apos;{theme_name}&apos;のスタイルシートパスが存在しません。デフォルトテーマ&apos;{default_theme}&apos;にリセットします。</translation>
+    </message>
+    <message>
+        <source>Theme Error</source>
+        <translation>テーマエラー</translation>
+    </message>
+    <message>
+        <source>Failed to apply theme: {selected_theme_name},Resetting to default theme: {self.default_theme}</source>
+        <translation>テーマ&apos;{selected_theme_name}&apos;の適用に失敗しました。デフォルトテーマ&apos;{self.default_theme}&apos;にリセットします。</translation>
+    </message>
+</context>
+<context>
+    <name>ToddsInterface</name>
+    <message>
+        <source>ERROR: todds was not found. If you are running from source, please ensure you have followed the correct steps in the {development_guide_url} 
+
+Please reach out to us for support at: {support_url}</source>
+        <translation>エラー：Toddsは見つかりませんでした。ソースから実行している場合は、{development_guide_url}の正しい手順に従っていることを確認してください。
+
+{support_url}のサポートについては、私たちに連絡してください</translation>
+    </message>
+</context>
+<context>
+    <name>TranslationManagerDialog</name>
+    <message>
+        <source>RimDex — Translation Manager</source>
+        <translation>rimDex — 翻訳マネージャー</translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation>言語：</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>全て</translation>
+    </message>
+    <message>
+        <source>Translation Service</source>
+        <translation>翻訳サービス</translation>
+    </message>
+    <message>
+        <source>Provider:</source>
+        <translation>プロバイダー:</translation>
+    </message>
+    <message>
+        <source>API Key:</source>
+        <translation>APIキー:</translation>
+    </message>
+    <message>
+        <source>(not required for Google)</source>
+        <translation>(Google の場合は必要ありません)</translation>
+    </message>
+    <message>
+        <source>Model:</source>
+        <translation>モデル：</translation>
+    </message>
+    <message>
+        <source>Concurrency:</source>
+        <translation>同時実行性:</translation>
+    </message>
+    <message>
+        <source>Use cache</source>
+        <translation>キャッシュを使用する</translation>
+    </message>
+    <message>
+        <source>Run All</source>
+        <translation>すべて実行</translation>
+    </message>
+    <message>
+        <source>Extract (lupdate)</source>
+        <translation>抽出 (lupdate)</translation>
+    </message>
+    <message>
+        <source>Translate</source>
+        <translation>翻訳する</translation>
+    </message>
+    <message>
+        <source>Validate</source>
+        <translation>検証する</translation>
+    </message>
+    <message>
+        <source>Compile (lrelease)</source>
+        <translation>コンパイル(lリリース)</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>近い</translation>
+    </message>
+    <message>
+        <source>▶ Running all steps…</source>
+        <translation>▶ すべてのステップを実行中…</translation>
+    </message>
+    <message>
+        <source>All steps completed.</source>
+        <translation>すべての手順が完了しました。</translation>
+    </message>
+    <message>
+        <source>✓ All steps completed.</source>
+        <translation>✓ すべての手順が完了しました。</translation>
+    </message>
+    <message>
+        <source>—— Step: {step} ——</source>
+        <translation>—— ステップ:  —— {step}</translation>
+    </message>
+    <message>
+        <source>lupdate: {result}</source>
+        <translation>lupdate:  {result}</translation>
+    </message>
+    <message>
+        <source>success</source>
+        <translation>成功</translation>
+    </message>
+    <message>
+        <source>failed</source>
+        <translation>失敗した</translation>
+    </message>
+    <message>
+        <source>No languages found.</source>
+        <translation>言語が見つかりません。</translation>
+    </message>
+    <message>
+        <source>translate: done ({t} translated, {f} failed)</source>
+        <translation>翻訳: 完了 ({t} は翻訳されました、{f} は失敗しました)</translation>
+    </message>
+    <message>
+        <source>validate: {n} issue(s)</source>
+        <translation>検証:  問題) {n}</translation>
+    </message>
+    <message>
+        <source>validate: passed</source>
+        <translation>検証: 合格</translation>
+    </message>
+    <message>
+        <source>validate: auto-fixed {n} issue(s), rerunning lupdate → translate → validate…</source>
+        <translation>validate:  の問題を自動修正)、lupdate を再実行→翻訳→検証… {n}</translation>
+    </message>
+    <message>
+        <source>lrelease: {result}</source>
+        <translation>lリリース:  {result}</translation>
+    </message>
+    <message>
+        <source>all</source>
+        <translation>全て</translation>
+    </message>
+    <message>
+        <source>Running lupdate for {lang}…</source>
+        <translation>{lang} の lupdate を実行中…</translation>
+    </message>
+    <message>
+        <source>lupdate: success</source>
+        <translation>lupdate: 成功</translation>
+    </message>
+    <message>
+        <source>lupdate: failed</source>
+        <translation>lupdate: 失敗しました</translation>
+    </message>
+    <message>
+        <source>Translating {lang} via {svc}…</source>
+        <translation>{svc} 経由で {lang} を翻訳しています…</translation>
+    </message>
+    <message>
+        <source>Translating all {n} languages via {svc}…</source>
+        <translation>{svc} 経由ですべての {n} 言語を翻訳しています…</translation>
+    </message>
+    <message>
+        <source>All done — translated: {t}, failed: {f}</source>
+        <translation>すべて完了 — 翻訳: {t}、失敗: {f}</translation>
+    </message>
+    <message>
+        <source>Starting {lang}…</source>
+        <translation>{lang} を開始しています…</translation>
+    </message>
+    <message>
+        <source>Translated: {t}, failed: {f}</source>
+        <translation>翻訳済み: {t}、失敗: {f}</translation>
+    </message>
+    <message>
+        <source>Translation batch failed</source>
+        <translation>翻訳バッチが失敗しました</translation>
+    </message>
+    <message>
+        <source>Validating…</source>
+        <translation>検証中…</translation>
+    </message>
+    <message>
+        <source>Issues found:</source>
+        <translation>見つかった問題:</translation>
+    </message>
+    <message>
+        <source>Validation passed.</source>
+        <translation>検証に合格しました。</translation>
+    </message>
+    <message>
+        <source>Auto-fixed {n} issue(s).</source>
+        <translation>の問題が自動修正されました)。 {n}</translation>
+    </message>
+    <message>
+        <source>{n} issue(s), {f} fixed</source>
+        <translation>{n} 件の問題、{f} 件が修正されました</translation>
+    </message>
+    <message>
+        <source>Compiling {lang}…</source>
+        <translation>{lang} をコンパイル中…</translation>
+    </message>
+    <message>
+        <source>lrelease: success</source>
+        <translation>lリリース: 成功</translation>
+    </message>
+    <message>
+        <source>lrelease: failed</source>
+        <translation>lリリース: 失敗しました</translation>
+    </message>
+</context>
+<context>
+    <name>TroubleshootingController</name>
+    <message>
+        <source>Process complete</source>
+        <translation>プロセスが完了しました</translation>
+    </message>
+    <message>
+        <source>Process complete, wait for steam to complete further process.</source>
+        <translation>プロセスが完了しました。Steamがさらなるプロセスを完了するのを待ってください。</translation>
+    </message>
+    <message>
+        <source>Steam Launch Failed</source>
+        <translation>Steamの起動に失敗しました</translation>
+    </message>
+    <message>
+        <source>Steam Workshop Redownload</source>
+        <translation>Steamワークショップの再ダウンロード</translation>
+    </message>
+    <message>
+        <source>Deleted all files in the {config_dir} successfully.</source>
+        <translation>成功裏に{config_dir}内のすべてのファイルを削除しました。</translation>
+    </message>
+    <message>
+        <source>No files found in {config_dir} for deletion.</source>
+        <translation>{config_dir}内に削除するファイルが見つかりませんでした。</translation>
+    </message>
+    <message>
+        <source>Deleted {item} successfully.</source>
+        <translation>成功裏に{item}を削除しました。</translation>
+    </message>
+    <message>
+        <source>Confirm Changes</source>
+        <translation>変更を確認</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to apply these changes? This cannot be undone.</source>
+        <translation>これらの変更を適用してもよろしいですか？元に戻すことはできません。</translation>
+    </message>
+    <message>
+        <source>This will delete the selected files. Make sure you have backups if needed.</source>
+        <translation>これにより、選択したファイルが削除されます。必要に応じてバックアップを取ってください。</translation>
+    </message>
+    <message>
+        <source>Confirm Clear</source>
+        <translation>すべてのモッドを削除しますか？</translation>
+    </message>
+    <message>
+        <source>Successfully deleted all mods and resetting ModsConfig.xml to vanilla state.</source>
+        <translation>すべてのモッドを削除しました。ModsConfig.xmlをバニラの状態にリセットしました。</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>エラー</translation>
+    </message>
+    <message>
+        <source>Failed to reset ModsConfig.xml.</source>
+        <translation>ModsConfig.xmlをリセットできませんでした。</translation>
+    </message>
+    <message>
+        <source>Export failed</source>
+        <translation>エクスポートに失敗しました</translation>
+    </message>
+    <message>
+        <source>{mods_config} does not exist, skipping mod export.</source>
+        <translation>{mods_config}が存在しません。モッドのエクスポートをスキップします。</translation>
+    </message>
+    <message>
+        <source>Export Mod List</source>
+        <translation>モッドのエクスポート</translation>
+    </message>
+    <message>
+        <source>The selected file is not a valid mod list file.&lt;br&gt;Details: {e}</source>
+        <translation>選択したファイルは有効な MOD リスト ファイルではありません。&lt;br&gt;詳細: {e}</translation>
+    </message>
+    <message>
+        <source>Successfully deleted Steam&apos;s downloading folder.&lt;br&gt;Restart Steam for the changes to take effect.</source>
+        <translation>Steam のダウンロード フォルダーが正常に削除されました。&lt;br&gt;変更を有効にするために Steam を再起動します。</translation>
+    </message>
+    <message>
+        <source>Could not delete Steam&apos;s downloading folder.&lt;br&gt;Please delete it manually: Steam/steamapps/downloading&lt;br&gt;Details: {e}</source>
+        <translation>Steam のダウンロード フォルダーを削除できませんでした。&lt;br&gt;手動で削除してください: Steam/steamapps/downloading&lt;br&gt;詳細: {e}</translation>
+    </message>
+    <message>
+        <source>No installed games found in this Steam library folder.&lt;br&gt;You may have games installed in a different Steam library folder or drive.</source>
+        <translation>この Steam ライブラリ フォルダにはインストールされたゲームが見つかりません。&lt;br&gt;別の Steam ライブラリ フォルダまたはドライブにゲームがインストールされている可能性があります。</translation>
+    </message>
+    <message>
+        <source>This will verify all {len} games in your Steam library.&lt;br&gt;This may take a while. Continue?</source>
+        <translation>これにより、Steam ライブラリ内のすべての {len} ゲームが確認されます。&lt;br&gt;これには時間がかかる場合があります。続く？</translation>
+    </message>
+    <message>
+        <source>Steam will now verify {len} games.&lt;br&gt;You can monitor progress in the Steam client.</source>
+        <translation>Steam は {len} ゲームを検証します。&lt;br&gt;Steam クライアントで進行状況を監視できます。</translation>
+    </message>
+    <message>
+        <source>Could not repair Steam library.&lt;br&gt;Please verify your games manually through Steam.&lt;br&gt;Details: {e}</source>
+        <translation>Steam ライブラリを修復できませんでした。&lt;br&gt;Steam を通じてゲームを手動で確認してください。&lt;br&gt;詳細: {e}</translation>
+    </message>
+    <message>
+        <source>ACF File Not Found</source>
+        <translation>ACF ファイルが見つかりません</translation>
+    </message>
+    <message>
+        <source>Could not find the Steam Workshop ACF file at:&lt;br&gt;{acf_path}</source>
+        <translation>Steam ワークショップ ACF ファイルが次の場所に見つかりませんでした:&lt;br&gt;{acf_path}</translation>
+    </message>
+    <message>
+        <source>This will remove stale workshop entries from the ACF metadata file for mods that no longer exist on disk.&lt;br&gt;&lt;br&gt;A backup will be created before any changes are made.&lt;br&gt;&lt;br&gt;Continue?</source>
+        <translation>これにより、ディスク上に存在しなくなった MOD の古いワークショップ エントリが ACF メタデータ ファイルから削除されます。&lt;br&gt;&lt;br&gt;変更が行われる前にバックアップが作成されます。&lt;br&gt;&lt;br&gt;続行しますか?</translation>
+    </message>
+    <message>
+        <source>Clean Orphaned Workshop Items</source>
+        <translation>孤立したワークショップアイテムをクリーンアップする</translation>
+    </message>
+    <message>
+        <source>Cleanup Complete</source>
+        <translation>クリーンアップが完了しました</translation>
+    </message>
+    <message>
+        <source>Removed {count} orphaned workshop entries.</source>
+        <translation>{count} 個の孤立したワークショップ エントリを削除しました。</translation>
+    </message>
+    <message>
+        <source>No Orphans Found</source>
+        <translation>孤児は見つかりませんでした</translation>
+    </message>
+    <message>
+        <source>No orphaned workshop entries were found. The ACF file is clean.</source>
+        <translation>孤立したワークショップのエントリは見つかりませんでした。 ACF ファイルはクリーンです。</translation>
+    </message>
+    <message>
+        <source>Cleanup Failed</source>
+        <translation>クリーンアップに失敗しました</translation>
+    </message>
+    <message>
+        <source>Failed to clean orphaned workshop items.</source>
+        <translation>孤立したワークショップアイテムのクリーニングに失敗しました。</translation>
+    </message>
+    <message>
+        <source>Location Error</source>
+        <translation>場所エラー</translation>
+    </message>
+    <message>
+        <source>Confirm Export</source>
+        <translation>エクスポートを確認</translation>
+    </message>
+    <message>
+        <source>Could not automatically start game installation through Steam.&lt;br&gt;&lt;br&gt;Please manually verify/install the game through Steam.</source>
+        <translation>Steam を通じてゲームのインストールを自動的に開始できませんでした。&lt;br&gt;&lt;br&gt;Steam を通じてゲームを手動で確認/インストールしてください。</translation>
+    </message>
+    <message>
+        <source>Deleted all files in the Steam mods directory.&lt;br&gt;&lt;br&gt; Trying to restart Steam to trigger automatic redownload of subscribed mods.</source>
+        <translation>Steam mods ディレクトリ内のすべてのファイルを削除しました。&lt;br&gt;&lt;br&gt; サブスクライブした MOD の自動再ダウンロードをトリガーするために Steam を再起動しようとしています。</translation>
+    </message>
+    <message>
+        <source>Mods have been deleted. Please restart Steam to trigger automatic redownload of subscribed mods.&lt;br&gt;&lt;br&gt;If mods don&apos;t download automatically, try:&lt;br&gt;1. Restart Steam&lt;br&gt;2. Verify game files in Steam&lt;br&gt;3. Visit the Workshop page of each mod</source>
+        <translation>MODは削除されました。サブスクライブした MOD の自動再ダウンロードをトリガーするには、Steam を再起動してください。&lt;br&gt;&lt;br&gt;MOD が自動的にダウンロードされない場合は、以下をお試しください。&lt;br&gt;1. Steamを再起動&lt;br&gt;２． Steam でゲーム ファイルを確認する&lt;br&gt;3.各MODのワークショップページにアクセスしてください。</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete all mods?&lt;br&gt;&lt;br&gt;WARNING: This will permanently delete all mods in your Mods folder and reset to vanilla state.</source>
+        <translation>すべての MOD を削除してもよろしいですか?&lt;br&gt;&lt;br&gt;警告: これにより、Mods フォルダ内のすべての MOD が完全に削除され、バニラ状態にリセットされます。</translation>
+    </message>
+    <message>
+        <source>Export current mod list to file?</source>
+        <translation>現在のモッドリストをファイルにエクスポートしますか？</translation>
+    </message>
+    <message>
+        <source>Failed to export mod list.</source>
+        <translation>モッドリストのエクスポートに失敗しました。</translation>
+    </message>
+    <message>
+        <source>Import failed</source>
+        <translation>モッドリストのインポートに失敗しました。</translation>
+    </message>
+    <message>
+        <source>{mods_config} does not exist, skipping mod import.</source>
+        <translation>{mods_config}が存在しません。モッドのインポートをスキップします。</translation>
+    </message>
+    <message>
+        <source>Import Mod List</source>
+        <translation>モッドリストのインポート</translation>
+    </message>
+    <message>
+        <source>Confirm Import</source>
+        <translation>モッドリストのインポートを確認</translation>
+    </message>
+    <message>
+        <source>Import mod list from file?</source>
+        <translation>モッドリストをファイルからインポートしますか？</translation>
+    </message>
+    <message>
+        <source>This will overwrite your current mod list.</source>
+        <translation>これにより、現在のモッドリストが上書きされます。</translation>
+    </message>
+    <message>
+        <source>Failed to import mod list</source>
+        <translation>モッドリストのインポートに失敗しました。</translation>
+    </message>
+    <message>
+        <source>Cache Cleared</source>
+        <translation>キャッシュがクリアされました</translation>
+    </message>
+    <message>
+        <source>Cache Clear</source>
+        <translation>キャッシュをクリア</translation>
+    </message>
+    <message>
+        <source>Steam&apos;s downloading folder is already empty.</source>
+        <translation>Steamのダウンロードフォルダはすでに空です。</translation>
+    </message>
+    <message>
+        <source>Cache Clear Failed</source>
+        <translation>キャッシュのクリアに失敗しました</translation>
+    </message>
+    <message>
+        <source>Steam Action Failed</source>
+        <translation>Steamのアクションに失敗しました</translation>
+    </message>
+    <message>
+        <source>No Games Found</source>
+        <translation>ゲームが見つかりません</translation>
+    </message>
+    <message>
+        <source>Confirm Library Repair</source>
+        <translation>ライブラリの修復を確認</translation>
+    </message>
+    <message>
+        <source>Library Repair Started</source>
+        <translation>ライブラリの修復が開始されました</translation>
+    </message>
+    <message>
+        <source>Path not set, Please check your settings and Try again.</source>
+        <translation>パスが設定されていません。設定を確認して再試行してください。</translation>
+    </message>
+    <message>
+        <source>Process failed</source>
+        <translation>プロセスに失敗しました</translation>
+    </message>
+    <message>
+        <source>Could not process: {item}</source>
+        <translation>処理できませんでした: {item}</translation>
+    </message>
+    <message>
+        <source>Failed to process item: {item} due to the following error: {e}</source>
+        <translation>項目の処理に失敗しました: {item}
+次のエラーが発生しました: {e}</translation>
+    </message>
+    <message>
+        <source>Steam user Check failed</source>
+        <translation>Steamユーザーの確認に失敗しました</translation>
+    </message>
+    <message>
+        <source>You are not a Steam user, or Path not set, Please check settings and try again.</source>
+        <translation>Steamユーザーではありません。パスが設定されていないか、設定を確認して再試行してください。</translation>
+    </message>
+    <message>
+        <source>Error: {e}</source>
+        <translation>エラー：{e}</translation>
+    </message>
+</context>
+<context>
+    <name>TroubleshootingDialog</name>
+    <message>
+        <source>Game Files Recovery</source>
+        <translation>ゲームファイルの復元</translation>
+    </message>
+    <message>
+        <source>If you&apos;re experiencing issues with your game, you can try the following recovery options. Steam will automatically redownload any deleted files on next launch.</source>
+        <translation>ゲームの問題が発生している場合、次の復元オプションを試してください。Steamは次回起動時に削除されたファイルを自動的に再ダウンロードします。</translation>
+    </message>
+    <message>
+        <source>Reset game files (Preserves local mods, deletes and redownloads game files)</source>
+        <translation>ゲームファイルをリセット（ローカルモッドを保持し、ゲームファイルを削除して再ダウンロード）</translation>
+    </message>
+    <message>
+        <source>Deletes and redownloads game files but keeps your local mods intact.</source>
+        <translation>ゲームファイルを削除して再ダウンロードしますが、ローカルモッドは保持します。</translation>
+    </message>
+    <message>
+        <source>Reset Steam Workshop mods (Deletes and redownloads all Steam mods)</source>
+        <translation>Steam Workshopモッドをリセット（すべてのSteamモッドを削除して再ダウンロード）</translation>
+    </message>
+    <message>
+        <source>Deletes all Steam Workshop mods and triggers redownload.</source>
+        <translation>すべてのSteam Workshopモッドを削除して再ダウンロードします。</translation>
+    </message>
+    <message>
+        <source>Reset mod configurations (Preserves ModsConfig.xml and Prefs.xml)</source>
+        <translation>モッドの設定をリセット（ModsConfig.xmlとPrefs.xmlを保持）</translation>
+    </message>
+    <message>
+        <source>Deletes mod configuration files except ModsConfig.xml and Prefs.xml.</source>
+        <translation>ModsConfig.xmlとPrefs.xmlを除くモッドの設定ファイルを削除します。</translation>
+    </message>
+    <message>
+        <source>Reset game configurations (ModsConfig.xml, Prefs.xml, KeyPrefs.xml)*</source>
+        <translation>ゲームの設定をリセット（ModsConfig.xml, Prefs.xml, KeyPrefs.xmlを保持）</translation>
+    </message>
+    <message>
+        <source>Deletes game configuration files including ModsConfig.xml, Prefs.xml, and KeyPrefs.xml.</source>
+        <translation>ModsConfig.xml, Prefs.xml, KeyPrefs.xmlを含むゲームの設定ファイルを削除します。</translation>
+    </message>
+    <message>
+        <source>After resetting game configurations, launch the game directly through Steam to regenerate ModsConfig.xml, then restart RimDex.</source>
+        <translation>ゲームの設定をリセットした後、Steamを直接起動してModsConfig.xmlを再生成し、RimDexを再起動します。</translation>
+    </message>
+    <message>
+        <source>Apply Recovery</source>
+        <translation>復元を適用</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
+        <source>Mod Configuration Options</source>
+        <translation>モッドの設定オプション</translation>
+    </message>
+    <message>
+        <source>Manage your mod configurations and load order. These options help you organize and share your mod setup.</source>
+        <translation>モッドの設定とロード順序を管理します。これらのオプションは、モッドのセットアップを整理して共有するのに役立ちます。</translation>
+    </message>
+    <message>
+        <source>Save your current mod list to a .xml file to share with others.</source>
+        <translation>現在のモッドリストを.xmlファイルに保存して他の人と共有します。</translation>
+    </message>
+    <message>
+        <source>Clean Orphaned Mods</source>
+        <translation>孤立した Mod をクリーンアップする</translation>
+    </message>
+    <message>
+        <source>Remove stale workshop entries for mods no longer on disk</source>
+        <translation>ディスク上に存在しない MOD の古いワークショップ エントリを削除します</translation>
+    </message>
+    <message>
+        <source>Export Mod List</source>
+        <translation>モッドリストをエクスポート</translation>
+    </message>
+    <message>
+        <source>Export your current mod list to a file</source>
+        <translation>現在のモッドリストをファイルにエクスポート</translation>
+    </message>
+    <message>
+        <source>Import a mod list in .xml format from another player</source>
+        <translation>他のプレイヤーから.xml形式のモッドリストをインポート</translation>
+    </message>
+    <message>
+        <source>Import Mod List</source>
+        <translation>モッドリストをインポート</translation>
+    </message>
+    <message>
+        <source>Import a mod list from a file</source>
+        <translation>ファイルからモッドリストをインポート</translation>
+    </message>
+    <message>
+        <source>Delete all mods and reset to vanilla state</source>
+        <translation>すべてのモッドを削除してバニラの状態にリセット</translation>
+    </message>
+    <message>
+        <source>Steam Utilities</source>
+        <translation>Steamのユーティリティ</translation>
+    </message>
+    <message>
+        <source>Delete Steam&apos;s downloading folder to fix download issues</source>
+        <translation>ダウンロードの問題を修正するためにSteamのダウンロードフォルダを削除</translation>
+    </message>
+    <message>
+        <source>Check and repair RimWorld game files</source>
+        <translation>RimWorldゲームファイルをチェックして修復</translation>
+    </message>
+    <message>
+        <source>Verify integrity of all installed Steam games</source>
+        <translation>すべてのインストールされたSteamゲームの整合性を確認</translation>
+    </message>
+    <message>
+        <source>Warning: These operations will delete selected files permanently!</source>
+        <translation>警告：これらの操作は、選択したファイルを永続的に削除します！</translation>
+    </message>
+    <message>
+        <source>Export List</source>
+        <translation>エクスポートリスト</translation>
+    </message>
+    <message>
+        <source>Import List</source>
+        <translation>インポートリスト</translation>
+    </message>
+    <message>
+        <source>Reset to Vanilla</source>
+        <translation>バニラにリセット</translation>
+    </message>
+    <message>
+        <source>This will delete all mods in your Mods folder and reset to vanilla state</source>
+        <translation>これにより、modsフォルダのすべてのmodが削除され、バニラステートにリセットされます</translation>
+    </message>
+    <message>
+        <source>Clear All Mods</source>
+        <translation>すべてのmodをクリアします</translation>
+    </message>
+    <message>
+        <source>Steam-specific utilities to help resolve download and game file issues.</source>
+        <translation>ダウンロードおよびゲームファイルの問題の解決を支援する蒸気固有のユーティリティ。</translation>
+    </message>
+    <message>
+        <source>Clear Download Cache</source>
+        <translation>クリアダウンロードキャッシュ</translation>
+    </message>
+    <message>
+        <source>Verify Game Files</source>
+        <translation>ゲームファイルを確認します</translation>
+    </message>
+    <message>
+        <source>Repair Steam Library</source>
+        <translation>蒸気ライブラリを修理します</translation>
+    </message>
+</context>
+<context>
+    <name>UIBaseMixin</name>
+    <message>
+        <source>Do nothing and exit</source>
+        <translation>何もせず終了します</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateManager</name>
+    <message>
+        <source>RimDex update found</source>
+        <translation>RIMDEXアップデートが見つかりました</translation>
+    </message>
+    <message>
+        <source>An update to RimDex has been released: {latest_tag_name}</source>
+        <translation>RimDexのアップデートがリリースされました： {latest_tag_name}</translation>
+    </message>
+    <message>
+        <source>Downloading RimDex {tag_name} release...</source>
+        <translation>RimDex {tag_name}リリースのダウンロード...</translation>
+    </message>
+    <message>
+        <source>Download failed</source>
+        <translation>ダウンロードに失敗しました</translation>
+    </message>
+    <message>
+        <source>Failed to download the update.</source>
+        <translation>アップデートのダウンロードに失敗しました。</translation>
+    </message>
+    <message>
+        <source>Extraction failed</source>
+        <translation>抽出に失敗しました</translation>
+    </message>
+    <message>
+        <source>Failed to extract the downloaded update.</source>
+        <translation>ダウンロードしたアップデートの解凍に失敗しました。</translation>
+    </message>
+    <message>
+        <source>Launch failed</source>
+        <translation>起動に失敗しました</translation>
+    </message>
+    <message>
+        <source>Failed to launch the update script.</source>
+        <translation>更新スクリプトの起動に失敗しました。</translation>
+    </message>
+    <message>
+        <source>Creating backup... (this may take several minutes)</source>
+        <translation>バックアップを作成しています... (これには数分かかる場合があります)</translation>
+    </message>
+    <message>
+        <source>Update downloaded</source>
+        <translation>ダウンロードされた更新</translation>
+    </message>
+    <message>
+        <source>Update failed</source>
+        <translation>アップデートに失敗しました</translation>
+    </message>
+    <message>
+        <source>An unexpected error occurred during the update process.</source>
+        <translation>更新プロセス中に予期しないエラーが発生しました。</translation>
+    </message>
+    <message>
+        <source>Update skipped</source>
+        <translation>アップデートはスキップされました</translation>
+    </message>
+    <message>
+        <source>You are running from Python interpreter.</source>
+        <translation>Python インタープリターから実行しています。</translation>
+    </message>
+    <message>
+        <source>Skipping update check...</source>
+        <translation>更新チェックをスキップしています...</translation>
+    </message>
+    <message>
+        <source>Unknown Version Detected</source>
+        <translation>不明なバージョンが検出されました</translation>
+    </message>
+    <message>
+        <source>Could not find version Information of RimDex, This may indicate that the application is not an offical release and may be a custom build.</source>
+        <translation>rimDex のバージョン情報が見つかりませんでした。これは、アプリケーションが正式リリースではなく、カスタム ビルドである可能性があることを示している可能性があります。</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to still update anyway?</source>
+        <translation>それでも更新してもよろしいですか?</translation>
+    </message>
+    <message>
+        <source>You are running RimDex {current_version}&lt;br&gt;Do you want to update now?</source>
+        <translation>RimDex {current_version} を実行しています&lt;br&gt;今すぐ更新しますか?</translation>
+    </message>
+    <message>
+        <source>RimDex Update Error</source>
+        <translation>rimDex 更新エラー</translation>
+    </message>
+    <message>
+        <source>Failed to connect to GitHub API: {error}</source>
+        <translation>GitHub API に接続できませんでした: {error}</translation>
+    </message>
+    <message>
+        <source>Do you want to proceed with the update?</source>
+        <translation>アップデートを進めたいですか？</translation>
+    </message>
+    <message>
+        <source>&lt;br&gt;Successfully retrieved latest release.&lt;br&gt;The update will be installed from: {update_source_path}</source>
+        <translation>&lt;br&gt;最新リリースを正常に取得しました。&lt;br&gt;アップデートは次の場所からインストールされます: {update_source_path}</translation>
+    </message>
+    <message>
+        <source>Backup failed</source>
+        <translation>バックアップに失敗しました</translation>
+    </message>
+    <message>
+        <source>Failed to create a backup before updating.</source>
+        <translation>アップデート前のバックアップ作成に失敗しました。</translation>
+    </message>
+    <message>
+        <source>Unable to retrieve latest release information</source>
+        <translation>最新のリリース情報を取得できません</translation>
+    </message>
+    <message>
+        <source>Please check your internet connection and try again, You can also check &apos;https://github.com/RimDex/RimDex/releases&apos; directly.</source>
+        <translation>インターネット接続を確認して、もう一度お試しください。「https://github.com/RimDex/RimDex/releases」を直接確認することもできます。</translation>
+    </message>
+</context>
+<context>
+    <name>UseThisInsteadPanel</name>
+    <message>
+        <source>RimDex - Replacements found for Workshop mods</source>
+        <translation>RimDex - ワークショップMODの置き換えが見つかりました</translation>
+    </message>
+    <message>
+        <source>There are replacements available for Workshop mods!</source>
+        <translation>ワークショップMODの置き換えが利用可能です！</translation>
+    </message>
+    <message>
+        <source>The following table displays Workshop mods with suggested replacements according to the &quot;Use This Instead&quot; database, grouped by replacement mod.</source>
+        <translation>次の表は、「代わりにこれを使用する」データベースに基づいて推奨される代替品を含むワークショップ MOD を、代替 MOD ごとにグループ化して表示します。</translation>
+    </message>
+    <message>
+        <source>Do nothing and exit</source>
+        <translation>何もせず終了します</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation>選択</translation>
+    </message>
+    <message>
+        <source>Select all Originals</source>
+        <translation>すべてのオリジナルを選択</translation>
+    </message>
+    <message>
+        <source>Select all Replacements</source>
+        <translation>すべての代替品を選択</translation>
+    </message>
+    <message>
+        <source>Installed</source>
+        <translation>インストール済み</translation>
+    </message>
+    <message>
+        <source>Not Installed</source>
+        <translation>インストールされていません</translation>
+    </message>
+    <message>
+        <source>Group {0}</source>
+        <translation>グループ{0}</translation>
+    </message>
+    <message>
+        <source>Original</source>
+        <translation>オリジナル</translation>
+    </message>
+    <message>
+        <source>Replacement [{0}]</source>
+        <translation>置換 [{0}]</translation>
+    </message>
+</context>
+<context>
+    <name>WorkshopModUpdaterPanel</name>
+    <message>
+        <source>RimDex - Updates found for Workshop mods</source>
+        <translation>RimDex - ワークショップ MOD のアップデートが見つかりました</translation>
+    </message>
+    <message>
+        <source>There are updates available for Workshop mods!</source>
+        <translation>ワークショップ MOD のアップデートが利用可能です!</translation>
+    </message>
+    <message>
+        <source>Update Mods with SteamCMD</source>
+        <translation>SteamCMD を使用して Mod を更新する</translation>
+    </message>
+    <message>
+        <source>Update Mods with Steam</source>
+        <translation>Steam で Mod を更新する</translation>
+    </message>
+    <message>
+        <source>
+The following table displays Workshop mods available for update from Steam.</source>
+        <translation>次の表に、Steam からアップデートできるワークショップ MOD を示します。</translation>
+    </message>
+</context>
+<context>
+    <name>_UploadLogDialog</name>
+    <message>
+        <source>Uploading Log...</source>
+        <translation>ログをアップロード中...</translation>
+    </message>
+    <message>
+        <source>Log Upload Successful</source>
+        <translation>ログのアップロードに成功しました</translation>
+    </message>
+    <message>
+        <source>Log file uploaded successfully! Copied URL to clipboard.</source>
+        <translation>ログファイルが正常にアップロードされました！URLをクリップボードにコピーしました。</translation>
+    </message>
+    <message>
+        <source>Log Upload Failed</source>
+        <translation>ログのアップロードに失敗しました</translation>
+    </message>
+    <message>
+        <source>Log file upload failed!</source>
+        <translation>ログファイルのアップロードに失敗しました！</translation>
+    </message>
+    <message>
+        <source>Please check your internet connection and try again.</source>
+        <translation>インターネット接続を確認し、再試行してください。</translation>
+    </message>
+</context>
+<context>
+    <name>check_if_pfids_blacklisted</name>
+    <message>
+        <source>Download blacklisted mods</source>
+        <translation>ブラックリストに登録されたMODをダウンロードします</translation>
+    </message>
+    <message>
+        <source>Skip blacklisted mods</source>
+        <translation>ブラックリストに登録されたMODをスキップします</translation>
+    </message>
+</context>
+<context>
+    <name>copy_to_clipboard_safely</name>
+    <message>
+        <source>Failed to copy to clipboard.</source>
+        <translation>クリップボードへのコピーに失敗しました。</translation>
+    </message>
+    <message>
+        <source>RimDex failed to copy the text to your clipboard. Please copy it manually.</source>
+        <translation>RimDexはテキストをクリップボードにコピーできませんでした。手動でコピーしてください。</translation>
+    </message>
+</context>
+<context>
+    <name>find_circular_dependencies</name>
+    <message>
+        <source>Unable to Sort</source>
+        <translation>ソートできません</translation>
+    </message>
+    <message>
+        <source>RimDex found circular dependencies in your mods list. Please see the details for dependency loops.</source>
+        <translation>RimDexはMODリストに循環依存関係を見つけました。依存関係のループの詳細を確認してください。</translation>
+    </message>
+</context>
+<context>
+    <name>launch_game_process</name>
+    <message>
+        <source>Game launch failed</source>
+        <translation>ゲームの起動に失敗しました</translation>
+    </message>
+    <message>
+        <source>Unable to launch RimWorld</source>
+        <translation>RimWorldを起動できません</translation>
+    </message>
+    <message>
+        <source>RimDex could not start RimWorld as the game folder is empty or invalid: [{game_install_path}] Please check that the game folder is properly set and that the RimWorld executable exists in it.</source>
+        <translation>RimDexはRimWorldを起動できませんでした。ゲームフォルダーが空であるか無効です: [{game_install_path}]。ゲームフォルダーが正しく設定されており、RimWorldの実行可能ファイルが存在することを確認してください。</translation>
+    </message>
+    <message>
+        <source>Invalid game folder</source>
+        <translation>無効なゲームフォルダー</translation>
+    </message>
+    <message>
+        <source>RimDex could not validate the RimWorld executable in the specified folder: {game_install_path}. Please check that this directory is correct and contains a valid RimWorld game executable.</source>
+        <translation>RimDex は、指定されたフォルダー {game_install_path} にあるrimWorld 実行可能ファイルを検証できませんでした。このディレクトリが正しく、有効なRimWorld ゲーム実行可能ファイルが含まれていることを確認してください。</translation>
+    </message>
+</context>
+<context>
+    <name>rmtree</name>
+    <message>
+        <source>Failed to remove directory</source>
+        <translation>ディレクトリの削除に失敗しました</translation>
+    </message>
+    <message>
+        <source>RimDex tried to remove a directory that does not exist.</source>
+        <translation>RimDexは存在しないディレクトリを削除しようとしました。</translation>
+    </message>
+    <message>
+        <source>Directory does not exist: {path}</source>
+        <translation>ディレクトリが存在しません: {path}</translation>
+    </message>
+    <message>
+        <source>RimDex tried to remove a directory that is not a directory.</source>
+        <translation>RimDexはディレクトリではないものを削除しようとしました。</translation>
+    </message>
+    <message>
+        <source>Path is not a directory: {path}</source>
+        <translation>パスはディレクトリではありません: {path}</translation>
+    </message>
+    <message>
+        <source>An OSError occurred while trying to remove a directory.</source>
+        <translation>ディレクトリを削除しようとしたときにOSErrorが発生しました。</translation>
+    </message>
+    <message>
+        <source>{e.strerror} occurred at {e.filename} with error code {error_code}.</source>
+        <translation>{e.strerror}が{e.filename}でエラーコード{error_code}で発生しました。</translation>
+    </message>
+</context>
+<context>
+    <name>self._panel</name>
+    <message>
+        <source>Failed to export to file</source>
+        <translation>ファイルへのエクスポートに失敗しました</translation>
+    </message>
+    <message>
+        <source>Failed to export active mods to file:</source>
+        <translation>アクティブな MOD をファイルにエクスポートできませんでした:</translation>
+    </message>
+    <message>
+        <source>Important</source>
+        <translation>重要</translation>
+    </message>
+    <message>
+        <source>You will need to redo Rentry import again after downloads complete.&lt;br&gt;&lt;br&gt;If there missing mods after download completes, they will be shown inside the missing mods panel.&lt;br&gt;&lt;br&gt;If RimDex is still not able to download some mods, It&apos;s due to the mod data not being available in both Rentry link and steam database.</source>
+        <translation>ダウンロードが完了したら、もう一度 Rentry のインポートをやり直す必要があります。&lt;br&gt;&lt;br&gt;ダウンロードの完了後に不足している MOD がある場合は、不足している MOD パネル内に表示されます。&lt;br&gt;&lt;br&gt;RimDex がまだ一部の MOD をダウンロードできない場合は、Rentry リンクと Steam データベースの両方で MOD データが利用できないことが原因です。</translation>
+    </message>
+    <message>
+        <source>Steam client integration not set up</source>
+        <translation>Steam クライアント統合が設定されていません</translation>
+    </message>
+    <message>
+        <source>Steam client integration is not set up. Please set it up to download mods using Steam</source>
+        <translation>Steam クライアント統合が設定されていません。 Steam を使用して MOD をダウンロードできるように設定してください</translation>
+    </message>
+    <message>
+        <source>Download Rentry Mods</source>
+        <translation>Rentry Mod をダウンロード</translation>
+    </message>
+    <message>
+        <source>Please select a download method.</source>
+        <translation>ダウンロード方法を選択してください。</translation>
+    </message>
+    <message>
+        <source>Select which method you want to use to download missing Rentry mods.</source>
+        <translation>不足している Rentry Mod をダウンロードするために使用する方法を選択します。</translation>
+    </message>
+    <message>
+        <source>Export active mod list</source>
+        <translation>アクティブなMODリストをエクスポートする</translation>
+    </message>
+    <message>
+        <source>Copied active mod list report to clipboard...</source>
+        <translation>アクティブな MOD リスト レポートをクリップボードにコピーしました...</translation>
+    </message>
+    <message>
+        <source>Click &quot;Show Details&quot; to see the full report!</source>
+        <translation>完全なレポートを表示するには、[詳細を表示] をクリックしてください。</translation>
+    </message>
+    <message>
+        <source>Report too long</source>
+        <translation>レポートが長すぎます</translation>
+    </message>
+    <message>
+        <source>Even the first mod exceeds the 200,000 character limit.</source>
+        <translation>最初のMODでも20万文字制限を超えています。</translation>
+    </message>
+    <message>
+        <source>Cannot upload this report to Rentry.co.</source>
+        <translation>このレポートは Rentry.co にアップロードできません。</translation>
+    </message>
+    <message>
+        <source>The mod list report exceeds 200,000 characters.</source>
+        <translation>MODリストレポートは20万文字を超えています。</translation>
+    </message>
+    <message>
+        <source>Rentry.co may reject uploads that are too long. Would you like to truncate the report to the first {max_mods} mods or cancel the upload?</source>
+        <translation>Rentry.co は長すぎるアップロードを拒否する場合があります。レポートを最初の {max_mods} 個の MOD まで切り詰めますか、それともアップロードをキャンセルしますか?</translation>
+    </message>
+    <message>
+        <source>Truncate to the first {max_mods} mods</source>
+        <translation>最初の {max_mods} 個の MOD まで切り詰めます</translation>
+    </message>
+    <message>
+        <source>Uploaded active mod list</source>
+        <translation>アップロードされたアクティブな MOD リスト</translation>
+    </message>
+    <message>
+        <source>Uploaded active mod list report to Rentry.co! The URL has been copied to your clipboard:&lt;br&gt;&lt;br&gt;{url}</source>
+        <translation>アクティブな MOD リストのレポートを Rentry.co にアップロードしました。 URL がクリップボードにコピーされました:&lt;br&gt;&lt;br&gt;{url}</translation>
+    </message>
+    <message>
+        <source>Failed to upload</source>
+        <translation>アップロードに失敗しました</translation>
+    </message>
+    <message>
+        <source>Failed to upload exported active mod list to Rentry.co</source>
+        <translation>エクスポートされたアクティブな MOD リストを Rentry.co にアップロードできませんでした</translation>
+    </message>
+    <message>
+        <source>Import from RimWorld Save File</source>
+        <translation>rimWorld 保存ファイルからインポート</translation>
+    </message>
+    <message>
+        <source>RimWorld save (*.rws);;All files (*.*)</source>
+        <translation>rimWorld 保存 (*.rws);;すべてのファイル (*.*)</translation>
+    </message>
+    <message>
+        <source>Confirm ACF import</source>
+        <translation>ACFインポートを確認する</translation>
+    </message>
+    <message>
+        <source>This will replace your current steamcmd .acf file</source>
+        <translation>これにより、現在の steamcmd .acf ファイルが置き換えられます。</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to import .acf? This only works for steamcmd</source>
+        <translation>.acf をインポートしてもよろしいですか?これはsteamcmdでのみ機能します</translation>
+    </message>
+    <message>
+        <source>Import .acf</source>
+        <translation>.acf をインポートする</translation>
+    </message>
+    <message>
+        <source>Export Error</source>
+        <translation>エクスポートエラー</translation>
+    </message>
+    <message>
+        <source>ACF file not found at: {acf_path}</source>
+        <translation>ACF ファイルが次の場所に見つかりません: {acf_path}</translation>
+    </message>
+    <message>
+        <source>Export Success</source>
+        <translation>エクスポートの成功</translation>
+    </message>
+    <message>
+        <source>Successfully exported ACF to {file_path}</source>
+        <translation>ACF が {file_path} に正常にエクスポートされました</translation>
+    </message>
+    <message>
+        <source>Export failed: Permission denied - check file permissions</source>
+        <translation>エクスポートに失敗しました: アクセス許可が拒否されました - ファイルのアクセス許可を確認してください</translation>
+    </message>
+    <message>
+        <source>Export failed: {e}</source>
+        <translation>エクスポートに失敗しました: {e}</translation>
+    </message>
+    <message>
+        <source>Reset SteamCMD ACF data file</source>
+        <translation>SteamCMD ACF データ ファイルをリセット</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to reset SteamCMD ACF data file?</source>
+        <translation>SteamCMD ACF データ ファイルをリセットしてもよろしいですか?</translation>
+    </message>
+    <message>
+        <source>This file is created and used by steamcmd to track mod informaton, This action cannot be undone.</source>
+        <translation>このファイルは、mod 情報を追跡するために steamcmd によって作成および使用されます。この操作は元に戻すことができません。</translation>
+    </message>
+    <message>
+        <source>Successfully deleted SteamCMD ACF data file: {steamcmd_appworkshop_acf_path}</source>
+        <translation>SteamCMD ACF データ ファイルが正常に削除されました: {steamcmd_appworkshop_acf_path}</translation>
+    </message>
+    <message>
+        <source>ACF data file will be recreated when you download mods using steamcmd next time.</source>
+        <translation>次回steamcmdを使用してMODをダウンロードすると、ACFデータファイルが再作成されます。</translation>
+    </message>
+    <message>
+        <source>SteamCMD ACF data file does not exist</source>
+        <translation>SteamCMD ACF データ ファイルが存在しません</translation>
+    </message>
+    <message>
+        <source>ACf file does not exist. It will be created when you download mods using steamcmd.</source>
+        <translation>ACfファイルが存在しません。 steamcmdを使用してMODをダウンロードすると作成されます。</translation>
+    </message>
+    <message>
+        <source>Checking Steam Workshop mods for updates...</source>
+        <translation>Steam ワークショップ MOD のアップデートをチェックしています...</translation>
+    </message>
+    <message>
+        <source>No Workshop mods to check for updates</source>
+        <translation>アップデートをチェックするワークショップ MOD はありません</translation>
+    </message>
+    <message>
+        <source>Unable to check for updates</source>
+        <translation>アップデートを確認できません</translation>
+    </message>
+    <message>
+        <source>RimDex was unable to check your Workshop mods for updates.</source>
+        <translation>rimDex はワークショップ MOD の更新をチェックできませんでした。</translation>
+    </message>
+    <message>
+        <source>Update check partially completed</source>
+        <translation>更新チェックが部分的に完了しました</translation>
+    </message>
+    <message>
+        <source>{failed} out of {total} Workshop mods could not be checked for updates.</source>
+        <translation>{total} 個のワークショップ MOD のうち {failed} 個のアップデートをチェックできませんでした。</translation>
+    </message>
+    <message>
+        <source>All Workshop mods appear to be up to date!</source>
+        <translation>すべてのワークショップ MOD は最新のようです。</translation>
+    </message>
+    <message>
+        <source>Steam Client Integration is disabled</source>
+        <translation>Steam クライアント統合が無効になっています</translation>
+    </message>
+    <message>
+        <source>This feature requires Steam Client Integration to be enabled in Settings.&lt;br&gt;&lt;br&gt;Please enable Steam Client Integration if you own the game on Steam.</source>
+        <translation>この機能を使用するには、設定で Steam クライアント統合を有効にする必要があります。&lt;br&gt;&lt;br&gt;Steam でゲームを所有している場合は、Steam クライアント統合を有効にしてください。</translation>
+    </message>
+    <message>
+        <source>RimDex</source>
+        <translation>リムデックス</translation>
+    </message>
+    <message>
+        <source>No PublishedFileIds were supplied in operation.</source>
+        <translation>操作中に PublishedFileId が指定されませんでした。</translation>
+    </message>
+    <message>
+        <source>Please add mods to list before attempting to download.</source>
+        <translation>ダウンロードを試みる前に、リストに MOD を追加してください。</translation>
+    </message>
+    <message>
+        <source>RimDex - SteamCMD setup</source>
+        <translation>rimDex - SteamCMD セットアップ</translation>
+    </message>
+    <message>
+        <source>Unable to create SteamCMD runner!</source>
+        <translation>SteamCMD ランナーを作成できません!</translation>
+    </message>
+    <message>
+        <source>There is an active process already running!</source>
+        <translation>アクティブなプロセスがすでに実行されています。</translation>
+    </message>
+    <message>
+        <source>Unable to initiate SteamCMD installation. Local mods path not set!</source>
+        <translation>SteamCMD のインストールを開始できません。ローカル MOD パスが設定されていません!</translation>
+    </message>
+    <message>
+        <source>Please configure local mods path in Settings before attempting to install.</source>
+        <translation>インストールを試みる前に、設定でローカル MOD パスを構成してください。</translation>
+    </message>
+    <message>
+        <source>SteamCMD not found</source>
+        <translation>SteamCMD が見つかりません</translation>
+    </message>
+    <message>
+        <source>SteamCMD executable was not found.</source>
+        <translation>SteamCMD 実行可能ファイルが見つかりませんでした。</translation>
+    </message>
+    <message>
+        <source>Please setup an existing SteamCMD prefix, or setup a new prefix with &quot;Setup SteamCMD&quot;.</source>
+        <translation>既存の SteamCMD プレフィックスをセットアップするか、「Setup SteamCMD」で新しいプレフィックスをセットアップしてください。</translation>
+    </message>
+    <message>
+        <source>Processing Steam subscription action(s) via Steamworks API...</source>
+        <translation>Steamworks API 経由で Steam サブスクリプション アクションを処理しています...</translation>
+    </message>
+    <message>
+        <source>Download or select from local</source>
+        <translation>ダウンロードまたはローカルから選択</translation>
+    </message>
+    <message>
+        <source>Please select a ZIP file to add to the local mods directory.</source>
+        <translation>ローカルの Mods ディレクトリに追加する ZIP ファイルを選択してください。</translation>
+    </message>
+    <message>
+        <source>You can download a ZIP file from the internet, or select a file from your local machine.</source>
+        <translation>インターネットから ZIP ファイルをダウンロードすることも、ローカル マシンからファイルを選択することもできます。</translation>
+    </message>
+    <message>
+        <source>Enter zip file url</source>
+        <translation>zip ファイルの URL を入力してください</translation>
+    </message>
+    <message>
+        <source>Enter a zip file url (http/https) to download to local mods:</source>
+        <translation>zip ファイルの URL (http/https) を入力して、ローカル MOD にダウンロードします。</translation>
+    </message>
+    <message>
+        <source>Failed to download zip file</source>
+        <translation>zipファイルのダウンロードに失敗しました</translation>
+    </message>
+    <message>
+        <source>The zip file could not be downloaded.</source>
+        <translation>zip ファイルをダウンロードできませんでした。</translation>
+    </message>
+    <message>
+        <source>File: {file_path}&lt;br&gt;Error: {e}</source>
+        <translation>ファイル: {file_path}&lt;br&gt;エラー: {e}</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translation>ファイルが見つかりません</translation>
+    </message>
+    <message>
+        <source>The selected file does not exist.</source>
+        <translation>選択したファイルは存在しません。</translation>
+    </message>
+    <message>
+        <source>File: {file_path}</source>
+        <translation>ファイル: {file_path}</translation>
+    </message>
+    <message>
+        <source>Unsupported Compression Method</source>
+        <translation>サポートされていない圧縮方法</translation>
+    </message>
+    <message>
+        <source>This ZIP file uses a compression method that is not supported by this version.</source>
+        <translation>この ZIP ファイルは、このバージョンでサポートされていない圧縮方法を使用しています。</translation>
+    </message>
+    <message>
+        <source>Failed to extract zip file</source>
+        <translation>zipファイルの解凍に失敗しました</translation>
+    </message>
+    <message>
+        <source>The zip file could not be extracted.</source>
+        <translation>zipファイルを解凍できませんでした。</translation>
+    </message>
+    <message>
+        <source>Existing files or directories found</source>
+        <translation>既存のファイルまたはディレクトリが見つかりました</translation>
+    </message>
+    <message>
+        <source>All files in the archive already exist in the target path.</source>
+        <translation>アーカイブ内のすべてのファイルはターゲット パスにすでに存在します。</translation>
+    </message>
+    <message>
+        <source>How would you like to proceed?&lt;br&gt;&lt;br&gt;1) Overwrite All — Replace all existing files and directories.&lt;br&gt;2) Cancel — Abort the operation.</source>
+        <translation>どのように続行しますか?&lt;br&gt;&lt;br&gt;1) すべて上書き — 既存のファイルとディレクトリをすべて置き換えます。&lt;br&gt;2) キャンセル — 操作を中止します。</translation>
+    </message>
+    <message>
+        <source>The following files or directories already exist in the target path:</source>
+        <translation>次のファイルまたはディレクトリはターゲット パスにすでに存在します。</translation>
+    </message>
+    <message>
+        <source>{conflicts_list}&lt;br&gt;&lt;br&gt;How would you like to proceed?&lt;br&gt;&lt;br&gt;1) Overwrite All — Replace all existing files and directories.&lt;br&gt;2) Skip Existing — Extract only new files and leave existing ones untouched.&lt;br&gt;3) Cancel — Abort the extraction.</source>
+        <translation>{conflicts_list}&lt;br&gt;&lt;br&gt;どのように処理しますか?&lt;br&gt;&lt;br&gt;1) すべて上書き — 既存のファイルとディレクトリをすべて置き換えます。&lt;br&gt;2) 既存をスキップ — 新しいファイルのみを抽出し、既存のファイルはそのままにしておきます。&lt;br&gt;3) キャンセル — 抽出を中止します。</translation>
+    </message>
+    <message>
+        <source>Extraction completed</source>
+        <translation>抽出が完了しました</translation>
+    </message>
+    <message>
+        <source>The ZIP file was successfully extracted!</source>
+        <translation>ZIP ファイルが正常に解凍されました。</translation>
+    </message>
+    <message>
+        <source>Extraction failed</source>
+        <translation>抽出に失敗しました</translation>
+    </message>
+    <message>
+        <source>An error occurred during extraction.</source>
+        <translation>抽出中にエラーが発生しました。</translation>
+    </message>
+</context>
+<context>
+    <name>validate_rimworld_mods_list</name>
+    <message>
+        <source>Unable to read data</source>
+        <translation>データを読み取れませんでした</translation>
+    </message>
+    <message>
+        <source>RimDex was unable to read the supplied mods list.</source>
+        <translation>RimDexは提供されたMODリストを読み取れませんでした。</translation>
+    </message>
+    <message>
+        <source>The supplied mods list may be missing or invalid. If you just (re)installed RimWorld, you may need to run it once to generate the mods list.</source>
+        <translation>提供されたMODリストが見つからないか無効である可能性があります。RimWorldを再インストールしたばかりの場合は、MODリストを生成するために一度実行する必要があるかもしれません。</translation>
+    </message>
+    <message>
+        <source>RimDex was unable to read the supplied mods list because it may be invalid or missing.</source>
+        <translation>RimDexは提供されたMODリストを読み取れませんでした。無効であるか、見つからない可能性があります。</translation>
+    </message>
+</context>
+</TS>
