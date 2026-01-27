@@ -723,7 +723,7 @@ def write_rules_db(path: Path, external_rules: ExternalRulesSchema) -> None:
         raise e
 
 
-def read_steam_db(path: Path) -> SteamDbSchema | None:
+def read_steam_database(path: Path) -> SteamDbSchema | None:
     """Reads the SteamDbSchema from the json file at the given path.
 
     :param path: Path to the SteamDB file.
@@ -749,7 +749,7 @@ def read_steam_db(path: Path) -> SteamDbSchema | None:
         return None
 
 
-def write_steam_db(path: Path, steam_db: SteamDbSchema) -> None:
+def write_steam_database(path: Path, steam_db: SteamDbSchema) -> None:
     """Writes the SteamDbSchema to a file. Raises an IOError/OSError if the file cannot be written.
 
     :param path:

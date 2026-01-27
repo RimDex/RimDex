@@ -8,7 +8,7 @@ from app.models.metadata.metadata_factory import (
     create_listed_mod_from_path,
     create_rules_from_external_rules,
     read_rules_db,
-    read_steam_db,
+    read_steam_database,
 )
 from app.models.metadata.metadata_structure import (
     AboutXmlMod,
@@ -23,7 +23,7 @@ class MetadataMediator:
 
     _user_rules: ExternalRulesSchema | None
     _community_rules: ExternalRulesSchema | None
-    _steam_db: SteamDbSchema | None
+    _steam_database: SteamDbSchema | None
     _mods_metadata: dict[str, ListedMod]
     _game_version: str = "Unknown"
 
@@ -31,14 +31,14 @@ class MetadataMediator:
         self,
         user_rules_path: Path,
         community_rules_path: Path | None,
-        steam_db_path: Path | None,
+        steam_database_path: Path | None,
         workshop_mods_path: Path | None,
         local_mods_path: Path | None,
         game_path: Path | None,
     ):
         self.user_rules_path = user_rules_path
         self.community_rules_path = community_rules_path
-        self.steam_db_path = steam_db_path
+        self.steam_database_path = steam_database_path
         self.workshop_mods_path = workshop_mods_path
         self.local_mods_path = local_mods_path
         self.game_path = game_path
@@ -59,9 +59,9 @@ class MetadataMediator:
 
     @property
     def steam_db(self) -> SteamDbSchema | None:
-        if hasattr(self, "_steam_db") is False:
+        if hasattr(self, "_steam_database") is False:
             return None
-        return self._steam_db
+        return self._steam_database
 
     @property
     def mods_metadata(self) -> dict[str, ListedMod]:
@@ -106,9 +106,9 @@ class MetadataMediator:
             if self.community_rules_path is not None
             else None
         )
-        self._steam_db = (
-            read_steam_db(self.steam_db_path)
-            if self.steam_db_path is not None
+        self._steam_database = (
+            read_steam_database(self.steam_database_path)
+            if self.steam_database_path is not None
             else None
         )
 

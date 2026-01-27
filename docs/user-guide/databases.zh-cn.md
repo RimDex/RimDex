@@ -46,7 +46,7 @@ Steam 创意工坊数据库（Steam DB）主要用于提供额外的依赖项数
 
 ### _**前置条件:**_ 为你的系统安装 [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-此功能用于下载/上传 Steam 创意工坊数据库（`steamDB.json`）或社区规则数据库（`communityRules.json`），便于协作与共享。
+此功能用于下载/上传 Steam 创意工坊数据库（`SteamDatabase.json`）或社区规则数据库（`communityRules.json`），便于协作与共享。
 
 {: .important}
 > 步骤 3 的 GitHub 身份配置，仅在你希望通过 RimDex 直接向配置的 GitHub 仓库提交 pull request 时才必需。若仅需通过 Git 从公共仓库下载数据库或仅在本地修改，无需此步骤。你也可以不通过 RimDex 配置，直接手动在 GitHub 提交 pull request。
