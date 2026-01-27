@@ -37,7 +37,7 @@ class IgnoreJsonEditor(QDialog):
         super().__init__(parent)
         logger.debug("Initializing IgnoreJsonEditor")
 
-        self.setWindowTitle(self.tr("RimSort - Manage Ignore List"))
+        self.setWindowTitle(self.tr("RimDex - Manage Ignore List"))
         self.setGeometry(100, 100, 500, 400)
         self._empty_list_placeholder = self.tr(_EMPTY_LIST_PLACEHOLDER)
 

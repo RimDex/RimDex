@@ -37,7 +37,7 @@ VERSION_PATTERN = re.compile(r"v?\d+[\.\-_]\d+")
 TAG_PREFIX_PATTERN = re.compile(r"^v", re.IGNORECASE)
 
 # API and network constants
-GITHUB_API_URL = "https://api.github.com/repos/RimSort/RimSort/releases/latest"
+GITHUB_API_URL = "https://api.github.com/repos/RimDex/RimDex/releases/latest"
 API_TIMEOUT = 15
 DOWNLOAD_TIMEOUT = 30
 
@@ -65,17 +65,17 @@ THREAD_JOIN_TIMEOUT = 5  # 5 seconds for thread join
 
 # No Version Dialog Constants
 UNKNOWN_VERSION_TITLE = "Unknown Version Detected"
-UNKNOWN_VERSION_TEXT = "Could not find version Information of RimSort, This may indicate that the application is not an offical release and may be a custom build."
+UNKNOWN_VERSION_TEXT = "Could not find version Information of RimDex, This may indicate that the application is not an offical release and may be a custom build."
 UNKNOWN_VERSION_INFO = "Are you sure you want to still update anyway?"
 
 # Standardized error messages
 ERR_UPDATE_SKIPPED_TITLE = "Update skipped"
 ERR_UPDATE_SKIPPED_TEXT = "You are running from Python interpreter."
 ERR_UPDATE_SKIPPED_INFO = "Skipping update check..."
-ERR_UPDATE_ERROR_TITLE = "RimSort Update Error"
-ERR_NO_VALID_RELEASE_TITLE = "RimSort Update Error"
-ERR_NO_VALID_RELEASE_TEXT = "Failed to find valid RimSort release for {system_info}"
-ERR_API_CONNECTION_TITLE = "RimSort Update Error"
+ERR_UPDATE_ERROR_TITLE = "RimDex Update Error"
+ERR_NO_VALID_RELEASE_TITLE = "RimDex Update Error"
+ERR_NO_VALID_RELEASE_TEXT = "Failed to find valid RimDex release for {system_info}"
+ERR_API_CONNECTION_TITLE = "RimDex Update Error"
 ERR_API_CONNECTION_TEXT = "Failed to connect to GitHub API: {error}"
 ERR_DOWNLOAD_FAILED_TITLE = "Download failed"
 ERR_DOWNLOAD_FAILED_TEXT = "Failed to download the update."
@@ -88,7 +88,7 @@ ERR_LAUNCH_FAILED_TEXT = "Failed to launch the update script."
 ERR_UPDATE_FAILED_TITLE = "Update failed"
 ERR_UPDATE_FAILED_TEXT = "An unexpected error occurred during the update process."
 ERR_RETRIEVE_RELEASE_TITLE = "Unable to retrieve latest release information"
-ERR_RETRIEVE_RELEASE_TEXT = "Please check your internet connection and try again, You can also check 'https://github.com/RimSort/RimSort/releases' directly."
+ERR_RETRIEVE_RELEASE_TEXT = "Please check your internet connection and try again, You can also check 'https://github.com/RimDex/RimDex/releases' directly."
 
 if TYPE_CHECKING:
     from app.utils.metadata import SettingsController
@@ -517,7 +517,7 @@ class UpdateManager(QObject):
 
     def do_check_for_update(self) -> None:
         """
-        Check for RimSort updates and handle the update process.
+        Check for RimDex updates and handle the update process.
 
         This method orchestrates the update process by delegating to focused sub-methods
         for better maintainability and testability.
@@ -598,7 +598,7 @@ class UpdateManager(QObject):
             needs_elevation = False
 
         current_version = AppInfo().app_version
-        logger.info(f"Current RimSort version: {current_version}")
+        logger.info(f"Current RimDex version: {current_version}")
 
         # Get the latest release info
         logger.info("Fetching latest release information from GitHub API...")
@@ -611,7 +611,7 @@ class UpdateManager(QObject):
         latest_tag_name = latest_release_info["tag_name"]
         download_url = latest_release_info["download_url"]
 
-        logger.info(f"Latest RimSort version: {latest_version}")
+        logger.info(f"Latest RimDex version: {latest_version}")
         logger.info(f"Update available: {latest_tag_name} ({latest_version})")
 
         # Compare versions
@@ -680,12 +680,12 @@ class UpdateManager(QObject):
             True if user accepts update, False otherwise
         """
         answer = dialogue.show_dialogue_conditional(
-            title=self.tr("RimSort update found"),
+            title=self.tr("RimDex update found"),
             text=self.tr(
-                "An update to RimSort has been released: {latest_tag_name}"
+                "An update to RimDex has been released: {latest_tag_name}"
             ).format(latest_tag_name=latest_tag_name),
             information=self.tr(
-                "You are running RimSort {current_version}\nDo you want to update now?"
+                "You are running RimDex {current_version}\nDo you want to update now?"
             ).format(current_version=current_version),
         )
         return answer == QMessageBox.StandardButton.Yes
@@ -954,19 +954,19 @@ class UpdateManager(QObject):
         """
         try:
             logger.debug(
-                f"Downloading & extracting RimSort release from: {download_url}"
+                f"Downloading & extracting RimDex release from: {download_url}"
             )
 
             # Download with progress widget
             self._download_cancelled = False
             self._progress_widget = TaskProgressWindow(
-                title="RimSort Update",
+                title="RimDex Update",
                 show_message=True,
                 show_percent=True,
             )
             self._progress_widget.update_progress(
                 0,
-                self.tr("Downloading RimSort {tag_name} release...").format(
+                self.tr("Downloading RimDex {tag_name} release...").format(
                     tag_name=tag_name
                 ),
             )
@@ -1271,7 +1271,7 @@ class UpdateManager(QObject):
         """
         temp_base = (
             Path(gettempdir())
-            / f"RimSort_update_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+            / f"RimDex_update_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         )
         temp_base.mkdir(exist_ok=True)
         return temp_base
@@ -1482,7 +1482,7 @@ class UpdateManager(QObject):
             if is_msi:
                 # For MSI, just save the file to temp location
                 temp_base = self._create_temp_dir()
-                msi_path = temp_base / "RimSort_Update.msi"
+                msi_path = temp_base / "RimDex_Update.msi"
                 msi_path.write_bytes(self._update_content)
                 logger.info("MSI prepared")
                 self._extracted_path = msi_path
@@ -1590,7 +1590,7 @@ class UpdateManager(QObject):
         Raises:
             UpdateExtractionError: If executable is not found
         """
-        expected_executable = "RimSort.exe" if self._system == "Windows" else "RimSort"
+        expected_executable = "RimDex.exe" if self._system == "Windows" else "RimDex"
         executable_found = False
 
         if self._system == "Darwin":
@@ -1606,9 +1606,9 @@ class UpdateManager(QObject):
                         logger.info("Found macOS executable")
                         break
             if not executable_found:
-                logger.error("RimSort.app bundle not found")
+                logger.error("RimDex.app bundle not found")
                 raise UpdateExtractionError(
-                    "Expected RimSort.app bundle with executable not found after normalization"
+                    "Expected RimDex.app bundle with executable not found after normalization"
                 )
         else:
             # Look for executable directly
@@ -1863,7 +1863,7 @@ class UpdateManager(QObject):
 
             # Use 'start' command to ensure visible console window
             # Quote the working directory for paths with spaces
-            start_cmd = f'start "RimSort Update" /D "{cwd}" {cmd_str}'
+            start_cmd = f'start "RimDex Update" /D "{cwd}" {cmd_str}'
             logger.debug(f"Using start command: {start_cmd}")
 
             p = subprocess.Popen(
@@ -1991,7 +1991,7 @@ class UpdateManager(QObject):
         """
         Launch the MSI installer on Windows.
 
-        The MSI is configured with CustomActions to automatically launch RimSort.exe
+        The MSI is configured with CustomActions to automatically launch RimDex.exe
         after installation completes. Windows handles UAC elevation if required.
 
         Args:
@@ -2022,7 +2022,7 @@ class UpdateManager(QObject):
             logger.info(f"Launching MSI installer: {msi_path}")
             subprocess.Popen(cmd, shell=True)
             self.update_progress.emit(100, "Update launched!")
-            logger.info("MSI launched, exiting RimSort to allow file replacement")
+            logger.info("MSI launched, exiting RimDex to allow file replacement")
 
             # Give subprocess time to initialize before exit
             time.sleep(1)
@@ -2053,7 +2053,7 @@ class UpdateManager(QObject):
         try:
             with open(log_path, "a", encoding="utf-8", errors="ignore") as lf:
                 lf.write(
-                    f"\n===== RimSort updater launched: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ({system}) =====\n"
+                    f"\n===== RimDex updater launched: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ({system}) =====\n"
                 )
         except Exception:
             # Non-fatal; continue without preface
@@ -2174,7 +2174,7 @@ class UpdateManager(QObject):
 
     def _create_backup(self) -> None:
         """
-        Create a compressed backup of the current RimSort installation as a ZIP file.
+        Create a compressed backup of the current RimDex installation as a ZIP file.
         Updates progress widget during backup.
         """
         app_folder = AppInfo().application_folder
@@ -2182,10 +2182,10 @@ class UpdateManager(QObject):
 
         # Generate backup ZIP filename with timestamp
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        backup_filename = f"RimSort_Backup_{timestamp}.zip"
+        backup_filename = f"RimDex_Backup_{timestamp}.zip"
         backup_path = backup_folder / backup_filename
 
-        logger.info("Creating backup of RimSort installation")
+        logger.info("Creating backup of RimDex installation")
 
         def update_backup_progress(current: int, total: int) -> None:
             """Update progress widget during backup (thread-safe)."""
@@ -2236,7 +2236,7 @@ class UpdateManager(QObject):
 
         try:
             # Get all backup files
-            backup_files = list(backup_folder.glob("RimSort_Backup_*.zip"))
+            backup_files = list(backup_folder.glob("RimDex_Backup_*.zip"))
             if len(backup_files) <= max_backups:
                 logger.debug(
                     f"Backup count ({len(backup_files)}) is within limit ({max_backups})"

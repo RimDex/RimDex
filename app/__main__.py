@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Compilation mode
 # nuitka-project: --assume-yes-for-downloads
-# nuitka-project: --output-filename=RimSort
+# nuitka-project: --output-filename=RimDex
 # nuitka-project: --output-dir={MAIN_DIRECTORY}/../build/
 # nuitka-project: --windows-console-mode=attach
 # nuitka-project: --noinclude-default-mode=error
@@ -77,8 +77,8 @@ def handle_exception(
             exc_info=(exc_type, exc_value, exc_traceback),
         )
         show_fatal_error(
-            title="RimSort crashed",
-            text="The RimSort application crashed! Sorry for the inconvenience!",
+            title="RimDex crashed",
+            text="The RimDex application crashed! Sorry for the inconvenience!",
             information="Please contact us on the Discord/Github to report the issue.",
             details="".join(
                 traceback.format_exception(exc_type, exc_value, exc_traceback)
@@ -147,7 +147,7 @@ def main_thread() -> None:
 
 
 if __name__ == "__main__":
-    # If RimSort is running from a --onefile Nuitka build, there are some nuances to consider:
+    # If RimDex is running from a --onefile Nuitka build, there are some nuances to consider:
     # https://nuitka.net/doc/user-manual.html#onefile-finding-files
     # You can override by passing --onefile-tempdir-spec to `nuitka`
     # See also: https://nuitka.net/doc/user-manual.html#use-case-4-program-distribution
@@ -238,5 +238,5 @@ if __name__ == "__main__":
 
         logger.debug("Running using Nuitka bundle")
 
-    logger.info(f"Initializing RimSort application: {AppInfo().app_version}")
+    logger.info(f"Initializing RimDex application: {AppInfo().app_version}")
     main_thread()

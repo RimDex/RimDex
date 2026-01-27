@@ -10,7 +10,7 @@ permalink: development-guide/translation-guidelines
 
 {: .no_toc}
 
-This guide explains how to contribute translations to RimSort. The project uses PySide6's Qt internationalization (i18n) system with QTranslator.
+This guide explains how to contribute translations to RimDex. The project uses PySide6's Qt internationalization (i18n) system with QTranslator.
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@ This guide explains how to contribute translations to RimSort. The project uses 
 
 ## Translation System Overview
 
-RimSort uses Qt's translation system with the following components:
+RimDex uses Qt's translation system with the following components:
 
 - **`.ts` files**: Source translation files (XML format) that translators edit
 - **`.qm` files**: Compiled binary translation files used by the application
@@ -30,7 +30,7 @@ RimSort uses Qt's translation system with the following components:
 ## Project Structure
 
 ```
-RimSort/
+RimDex/
 ├── locales/           # Translation files directory
 │   ├── en_US.ts      # English (source language)
 │   ├── zh_CN.ts      # Simplified Chinese
@@ -270,12 +270,12 @@ Before starting translation work, you need to prepare the following:
 
 ### Step 1: Set Up Your Environment
 
-1. Fork the RimSort repository on GitHub
+1. Fork the RimDex repository on GitHub
 2. Clone your fork:
 
    ```bash
-   git clone https://github.com/YOUR_USERNAME/RimSort.git
-   cd RimSort
+   git clone https://github.com/YOUR_USERNAME/RimDex.git
+   cd RimDex
    ```
 
 3. Create a new branch for your translation:
@@ -480,7 +480,7 @@ Use the translation helper tool for file validation:
 
 {: .no_toc}
 
-1. **Launch RimSort and switch language**:
+1. **Launch RimDex and switch language**:
    - Run `python -m app` to start the application
    - Click "Settings" in the menu bar
    - Find the "Language" option
@@ -548,7 +548,7 @@ You can check translation completeness by looking for:
 
 ### When Source Code Changes
 
-When RimSort's source code is updated, there may be new translatable strings added or existing strings modified. You will need to update translation files:
+When RimDex's source code is updated, there may be new translatable strings added or existing strings modified. You will need to update translation files:
 
 ```bash
 # Update translation files to include the latest translatable strings
@@ -578,4 +578,4 @@ The `.ts` files use XML format with this structure:
 </TS>
 ```
 
-Thank you for helping make RimSort accessible to users worldwide! 🌍
+Thank you for helping make RimDex accessible to users worldwide! 🌍

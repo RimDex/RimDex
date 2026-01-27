@@ -183,7 +183,7 @@ def _write_csv_metadata(panel: BaseModsPanel, writer: Any) -> None:
     """
     model = _get_table_model(panel)
 
-    writer.writerow(["RimSort Workshop Items Export"])
+    writer.writerow(["RimDex Workshop Items Export"])
     writer.writerow([f"Export Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"])
     writer.writerow([f"Total Items: {model.rowCount()}"])
 

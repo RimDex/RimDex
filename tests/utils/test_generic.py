@@ -5,19 +5,19 @@ from app.utils.generic import (
 )
 
 GIT_URLS = [
-    "https://github.com/org/RimSort.git",
-    "https://github.com/org/RimSort",
-    "https://github.com/org/RimSort/",
-    "http://github.com/org/RimSort.git",
-    "github.com/org/RimSort.git",
-    "github.com/org/RimSort",
-    "github.com/org/RimSort/",
+    "https://github.com/org/RimDex.git",
+    "https://github.com/org/RimDex",
+    "https://github.com/org/RimDex/",
+    "http://github.com/org/RimDex.git",
+    "github.com/org/RimDex.git",
+    "github.com/org/RimDex",
+    "github.com/org/RimDex/",
 ]
 
 
 def test_get_git_dir_name() -> None:
     for url in GIT_URLS:
-        assert extract_git_dir_name(url) == "RimSort"
+        assert extract_git_dir_name(url) == "RimDex"
 
 
 def test_get_git_org_or_user() -> None:
@@ -28,8 +28,8 @@ def test_get_git_org_or_user() -> None:
 def test_check_valid_http_git_url() -> None:
     assert check_valid_http_git_url("") is False
 
-    assert check_valid_http_git_url("github.com/org/RimSort.git") is False
+    assert check_valid_http_git_url("github.com/org/RimDex.git") is False
 
-    assert check_valid_http_git_url("https://github.com/org/RimSort.git") is True
+    assert check_valid_http_git_url("https://github.com/org/RimDex.git") is True
 
-    assert check_valid_http_git_url("http://github.com/org/RimSort.git/") is True
+    assert check_valid_http_git_url("http://github.com/org/RimDex.git/") is True

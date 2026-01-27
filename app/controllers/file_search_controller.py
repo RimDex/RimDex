@@ -1060,15 +1060,15 @@ class FileSearchController(QObject):
         elif "permission" in error_msg.lower() or "access" in error_msg.lower():
             show_warning(
                 title=self.tr("File Access Error"),
-                text=self.tr("RimSort doesn't have permission to access some files."),
+                text=self.tr("RimDex doesn't have permission to access some files."),
                 information=self.tr(
-                    "{error_msg}\n\nTry running RimSort with administrator privileges or check folder permissions."
+                    "{error_msg}\n\nTry running RimDex with administrator privileges or check folder permissions."
                 ).format(error_msg=error_msg),
             )
         elif "memory" in error_msg.lower():
             show_warning(
                 title=self.tr("Memory Error"),
-                text=self.tr("RimSort ran out of memory while searching."),
+                text=self.tr("RimDex ran out of memory while searching."),
                 information=self.tr(
                     "{error_msg}\n\nTry searching in smaller batches or use the 'streaming search' method for very large files."
                 ).format(error_msg=error_msg),

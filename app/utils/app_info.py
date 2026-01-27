@@ -57,7 +57,7 @@ class AppInfo:
 
         # Application metadata
 
-        self._app_name = "RimSort"
+        self._app_name = "RimDex"
         self._app_copyright = ""
 
         self._app_version = "Unknown version"

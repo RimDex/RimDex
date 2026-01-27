@@ -1,1 +1,1 @@
-"""CLI package for RimSort headless operations."""
+"""CLI package for RimDex headless operations."""

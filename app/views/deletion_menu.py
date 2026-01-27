@@ -284,7 +284,7 @@ class ModDeletionMenu(QMenu):
         # Show success message
         if result.success_count > 0:
             show_information(
-                title=self.tr("RimSort"),
+                title=self.tr("RimDex"),
                 text=self.tr(
                     f"Successfully deleted {result.success_count} selected mods."
                 ),

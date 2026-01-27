@@ -2,13 +2,13 @@
 title: Home
 layout: home
 nav_order: 1
-description: "RimSort is a free and open source, multi-platform mod manager for the video game RimWorld."
+description: "RimDex is a free and open source, multi-platform mod manager for the video game RimWorld."
 permalink: /
 ---
 
 {: .fs-9 }
 
-# RimSort
+# RimDex
 
 {: .fs-6 .fw-300 }
 
@@ -28,9 +28,9 @@ A free and open source, multi-platform mod manager for RimWorld.
 
 ---
 
-![RimSort Preview](./assets/images/rimsort_preview.png)
+![RimDex Preview](./assets/images/rimsort_preview.png)
 
-RimSort is a community centric mod manager and sorter for the game [RimWorld](https://rimworldgame.com/) with support for Windows, macOS, and Linux (Ubuntu builds). It is free and open source, meaning anyone can contribute to it or compile it.
+RimDex is a community centric mod manager and sorter for the game [RimWorld](https://rimworldgame.com/) with support for Windows, macOS, and Linux (Ubuntu builds). It is free and open source, meaning anyone can contribute to it or compile it.
 
 Features all the basic functionality you'd expect from a mod manager plus extras!
 
@@ -57,7 +57,7 @@ Features all the basic functionality you'd expect from a mod manager plus extras
   - Optimize your textures with 3 available presets
 - Steam Browser that allows you to download mods via SteamCMD, as well as Steam client
   - Download mods from the Steam Workshop without a copy of RimWorld from Steam
-- RimSort Steam DB Builder
+- RimDex Steam DB Builder
   - Generate Steam Workshop Database (SteamDB) on the fly. This is compatible with & synonymous to Paladin's RimPy Community Mod Manager Database db.json schema
   - Tools to compare, merge, and publish databases using this tool
 - Rule Editor for configured Community Rules database, as well as User Rules
@@ -68,7 +68,7 @@ Features all the basic functionality you'd expect from a mod manager plus extras
 
 ### License
 
-RimSort is distributed by a [GPL-3.0 license](https://github.com/RimSort/RimSort/tree/main/LICENSE.md)
+RimDex is distributed by a [GPL-3.0 license](https://github.com/RimDex/RimDex/tree/main/LICENSE.md)
 
 ### Thank you to our contributors!
 
@@ -83,10 +83,10 @@ RimSort is distributed by a [GPL-3.0 license](https://github.com/RimSort/RimSort
 ### Code of Conduct
 
 We aim to foster a welcoming community.
-[View our Code of Conduct](https://github.com/RimSort/RimSort/tree/main/CODE_OF_CONDUCT.md) on our GitHub repository.
+[View our Code of Conduct](https://github.com/RimDex/RimDex/tree/main/CODE_OF_CONDUCT.md) on our GitHub repository.
 
 [Wiki]: https://rimsort.github.io
-[Repo]: https://github.com/RimSort/RimSort
-[Issues]: https://github.com/RimSort/RimSort/issues
-[Releases]: https://github.com/oceancabbage/RimSort/releases
+[Repo]: https://github.com/RimDex/RimDex
+[Issues]: https://github.com/RimDex/RimDex/issues
+[Releases]: https://github.com/oceancabbage/RimDex/releases
 [Discord]: https://discord.gg/aV7g69JmR2

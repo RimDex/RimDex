@@ -35,7 +35,7 @@ Contributions should follow the [Contributor Guidelines](../development-guide/co
 
 ### Assets
 
-Where possible, all assets should be hosted within the repository itself and not be hosted externally and embedded as links.[^1] Even if the assets are used by the RimSort application itself, a copy of it should be included under `docs/assets`. This means that the documentation portion of the repository can act standalone.
+Where possible, all assets should be hosted within the repository itself and not be hosted externally and embedded as links.[^1] Even if the assets are used by the RimDex application itself, a copy of it should be included under `docs/assets`. This means that the documentation portion of the repository can act standalone.
 
 ### Navigation Order
 

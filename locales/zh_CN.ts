@@ -101,8 +101,8 @@ Try subscribing to the collection first</source>
 <context>
     <name>DuplicateModsPanel</name>
     <message>
-        <source>RimSort - Duplicate Mods Found</source>
-        <translation>RimSort - 发现重复模组</translation>
+        <source>RimDex - Duplicate Mods Found</source>
+        <translation>RimDex - 发现重复模组</translation>
     </message>
     <message>
         <source>Duplicate mods detected!</source>
@@ -200,24 +200,24 @@ Try simplifying your pattern or check for syntax errors.</source>
         <translation>文件访问错误</translation>
     </message>
     <message>
-        <source>RimSort doesn't have permission to access some files.</source>
-        <translation>RimSort 没有权限访问部分文件。</translation>
+        <source>RimDex doesn't have permission to access some files.</source>
+        <translation>RimDex 没有权限访问部分文件。</translation>
     </message>
     <message>
         <source>{error_msg}
 
-Try running RimSort with administrator privileges or check folder permissions.</source>
+Try running RimDex with administrator privileges or check folder permissions.</source>
         <translation> {error_msg}
     
-请尝试以管理员权限运行 RimSort 或检查文件夹权限。</translation>
+请尝试以管理员权限运行 RimDex 或检查文件夹权限。</translation>
     </message>
     <message>
         <source>Memory Error</source>
         <translation>内存错误</translation>
     </message>
     <message>
-        <source>RimSort ran out of memory while searching.</source>
-        <translation>RimSort 在搜索时内存不足。</translation>
+        <source>RimDex ran out of memory while searching.</source>
+        <translation>RimDex 在搜索时内存不足。</translation>
     </message>
     <message>
         <source>{error_msg}
@@ -472,8 +472,8 @@ When unchecked, search all file types with standard search.</source>
 <context>
     <name>IgnoreJsonEditor</name>
     <message>
-        <source>RimSort - Manage Ignore List</source>
-        <translation>RimSort - 管理忽略列表</translation>
+        <source>RimDex - Manage Ignore List</source>
+        <translation>RimDex - 管理忽略列表</translation>
     </message>
     <message>
         <source>Mods checked below will be removed from the ignore list.</source>
@@ -571,10 +571,10 @@ When unchecked, search all file types with standard search.</source>
 </translation>
     </message>
     <message>
-        <source>RimSort requires, at the minimum, for the game install folder and the config folder paths to be set, and that the paths both exist. Please set both of these manually or by using the autodetect functionality.
+        <source>RimDex requires, at the minimum, for the game install folder and the config folder paths to be set, and that the paths both exist. Please set both of these manually or by using the autodetect functionality.
 
 Would you like to configure them now?</source>
-        <translation>RimSort 至少需要设置游戏安装文件夹和配置文件夹路径，并且路径都存在。请手动设置或使用自动检测功能。
+        <translation>RimDex 至少需要设置游戏安装文件夹和配置文件夹路径，并且路径都存在。请手动设置或使用自动检测功能。
 
 是否要现在配置它们？</translation>
     </message>
@@ -607,8 +607,8 @@ Would you like to configure them now?</source>
         <translation>重要</translation>
     </message>
     <message>
-        <source>You will need to redo Rentry import again after downloads complete. If there missing mods after download completes, they will be shown inside the missing mods panel. If RimSort is still not able to download some mods, It's due to the mod data not being available in both Rentry link and steam database.</source>
-        <translation>你需要在下载完成后重新进行 Rentry 导入。如果下载完成后仍有缺失的模组，它们会显示在缺失模组面板中。如果 RimSort 仍然无法下载某些模组，说明这些模组的数据在 Rentry 链接和 steam 数据库中都不可用。</translation>
+        <source>You will need to redo Rentry import again after downloads complete. If there missing mods after download completes, they will be shown inside the missing mods panel. If RimDex is still not able to download some mods, It's due to the mod data not being available in both Rentry link and steam database.</source>
+        <translation>你需要在下载完成后重新进行 Rentry 导入。如果下载完成后仍有缺失的模组，它们会显示在缺失模组面板中。如果 RimDex 仍然无法下载某些模组，说明这些模组的数据在 Rentry 链接和 steam 数据库中都不可用。</translation>
     </message>
     <message>
         <source>Steam client integration not set up</source>
@@ -795,9 +795,9 @@ Would you like to configure them now?</source>
         <translation>无法检查更新</translation>
     </message>
     <message>
-        <source>RimSort was unable to query Steam WebAPI for update information!
+        <source>RimDex was unable to query Steam WebAPI for update information!
 </source>
-        <translation>RimSort 无法查询 Steam WebAPI 以获取更新信息！
+        <translation>RimDex 无法查询 Steam WebAPI 以获取更新信息！
 </translation>
     </message>
     <message>
@@ -817,8 +817,8 @@ Would you like to configure them now?</source>
         <translation>此功能需要在“设置”中启用 Steam 客户端集成。如果您在 Steam 上拥有该游戏，请启用 Steam 客户端集成。</translation>
     </message>
     <message>
-        <source>RimSort - SteamCMD setup</source>
-        <translation>RimSort - SteamCMD 安装</translation>
+        <source>RimDex - SteamCMD setup</source>
+        <translation>RimDex - SteamCMD 安装</translation>
     </message>
     <message>
         <source>Unable to create SteamCMD runner!</source>
@@ -837,8 +837,8 @@ Would you like to configure them now?</source>
         <translation>请在尝试安装之前在设置中配置本地模组路径。</translation>
     </message>
     <message>
-        <source>RimSort</source>
-        <translation>RimSort</translation>
+        <source>RimDex</source>
+        <translation>RimDex</translation>
     </message>
     <message>
         <source>No PublishedFileIds were supplied in operation.</source>
@@ -1019,10 +1019,10 @@ How would you like to proceed?
     <message>
         <source>Git integration will not work without Git installed! Do you want to open download page for Git?
 
-If you just installed Git, please restart RimSort for the PATH changes to take effect.</source>
+If you just installed Git, please restart RimDex for the PATH changes to take effect.</source>
         <translation>没有安装 Git 的 Git 集成将无法工作！你想要打开 Git 的下载页面吗？
 
-如果你刚刚安装了 Git，请重新启动 RimSort 以使 PATH 更改生效。</translation>
+如果你刚刚安装了 Git，请重新启动 RimDex 以使 PATH 更改生效。</translation>
     </message>
     <message>
         <source>Edit Steam DB repo</source>
@@ -1059,8 +1059,8 @@ PublishedFileIDs are needed to retrieve mods from Steam!</source>
         <translation>实验性功能，可能存在风险</translation>
     </message>
     <message>
-        <source>WARNING: It is NOT recommended to subscribe to this many mods at once via Steam. Steam has limitations in place seemingly intentionally and unintentionally for API subscriptions. It is highly recommended that you instead download these mods to a SteamCMD prefix by using SteamCMD. This can take longer due to rate limits, but you can also re-use the script generated by RimSort with a separate, authenticated instance of SteamCMD, if you do not want to anonymously download via RimSort.</source>
-        <translation>警告：不建议通过 Steam 一次性订阅这么多模组。Steam 有意无意地设置了 API 订阅的限制。强烈建议你使用 SteamCMD 下载这些模组到 SteamCMD 前缀目录中。这可能会因为速率限制而花费更长时间，但你可以使用单独的、经过身份验证的 SteamCMD 实例重新使用由 RimSort 生成的脚本，如果你不想通过 RimSort 匿名下载。</translation>
+        <source>WARNING: It is NOT recommended to subscribe to this many mods at once via Steam. Steam has limitations in place seemingly intentionally and unintentionally for API subscriptions. It is highly recommended that you instead download these mods to a SteamCMD prefix by using SteamCMD. This can take longer due to rate limits, but you can also re-use the script generated by RimDex with a separate, authenticated instance of SteamCMD, if you do not want to anonymously download via RimDex.</source>
+        <translation>警告：不建议通过 Steam 一次性订阅这么多模组。Steam 有意无意地设置了 API 订阅的限制。强烈建议你使用 SteamCMD 下载这些模组到 SteamCMD 前缀目录中。这可能会因为速率限制而花费更长时间，但你可以使用单独的、经过身份验证的 SteamCMD 实例重新使用由 RimDex 生成的脚本，如果你不想通过 RimDex 匿名下载。</translation>
     </message>
     <message>
         <source>Edit Steam WebAPI key</source>
@@ -1135,8 +1135,8 @@ The resultant database, C, is saved to a user-specified path. You will be prompt
         <translation>路径：{path}</translation>
     </message>
     <message>
-        <source>RimSort - DB Builder</source>
-        <translation>RimSort - 数据库构建器</translation>
+        <source>RimDex - DB Builder</source>
+        <translation>RimDex - 数据库构建器</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -2036,7 +2036,7 @@ Generated run arguments preview:
         <source>Workshop folder: {existing_instance_workshop_folder}
 
 Option 1: Convert to SteamCMD
-RimSort will copy all Workshop mods to the new instance's local mods folder, converting them to SteamCMD mods that you can manage inside the new instance. The Workshop folder will be ignored for this instance to prevent duplicate mods.
+RimDex will copy all Workshop mods to the new instance's local mods folder, converting them to SteamCMD mods that you can manage inside the new instance. The Workshop folder will be ignored for this instance to prevent duplicate mods.
 
 Option 2: Keep Workshop Folder
 The new instance will use the same Workshop folder as the original instance. You can change this later in the settings if needed.
@@ -2045,7 +2045,7 @@ How would you like to proceed?</source>
         <translation>创意工坊文件夹：{existing_instance_workshop_folder}
 
 选项 1：转换为 SteamCMD 模组
-RimSort 将会把所有创意工坊模组复制到新实例的本地模组文件夹中，将它们转换为你可以在新实例中管理的 SteamCMD 模组。为了防止模组重复，此实例将忽略创意工坊文件夹。
+RimDex 将会把所有创意工坊模组复制到新实例的本地模组文件夹中，将它们转换为你可以在新实例中管理的 SteamCMD 模组。为了防止模组重复，此实例将忽略创意工坊文件夹。
 
 选项 2：保留创意工坊文件夹
 新实例将使用与原始实例相同的创意工坊文件夹。如果需要，你可以稍后在设置中更改它。
@@ -2065,10 +2065,10 @@ RimSort 将会把所有创意工坊模组复制到新实例的本地模组文件
         <translation>更新日志</translation>
     </message>
     <message>
-        <source>This will allow you to use RimSort features that require the Steam Client. This includes, among other things, unsubscribing from workshop mods and opening workshop links via the Steam Client. 
+        <source>This will allow you to use RimDex features that require the Steam Client. This includes, among other things, unsubscribing from workshop mods and opening workshop links via the Steam Client. 
                 &lt;br&gt;&lt;br&gt;
                 You can change this in the settings under the Advanced tab.</source>
-        <translation>这将允许你使用需要 Steam 客户端的 RimSort 功能。这包括但不限于通过 Steam 客户端取消订阅创意工坊模组和打开创意工坊链接。
+        <translation>这将允许你使用需要 Steam 客户端的 RimDex 功能。这包括但不限于通过 Steam 客户端取消订阅创意工坊模组和打开创意工坊链接。
                 &lt;br&gt;&lt;br&gt;
                 你可以在设置的高级选项卡中更改此设置。</translation>
     </message>
@@ -2104,8 +2104,8 @@ RimSort 将会把所有创意工坊模组复制到新实例的本地模组文件
         <translation>导出到 Rentry.co</translation>
     </message>
     <message>
-        <source>RimSort</source>
-        <translation>RimSort</translation>
+        <source>RimDex</source>
+        <translation>RimDex</translation>
     </message>
     <message>
         <source>RimWorld</source>
@@ -2252,8 +2252,8 @@ RimSort 将会把所有创意工坊模组复制到新实例的本地模组文件
         <translation>更新</translation>
     </message>
     <message>
-        <source>RimSort Wiki…</source>
-        <translation>RimSort Wiki</translation>
+        <source>RimDex Wiki…</source>
+        <translation>RimDex Wiki</translation>
     </message>
     <message>
         <source>Check for Updates…</source>
@@ -2272,8 +2272,8 @@ RimSort 将会把所有创意工坊模组复制到新实例的本地模组文件
         <translation>帮助</translation>
     </message>
     <message>
-        <source>RimSort GitHub…</source>
-        <translation>RimSort GitHub</translation>
+        <source>RimDex GitHub…</source>
+        <translation>RimDex GitHub</translation>
     </message>
     <message>
         <source>From Save file…</source>
@@ -2316,8 +2316,8 @@ Falling back to cached, but EXPIRED Steam Database...</source>
         <translation>缺少 Version.txt</translation>
     </message>
     <message>
-        <source>RimSort is unable to get the game version at the expected path: [{version_file_path}].</source>
-        <translation>RimSort 无法在预期路径获取游戏版本：[{version_file_path}]。</translation>
+        <source>RimDex is unable to get the game version at the expected path: [{version_file_path}].</source>
+        <translation>RimDex 无法在预期路径获取游戏版本：[{version_file_path}]。</translation>
     </message>
     <message>
         <source>
@@ -2372,8 +2372,8 @@ Select which missing dependencies to add to your active mods list.</source>
 <context>
     <name>MissingModPropertiesPanel</name>
     <message>
-        <source>RimSort - Mods with Missing Properties</source>
-        <translation>RimSort - 缺少属性的模组</translation>
+        <source>RimDex - Mods with Missing Properties</source>
+        <translation>RimDex - 缺少属性的模组</translation>
     </message>
     <message>
         <source>Mods with Missing Properties detected!</source>
@@ -2405,8 +2405,8 @@ Please contact the mod authors to add these properties to their mods.</source>
 <context>
     <name>MissingModsPrompt</name>
     <message>
-        <source>RimSort - Missing mods found</source>
-        <translation>RimSort - 找到缺失的模组</translation>
+        <source>RimDex - Missing mods found</source>
+        <translation>RimDex - 找到缺失的模组</translation>
     </message>
     <message>
         <source>There are mods missing from the active mods list!</source>
@@ -2446,8 +2446,8 @@ Steam Workshop 上的 RimWorld 模组如果共享相同的 包名，则为 '变�
         <translation>删除纹理（删除 .dds 纹理）</translation>
     </message>
     <message>
-        <source>RimSort</source>
-        <translation>RimSort</translation>
+        <source>RimDex</source>
+        <translation>RimDex</translation>
     </message>
     <message>
         <source>Mod directory was not empty. Please close all programs accessing files or subfolders in the directory (including your file manager) and try again.</source>
@@ -2666,8 +2666,8 @@ Do you want to proceed?</source>
         <translation>创意工坊时间：</translation>
     </message>
     <message>
-        <source>Welcome to RimSort!</source>
-        <translation>欢迎使用 RimSort！</translation>
+        <source>Welcome to RimDex!</source>
+        <translation>欢迎使用 RimDex！</translation>
     </message>
     <message>
         <source>Put your personal mod notes here!</source>
@@ -3434,8 +3434,8 @@ Alternative Dependencies:</source>
 <context>
     <name>Rentry Auth Code Not Found </name>
     <message>
-        <source>RimSort can work without rentry auth code. But To enable full functionality of renry.co you need to email support@rentry.co and request an auth code. Then paste it into Settings -&gt; Advanced -&gt; Rentry Auth.</source>
-        <translation>RimSort 可以在没有 rentry 授权码的情况下工作。但要启用 rentry.co 的全部功能，你需要发送邮件到 support@rentry.co 并请求一个授权码。然后将其粘贴到 设置 -&gt; 高级 -&gt; Rentry 授权。</translation>
+        <source>RimDex can work without rentry auth code. But To enable full functionality of renry.co you need to email support@rentry.co and request an auth code. Then paste it into Settings -&gt; Advanced -&gt; Rentry Auth.</source>
+        <translation>RimDex 可以在没有 rentry 授权码的情况下工作。但要启用 rentry.co 的全部功能，你需要发送邮件到 support@rentry.co 并请求一个授权码。然后将其粘贴到 设置 -&gt; 高级 -&gt; Rentry 授权。</translation>
     </message>
 </context>
 <context>
@@ -3449,8 +3449,8 @@ Alternative Dependencies:</source>
         <translation>Rentry 返回状态码: {code}</translation>
     </message>
     <message>
-        <source>RimSort failed to fetch the content from the provided Rentry link. This may be due to an invalid link, your internet connection, or Rentry.co being down. It may also be the result of a captcha. Please try again later.</source>
-        <translation>RimSort 无法从提供的 Rentry 链接获取内容。这可能是由于无效的链接、你的互联网连接或 Rentry.co 宕机。也可能是验证码的结果。请稍后再试。</translation>
+        <source>RimDex failed to fetch the content from the provided Rentry link. This may be due to an invalid link, your internet connection, or Rentry.co being down. It may also be the result of a captcha. Please try again later.</source>
+        <translation>RimDex 无法从提供的 Rentry 链接获取内容。这可能是由于无效的链接、你的互联网连接或 Rentry.co 宕机。也可能是验证码的结果。请稍后再试。</translation>
     </message>
     <message>
         <source>Network Error</source>
@@ -3892,8 +3892,8 @@ Click 'Show Details' to see a list of mods that failed.</source>
         <translation>每日首次启动游戏时自动备份存档</translation>
     </message>
     <message>
-        <source>If enabled, RimSort will automatically backup saves on the first daily launch.</source>
-        <translation>如果启用，RimSort将在每日首次启动游戏时自动备份存档。</translation>
+        <source>If enabled, RimDex will automatically backup saves on the first daily launch.</source>
+        <translation>如果启用，RimDex将在每日首次启动游戏时自动备份存档。</translation>
     </message>
     <message>
         <source>Number of backups to keep:</source>
@@ -4208,8 +4208,8 @@ This may potentially prevent some issues with downloading mods such as download 
         <translation>高级</translation>
     </message>
     <message>
-        <source>RimSort restart required for some settings</source>
-        <translation>某些设置需要重启 RimSort</translation>
+        <source>RimDex restart required for some settings</source>
+        <translation>某些设置需要重启 RimDex</translation>
     </message>
     <message>
         <source>Enable debug logging</source>
@@ -4256,8 +4256,8 @@ This may potentially prevent some issues with downloading mods such as download 
         <translation>启动时更新数据库</translation>
     </message>
     <message>
-        <source>Enable this option to automatically update enabled databases when RimSort starts. This will check for updates and download them if available.</source>
-        <translation>启用此选项将在 RimSort 启动时自动更新启用的数据库。这将检查更新并在可用时下载它们。</translation>
+        <source>Enable this option to automatically update enabled databases when RimDex starts. This will check for updates and download them if available.</source>
+        <translation>启用此选项将在 RimDex 启动时自动更新启用的数据库。这将检查更新并在可用时下载它们。</translation>
     </message>
     <message>
         <source>Rentry Auth:</source>
@@ -4356,8 +4356,8 @@ This may potentially prevent some issues with downloading mods such as download 
         <translation>通过 Steam 协议启动游戏（启用 Steam 覆盖）</translation>
     </message>
     <message>
-        <source>If enabled, RimSort will launch the game using the Steam protocol (steam://rungameid/294100) instead of directly running the executable. This enables the Steam overlay. Note: This requires Steam to be running and will ignore custom launch arguments.</source>
-        <translation>如果启用，RimSort 将使用 Steam 协议 (steam://rungameid/294100) 启动游戏，而不是直接运行可执行文件。这将启用 Steam 覆盖。注意：这需要 Steam 正在运行，并且将忽略自定义启动参数。</translation>
+        <source>If enabled, RimDex will launch the game using the Steam protocol (steam://rungameid/294100) instead of directly running the executable. This enables the Steam overlay. Note: This requires Steam to be running and will ignore custom launch arguments.</source>
+        <translation>如果启用，RimDex 将使用 Steam 协议 (steam://rungameid/294100) 启动游戏，而不是直接运行可执行文件。这将启用 Steam 覆盖。注意：这需要 Steam 正在运行，并且将忽略自定义启动参数。</translation>
     </message>
     <message>
         <source>Enter launch options using Steam-style syntax with optional %command% placeholder:
@@ -4424,10 +4424,10 @@ Improves performance by ~50%.</source>
     <message>
         <source>To add your own theme / stylesheet 
 
-1) Create a new-folder in 'themes' folder in your 'RimSort' config folder 
+1) Create a new-folder in 'themes' folder in your 'RimDex' config folder 
 2) Using the default 'RimPy' theme copy it to the folder you created 
 3) Edit the copied 'style.qss' as per your imagination 
-4) Start 'RimSort' and select your theme from dropdown 
+4) Start 'RimDex' and select your theme from dropdown 
 5) Click 'ok' to save settings and apply the selected theme 
 
 NOTE 
@@ -4435,10 +4435,10 @@ Name of folder will be used as name of the theme and any invalid theme will be i
 </source>
         <translation>要添加自定义主题/样式表
 
-1) 在你的'RimSort'配置文件夹中的'themes'文件夹内新建一个文件夹
+1) 在你的'RimDex'配置文件夹中的'themes'文件夹内新建一个文件夹
 2) 将默认的'RimPy'主题复制到你创建的文件夹中
 3) 根据你的创意编辑复制的'style.qss'文件
-4) 启动'RimSort'并从下拉菜单中选择你的主题
+4) 启动'RimDex'并从下拉菜单中选择你的主题
 5) 点击'确定'保存设置并应用所选主题 
 
 注意
@@ -4454,12 +4454,12 @@ Name of folder will be used as name of the theme and any invalid theme will be i
 After a mod is deleted, this is the time we wait until this mod item is deleted from the Auxiliary Metadata DB. 
 This Auxiliary DB contains info for mod colors, toggled warning, user notes etc. 
 This basically preserves your mod coloring, user notes etc. for this many seconds after deletion. 
-(This applies to deletion outside of RimSort too)</source>
+(This applies to deletion outside of RimDex too)</source>
         <translation>要启用此时间限制的编辑，请在高级设置中勾选相应的复选框。
 当模组被删除后，系统将在此时间段后从辅助元数据数据库中删除该模组项。
 该辅助数据库包含模组颜色、切换警告、用户备注等信息。
 此设置可在删除后保留模组的颜色、用户备注等信息指定的秒数。
-（此设置同样适用于RimSort外的删除操作）</translation>
+（此设置同样适用于RimDex外的删除操作）</translation>
     </message>
     <message>
         <source>Min is {MIN_SIZE} and Max is {MAX_SIZE}. Values outside this range will be reset to defaults.</source>
@@ -4548,12 +4548,12 @@ E.g., 'oels.vehiclemapframework', alternatives: 'oels.vehiclemapframework.dev'</
         <translation>XML解析方式</translation>
     </message>
     <message>
-        <source>Create backup before RimSort update</source>
+        <source>Create backup before RimDex update</source>
         <translation>在 Rimsort 更新之前创建备份</translation>
     </message>
     <message>
-        <source>Recommended to keep this enabled as it creates a backup before updating RimSort, This helps prevent any unwanted changes or data getting deleted.</source>
-        <translation>建议保持此选项启用，因为在更新 RimSort 之前它会创建备份，这有助于防止任何不必要的更改或数据被删除。</translation>
+        <source>Recommended to keep this enabled as it creates a backup before updating RimDex, This helps prevent any unwanted changes or data getting deleted.</source>
+        <translation>建议保持此选项启用，因为在更新 RimDex 之前它会创建备份，这有助于防止任何不必要的更改或数据被删除。</translation>
     </message>
     <message>
         <source>Maximum number of backups to keep:</source>
@@ -4567,9 +4567,9 @@ E.g., 'oels.vehiclemapframework', alternatives: 'oels.vehiclemapframework.dev'</
         <translation>打开设置</translation>
     </message>
     <message>
-        <source>Your RimSort settings file is corrupt.
+        <source>Your RimDex settings file is corrupt.
 Please choose one of the following options to proceed.</source>
-        <translation>你的 RimSort 设置文件已损坏。
+        <translation>你的 RimDex 设置文件已损坏。
 请选择以下选项之一继续。</translation>
     </message>
     <message>
@@ -4581,8 +4581,8 @@ Please choose one of the following options to proceed.</source>
         <translation>重置设置</translation>
     </message>
     <message>
-        <source>Exit RimSort</source>
-        <translation>退出 RimSort</translation>
+        <source>Exit RimDex</source>
+        <translation>退出 RimDex</translation>
     </message>
 </context>
 <context>
@@ -4669,13 +4669,13 @@ Rocketman/CAI 的 Discord 上联系我们</translation>
 <context>
     <name>SteamcmdInterface</name>
     <message>
-        <source>RimSort - SteamCMD setup</source>
-        <translation>RimSort - SteamCMD 安装</translation>
+        <source>RimDex - SteamCMD setup</source>
+        <translation>RimDex - SteamCMD 安装</translation>
     </message>
     <message>
-        <source>RimSort was unable to find SteamCMD installed in the configured prefix:
+        <source>RimDex was unable to find SteamCMD installed in the configured prefix:
 </source>
-        <translation>RimSort 无法在配置的前缀中找到 SteamCMD 安装：</translation>
+        <translation>RimDex 无法在配置的前缀中找到 SteamCMD 安装：</translation>
     </message>
     <message>
         <source>Do you want to setup SteamCMD?</source>
@@ -5084,8 +5084,8 @@ Details: {e}</source>
         <translation>删除游戏配置文件，包括 ModsConfig.xml、Prefs.xml 和 KeyPrefs.xml。</translation>
     </message>
     <message>
-        <source>After resetting game configurations, launch the game directly through Steam to regenerate ModsConfig.xml, then restart RimSort.</source>
-        <translation>重置游戏配置后，请通过 Steam 直接启动游戏以重新生成 ModsConfig.xml，然后重新启动 RimSort。</translation>
+        <source>After resetting game configurations, launch the game directly through Steam to regenerate ModsConfig.xml, then restart RimDex.</source>
+        <translation>重置游戏配置后，请通过 Steam 直接启动游戏以重新生成 ModsConfig.xml，然后重新启动 RimDex。</translation>
     </message>
     <message>
         <source>Apply Recovery</source>
@@ -5191,22 +5191,22 @@ Details: {e}</source>
 <context>
     <name>UpdateManager</name>
     <message>
-        <source>RimSort update found</source>
-        <translation>检测到 RimSort 更新</translation>
+        <source>RimDex update found</source>
+        <translation>检测到 RimDex 更新</translation>
     </message>
     <message>
-        <source>An update to RimSort has been released: {latest_tag_name}</source>
-        <translation>RimSort 的更新已发布： {latest_tag_name}</translation>
+        <source>An update to RimDex has been released: {latest_tag_name}</source>
+        <translation>RimDex 的更新已发布： {latest_tag_name}</translation>
     </message>
     <message>
-        <source>You are running RimSort {current_version}
+        <source>You are running RimDex {current_version}
 Do you want to update now?</source>
-        <translation>你正在运行RimSort {current_version}
+        <translation>你正在运行RimDex {current_version}
 你现在要更新吗？</translation>
     </message>
     <message>
-        <source>Downloading RimSort {tag_name} release...</source>
-        <translation>下载 RimSort {tag_name} 版本...</translation>
+        <source>Downloading RimDex {tag_name} release...</source>
+        <translation>下载 RimDex {tag_name} 版本...</translation>
     </message>
     <message>
         <source>
@@ -5230,8 +5230,8 @@ The update will be installed from: {update_source_path}</source>
 <context>
     <name>UseThisInsteadPanel</name>
     <message>
-        <source>RimSort - Replacements found for Workshop mods</source>
-        <translation>RimSort - 已找到创意工坊模组的替代项</translation>
+        <source>RimDex - Replacements found for Workshop mods</source>
+        <translation>RimDex - 已找到创意工坊模组的替代项</translation>
     </message>
     <message>
         <source>There are replacements available for Workshop mods!</source>
@@ -5289,8 +5289,8 @@ The update will be installed from: {update_source_path}</source>
 <context>
     <name>WorkshopModUpdaterPanel</name>
     <message>
-        <source>RimSort - Updates found for Workshop mods</source>
-        <translation>RimSort - 找到创意工坊模组的更新</translation>
+        <source>RimDex - Updates found for Workshop mods</source>
+        <translation>RimDex - 找到创意工坊模组的更新</translation>
     </message>
     <message>
         <source>There are updates available for Workshop mods!</source>
@@ -5355,8 +5355,8 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>复制到剪贴板失败。</translation>
     </message>
     <message>
-        <source>RimSort failed to copy the text to your clipboard. Please copy it manually.</source>
-        <translation>RimSort 无法将文本复制到你的剪贴板。请手动复制。</translation>
+        <source>RimDex failed to copy the text to your clipboard. Please copy it manually.</source>
+        <translation>RimDex 无法将文本复制到你的剪贴板。请手动复制。</translation>
     </message>
 </context>
 <context>
@@ -5366,8 +5366,8 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>无法排序</translation>
     </message>
     <message>
-        <source>RimSort found circular dependencies in your mods list. Please see the details for dependency loops.</source>
-        <translation>RimSort 在你的模组列表中发现了循环依赖。请查看详细信息以了解循环依赖。</translation>
+        <source>RimDex found circular dependencies in your mods list. Please see the details for dependency loops.</source>
+        <translation>RimDex 在你的模组列表中发现了循环依赖。请查看详细信息以了解循环依赖。</translation>
     </message>
 </context>
 <context>
@@ -5381,16 +5381,16 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>无法启动 RimWorld</translation>
     </message>
     <message>
-        <source>RimSort could not start RimWorld as the game folder is empty or invalid: [{game_install_path}] Please check that the game folder is properly set and that the RimWorld executable exists in it.</source>
-        <translation>RimSort 无法启动 RimWorld 因为游戏文件夹为空或无效：[{game_install_path}] 请检查游戏文件夹是否正确设置，并且 RimWorld 可执行文件是否存在。</translation>
+        <source>RimDex could not start RimWorld as the game folder is empty or invalid: [{game_install_path}] Please check that the game folder is properly set and that the RimWorld executable exists in it.</source>
+        <translation>RimDex 无法启动 RimWorld 因为游戏文件夹为空或无效：[{game_install_path}] 请检查游戏文件夹是否正确设置，并且 RimWorld 可执行文件是否存在。</translation>
     </message>
     <message>
         <source>Invalid game folder</source>
         <translation>无效的游戏路径</translation>
     </message>
     <message>
-        <source>RimSort could not validate the RimWorld executable in the specified folder: {game_install_path}. Please check that this directory is correct and contains a valid RimWorld game executable.</source>
-        <translation>RimSort 无法验证指定文件夹中的 RimWorld 可执行文件：{game_install_path}。请检查该目录是否正确并包含有效的 RimWorld 游戏可执行文件。</translation>
+        <source>RimDex could not validate the RimWorld executable in the specified folder: {game_install_path}. Please check that this directory is correct and contains a valid RimWorld game executable.</source>
+        <translation>RimDex 无法验证指定文件夹中的 RimWorld 可执行文件：{game_install_path}。请检查该目录是否正确并包含有效的 RimWorld 游戏可执行文件。</translation>
     </message>
 </context>
 <context>
@@ -5407,8 +5407,8 @@ The following table displays Workshop mods available for update from Steam.</sou
 <context>
     <name>rmtree</name>
     <message>
-        <source>RimSort tried to remove a directory that does not exist.</source>
-        <translation>RimSort 尝试删除一个不存在的目录。</translation>
+        <source>RimDex tried to remove a directory that does not exist.</source>
+        <translation>RimDex 尝试删除一个不存在的目录。</translation>
     </message>
     <message>
         <source>Directory does not exist: {path}</source>
@@ -5419,8 +5419,8 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>无法删除目录</translation>
     </message>
     <message>
-        <source>RimSort tried to remove a directory that is not a directory.</source>
-        <translation>RimSort 尝试删除一个不是目录的目录。</translation>
+        <source>RimDex tried to remove a directory that is not a directory.</source>
+        <translation>RimDex 尝试删除一个不是目录的目录。</translation>
     </message>
     <message>
         <source>Path is not a directory: {path}</source>
@@ -5442,16 +5442,16 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>无法读取数据</translation>
     </message>
     <message>
-        <source>RimSort was unable to read the supplied mods list.</source>
-        <translation>RimSort 无法读取提供的模组列表。</translation>
+        <source>RimDex was unable to read the supplied mods list.</source>
+        <translation>RimDex 无法读取提供的模组列表。</translation>
     </message>
     <message>
         <source>The supplied mods list may be missing or invalid. If you just (re)installed RimWorld, you may need to run it once to generate the mods list.</source>
         <translation>提供的模组列表可能缺失或无效。如果你刚刚（重新）安装了 RimWorld，你可能需要运行一次以生成模组列表。</translation>
     </message>
     <message>
-        <source>RimSort was unable to read the supplied mods list because it may be invalid or missing.</source>
-        <translation>RimSort 无法读取提供的模组列表，因为它可能无效或缺失。</translation>
+        <source>RimDex was unable to read the supplied mods list because it may be invalid or missing.</source>
+        <translation>RimDex 无法读取提供的模组列表，因为它可能无效或缺失。</translation>
     </message>
 </context>
 </TS>

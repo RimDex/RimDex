@@ -42,8 +42,8 @@ body:
     id: logs
     attributes:
       label: Relevant logs
-      description: Please provide a RimSort.log file. There may be circumstances where a log file is not generated but without logs, it is difficult to diagnose the issue.
-      placeholder: Link to RimSort.log file
+      description: Please provide a RimDex.log file. There may be circumstances where a log file is not generated but without logs, it is difficult to diagnose the issue.
+      placeholder: Link to RimDex.log file
 
   - type: textarea
     id: bug_description
@@ -66,7 +66,7 @@ body:
     attributes:
       multiple: true
       label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/RimSort/RimSort/blob/main/CODE_OF_CONDUCT.md).
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/RimDex/RimDex/blob/main/CODE_OF_CONDUCT.md).
       options:
         - I agree to follow this project's Code of Conduct
     validations:
@@ -77,7 +77,7 @@ body:
     attributes:
       multiple: true
       label: Duplicate Issue Check
-      description: By submitting this issue, you attest that you've searched for similar [issues on GitHub](https://github.com/RimSort/RimSort/issues) and didn't find any.
+      description: By submitting this issue, you attest that you've searched for similar [issues on GitHub](https://github.com/RimDex/RimDex/issues) and didn't find any.
       options:
         - I've checked for similar issues and didn't find anything
     validations:
@@ -88,7 +88,7 @@ body:
     attributes:
       multiple: true
       label: Wiki/FAQ Check
-      description: By submitting this issue, you attest that you've checked [the Wiki](https://rimsort.github.io/RimSort/) for potential solutions and didn't find any.
+      description: By submitting this issue, you attest that you've checked [the Wiki](https://rimsort.github.io/RimDex/) for potential solutions and didn't find any.
       options:
         - I've checked the Wiki for a solution and didn't find a solution
     validations:

@@ -41,7 +41,7 @@ class DuplicateModsPanel(BaseModsPanel):
 
         super().__init__(
             object_name="duplicateModsPanel",
-            window_title=self.tr("RimSort - Duplicate Mods Found"),
+            window_title=self.tr("RimDex - Duplicate Mods Found"),
             title_text=self.tr("Duplicate mods detected!"),
             details_text=self.tr(
                 "\nThe following table displays duplicate mods grouped by package ID. "

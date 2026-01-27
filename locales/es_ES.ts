@@ -101,8 +101,8 @@ Primero intenta suscribirte a la colección.</translation>
 <context>
     <name>DuplicateModsPanel</name>
     <message>
-        <source>RimSort - Duplicate Mods Found</source>
-        <translation>RimSort - Mods duplicados encontrados</translation>
+        <source>RimDex - Duplicate Mods Found</source>
+        <translation>RimDex - Mods duplicados encontrados</translation>
     </message>
     <message>
         <source>Duplicate mods detected!</source>
@@ -198,13 +198,13 @@ Try simplifying your pattern or check for syntax errors.</source>
         <translation>Error de acceso al archivo</translation>
     </message>
     <message>
-        <source>RimSort doesn't have permission to access some files.</source>
+        <source>RimDex doesn't have permission to access some files.</source>
         <translation>Rimsort no tiene permiso para acceder a algunos archivos.</translation>
     </message>
     <message>
         <source>{error_msg}
 
-Try running RimSort with administrator privileges or check folder permissions.</source>
+Try running RimDex with administrator privileges or check folder permissions.</source>
         <translation>Intente ejecutar Rimsort con privilegios de administrador o verificar los permisos de la carpeta. {error_msg}</translation>
     </message>
     <message>
@@ -212,7 +212,7 @@ Try running RimSort with administrator privileges or check folder permissions.</
         <translation>Error de memoria</translation>
     </message>
     <message>
-        <source>RimSort ran out of memory while searching.</source>
+        <source>RimDex ran out of memory while searching.</source>
         <translation>Rimsort se quedó sin memoria mientras buscaba.</translation>
     </message>
     <message>
@@ -464,8 +464,8 @@ Cuando no está marcado, buscar todos los tipos de archivos con búsqueda están
 <context>
     <name>IgnoreJsonEditor</name>
     <message>
-        <source>RimSort - Manage Ignore List</source>
-        <translation>RimSort - Administrar lista de ignorados</translation>
+        <source>RimDex - Manage Ignore List</source>
+        <translation>RimDex - Administrar lista de ignorados</translation>
     </message>
     <message>
         <source>Mods checked below will be removed from the ignore list.</source>
@@ -562,7 +562,7 @@ Cuando no está marcado, buscar todos los tipos de archivos con búsqueda están
         <translation>Los caminos esenciales son inválidos o no están configurados!</translation>
     </message>
     <message>
-        <source>RimSort requires, at the minimum, for the game install folder and the config folder paths to be set, and that the paths both exist. Please set both of these manually or by using the autodetect functionality.
+        <source>RimDex requires, at the minimum, for the game install folder and the config folder paths to be set, and that the paths both exist. Please set both of these manually or by using the autodetect functionality.
 
 Would you like to configure them now?</source>
         <translation>¿Te gustaría configurarlos ahora?</translation>
@@ -596,8 +596,8 @@ Would you like to configure them now?</source>
         <translation>Importante</translation>
     </message>
     <message>
-        <source>You will need to redo Rentry import again after downloads complete. If there missing mods after download completes, they will be shown inside the missing mods panel. If RimSort is still not able to download some mods, It's due to the mod data not being available in both Rentry link and steam database.</source>
-        <translation>Deberás volver a realizar la importación de Rentry una vez que se completen las descargas. Si faltan mods después de que se complete la descarga, se mostrarán en el panel de mods faltantes. Si RimSort aún no puede descargar algunos mods, se debe a que los datos del mod no están disponibles tanto en el enlace de Rentry como en la base de datos de Steam.</translation>
+        <source>You will need to redo Rentry import again after downloads complete. If there missing mods after download completes, they will be shown inside the missing mods panel. If RimDex is still not able to download some mods, It's due to the mod data not being available in both Rentry link and steam database.</source>
+        <translation>Deberás volver a realizar la importación de Rentry una vez que se completen las descargas. Si faltan mods después de que se complete la descarga, se mostrarán en el panel de mods faltantes. Si RimDex aún no puede descargar algunos mods, se debe a que los datos del mod no están disponibles tanto en el enlace de Rentry como en la base de datos de Steam.</translation>
     </message>
     <message>
         <source>Steam client integration not set up</source>
@@ -784,9 +784,9 @@ Would you like to configure them now?</source>
         <translation>No se pudo comprobar si hay actualizaciones</translation>
     </message>
     <message>
-        <source>RimSort was unable to query Steam WebAPI for update information!
+        <source>RimDex was unable to query Steam WebAPI for update information!
 </source>
-        <translation>RimSort no pudo consultar la Steam WebAPI para obtener información sobre actualizaciones!
+        <translation>RimDex no pudo consultar la Steam WebAPI para obtener información sobre actualizaciones!
 </translation>
     </message>
     <message>
@@ -806,8 +806,8 @@ Would you like to configure them now?</source>
         <translation>Esta función requiere que la integración del cliente Steam esté habilitada en Configuración. Habilite la integración del cliente Steam si posee el juego en Steam.</translation>
     </message>
     <message>
-        <source>RimSort - SteamCMD setup</source>
-        <translation>RimSort - Configuración de SteamCMD</translation>
+        <source>RimDex - SteamCMD setup</source>
+        <translation>RimDex - Configuración de SteamCMD</translation>
     </message>
     <message>
         <source>Unable to create SteamCMD runner!</source>
@@ -826,8 +826,8 @@ Would you like to configure them now?</source>
         <translation>Por favor, configura la ruta de mods locales en la configuración antes de intentar instalar.</translation>
     </message>
     <message>
-        <source>RimSort</source>
-        <translation>RimSort</translation>
+        <source>RimDex</source>
+        <translation>RimDex</translation>
     </message>
     <message>
         <source>No PublishedFileIds were supplied in operation.</source>
@@ -976,10 +976,10 @@ How would you like to proceed?
     <message>
         <source>Git integration will not work without Git installed! Do you want to open download page for Git?
 
-If you just installed Git, please restart RimSort for the PATH changes to take effect.</source>
+If you just installed Git, please restart RimDex for the PATH changes to take effect.</source>
         <translation>¡La integración de Git no funcionará sin Git instalado! ¿Quieres abrir la página de descarga de Git?
 
-Si acabas de instalar Git, reinicia RimSort para que los cambios en el PATH surtan efecto.</translation>
+Si acabas de instalar Git, reinicia RimDex para que los cambios en el PATH surtan efecto.</translation>
     </message>
     <message>
         <source>Edit Steam DB repo</source>
@@ -1016,8 +1016,8 @@ PublishedFileIDs are needed to retrieve mods from Steam!</source>
         <translation>Aquí hay dragones.</translation>
     </message>
     <message>
-        <source>WARNING: It is NOT recommended to subscribe to this many mods at once via Steam. Steam has limitations in place seemingly intentionally and unintentionally for API subscriptions. It is highly recommended that you instead download these mods to a SteamCMD prefix by using SteamCMD. This can take longer due to rate limits, but you can also re-use the script generated by RimSort with a separate, authenticated instance of SteamCMD, if you do not want to anonymously download via RimSort.</source>
-        <translation>ADVERTENCIA: No se recomienda suscribirse a tantos mods a la vez a través de Steam. Steam tiene limitaciones en su lugar, aparentemente intencional e involuntariamente, para las suscripciones a la API. Se recomienda encarecidamente que, en su lugar, descargue estos mods a un prefijo de SteamCMD utilizando SteamCMD. Esto puede tardar más debido a los límites de velocidad, pero también puede reutilizar el script generado por RimSort con una instancia separada y autenticada de SteamCMD, si no desea descargar de forma anónima a través de RimSort.</translation>
+        <source>WARNING: It is NOT recommended to subscribe to this many mods at once via Steam. Steam has limitations in place seemingly intentionally and unintentionally for API subscriptions. It is highly recommended that you instead download these mods to a SteamCMD prefix by using SteamCMD. This can take longer due to rate limits, but you can also re-use the script generated by RimDex with a separate, authenticated instance of SteamCMD, if you do not want to anonymously download via RimDex.</source>
+        <translation>ADVERTENCIA: No se recomienda suscribirse a tantos mods a la vez a través de Steam. Steam tiene limitaciones en su lugar, aparentemente intencional e involuntariamente, para las suscripciones a la API. Se recomienda encarecidamente que, en su lugar, descargue estos mods a un prefijo de SteamCMD utilizando SteamCMD. Esto puede tardar más debido a los límites de velocidad, pero también puede reutilizar el script generado por RimDex con una instancia separada y autenticada de SteamCMD, si no desea descargar de forma anónima a través de RimDex.</translation>
     </message>
     <message>
         <source>Edit Steam WebAPI key</source>
@@ -1096,8 +1096,8 @@ La base de datos resultante, C, se guarda en una ruta especificada por el usuari
         <translation>Ruta: {path}</translation>
     </message>
     <message>
-        <source>RimSort - DB Builder</source>
-        <translation>RimSort - Constructor de DB</translation>
+        <source>RimDex - DB Builder</source>
+        <translation>RimDex - Constructor de DB</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -1842,10 +1842,10 @@ Error: {error}</translation>
         <translation>&lt;h3&gt;¿Te gustaría habilitar la integración del cliente de Steam para esta instancia?&lt;/h3&gt;</translation>
     </message>
     <message>
-        <source>This will allow you to use RimSort features that require the Steam Client. This includes, among other things, unsubscribing from workshop mods and opening workshop links via the Steam Client. 
+        <source>This will allow you to use RimDex features that require the Steam Client. This includes, among other things, unsubscribing from workshop mods and opening workshop links via the Steam Client. 
                 &lt;br&gt;&lt;br&gt;
                 You can change this in the settings under the Advanced tab.</source>
-        <translation>Esto te permitirá usar las funciones de RimSort que requieren el cliente de Steam. Esto incluye, entre otras cosas, cancelar la suscripción a mods del taller y abrir enlaces del taller a través del cliente de Steam.
+        <translation>Esto te permitirá usar las funciones de RimDex que requieren el cliente de Steam. Esto incluye, entre otras cosas, cancelar la suscripción a mods del taller y abrir enlaces del taller a través del cliente de Steam.
                 &lt;br&gt;&lt;br&gt;
                 Puedes cambiar esto en la configuración bajo la pestaña Avanzado.</translation>
     </message>
@@ -2028,7 +2028,7 @@ Generated run arguments preview:
         <source>Workshop folder: {existing_instance_workshop_folder}
 
 Option 1: Convert to SteamCMD
-RimSort will copy all Workshop mods to the new instance's local mods folder, converting them to SteamCMD mods that you can manage inside the new instance. The Workshop folder will be ignored for this instance to prevent duplicate mods.
+RimDex will copy all Workshop mods to the new instance's local mods folder, converting them to SteamCMD mods that you can manage inside the new instance. The Workshop folder will be ignored for this instance to prevent duplicate mods.
 
 Option 2: Keep Workshop Folder
 The new instance will use the same Workshop folder as the original instance. You can change this later in the settings if needed.
@@ -2100,8 +2100,8 @@ How would you like to proceed?</source>
         <translation>Abrir…</translation>
     </message>
     <message>
-        <source>RimSort</source>
-        <translation>RimSort</translation>
+        <source>RimDex</source>
+        <translation>RimDex</translation>
     </message>
     <message>
         <source>RimWorld</source>
@@ -2244,15 +2244,15 @@ How would you like to proceed?</source>
         <translation>Ayuda</translation>
     </message>
     <message>
-        <source>RimSort Wiki…</source>
-        <translation>Wiki de RimSort…</translation>
+        <source>RimDex Wiki…</source>
+        <translation>Wiki de RimDex…</translation>
     </message>
     <message>
         <source>From Save file…</source>
         <translation>Desde guardar archivo ...</translation>
     </message>
     <message>
-        <source>RimSort GitHub…</source>
+        <source>RimDex GitHub…</source>
         <translation>Rimsort Github ...</translation>
     </message>
     <message>
@@ -2291,7 +2291,7 @@ Volviendo a la base de datos de Steam en caché, pero vencido ...</translation>
         <translation>Falta versión.txt</translation>
     </message>
     <message>
-        <source>RimSort is unable to get the game version at the expected path: [{version_file_path}].</source>
+        <source>RimDex is unable to get the game version at the expected path: [{version_file_path}].</source>
         <translation>Rimsort no puede obtener la versión del juego en la ruta esperada: []. {version_file_path}</translation>
     </message>
     <message>
@@ -2346,8 +2346,8 @@ Seleccione qué dependencias faltantes se agregan a su lista de modificaciones a
 <context>
     <name>MissingModPropertiesPanel</name>
     <message>
-        <source>RimSort - Mods with Missing Properties</source>
-        <translation>RimSort - Mods con propiedades faltantes</translation>
+        <source>RimDex - Mods with Missing Properties</source>
+        <translation>RimDex - Mods con propiedades faltantes</translation>
     </message>
     <message>
         <source>Mods with Missing Properties detected!</source>
@@ -2379,7 +2379,7 @@ Comuníquese con los autores de los mods para agregar estas propiedades a sus mo
 <context>
     <name>MissingModsPrompt</name>
     <message>
-        <source>RimSort - Missing mods found</source>
+        <source>RimDex - Missing mods found</source>
         <translation>Rimsort - Mods faltantes encontrados</translation>
     </message>
     <message>
@@ -2419,7 +2419,7 @@ Seleccione su variante de mod de Mod en la tabla a continuación. También puede
         <translation>Eliminar texturas optimizadas (solo archivos .dds)</translation>
     </message>
     <message>
-        <source>RimSort</source>
+        <source>RimDex</source>
         <translation>Rimsort</translation>
     </message>
     <message>
@@ -2636,8 +2636,8 @@ Do you want to proceed?</source>
         <translation>Horarios del taller:</translation>
     </message>
     <message>
-        <source>Welcome to RimSort!</source>
-        <translation>¡Bienvenido a RimSort!</translation>
+        <source>Welcome to RimDex!</source>
+        <translation>¡Bienvenido a RimDex!</translation>
     </message>
     <message>
         <source>Put your personal mod notes here!</source>
@@ -3395,7 +3395,7 @@ Alternative Dependencies:</source>
 <context>
     <name>Rentry Auth Code Not Found </name>
     <message>
-        <source>RimSort can work without rentry auth code. But To enable full functionality of renry.co you need to email support@rentry.co and request an auth code. Then paste it into Settings -&gt; Advanced -&gt; Rentry Auth.</source>
+        <source>RimDex can work without rentry auth code. But To enable full functionality of renry.co you need to email support@rentry.co and request an auth code. Then paste it into Settings -&gt; Advanced -&gt; Rentry Auth.</source>
         <translation>Rimsort puede funcionar sin el código de autenticación de Rentry. Pero para habilitar la funcionalidad completa de Renry.co, debe enviar un correo electrónico a support@rentry.co y solicitar un código de autenticación. Luego péguelo en Configuración -&gt; Avanzado -&gt; Auth.</translation>
     </message>
 </context>
@@ -3410,7 +3410,7 @@ Alternative Dependencies:</source>
         <translation>Código de estado devuelto de Rentry:  {code}</translation>
     </message>
     <message>
-        <source>RimSort failed to fetch the content from the provided Rentry link. This may be due to an invalid link, your internet connection, or Rentry.co being down. It may also be the result of a captcha. Please try again later.</source>
+        <source>RimDex failed to fetch the content from the provided Rentry link. This may be due to an invalid link, your internet connection, or Rentry.co being down. It may also be the result of a captcha. Please try again later.</source>
         <translation>Rimsort no logró obtener el contenido del enlace de alquiler provisto. Esto puede deberse a un enlace no válido, su conexión a Internet o Rentry.co está abajo. También puede ser el resultado de una captcha. Vuelva a intentarlo más tarde.</translation>
     </message>
     <message>
@@ -3853,8 +3853,8 @@ Haga clic en 'Mostrar detalles' para ver una lista de modificaciones que fallaro
         <translation>Copia de seguridad automática de los guardados en el primer lanzamiento diario</translation>
     </message>
     <message>
-        <source>If enabled, RimSort will automatically backup saves on the first daily launch.</source>
-        <translation>Si está habilitado, RimSort realizará automáticamente una copia de seguridad de los archivos guardados en el primer inicio diario.</translation>
+        <source>If enabled, RimDex will automatically backup saves on the first daily launch.</source>
+        <translation>Si está habilitado, RimDex realizará automáticamente una copia de seguridad de los archivos guardados en el primer inicio diario.</translation>
     </message>
     <message>
         <source>Number of backups to keep:</source>
@@ -4134,10 +4134,10 @@ This may potentially prevent some issues with downloading mods such as download 
     <message>
         <source>To add your own theme / stylesheet 
 
-1) Create a new-folder in 'themes' folder in your 'RimSort' config folder 
+1) Create a new-folder in 'themes' folder in your 'RimDex' config folder 
 2) Using the default 'RimPy' theme copy it to the folder you created 
 3) Edit the copied 'style.qss' as per your imagination 
-4) Start 'RimSort' and select your theme from dropdown 
+4) Start 'RimDex' and select your theme from dropdown 
 5) Click 'ok' to save settings and apply the selected theme 
 
 NOTE 
@@ -4145,10 +4145,10 @@ Name of folder will be used as name of the theme and any invalid theme will be i
 </source>
         <translation>Para agregar tu propio tema / hoja de estilo
 
-1) Crea una nueva carpeta en la carpeta 'themes' en tu carpeta de configuración de 'RimSort'
+1) Crea una nueva carpeta en la carpeta 'themes' en tu carpeta de configuración de 'RimDex'
 2) Usando el tema predeterminado 'RimPy', cópialo en la carpeta que creaste
 3) Edita el 'style.qss' copiado según tu imaginación
-4) Inicia 'RimSort' y selecciona tu tema del menú desplegable
+4) Inicia 'RimDex' y selecciona tu tema del menú desplegable
 5) Haz clic en 'ok' para guardar la configuración y aplicar el tema seleccionado
 
 NOTA
@@ -4192,8 +4192,8 @@ El nombre de la carpeta se usará como nombre del tema y cualquier tema inválid
         <translation>Avanzado</translation>
     </message>
     <message>
-        <source>RimSort restart required for some settings</source>
-        <translation>RimSort requiere reiniciar para algunas configuraciones</translation>
+        <source>RimDex restart required for some settings</source>
+        <translation>RimDex requiere reiniciar para algunas configuraciones</translation>
     </message>
     <message>
         <source>Enable debug logging</source>
@@ -4240,8 +4240,8 @@ El nombre de la carpeta se usará como nombre del tema y cualquier tema inválid
         <translation>Actualizar bases de datos al inicio</translation>
     </message>
     <message>
-        <source>Enable this option to automatically update enabled databases when RimSort starts. This will check for updates and download them if available.</source>
-        <translation>Habilitar esta opción para actualizar automáticamente las bases de datos habilitadas cuando se inicie RimSort. Esto comprobará si hay actualizaciones y las descargará si están disponibles.</translation>
+        <source>Enable this option to automatically update enabled databases when RimDex starts. This will check for updates and download them if available.</source>
+        <translation>Habilitar esta opción para actualizar automáticamente las bases de datos habilitadas cuando se inicie RimDex. Esto comprobará si hay actualizaciones y las descargará si están disponibles.</translation>
     </message>
     <message>
         <source>Rentry Auth:</source>
@@ -4296,8 +4296,8 @@ El nombre de la carpeta se usará como nombre del tema y cualquier tema inválid
         <translation>Inicie el juego a través del protocolo Steam (habilita la superposición de Steam)</translation>
     </message>
     <message>
-        <source>If enabled, RimSort will launch the game using the Steam protocol (steam://rungameid/294100) instead of directly running the executable. This enables the Steam overlay. Note: This requires Steam to be running and will ignore custom launch arguments.</source>
-        <translation>Si está habilitado, RimSort iniciará el juego usando el protocolo Steam (steam://rungameid/294100) en lugar de ejecutar directamente el ejecutable. Esto habilita la superposición de Steam. Nota: Esto requiere que Steam esté ejecutándose e ignorará los argumentos de inicio personalizados.</translation>
+        <source>If enabled, RimDex will launch the game using the Steam protocol (steam://rungameid/294100) instead of directly running the executable. This enables the Steam overlay. Note: This requires Steam to be running and will ignore custom launch arguments.</source>
+        <translation>Si está habilitado, RimDex iniciará el juego usando el protocolo Steam (steam://rungameid/294100) en lugar de ejecutar directamente el ejecutable. Esto habilita la superposición de Steam. Nota: Esto requiere que Steam esté ejecutándose e ignorará los argumentos de inicio personalizados.</translation>
     </message>
     <message>
         <source>Enter launch options using Steam-style syntax with optional %command% placeholder:
@@ -4348,7 +4348,7 @@ El nombre de la carpeta se usará como nombre del tema y cualquier tema inválid
 After a mod is deleted, this is the time we wait until this mod item is deleted from the Auxiliary Metadata DB. 
 This Auxiliary DB contains info for mod colors, toggled warning, user notes etc. 
 This basically preserves your mod coloring, user notes etc. for this many seconds after deletion. 
-(This applies to deletion outside of RimSort too)</source>
+(This applies to deletion outside of RimDex too)</source>
         <translation>Para habilitar la edición de este límite de tiempo, verifique la casilla de verificación relevante en la configuración avanzada.
 Después de eliminar un mod, este es el momento en que esperamos hasta que este elemento de mod se elimine de los metadatos auxiliares DB. 
 Este DB auxiliar contiene información para colores mods, advertencia alternativa, notas de usuario, etc. 
@@ -4508,11 +4508,11 @@ Por ejemplo, 'oels.VehicleMapFramework', alternativas: 'oels.VehiclemaPframework
         <translation>Comportamiento de análisis XML</translation>
     </message>
     <message>
-        <source>Create backup before RimSort update</source>
+        <source>Create backup before RimDex update</source>
         <translation>Crear copia de seguridad antes de la actualización de Rimsort</translation>
     </message>
     <message>
-        <source>Recommended to keep this enabled as it creates a backup before updating RimSort, This helps prevent any unwanted changes or data getting deleted.</source>
+        <source>Recommended to keep this enabled as it creates a backup before updating RimDex, This helps prevent any unwanted changes or data getting deleted.</source>
         <translation>Recomendado para mantener esto habilitado, ya que crea una copia de seguridad antes de actualizar Rimsort, esto ayuda a evitar que los cambios o datos no deseados se eliminen.</translation>
     </message>
     <message>
@@ -4523,7 +4523,7 @@ Por ejemplo, 'oels.VehicleMapFramework', alternativas: 'oels.VehiclemaPframework
 <context>
     <name>SettingsFailureDialog</name>
     <message>
-        <source>Your RimSort settings file is corrupt.
+        <source>Your RimDex settings file is corrupt.
 Please choose one of the following options to proceed.</source>
         <translation>Su archivo de configuración de Rimsort es corrupto.
 Elija una de las siguientes opciones para continuar.</translation>
@@ -4541,7 +4541,7 @@ Elija una de las siguientes opciones para continuar.</translation>
         <translation>Configuración de reinicio</translation>
     </message>
     <message>
-        <source>Exit RimSort</source>
+        <source>Exit RimDex</source>
         <translation>Salir Rimsort</translation>
     </message>
 </context>
@@ -4629,11 +4629,11 @@ Elija una de las siguientes opciones para continuar.</translation>
 <context>
     <name>SteamcmdInterface</name>
     <message>
-        <source>RimSort - SteamCMD setup</source>
+        <source>RimDex - SteamCMD setup</source>
         <translation>Rimsort - Configuración de Steamcmd</translation>
     </message>
     <message>
-        <source>RimSort was unable to find SteamCMD installed in the configured prefix:
+        <source>RimDex was unable to find SteamCMD installed in the configured prefix:
 </source>
         <translation>Rimsort no pudo encontrar SteamCMD instalado en el prefijo configurado:</translation>
     </message>
@@ -5044,8 +5044,8 @@ Detalles:  {e}</translation>
         <translation>Elimina archivos de configuración de juego incluyendo ModsConfig.xml, Prefs.xml y KeyPrefs.xml.</translation>
     </message>
     <message>
-        <source>After resetting game configurations, launch the game directly through Steam to regenerate ModsConfig.xml, then restart RimSort.</source>
-        <translation>Después de restablecer las configuraciones de juego, inicia el juego directamente a través de Steam para regenerar ModsConfig.xml, luego reinicia RimSort.</translation>
+        <source>After resetting game configurations, launch the game directly through Steam to regenerate ModsConfig.xml, then restart RimDex.</source>
+        <translation>Después de restablecer las configuraciones de juego, inicia el juego directamente a través de Steam para regenerar ModsConfig.xml, luego reinicia RimDex.</translation>
     </message>
     <message>
         <source>Apply Recovery</source>
@@ -5151,21 +5151,21 @@ Detalles:  {e}</translation>
 <context>
     <name>UpdateManager</name>
     <message>
-        <source>RimSort update found</source>
+        <source>RimDex update found</source>
         <translation>Actualización de Rimsort encontrada</translation>
     </message>
     <message>
-        <source>An update to RimSort has been released: {latest_tag_name}</source>
+        <source>An update to RimDex has been released: {latest_tag_name}</source>
         <translation>Se ha lanzado una actualización de Rimsort:  {latest_tag_name}</translation>
     </message>
     <message>
-        <source>You are running RimSort {current_version}
+        <source>You are running RimDex {current_version}
 Do you want to update now?</source>
         <translation>Estás ejecutando Rimsort {current_version}
 ¿Quieres actualizar ahora?</translation>
     </message>
     <message>
-        <source>Downloading RimSort {tag_name} release...</source>
+        <source>Downloading RimDex {tag_name} release...</source>
         <translation>Descargar Rimsort {tag_name} versión ...</translation>
     </message>
     <message>
@@ -5190,8 +5190,8 @@ The update will be installed from: {update_source_path}</source>
 <context>
     <name>UseThisInsteadPanel</name>
     <message>
-        <source>RimSort - Replacements found for Workshop mods</source>
-        <translation>RimSort - Reemplazos encontrados para mods de Workshop</translation>
+        <source>RimDex - Replacements found for Workshop mods</source>
+        <translation>RimDex - Reemplazos encontrados para mods de Workshop</translation>
     </message>
     <message>
         <source>There are replacements available for Workshop mods!</source>
@@ -5249,8 +5249,8 @@ The update will be installed from: {update_source_path}</source>
 <context>
     <name>WorkshopModUpdaterPanel</name>
     <message>
-        <source>RimSort - Updates found for Workshop mods</source>
-        <translation>RimSort: actualizaciones encontradas para mods de Workshop</translation>
+        <source>RimDex - Updates found for Workshop mods</source>
+        <translation>RimDex: actualizaciones encontradas para mods de Workshop</translation>
     </message>
     <message>
         <source>There are updates available for Workshop mods!</source>
@@ -5315,7 +5315,7 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>No se pudo copiar al portapapeles.</translation>
     </message>
     <message>
-        <source>RimSort failed to copy the text to your clipboard. Please copy it manually.</source>
+        <source>RimDex failed to copy the text to your clipboard. Please copy it manually.</source>
         <translation>Rimsort no pudo copiar el texto a su portapapeles. Por favor, copielo manualmente.</translation>
     </message>
 </context>
@@ -5326,7 +5326,7 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>Incapaz de clasificar</translation>
     </message>
     <message>
-        <source>RimSort found circular dependencies in your mods list. Please see the details for dependency loops.</source>
+        <source>RimDex found circular dependencies in your mods list. Please see the details for dependency loops.</source>
         <translation>Rimsort encontró dependencias circulares en su lista de mods. Consulte los detalles de los bucles de dependencia.</translation>
     </message>
 </context>
@@ -5341,7 +5341,7 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>No se puede lanzar Rimworld</translation>
     </message>
     <message>
-        <source>RimSort could not start RimWorld as the game folder is empty or invalid: [{game_install_path}] Please check that the game folder is properly set and that the RimWorld executable exists in it.</source>
+        <source>RimDex could not start RimWorld as the game folder is empty or invalid: [{game_install_path}] Please check that the game folder is properly set and that the RimWorld executable exists in it.</source>
         <translation>Rimsort no pudo comenzar a Rimworld ya que la carpeta del juego está vacía o no es válida: [] verifique que la carpeta del juego esté configurada correctamente y que el ejecutable de Rimworld existe en ella. {game_install_path}</translation>
     </message>
     <message>
@@ -5349,8 +5349,8 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>Carpeta de juego no válida</translation>
     </message>
     <message>
-        <source>RimSort could not validate the RimWorld executable in the specified folder: {game_install_path}. Please check that this directory is correct and contains a valid RimWorld game executable.</source>
-        <translation>RimSort no pudo validar el ejecutable de RimWorld en la carpeta especificada: {game_install_path}.Verifique que este directorio sea correcto y contenga un ejecutable del juego RimWorld válido.</translation>
+        <source>RimDex could not validate the RimWorld executable in the specified folder: {game_install_path}. Please check that this directory is correct and contains a valid RimWorld game executable.</source>
+        <translation>RimDex no pudo validar el ejecutable de RimWorld en la carpeta especificada: {game_install_path}.Verifique que este directorio sea correcto y contenga un ejecutable del juego RimWorld válido.</translation>
     </message>
 </context>
 <context>
@@ -5371,7 +5371,7 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>No se pudo eliminar el directorio</translation>
     </message>
     <message>
-        <source>RimSort tried to remove a directory that does not exist.</source>
+        <source>RimDex tried to remove a directory that does not exist.</source>
         <translation>Rimsort intentó eliminar un directorio que no existe.</translation>
     </message>
     <message>
@@ -5379,7 +5379,7 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>El directorio no existe:  {path}</translation>
     </message>
     <message>
-        <source>RimSort tried to remove a directory that is not a directory.</source>
+        <source>RimDex tried to remove a directory that is not a directory.</source>
         <translation>Rimsort intentó eliminar un directorio que no es un directorio.</translation>
     </message>
     <message>
@@ -5402,7 +5402,7 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>No se puede leer datos</translation>
     </message>
     <message>
-        <source>RimSort was unable to read the supplied mods list.</source>
+        <source>RimDex was unable to read the supplied mods list.</source>
         <translation>Rimsort no pudo leer la lista de modificaciones suministradas.</translation>
     </message>
     <message>
@@ -5410,7 +5410,7 @@ The following table displays Workshop mods available for update from Steam.</sou
         <translation>La lista de modificaciones suministradas puede faltar o no válida. Si solo (re) instaló RimWorld, es posible que deba ejecutarlo una vez para generar la lista de mods.</translation>
     </message>
     <message>
-        <source>RimSort was unable to read the supplied mods list because it may be invalid or missing.</source>
+        <source>RimDex was unable to read the supplied mods list because it may be invalid or missing.</source>
         <translation>Rimsort no pudo leer la lista de modificaciones suministradas porque puede ser inválida o faltante.</translation>
     </message>
 </context>
