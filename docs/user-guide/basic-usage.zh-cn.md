@@ -78,9 +78,9 @@ Steam 创意工坊元数据
 规则元数据
 {: .label .label-red }
 
-  RimDex 使用两个外部规则数据库：`userRules.json` 和 `communityRules.json`。两者功能相同，区别在于社区规则数据库由社区维护共享，用户规则数据库用于存储你个人的加载顺序规则。
+  RimDex 使用两个外部规则数据库：`userRules.json` 和 `RulesDatabase.json`。两者功能相同，区别在于社区规则数据库由社区维护共享，用户规则数据库用于存储你个人的加载顺序规则。
 
-  这两个数据库都采用与 Paladin RimPy Mod 管理器的社区规则数据库（communityRules.json）兼容的格式。
+  这两个数据库都采用与 Paladin RimPy Mod 管理器的社区规则数据库（RulesDatabase.json）兼容的格式。
 
   {: .note}
   > 虽然你可以直接修改这些纯文本格式的数据库，但建议使用 RimDex 内置的 [规则编辑器](../user-guide/rule-editor.zh-cn) 来编辑其中定义的规则。

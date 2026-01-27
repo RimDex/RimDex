@@ -105,7 +105,7 @@ class EditableDelegate(QItemDelegate):
 
 class RuleEditor(QWidget):
     """
-    A generic panel used to edit Paladin communityRules.json style rules
+    A generic panel used to edit Paladin RulesDatabase.json style rules
     """
 
     update_database_signal = Signal(list)
@@ -388,7 +388,7 @@ class RuleEditor(QWidget):
         )
         self.editor_save_community_rules_button = QToolButton()
         self.editor_save_community_rules_button.setToolTip(
-            self.tr("Save rules to communityRules.json")
+            self.tr("Save rules to RulesDatabase.json")
         )
         self.editor_save_community_rules_button.setIcon(
             self.editor_save_community_rules_icon

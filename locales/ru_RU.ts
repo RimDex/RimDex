@@ -3542,8 +3542,8 @@ Alternative Dependencies:</source>
         <translation>Комментарий</translation>
     </message>
     <message>
-        <source>Save rules to communityRules.json</source>
-        <translation>Сохранить правила в communityRules.json</translation>
+        <source>Save rules to RulesDatabase.json</source>
+        <translation>Сохранить правила в RulesDatabase.json</translation>
     </message>
     <message>
         <source>Save rules to userRules.json</source>

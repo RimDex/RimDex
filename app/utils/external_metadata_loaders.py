@@ -17,7 +17,7 @@ SOURCE_DISABLED = "Disabled"
 
 # Metadata file names
 STEAM_DB_FILE = "SteamDatabase.json"
-COMMUNITY_RULES_FILE = "communityRules.json"
+COMMUNITY_RULES_FILE = "RulesDatabase.json"
 NO_VERSION_WARNING_FILE = "ModIdsToFix.xml"
 USE_THIS_INSTEAD_FILE = "replacements.json.gz"
 

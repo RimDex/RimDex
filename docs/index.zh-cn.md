@@ -62,7 +62,7 @@ RimDex 是社区主导的 [RimWorld](https://rimworldgame.com/) Mod 管理及排
   - 动态生成 Steam 创意工坊数据库（SteamDB）。该功能与 Paladin 的 RimPy 社区 Mod 管理器数据库 db.json 架构兼容且功能相同
   - 提供用于比较、合并和发布数据库的工具
 - 社区规则数据库和用户规则的编辑器
-  - 完全兼容 Paladin 的 RimPy 社区 Mod 管理器数据库 `communityRules.json` 架构
+  - 完全兼容 Paladin 的 RimPy 社区 Mod 管理器数据库 `RulesDatabase.json` 架构
   - 提供用于比较、合并和发布数据库的工具
 
 ## 关于项目

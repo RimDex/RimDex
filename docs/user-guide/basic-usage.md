@@ -68,9 +68,9 @@ Steam Workshop Metadata
 Rules Metadata
 {: .label .label-red }
 
-  There are two external rules databases that RimDex uses, `userRules.json` and `communityRules.json`. They both provide the same functionality, but one is community driven and intended to be shared, and the other is intended for your own personal load order rules. 
+  There are two external rules databases that RimDex uses, `userRules.json` and `RulesDatabase.json`. They both provide the same functionality, but one is community driven and intended to be shared, and the other is intended for your own personal load order rules. 
   
-  Both of these databases uses a schema compatible with Paladin's RimPy Mod Manager Database communityRules.json.
+  Both of these databases uses a schema compatible with Paladin's RimPy Mod Manager Database RulesDatabase.json.
 
   {: .note}
   > While you can modify the databases directly as they are plain text files, it is recommended to use RimDex's built in [Rule Editor](../user-guide/rule-editor) utility to edit the rules defined in these databases.

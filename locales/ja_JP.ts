@@ -3545,7 +3545,7 @@ Alternative Dependencies:</source>
         <translation>コメント</translation>
     </message>
     <message>
-        <source>Save rules to communityRules.json</source>
+        <source>Save rules to RulesDatabase.json</source>
         <translation>コミュニティルールを保存</translation>
     </message>
     <message>

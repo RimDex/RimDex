@@ -251,11 +251,11 @@ def test_create_base_rules_ludeon_core() -> None:
 
 
 def test_get_rules_db_large_db(tmp_path: Path) -> None:
-    repo = "https://github.com/RimDex/Community-Rules-Database.git"
+    repo = "https://github.com/RimDex/RimDex-Rules-Database.git"
     _ = pygit2.clone_repository(repo, str(tmp_path), depth=1)
-    file = tmp_path / "communityRules.json"
+    file = tmp_path / "RulesDatabase.json"
     if not file.exists():
-        warnings.warn("communityRules.json could not be found! Skipping test.")
+        warnings.warn("RulesDatabase.json could not be found! Skipping test.")
         return
     assert read_rules_db(file) is not None
 

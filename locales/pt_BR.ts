@@ -3548,8 +3548,8 @@ Um mod alternativo atualizado é recomendado:
         <translation>Comentário</translation>
     </message>
     <message>
-        <source>Save rules to communityRules.json</source>
-        <translation>Salvar regras em communityRules.json</translation>
+        <source>Save rules to RulesDatabase.json</source>
+        <translation>Salvar regras em RulesDatabase.json</translation>
     </message>
     <message>
         <source>Save rules to userRules.json</source>
