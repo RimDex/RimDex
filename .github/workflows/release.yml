@@ -48,6 +48,8 @@ permissions: {}
 jobs:
   pre-build:
     uses: ./.github/workflows/get_version_info.yml
+    secrets:
+      RIMDEX_ORG_TOKEN: ${{ secrets.RIMDEX_ORG_TOKEN }}
     with:
       type: ${{ github.event.inputs.type }}
 
@@ -60,6 +62,8 @@ jobs:
       attestations: write
       packages: write
     uses: ./.github/workflows/build.yml
+    secrets:
+      RIMDEX_ORG_TOKEN: ${{ secrets.RIMDEX_ORG_TOKEN }}
     with:
       version_format: ${{ needs.pre-build.outputs.version_format }}
 
@@ -81,6 +85,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-tags: true
+          token: ${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Determine tag
         id: tag
@@ -97,6 +102,7 @@ jobs:
         shell: bash
 
       - name: Install xmlstarlet
+        shell: bash
         run: sudo apt-get install -y xmlstarlet
 
       - name: Download artifacts - Current Flow
