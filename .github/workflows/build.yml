@@ -91,6 +91,14 @@ jobs:
               BUILD_OUTPUT: "app.dist"
               Executable: RimDex.exe
     steps:
+      - name: Configure Git for submodule authentication
+        shell: bash
+        run: |
+          TOKEN="${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}"
+          if [[ -n "$TOKEN" ]]; then
+            git config --global url."https://${TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+          fi
+
       - name: Check-out repository
         uses: actions/checkout@v6
         with:
@@ -148,14 +156,6 @@ jobs:
         with:
           enable-cache: true
           activate-environment: true
-
-      - name: Configure Git for submodules (if needed)
-        shell: bash
-        run: |
-          TOKEN="${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}"
-          if [[ -n "$TOKEN" ]]; then
-            git config --global url."https://${TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
-          fi
 
       - name: Install Dependencies
         shell: bash

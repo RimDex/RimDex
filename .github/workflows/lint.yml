@@ -21,6 +21,14 @@ jobs:
       statuses: write
 
     steps:
+      - name: Configure Git for submodule authentication
+        shell: bash
+        run: |
+          TOKEN="${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}"
+          if [[ -n "$TOKEN" ]]; then
+            git config --global url."https://${TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+          fi
+
       - name: Checkout code
         uses: actions/checkout@v6
         with:

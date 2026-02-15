@@ -89,6 +89,14 @@ jobs:
           echo "prerelease=$prerelease" >> "$GITHUB_OUTPUT"
         shell: bash
 
+      - name: Configure Git for submodule authentication
+        shell: bash
+        run: |
+          TOKEN="${{ secrets.RIMDEX_ORG_TOKEN != '' && secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}"
+          if [[ -n "$TOKEN" ]]; then
+            git config --global url."https://${TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+          fi
+
       - name: Checkout
         if: ${{ inputs.format_only == false }}
         uses: actions/checkout@v6

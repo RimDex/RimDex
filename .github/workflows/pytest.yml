@@ -2,11 +2,7 @@ name: Run Pytest
 on:
   workflow_call: null
   workflow_dispatch: null
-  merge_group: null
-  pull_request: null
-  push:
-    branches:
-      - main
+  merge_group:
 
 permissions: {}
 
@@ -16,10 +12,19 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     steps:
+      - name: Configure Git for submodule authentication
+        shell: bash
+        run: |
+          TOKEN="${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}"
+          if [[ -n "$TOKEN" ]]; then
+            git config --global url."https://${TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+          fi
+
       - uses: actions/checkout@v6
         with:
           token: ${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}
           submodules: recursive
+
       - name: Setup Python
         uses: actions/setup-python@main
         with:
@@ -29,14 +34,6 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           enable-cache: true
-
-      - name: Configure Git for submodules (if needed)
-        shell: bash
-        run: |
-          TOKEN="${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}"
-          if [[ -n "$TOKEN" ]]; then
-            git config --global url."https://${TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
-          fi
 
       - name: Install Dependencies
         shell: bash
