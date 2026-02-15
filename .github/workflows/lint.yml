@@ -27,8 +27,9 @@ jobs:
           # super-linter needs the full git history to get the
           # list of files that changed across commits
           fetch-depth: 0
-          submodules: recursive
           persist-credentials: true
+          token: ${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}
+          submodules: recursive
 
       - name: Setup Python
         uses: actions/setup-python@main
@@ -41,11 +42,21 @@ jobs:
           enable-cache: true
           activate-environment: true
 
+      - name: Configure Git for private repos
+        shell: bash
+        run: |
+          TOKEN="${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}"
+          if [[ -n "$TOKEN" ]]; then
+            git config --global url."https://${TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+          fi
+
       - name: Install Dependencies
+        if: ${{ github.event_name != 'pull_request' }}
         shell: bash
         run: uv sync --locked --dev
 
       - name: Move the dependencies # Needed to deal with weirdness with super-linter's internal MyPy.
+        shell: bash
         run: mv .venv /home/runner/work/_temp/_github_workflow
 
       - name: Super-linter

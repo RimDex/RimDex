@@ -2,7 +2,11 @@ name: Run Pytest
 on:
   workflow_call: null
   workflow_dispatch: null
-  merge_group:
+  merge_group: null
+  pull_request: null
+  push:
+    branches:
+      - main
 
 permissions: {}
 
@@ -12,7 +16,10 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
+      - uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}
+          submodules: recursive
       - name: Setup Python
         uses: actions/setup-python@main
         with:
@@ -22,6 +29,14 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           enable-cache: true
+
+      - name: Configure Git for submodules (if needed)
+        shell: bash
+        run: |
+          TOKEN="${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}"
+          if [[ -n "$TOKEN" ]]; then
+            git config --global url."https://${TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+          fi
 
       - name: Install Dependencies
         shell: bash
@@ -55,4 +70,5 @@ jobs:
           name: pytest-results
           path: junit/test-results.xml
         # Use always() to always run this step to publish test results when there are test failures
-        if: ${{ always() }}
+        if: ${{ always() && false }}
+        # NOTE: Disabled due to GitHub artifact storage quota limits. Re-enable after cleaning up old artifacts.

@@ -1,6 +1,9 @@
 name: Build
 on:
   workflow_call:
+    secrets:
+      RIMDEX_ORG_TOKEN:
+        required: false
     inputs:
       version_format:
         description: "Versioning format"
@@ -89,9 +92,10 @@ jobs:
               Executable: RimDex.exe
     steps:
       - name: Check-out repository
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          token: ${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}
           submodules: recursive
 
       - name: Add submodules to pythonpath
@@ -144,6 +148,14 @@ jobs:
         with:
           enable-cache: true
           activate-environment: true
+
+      - name: Configure Git for submodules (if needed)
+        shell: bash
+        run: |
+          TOKEN="${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}"
+          if [[ -n "$TOKEN" ]]; then
+            git config --global url."https://${TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+          fi
 
       - name: Install Dependencies
         shell: bash
