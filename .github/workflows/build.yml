@@ -1,6 +1,9 @@
 name: Build
 on:
   workflow_call:
+    secrets:
+      RIMDEX_ORG_TOKEN:
+        required: false
     inputs:
       version_format:
         description: "Versioning format"
@@ -88,10 +91,19 @@ jobs:
               BUILD_OUTPUT: "app.dist"
               Executable: RimDex.exe
     steps:
+      - name: Configure Git for submodule authentication
+        shell: bash
+        run: |
+          TOKEN="${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}"
+          if [[ -n "$TOKEN" ]]; then
+            git config --global url."https://${TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+          fi
+
       - name: Check-out repository
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          token: ${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}
           submodules: recursive
 
       - name: Add submodules to pythonpath

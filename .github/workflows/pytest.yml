@@ -12,7 +12,19 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
+      - name: Configure Git for submodule authentication
+        shell: bash
+        run: |
+          TOKEN="${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}"
+          if [[ -n "$TOKEN" ]]; then
+            git config --global url."https://${TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+          fi
+
+      - uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.RIMDEX_ORG_TOKEN || secrets.GITHUB_TOKEN }}
+          submodules: recursive
+
       - name: Setup Python
         uses: actions/setup-python@main
         with:
@@ -55,4 +67,5 @@ jobs:
           name: pytest-results
           path: junit/test-results.xml
         # Use always() to always run this step to publish test results when there are test failures
-        if: ${{ always() }}
+        if: ${{ always() && false }}
+        # NOTE: Disabled due to GitHub artifact storage quota limits. Re-enable after cleaning up old artifacts.

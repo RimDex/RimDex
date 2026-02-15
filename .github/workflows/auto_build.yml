@@ -25,6 +25,8 @@ jobs:
 
   pre-build:
     uses: ./.github/workflows/get_version_info.yml
+    secrets:
+      RIMDEX_ORG_TOKEN: ${{ secrets.RIMDEX_ORG_TOKEN }}
     with:
       format_only: true
 
@@ -37,6 +39,8 @@ jobs:
       attestations: write
       packages: write
     uses: ./.github/workflows/build.yml
+    secrets:
+      RIMDEX_ORG_TOKEN: ${{ secrets.RIMDEX_ORG_TOKEN }}
     with:
       version_format: ${{ needs.pre-build.outputs.version_format }}
       attest: true
@@ -50,6 +54,8 @@ jobs:
       attestations: write
       packages: write
     uses: ./.github/workflows/build.yml
+    secrets:
+      RIMDEX_ORG_TOKEN: ${{ secrets.RIMDEX_ORG_TOKEN }}
     with:
       version_format: ${{ needs.pre-build.outputs.version_format }}
       attest: false
@@ -65,4 +71,5 @@ jobs:
     if: always()
     steps:
       - name: Set status check
+        shell: bash
         run: echo "All required jobs have completed."
