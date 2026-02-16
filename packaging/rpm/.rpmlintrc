@@ -1,4 +1,4 @@
-# rpmlint configuration for rimsort
+# rpmlint configuration for rimdex
 #
 # This package uses Nuitka to create a standalone binary with all dependencies bundled.
 # As a result, it triggers several warnings that are expected and acceptable for this

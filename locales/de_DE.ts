@@ -4616,7 +4616,7 @@ Bitte wählen Sie eine der folgenden Optionen, um fortzufahren.</translation>
     </message>
     <message>
         <source>Please reach out to us on Github Issues page or
-#rimsort-testing on the Rocketman/CAI discord</source>
+#rimdex-testing on the Rocketman/CAI discord</source>
         <translation>Bitte wenden Sie sich an uns auf der Seite GitHub -Ausgaben oder
 #RIMSORT-Tests auf dem Raketman/Cai-Zwietracht</translation>
     </message>
@@ -5173,7 +5173,7 @@ Möchten Sie jetzt aktualisieren?</translation>
     </message>
     <message>
         <source>Downloading RimDex {tag_name} release...</source>
-        <translation>Herunterladen rimsort  Release ... {tag_name}</translation>
+        <translation>Herunterladen rimdex  Release ... {tag_name}</translation>
     </message>
     <message>
         <source>

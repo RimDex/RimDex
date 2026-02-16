@@ -4377,7 +4377,7 @@ This basically preserves your mod coloring, user notes etc. for this many second
 После того, как мод будет удален, это время, когда мы ждем, пока этот элемент мода не будет удален из вспомогательной метаданной.
 Этот вспомогательный DB содержит информацию о цветах модов, переключении предупреждения, пользовательских примечаниях и т. Д.
 Это в основном сохраняет ваш мод раскраски, пользовательские примечания и т. Д. В течение столько секунд после удаления.
-(Это относится и к удалению за пределами rimsort)</translation>
+(Это относится и к удалению за пределами rimdex)</translation>
     </message>
     <message>
         <source>Enable editing</source>
@@ -4633,9 +4633,9 @@ Please choose one of the following options to proceed.</source>
     </message>
     <message>
         <source>Please reach out to us on Github Issues page or
-#rimsort-testing on the Rocketman/CAI discord</source>
+#rimdex-testing on the Rocketman/CAI discord</source>
         <translation>Пожалуйста, свяжитесь с нами на странице проблем Github или
-#rimsort-testing на Discord Rocketman/CAI</translation>
+#rimdex-testing на Discord Rocketman/CAI</translation>
     </message>
     <message>
         <source>You already have these mods in your download list!</source>
@@ -5186,12 +5186,12 @@ Details: {e}</source>
     <message>
         <source>You are running RimDex {current_version}
 Do you want to update now?</source>
-        <translation>Вы используете rimsort {current_version}
+        <translation>Вы используете rimdex {current_version}
 Вы хотите обновить сейчас?</translation>
     </message>
     <message>
         <source>Downloading RimDex {tag_name} release...</source>
-        <translation>Загрузка rimsort  релиз ... {tag_name}</translation>
+        <translation>Загрузка rimdex  релиз ... {tag_name}</translation>
     </message>
     <message>
         <source>

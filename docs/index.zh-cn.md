@@ -29,7 +29,7 @@ lang: zh-cn
 
 ---
 
-![RimDex Preview](./assets/images/rimsort_preview.png)
+![RimDex Preview](./assets/images/rimdex_preview.png)
 
 RimDex 是社区主导的 [RimWorld](https://rimworldgame.com/) Mod 管理及排序工具，支持 Windows，macOS 和 Linux (Ubuntu) 系统。作为免费开源的软件，任何人都可以为其贡献代码或者自行编译。
 
@@ -86,7 +86,7 @@ RimDex 采用 [GPL-3.0 协议](https://github.com/RimDex/RimDex/tree/main/LICENS
 我们旨在培养一个友好的社区。
 在 GitHub 仓库中 [查看我们的行为守则](https://github.com/RimDex/RimDex/tree/main/CODE_OF_CONDUCT.md)。
 
-[Wiki]: https://rimsort.github.io
+[Wiki]: https://rimdex.github.io
 [Repo]: https://github.com/RimDex/RimDex
 [Issues]: https://github.com/RimDex/RimDex/issues
 [Releases]: https://github.com/oceancabbage/RimDex/releases

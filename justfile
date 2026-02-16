@@ -94,7 +94,7 @@ rpm-tarball VERSION='1.0.0':
         FULL_VERSION="{{VERSION}}"
     fi
 
-    TARBALL="$HOME/rpmbuild/SOURCES/rimsort-$FULL_VERSION.tar.gz"
+    TARBALL="$HOME/rpmbuild/SOURCES/rimdex-$FULL_VERSION.tar.gz"
 
     echo "Creating source tarball with submodules for version $FULL_VERSION..."
 
@@ -132,10 +132,10 @@ build-rpm VERSION='1.0.0': check (rpm-tarball VERSION)
     mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
     echo "Building RPM package for version $FULL_VERSION..."
-    rpmbuild -bb packaging/rpm/rimsort.spec --define "version $FULL_VERSION"
+    rpmbuild -bb packaging/rpm/rimdex.spec --define "version $FULL_VERSION"
 
     echo "RPM build complete!"
-    RPM_FILE=$(find ~/rpmbuild/RPMS/x86_64/ -name "rimsort-$FULL_VERSION-*.rpm" | head -n 1)
+    RPM_FILE=$(find ~/rpmbuild/RPMS/x86_64/ -name "rimdex-$FULL_VERSION-*.rpm" | head -n 1)
     if [ -n "$RPM_FILE" ]; then
         echo "Built RPM: $RPM_FILE"
         ls -lh "$RPM_FILE"

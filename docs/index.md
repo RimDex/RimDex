@@ -28,7 +28,7 @@ A free and open source, multi-platform mod manager for RimWorld.
 
 ---
 
-![RimDex Preview](./assets/images/rimsort_preview.png)
+![RimDex Preview](./assets/images/rimdex_preview.png)
 
 RimDex is a community centric mod manager and sorter for the game [RimWorld](https://rimworldgame.com/) with support for Windows, macOS, and Linux (Ubuntu builds). It is free and open source, meaning anyone can contribute to it or compile it.
 
@@ -85,7 +85,7 @@ RimDex is distributed by a [GPL-3.0 license](https://github.com/RimDex/RimDex/tr
 We aim to foster a welcoming community.
 [View our Code of Conduct](https://github.com/RimDex/RimDex/tree/main/CODE_OF_CONDUCT.md) on our GitHub repository.
 
-[Wiki]: https://rimsort.github.io
+[Wiki]: https://rimdex.github.io
 [Repo]: https://github.com/RimDex/RimDex
 [Issues]: https://github.com/RimDex/RimDex/issues
 [Releases]: https://github.com/oceancabbage/RimDex/releases

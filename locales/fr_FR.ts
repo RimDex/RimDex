@@ -4600,7 +4600,7 @@ Veuillez choisir l'une des options suivantes à procéder.</translation>
     </message>
     <message>
         <source>Please reach out to us on Github Issues page or
-#rimsort-testing on the Rocketman/CAI discord</source>
+#rimdex-testing on the Rocketman/CAI discord</source>
         <translation>Veuillez nous contacter sur la page des problèmes GitHub ou
 # Rimsort-test sur le rocketman / cai discorde</translation>
     </message>

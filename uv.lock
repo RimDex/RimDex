@@ -919,7 +919,7 @@ wheels = [
 ]
 
 [[package]]
-name = "rimsort"
+name = "rimdex"
 version = "0.0.0"
 source = { virtual = "." }
 dependencies = [

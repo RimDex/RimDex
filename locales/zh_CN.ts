@@ -4649,7 +4649,7 @@ Please choose one of the following options to proceed.</source>
     </message>
     <message>
         <source>Please reach out to us on Github Issues page or
-#rimsort-testing on the Rocketman/CAI discord</source>
+#rimdex-testing on the Rocketman/CAI discord</source>
         <translation>请在 Github Issues 页面或在 
 Rocketman/CAI 的 Discord 上联系我们</translation>
     </message>

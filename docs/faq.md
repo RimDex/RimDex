@@ -26,7 +26,7 @@ Unfortunately, because RimDex is compiled Python, it has a tendency to trigger f
 
 For **_windows defender (WD)_** specifically, we tend to try and send samples to Microsoft to whitelist the RimDex release if there are any false detections. This process can still take at least a full day, and needs to be repeated every release. Thus, if WD is false flagging RimDex, we still appreciate a quick report, but it should be safe to override WD. 
 
-For **_macOS_,** we'd require a similar yet separate yearly fee to sign apps on macOS. Mac users can, for now, use [this workaround](https://rimsort.github.io/RimDex/user-guide/downloading-and-installing#macos). There is no solution for us on macOS other than paying Apple.
+For **_macOS_,** we'd require a similar yet separate yearly fee to sign apps on macOS. Mac users can, for now, use [this workaround](https://rimdex.github.io/RimDex/user-guide/downloading-and-installing#macos). There is no solution for us on macOS other than paying Apple.
 
 ## Where are game paths located?
 
@@ -38,11 +38,11 @@ Game paths and other location settings are located in the settings panel under `
 
 ## What is the Steam Workshop Database used for?
 
-RimDex uses the Steam Workshop Database (Steam DB) for loading mod dependency data that is only available on Steam (the "required items" section). While modders should strive to specify this data also in their mods about.xml, the Steam DB allows RimDex to use a mods Steam data, in addition to its about.xml. For details, see the [user guide](https://rimsort.github.io/RimDex/user-guide/databases)
+RimDex uses the Steam Workshop Database (Steam DB) for loading mod dependency data that is only available on Steam (the "required items" section). While modders should strive to specify this data also in their mods about.xml, the Steam DB allows RimDex to use a mods Steam data, in addition to its about.xml. For details, see the [user guide](https://rimdex.github.io/RimDex/user-guide/databases)
 
 ## What is the Community Rules Database used for?
 
-The Community Rules Database (Community Rules DB / CR DB) is used for getting RimDex to place mods in the correct load order. These rules are found and submitted by the community and then collected for shared use in the CR DB. You can contribute to the CR DB by submitting pull requests on GitHub. For details about the DB, see the [user guide](https://rimsort.github.io/RimDex/user-guide/databases).
+The Community Rules Database (Community Rules DB / CR DB) is used for getting RimDex to place mods in the correct load order. These rules are found and submitted by the community and then collected for shared use in the CR DB. You can contribute to the CR DB by submitting pull requests on GitHub. For details about the DB, see the [user guide](https://rimdex.github.io/RimDex/user-guide/databases).
 
 ## How do I enable Steam client integration features like `Open mod in Steam` if I have Steam installed?
 

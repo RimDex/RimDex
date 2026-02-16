@@ -12,11 +12,11 @@ if (typeof QWebChannel !== 'undefined') {
 				return;
 			}
 
-			let modStatusBadge = tile.querySelector('.rimsort-modstatus-badge');
+			let modStatusBadge = tile.querySelector('.rimdex-modstatus-badge');
 
 			if (!modStatusBadge) {
 				modStatusBadge = document.createElement('div');
-				modStatusBadge.className = 'rimsort-modstatus-badge';
+				modStatusBadge.className = 'rimdex-modstatus-badge';
 
 				let modTitleContainer = null;
 				const collectionItemParent = tile.parentElement;
@@ -30,15 +30,15 @@ if (typeof QWebChannel !== 'undefined') {
 				const modTitleText = modTitleElement ? modTitleElement.textContent.trim() : modId;
 
 				const tileMouseoverHandler = function() {
-					tile.classList.add('rimsort-tile-hovered');
-					if (modStatusBadge.classList.contains('rimsort-mod-default')) {
+					tile.classList.add('rimdex-tile-hovered');
+					if (modStatusBadge.classList.contains('rimdex-mod-default')) {
 						modStatusBadge.style.opacity = '1';
 						modStatusBadge.style.visibility = 'visible';
 					}
 				};
 				const tileMouseoutHandler = function() {
-					tile.classList.remove('rimsort-tile-hovered');
-					if (modStatusBadge.classList.contains('rimsort-mod-default')) {
+					tile.classList.remove('rimdex-tile-hovered');
+					if (modStatusBadge.classList.contains('rimdex-mod-default')) {
 						modStatusBadge.style.opacity = '0';
 						modStatusBadge.style.visibility = 'hidden';
 					}
@@ -47,10 +47,10 @@ if (typeof QWebChannel !== 'undefined') {
 				tile.addEventListener('mouseout', tileMouseoutHandler);
 
 				const badgeMouseoverHandler = function() {
-					modStatusBadge.classList.add('rimsort-badge-hovered');
+					modStatusBadge.classList.add('rimdex-badge-hovered');
 				};
 				const badgeMouseoutHandler = function() {
-					modStatusBadge.classList.remove('rimsort-badge-hovered');
+					modStatusBadge.classList.remove('rimdex-badge-hovered');
 				};
 				modStatusBadge.addEventListener('mouseover', badgeMouseoverHandler);
 				modStatusBadge.addEventListener('mouseout', badgeMouseoutHandler);
@@ -64,9 +64,9 @@ if (typeof QWebChannel !== 'undefined') {
 						modStatusBadge.classList.remove('pressed');
 					}, 150);
 
-					if (modStatusBadge.classList.contains('rimsort-mod-default')) {
+					if (modStatusBadge.classList.contains('rimdex-mod-default')) {
 						window.browserBridge.add_mod_from_js(modId, modTitleText);
-					} else if (modStatusBadge.classList.contains('rimsort-mod-added')) {
+					} else if (modStatusBadge.classList.contains('rimdex-mod-added')) {
 						window.browserBridge.remove_mod_from_js(modId);
 					}
 				};
@@ -80,8 +80,8 @@ if (typeof QWebChannel !== 'undefined') {
 			if (status === BadgeState.INSTALLED) {
 				modStatusBadge.title = 'Already installed';
 				modStatusBadge.innerHTML = '✓';
-				modStatusBadge.classList.remove('rimsort-mod-added', 'rimsort-mod-default');
-				modStatusBadge.classList.add('rimsort-mod-installed');
+				modStatusBadge.classList.remove('rimdex-mod-added', 'rimdex-mod-default');
+				modStatusBadge.classList.add('rimdex-mod-installed');
 				const modTitleElement = tile.querySelector('.workshopItemTitle');
 				if (modTitleElement) {
 					modTitleElement.style.color = '#4CAF50';
@@ -91,8 +91,8 @@ if (typeof QWebChannel !== 'undefined') {
 			} else if (status === BadgeState.ADDED) {
 				modStatusBadge.title = 'Preparing to download';
 				modStatusBadge.innerHTML = '-';
-				modStatusBadge.classList.remove('rimsort-mod-installed', 'rimsort-mod-default');
-				modStatusBadge.classList.add('rimsort-mod-added');
+				modStatusBadge.classList.remove('rimdex-mod-installed', 'rimdex-mod-default');
+				modStatusBadge.classList.add('rimdex-mod-added');
 				const modTitleElement = tile.querySelector('.workshopItemTitle');
 				if (modTitleElement) {
 					modTitleElement.style.color = '';
@@ -102,13 +102,13 @@ if (typeof QWebChannel !== 'undefined') {
 			} else {
 				modStatusBadge.title = 'Add to list';
 				modStatusBadge.innerHTML = '+';
-				modStatusBadge.classList.remove('rimsort-mod-installed', 'rimsort-mod-added');
-				modStatusBadge.classList.add('rimsort-mod-default');
+				modStatusBadge.classList.remove('rimdex-mod-installed', 'rimdex-mod-added');
+				modStatusBadge.classList.add('rimdex-mod-default');
 				const modTitleElement = tile.querySelector('.workshopItemTitle');
 				if (modTitleElement) {
 					modTitleElement.style.color = '';
 				}
-				if (tile.classList.contains('rimsort-tile-hovered')) {
+				if (tile.classList.contains('rimdex-tile-hovered')) {
 					modStatusBadge.style.opacity = '1';
 					modStatusBadge.style.visibility = 'visible';
 				} else {
@@ -118,9 +118,9 @@ if (typeof QWebChannel !== 'undefined') {
 			}
 
 			if (modStatusBadge.matches(':hover')) {
-				modStatusBadge.classList.add('rimsort-badge-hovered');
+				modStatusBadge.classList.add('rimdex-badge-hovered');
 			} else {
-				modStatusBadge.classList.remove('rimsort-badge-hovered');
+				modStatusBadge.classList.remove('rimdex-badge-hovered');
 			}
 		};
 
@@ -154,7 +154,7 @@ if (typeof QWebChannel !== 'undefined') {
 
 const style = document.createElement('style');
 style.textContent = `
-    .rimsort-modstatus-badge {
+    .rimdex-modstatus-badge {
         position: absolute;
         top: 5px;
         right: 5px;
@@ -173,25 +173,25 @@ style.textContent = `
         transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.2s ease, visibility 0.2s ease;
     }
 
-    .rimsort-modstatus-badge.rimsort-badge-hovered {
+    .rimdex-modstatus-badge.rimdex-badge-hovered {
         transform: scale(1.05);
         box-shadow: 0 0 8px rgba(0,0,0,0.4);
     }
 
-    .rimsort-modstatus-badge.pressed {
+    .rimdex-modstatus-badge.pressed {
         transform: scale(0.9);
     }
 
-    .rimsort-mod-installed {
+    .rimdex-mod-installed {
         background-color: #4CAF50;
     }
 
-    .rimsort-mod-added {
+    .rimdex-mod-added {
         background-color: #FFA500;
         cursor: pointer;
     }
 
-    .rimsort-mod-default {
+    .rimdex-mod-default {
         background-color: #2196F3;
         cursor: pointer;
         opacity: 0;

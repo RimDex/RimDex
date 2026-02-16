@@ -103,7 +103,7 @@ log_error() {
 }
 
 # Function to kill RimDex process safely
-kill_rimsort() {
+kill_rimdex() {
     log_info "Stopping RimDex process..."
     
     if [ "$OS" = "Darwin" ]; then
@@ -221,7 +221,7 @@ else
 fi
 
 # Kill running processes
-kill_rimsort
+kill_rimdex
 
 # Check if update source exists
 if [ ! -d "$UPDATE_SOURCE_FOLDER" ]; then

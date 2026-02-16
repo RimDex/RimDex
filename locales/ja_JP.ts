@@ -2266,7 +2266,7 @@ How would you like to proceed?</source>
     </message>
     <message>
         <source>RimDex GitHub…</source>
-        <translation>rimsort github…</translation>
+        <translation>rimdex github…</translation>
     </message>
     <message>
         <source>Reset Mod Colors</source>
@@ -4170,10 +4170,10 @@ Name of folder will be used as name of the theme and any invalid theme will be i
 </source>
         <translation>独自のテーマ /スタイルシートを追加するには
 
-1）「rimsort」構成フォルダーに「Themes」フォルダーに新しい倍率を作成する
+1）「rimdex」構成フォルダーに「Themes」フォルダーに新しい倍率を作成する
 2）デフォルトの「rimpy」テーマを使用して作成したフォルダーにコピーします
 3）あなたの想像力に従って、コピーされた「style.qss」を編集します
-4）「rimsort」を開始し、ドロップダウンからテーマを選択します
+4）「rimdex」を開始し、ドロップダウンからテーマを選択します
 5）[OK]をクリックして設定を保存し、選択したテーマを適用します
 
 注記
@@ -4633,9 +4633,9 @@ Please choose one of the following options to proceed.</source>
     </message>
     <message>
         <source>Please reach out to us on Github Issues page or
-#rimsort-testing on the Rocketman/CAI discord</source>
+#rimdex-testing on the Rocketman/CAI discord</source>
         <translation>GithubのIssuesページまたは
-Rocketman/CAIのDiscordの#rimsort-testingでお問い合わせください。</translation>
+Rocketman/CAIのDiscordの#rimdex-testingでお問い合わせください。</translation>
     </message>
     <message>
         <source>You already have these mods in your download list!</source>
@@ -5182,17 +5182,17 @@ Details: {e}</source>
     </message>
     <message>
         <source>An update to RimDex has been released: {latest_tag_name}</source>
-        <translation>rimsortのアップデートがリリースされました： {latest_tag_name}</translation>
+        <translation>rimdexのアップデートがリリースされました： {latest_tag_name}</translation>
     </message>
     <message>
         <source>You are running RimDex {current_version}
 Do you want to update now?</source>
-        <translation>rimsort {current_version}を実行しています
+        <translation>rimdex {current_version}を実行しています
 今すぐ更新しますか？</translation>
     </message>
     <message>
         <source>Downloading RimDex {tag_name} release...</source>
-        <translation>rimsort {tag_name}リリースのダウンロード...</translation>
+        <translation>rimdex {tag_name}リリースのダウンロード...</translation>
     </message>
     <message>
         <source>

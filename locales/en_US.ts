@@ -4481,7 +4481,7 @@ Please choose one of the following options to proceed.</source>
     </message>
     <message>
         <source>Please reach out to us on Github Issues page or
-#rimsort-testing on the Rocketman/CAI discord</source>
+#rimdex-testing on the Rocketman/CAI discord</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

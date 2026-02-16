@@ -4639,9 +4639,9 @@ Escolha uma das opções a seguir para continuar.</translation>
     </message>
     <message>
         <source>Please reach out to us on Github Issues page or
-#rimsort-testing on the Rocketman/CAI discord</source>
+#rimdex-testing on the Rocketman/CAI discord</source>
         <translation>Entre em contato conosco pela página de Issues no GitHub ou
-#rimsort-testing no Discord do Rocketman/CAI</translation>
+#rimdex-testing no Discord do Rocketman/CAI</translation>
     </message>
     <message>
         <source>You already have these mods in your download list!</source>
@@ -5183,7 +5183,7 @@ Detalhes: {e}</translation>
     <name>UpdateManager</name>
     <message>
         <source>RimDex update found</source>
-        <translation>Atualização do rimsort encontrada</translation>
+        <translation>Atualização do rimdex encontrada</translation>
     </message>
     <message>
         <source>An update to RimDex has been released: {latest_tag_name}</source>
@@ -5192,12 +5192,12 @@ Detalhes: {e}</translation>
     <message>
         <source>You are running RimDex {current_version}
 Do you want to update now?</source>
-        <translation>Você está executando o rimsort {current_version}
+        <translation>Você está executando o rimdex {current_version}
 Você quer atualizar agora?</translation>
     </message>
     <message>
         <source>Downloading RimDex {tag_name} release...</source>
-        <translation>Download de rimsort {tag_name} liberação ...</translation>
+        <translation>Download de rimdex {tag_name} liberação ...</translation>
     </message>
     <message>
         <source>

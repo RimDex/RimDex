@@ -280,7 +280,7 @@ jobs:
       - name: Build RPM package
         if: matrix.env.BUILD_RPM == 'true'
         run: |
-          rpmbuild -bb packaging/rpm/rimsort.spec \
+          rpmbuild -bb packaging/rpm/rimdex.spec \
             --define "version ${{ steps.sem_version.outputs.version }}"
         shell: bash
 
@@ -288,7 +288,7 @@ jobs:
         if: matrix.env.BUILD_RPM == 'true'
         id: find_rpm
         run: |
-          RPM_FILE=$(find ~/rpmbuild/RPMS/x86_64/ -name "rimsort-*.rpm" | head -n 1)
+          RPM_FILE=$(find ~/rpmbuild/RPMS/x86_64/ -name "rimdex-*.rpm" | head -n 1)
           echo "RPM_FILE=$RPM_FILE" >> "$GITHUB_OUTPUT"
           echo "Found RPM: $RPM_FILE"
         shell: bash
