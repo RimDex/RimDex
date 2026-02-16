@@ -172,22 +172,11 @@ if __name__ == "__main__":
         sys.exit(0)
 
     # GUI mode continues below with normal initialization
-    # Set the log level from the presence (or absence) of a "DEBUG" file in the app_data_folder
-    debug_file_path = AppInfo().app_storage_folder / "DEBUG"
-    if debug_file_path.exists() and debug_file_path.is_file():
-        DEBUG_MODE = True
-    else:
-        DEBUG_MODE = False
+    # check if "DEBUG" needs to be enabled
+    DEBUG_MODE = AppInfo().setup_debug_mode
 
-    # We have log_file (foo.log) and old_log_file (foo.old.log). If old_log_file exists,
-    # remove it. If log_file exists, rename it to old_log_file. When we pass log_file to
-    # the logger as an argument, it will automatically be created.
-    log_file = AppInfo().user_log_folder / (AppInfo().app_name + ".log")
-    old_log_file = AppInfo().user_log_folder / (AppInfo().app_name + ".old.log")
-    if old_log_file.exists() and old_log_file.is_file():
-        old_log_file.unlink()
-    if log_file.exists() and log_file.is_file():
-        log_file.rename(old_log_file)
+    # Define log file
+    log_file = AppInfo().setup_log_file
 
     # Define the log format string
 
@@ -221,12 +210,10 @@ if __name__ == "__main__":
     )
 
     if "__compiled__" not in globals():
-        logger.debug("Running using Python interpreter")
+        logger.warning("Running using Python interpreter")
     else:
         # Configure QtWebEngine locales path
-        os.environ["QTWEBENGINE_LOCALES_PATH"] = str(
-            AppInfo().application_folder / "qtwebengine_locales"
-        )
+        os.environ["QTWEBENGINE_LOCALES_PATH"] = str(AppInfo().qtwebengine_locales_file)
 
         # MacOS and Windows do not support fork, and can only use spawn
         if SYSTEM != "Linux":
@@ -236,7 +223,7 @@ if __name__ == "__main__":
             freeze_support()
             set_start_method("spawn")
 
-        logger.debug("Running using Nuitka bundle")
+        logger.warning("Running using Nuitka bundle")
 
     logger.info(f"Initializing RimDex application: {AppInfo().app_version}")
     main_thread()

@@ -78,7 +78,7 @@ class AppInfo:
 
         platform_dirs = PlatformDirs(appname=self._app_name, appauthor=False)
         self._app_storage_folder: Path = Path(platform_dirs.user_data_dir)
-        self._user_log_folder: Path = Path(platform_dirs.user_log_dir)
+        self._user_log_folder: Path = self._app_storage_folder / "Logs"
 
         # Derive some secondary directory paths
 
@@ -94,6 +94,9 @@ class AppInfo:
         self._backup_folder: Path = self._app_storage_folder / "backup"
         self._setup_web_channel_script_file: Path = (
             self._application_folder / "setup_web_channel_script.js"
+        )
+        self._qtwebengine_locales_folder: Path = (
+            self.application_folder / "qtwebengine_locales"
         )
 
         # Make sure important directories exist
@@ -261,3 +264,38 @@ class AppInfo:
         Get the path to the file where _setup_web_channel_script_file exists
         """
         return self._setup_web_channel_script_file
+
+    @property
+    def qtwebengine_locales_file(self) -> Path:
+        """
+        Get the path to the folder where qtwebengine_locales are stored
+        """
+        return self._qtwebengine_locales_folder
+
+    @property
+    def setup_debug_mode(self) -> bool:
+        """
+        Check existence of "DEBUG" file
+        """
+        debug_file_path = self.app_storage_folder / "DEBUG"
+        if debug_file_path.exists() and debug_file_path.is_file():
+            DEBUG_MODE = True
+        else:
+            DEBUG_MODE = False
+        return DEBUG_MODE
+
+    @property
+    def setup_log_file(self) -> Path:
+        """
+        We have log_file (foo.log) and old_log_file (foo.old.log).
+        If old_log_file exists, remove it.
+        If log_file exists, rename it to old_log_file.
+        When we pass log_file to the logger as an argument, it will automatically be created.
+        """
+        log_file = self.user_log_folder / (self.app_name + ".log")
+        old_log_file = self.user_log_folder / (self.app_name + ".old.log")
+        if old_log_file.exists() and old_log_file.is_file():
+            old_log_file.unlink()
+        if log_file.exists() and log_file.is_file():
+            log_file.rename(old_log_file)
+        return log_file
