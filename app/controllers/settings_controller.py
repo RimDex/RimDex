@@ -344,7 +344,7 @@ class SettingsController(QObject):
         self.settings_dialog.include_mod_notes_in_mod_name_filter_checkbox.stateChanged.connect(
             self._on_include_mod_notes_in_mod_name_filter_changed
         )
-        
+
         EventBus().settings_have_changed.connect(self._handle_mod_coloring_mode_changed)
 
         # Connect signals from dialogs
@@ -1331,9 +1331,7 @@ class SettingsController(QObject):
         self.settings.update_databases_on_startup = (
             self.settings_dialog.update_databases_on_startup_checkbox.isChecked()
         )
-        self.settings.include_mod_notes_in_mod_name_filter = (
-            self.settings_dialog.include_mod_notes_in_mod_name_filter_checkbox.isChecked()
-        )
+        self.settings.include_mod_notes_in_mod_name_filter = self.settings_dialog.include_mod_notes_in_mod_name_filter_checkbox.isChecked()
 
         self.settings.enable_backup_before_update = (
             self.settings_dialog.enable_backup_before_update_checkbox.isChecked()
@@ -2453,9 +2451,7 @@ class SettingsController(QObject):
 
     @Slot()
     def _on_include_mod_notes_in_mod_name_filter_changed(self) -> None:
-        self.settings.include_mod_notes_in_mod_name_filter = (
-            self.settings_dialog.include_mod_notes_in_mod_name_filter_checkbox.isChecked()
-        )
+        self.settings.include_mod_notes_in_mod_name_filter = self.settings_dialog.include_mod_notes_in_mod_name_filter_checkbox.isChecked()
 
     @Slot()
     def _handle_mod_coloring_mode_changed(self) -> None:

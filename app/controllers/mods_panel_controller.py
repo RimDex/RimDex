@@ -180,8 +180,12 @@ class ModsPanelController(QObject):
             return
         active_mods = self.mods_panel.active_mods_list.get_all_mod_list_items()
         inactive_mods = self.mods_panel.inactive_mods_list.get_all_mod_list_items()
-        active_uuids = [mod.data(Qt.ItemDataRole.UserRole)["uuid"] for mod in active_mods]
-        inactive_uuids = [mod.data(Qt.ItemDataRole.UserRole)["uuid"] for mod in inactive_mods]
+        active_uuids = [
+            mod.data(Qt.ItemDataRole.UserRole)["uuid"] for mod in active_mods
+        ]
+        inactive_uuids = [
+            mod.data(Qt.ItemDataRole.UserRole)["uuid"] for mod in inactive_mods
+        ]
         self.mods_panel.active_mods_list.reset_all_mod_colors(active_uuids)
         self.mods_panel.inactive_mods_list.reset_all_mod_colors(inactive_uuids)
 

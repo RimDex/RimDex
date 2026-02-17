@@ -898,9 +898,11 @@ class MainWindow(QMainWindow):
                         steam_install_path,
                         target_steam_install_path,
                         symlinks=True,
-                        ignore=lambda d, names: ["steamapps/workshop/content/294100"]
-                        if d == steam_install_path
-                        else [],
+                        ignore=lambda d, names: (
+                            ["steamapps/workshop/content/294100"]
+                            if d == steam_install_path
+                            else []
+                        ),
                     )
                     # Unlink steam/workshop/content/294100 symlink if it exists, and relink it to our new target local mods folder
                     link_path = str(

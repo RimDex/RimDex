@@ -729,12 +729,16 @@ class PlayerLogTab(QWidget):
                 self.tr("All Issues"),
             ]
         )
-        self.filter_combo.currentIndexChanged.connect(lambda _: self.apply_filter(clear_log=True, filter_type="Type"))
+        self.filter_combo.currentIndexChanged.connect(
+            lambda _: self.apply_filter(clear_log=True, filter_type="Type")
+        )
         filter_layout.addWidget(self.filter_combo)
 
         self.mod_filter_input = QLineEdit()
         self.mod_filter_input.setPlaceholderText(self.tr("Filter by mod name..."))
-        self.mod_filter_input.textChanged.connect(lambda _: self.apply_filter(clear_log=True, filter_type="Search"))
+        self.mod_filter_input.textChanged.connect(
+            lambda _: self.apply_filter(clear_log=True, filter_type="Search")
+        )
         filter_layout.addWidget(self.mod_filter_input)
         search_filter_layout.addLayout(filter_layout)
 
@@ -1010,7 +1014,11 @@ class PlayerLogTab(QWidget):
             with open(
                 self.player_log_path, "r", encoding="utf-8", errors="ignore"
             ) as f:
-                total_chunks = max(1, (self.player_log_path.stat().st_size + chunk_size - 1) // chunk_size)
+                total_chunks = max(
+                    1,
+                    (self.player_log_path.stat().st_size + chunk_size - 1)
+                    // chunk_size,
+                )
                 chunk_cnt = 0
                 self.progress_bar.setTextVisible(True)
                 self.progress_bar.setFormat(self.tr("Reading file... %p%"))
@@ -1024,7 +1032,7 @@ class PlayerLogTab(QWidget):
                     progress = (chunk_cnt / total_chunks) * 100
                     self.progress_bar.setValue(int(progress))
                     QApplication.processEvents()
-            
+
             self.last_log_size = len(self.log_storage)  # Update based on new storage
             self.current_log_content = str(
                 self.log_storage
@@ -1439,7 +1447,13 @@ class PlayerLogTab(QWidget):
             if LogPatternManager.EXCEPTION_FILTER_PATTERN.search(line):
                 self.log_stats["exceptions"] += 1
 
-    def apply_filter(self, new_content: str = "", clear_log: bool = False, chunk_size: int = 1024, filter_type: str = "") -> None:
+    def apply_filter(
+        self,
+        new_content: str = "",
+        clear_log: bool = False,
+        chunk_size: int = 1024,
+        filter_type: str = "",
+    ) -> None:
         """Apply the selected filter and mod name filter to the log content more efficiently."""
         if clear_log:
             self.clear_log()
@@ -1503,7 +1517,9 @@ class PlayerLogTab(QWidget):
         collapsed_lines = self._collapse_repeated_lines(filtered_lines)
         self.filtered_content = "\n".join(collapsed_lines)
         scroll_bar = self.log_display.verticalScrollBar()
-        total_chunks = max(1, (len(self.filtered_content) + chunk_size - 1) // chunk_size)
+        total_chunks = max(
+            1, (len(self.filtered_content) + chunk_size - 1) // chunk_size
+        )
         chunk_cnt = 0
         for i in range(0, len(self.filtered_content), chunk_size):
             old_value = scroll_bar.value()

@@ -836,10 +836,14 @@ class ModListWidget(QListWidget):
         self.itemChanged.connect(self.handle_item_data_changed)
 
         # Allow inserting custom list items
-        self.model().rowsInserted.connect(self.handle_rows_inserted, Qt.ConnectionType.QueuedConnection)
+        self.model().rowsInserted.connect(
+            self.handle_rows_inserted, Qt.ConnectionType.QueuedConnection
+        )
 
         # Handle removing items to update count
-        self.model().rowsAboutToBeRemoved.connect(self.handle_rows_removed, Qt.ConnectionType.QueuedConnection)
+        self.model().rowsAboutToBeRemoved.connect(
+            self.handle_rows_removed, Qt.ConnectionType.QueuedConnection
+        )
 
         # Lazy load ModListItemInner
         self.verticalScrollBar().valueChanged.connect(self.check_widgets_visible)
@@ -984,7 +988,7 @@ class ModListWidget(QListWidget):
             # Open folder action
             open_folder_action = None
             # Open folder in text editor action
-            open_folder_text_editor_action = None 
+            open_folder_text_editor_action = None
             # Open URL in browser action
             open_url_browser_action = None
             # Open URL in Steam
@@ -1731,13 +1735,23 @@ class ModListWidget(QListWidget):
                             else:
                                 self.toggle_warning(mod_metadata["packageid"], uuid)
                         elif action == change_mod_color_action and not invalid_color:
-                            if len(selected_items) > 1 and item_idx == len(selected_items) - 1:
-                                self.change_all_mod_colors(list(all_selected_uuids.values()), new_color)
+                            if (
+                                len(selected_items) > 1
+                                and item_idx == len(selected_items) - 1
+                            ):
+                                self.change_all_mod_colors(
+                                    list(all_selected_uuids.values()), new_color
+                                )
                             elif len(selected_items) == 1:
                                 self.change_mod_color(uuid, new_color)
                         elif action == reset_mod_color_action:
-                            if len(selected_items) > 1 and item_idx == len(selected_items) - 1:
-                                self.reset_all_mod_colors(list(all_selected_uuids.values()))
+                            if (
+                                len(selected_items) > 1
+                                and item_idx == len(selected_items) - 1
+                            ):
+                                self.reset_all_mod_colors(
+                                    list(all_selected_uuids.values())
+                                )
                             elif len(selected_items) == 1:
                                 self.reset_mod_color(uuid)
                         # Open folder action
@@ -2711,13 +2725,21 @@ class ModListWidget(QListWidget):
         else:  # ...unless we don't have mods, at which point reenable updates and exit
             self.setUpdatesEnabled(True)
             # Reconnect model signals
-            self.model().rowsInserted.connect(self.handle_rows_inserted, Qt.ConnectionType.QueuedConnection)
-            self.model().rowsAboutToBeRemoved.connect(self.handle_rows_removed, Qt.ConnectionType.QueuedConnection)
+            self.model().rowsInserted.connect(
+                self.handle_rows_inserted, Qt.ConnectionType.QueuedConnection
+            )
+            self.model().rowsAboutToBeRemoved.connect(
+                self.handle_rows_removed, Qt.ConnectionType.QueuedConnection
+            )
             return
 
         # Reconnect model signals
-        self.model().rowsInserted.connect(self.handle_rows_inserted, Qt.ConnectionType.QueuedConnection)
-        self.model().rowsAboutToBeRemoved.connect(self.handle_rows_removed, Qt.ConnectionType.QueuedConnection)
+        self.model().rowsInserted.connect(
+            self.handle_rows_inserted, Qt.ConnectionType.QueuedConnection
+        )
+        self.model().rowsAboutToBeRemoved.connect(
+            self.handle_rows_removed, Qt.ConnectionType.QueuedConnection
+        )
         # Enable updates and repaint
         self.setUpdatesEnabled(True)
         self.repaint()
@@ -3885,16 +3907,14 @@ class ModsPanel(QWidget):
             LIMIT :limit;
         """)
 
-        aux_metadata_controller = (
-            AuxMetadataController.get_or_create_cached_instance(
-                self.settings_controller.settings.aux_db_path
-            )
+        aux_metadata_controller = AuxMetadataController.get_or_create_cached_instance(
+            self.settings_controller.settings.aux_db_path
         )
         with aux_metadata_controller.engine.connect() as conn:
             result = conn.execute(SEARCH_SQL, {"limit": limit})
             rows = result.fetchall()
 
-        #TODO: Allow user to set fuzzy threshold?
+        # TODO: Allow user to set fuzzy threshold?
         fuzz_threshold = 80 if len(pattern) > 5 else 70
         matching_paths = set()
         for path, note in rows:
@@ -3963,8 +3983,12 @@ class ModsPanel(QWidget):
         num_filtered = 0
         num_unfiltered = 0
         if pattern.strip() and (
-            search_filter == "notes" or
-            (search_filter == "name" and self.settings_controller.settings.include_mod_notes_in_mod_name_filter)):
+            search_filter == "notes"
+            or (
+                search_filter == "name"
+                and self.settings_controller.settings.include_mod_notes_in_mod_name_filter
+            )
+        ):
             matches = self.search_mod_notes(pattern)
         for idx, uuid in enumerate(uuids):
             item = (
@@ -3993,7 +4017,8 @@ class ModsPanel(QWidget):
                     item.setHidden(False)
             # Check if the item is filtered
             item_filtered = item_data["filtered"]
-            # Check if the item should be filtered or not based on search filter
+
+            # Search pattern filtering
             if search_filter == "version" and pattern:
                 versions = metadata.get("supportedversions", {}).get("li", [])
                 if isinstance(versions, str):
@@ -4009,7 +4034,11 @@ class ModsPanel(QWidget):
                     mod_path = metadata.get("path", "")
                     item_filtered = mod_path not in matches
             # Filter by name and mod notes
-            elif search_filter == "name" and self.settings_controller.settings.include_mod_notes_in_mod_name_filter:
+            elif (
+                pattern.strip()
+                and search_filter == "name"
+                and self.settings_controller.settings.include_mod_notes_in_mod_name_filter
+            ):
                 if not pattern.strip():
                     item_filtered = False
                 elif (
@@ -4027,15 +4056,18 @@ class ModsPanel(QWidget):
                 and pattern.lower() not in str(metadata.get(search_filter)).lower()
             ):
                 item_filtered = True
-            elif source_filter == "all":  # or data source
-                item_filtered = False
-            elif source_filter == "git_repo":
-                item_filtered = not metadata.get("git_repo")
-            elif source_filter == "steamcmd":
-                item_filtered = not metadata.get("steamcmd")
-            elif source_filter != metadata.get("data_source"):
-                item_filtered = True
+            # Source filtering
+            if not item_filtered:
+                if source_filter == "all":
+                    pass
+                elif source_filter == "git_repo":
+                    item_filtered = not metadata.get("git_repo")
+                elif source_filter == "steamcmd":
+                    item_filtered = not metadata.get("steamcmd")
+                elif source_filter != metadata.get("data_source"):
+                    item_filtered = True
 
+            # Type filtering
             type_filter_index = (
                 self.active_data_source_filter_type_index
                 if list_type == "Active"

@@ -67,11 +67,15 @@ class MainContentController(QObject):
             ),
             EventBus().do_download_use_this_instead_db_from_github: (
                 AppInfo().databases_folder,
-                lambda: self.settings_controller.settings.external_use_this_instead_repo_path,
+                lambda: (
+                    self.settings_controller.settings.external_use_this_instead_repo_path
+                ),
             ),
             EventBus().do_download_no_version_warning_db_from_github: (
                 AppInfo().databases_folder,
-                lambda: self.settings_controller.settings.external_no_version_warning_repo_path,
+                lambda: (
+                    self.settings_controller.settings.external_no_version_warning_repo_path
+                ),
             ),
         }
 
@@ -92,10 +96,11 @@ class MainContentController(QObject):
         # Bind download signals
         for event_signal, (base_path_obj, url_getter) in self.download_signals.items():
             event_signal.connect(
-                lambda url_getter=url_getter,
-                base_path_obj=base_path_obj: self._do_git_clone(
-                    base_path=str(base_path_obj),
-                    repo_url=url_getter(),
+                lambda url_getter=url_getter, base_path_obj=base_path_obj: (
+                    self._do_git_clone(
+                        base_path=str(base_path_obj),
+                        repo_url=url_getter(),
+                    )
                 )
             )
 

@@ -649,10 +649,12 @@ class TestAutoTranslateFile:
         # Mock the XML structure for content writing
         mock_xml_parsing["root"].findall.return_value = []  # No contexts initially
         mock_xml_parsing["tree"].write.side_effect = (
-            lambda file, encoding, xml_declaration: mock_filesystem["file_content"]
-            .setdefault(str(file), [])
-            .append(
-                "<TS><context><name>MyContext</name><message><source>Hello</source><translation>你好</translation></message><message><source>World</source><translation>世界</translation></message></context></TS>"
+            lambda file, encoding, xml_declaration: (
+                mock_filesystem["file_content"]
+                .setdefault(str(file), [])
+                .append(
+                    "<TS><context><name>MyContext</name><message><source>Hello</source><translation>你好</translation></message><message><source>World</source><translation>世界</translation></message></context></TS>"
+                )
             )
         )
 
