@@ -81,6 +81,7 @@ jobs:
         with:
           fetch-depth: 0
           submodules: recursive
+          token: ${{ secrets.RIMDEX_TOKEN }}
 
       - name: Add submodules to pythonpath
         id: pythonpath

@@ -75,6 +75,7 @@ jobs:
   pre-test:
     permissions:
       contents: read
+    secrets: inherit
     uses: ./.github/workflows/pytest.yml
 
   pre-build:
@@ -93,6 +94,7 @@ jobs:
       contents: read
       attestations: write
       packages: write
+    secrets: inherit
     uses: ./.github/workflows/build.yml
     with:
       version_format: ${{ needs.pre-build.outputs.version_format }}
@@ -108,6 +110,7 @@ jobs:
       contents: read
       attestations: write
       packages: write
+    secrets: inherit
     uses: ./.github/workflows/build.yml
     with:
       version_format: ${{ needs.pre-build.outputs.version_format }}
