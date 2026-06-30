@@ -143,7 +143,7 @@ def build_steamworkspy(sdk_url: str | None = None, sdk_zip: str | None = None) -
     STEAMWORKS_SDK_URL = (
         sdk_url
         if sdk_url
-        else "https://partner.steamgames.com/downloads/steamworks_sdk_163.zip"
+        else "https://partner.steamgames.com/downloads/steamworks_sdk_164.zip"
     )
     STEAMWORKS_PY_PATH = os.path.join(_CWD, "submodules", "SteamworksPy", "library")
     STEAMWORKS_SDK_PATH = os.path.join(STEAMWORKS_PY_PATH, "sdk")
