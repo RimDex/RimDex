@@ -60,3 +60,5 @@ MagicMock/
 
 # Development tooling
 .tools/
+# CocoIndex Code (ccc)
+/.cocoindex_code/
