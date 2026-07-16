@@ -11,7 +11,7 @@ of three things:
 3. URL parsing helpers (``parse_git_url``, ``git_get_repo_name``,
    ``ParsedGitUrl``).
 
-The P1 task in ``TODO.md`` ("Split ``git/git_utils.py`` (operations vs.
+The P1 task in ``AGENTS.md`` ("Split ``git/git_utils.py`` (operations vs.
 UI/status reporting)") is now implemented by:
 
 * :mod:`app.git.git_operations`  — the operations (1) and the pure URL

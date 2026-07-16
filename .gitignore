@@ -30,7 +30,6 @@ dmypy.json
 env/
 venv/
 ENV/
-Scripts/
 
 # IDE
 .idea/

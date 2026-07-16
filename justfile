@@ -285,7 +285,7 @@ build-help:
 # Stats / reporting
 # ═════════════════════════════════════════════════════════════════════════
 
-# Print file / LOC / test counts so §0/§1/§2 of Agent.md stay in sync.
+# Print file / LOC / test counts so §0/§1/§2 of AGENTS.md stay in sync.
 # Re-measure instead of trusting stale doc numbers (prevents count drift).
 stats:
     uv run python scripts/stats.py

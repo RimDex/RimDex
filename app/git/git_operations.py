@@ -1,7 +1,7 @@
 """Operations layer for git repositories.
 
 This module is the "operations" half of the ``git_utils`` split recommended in
-``TODO.md`` (P1 â€” split ``git/git_utils.py`` (operations vs. UI/status
+``AGENTS.md`` (P1 — split ``git/git_utils.py`` (operations vs. UI/status
 reporting)).  It contains the pure, side-effectful git operations built on
 top of :mod:`app.git.pygit2_loader` plus URL parsing helpers.
 
