@@ -81,12 +81,12 @@ class TestSetupWebChannelScript:
             installed_mods=installed_mods, added_mods=added_mods
         )
         page.runJavaScript(
-            script, QWebEngineScript.ScriptWorldId.MainWorld, lambda: None
+            script, QWebEngineScript.ScriptWorldId.MainWorld, lambda _=None: None
         )
         page.runJavaScript(
             "updateAllModBadges()",
             QWebEngineScript.ScriptWorldId.MainWorld,
-            lambda: None,
+            lambda _=None: None,
         )
 
     def test_badges_created_with_correct_states(
@@ -173,14 +173,14 @@ class TestSetupWebChannelScript:
 
         script = _substitute_script(installed_mods=["111111"], added_mods=["222222"])
         page.runJavaScript(
-            script, QWebEngineScript.ScriptWorldId.MainWorld, lambda: None
+            script, QWebEngineScript.ScriptWorldId.MainWorld, lambda _=None: None
         )
         qtbot.wait(300)
 
         page.runJavaScript(
             "updateAllModBadges()",
             QWebEngineScript.ScriptWorldId.MainWorld,
-            lambda: None,
+            lambda _=None: None,
         )
         qtbot.wait(300)
 
@@ -198,7 +198,7 @@ class TestSetupWebChannelScript:
 
         script = _substitute_script()
         page.runJavaScript(
-            script, QWebEngineScript.ScriptWorldId.MainWorld, lambda: None
+            script, QWebEngineScript.ScriptWorldId.MainWorld, lambda _=None: None
         )
         qtbot.wait(500)
 
@@ -229,7 +229,7 @@ class TestSetupWebChannelScript:
 
         script = _substitute_script()
         page.runJavaScript(
-            script, QWebEngineScript.ScriptWorldId.MainWorld, lambda: None
+            script, QWebEngineScript.ScriptWorldId.MainWorld, lambda _=None: None
         )
         qtbot.wait(500)
 
@@ -247,7 +247,7 @@ class TestSetupWebChannelScript:
 
         script = _substitute_script()
         page.runJavaScript(
-            script, QWebEngineScript.ScriptWorldId.MainWorld, lambda: None
+            script, QWebEngineScript.ScriptWorldId.MainWorld, lambda _=None: None
         )
         qtbot.wait(500)
 
