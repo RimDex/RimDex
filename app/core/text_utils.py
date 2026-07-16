@@ -13,8 +13,8 @@ from time import localtime, strftime
 def get_relative_time(timestamp: int) -> str:
     """Convert a timestamp to a relative time string (e.g. '2 days ago')."""
     try:
-        dt = datetime.fromtimestamp(timestamp)
-        now = datetime.now()
+        dt = datetime.fromtimestamp(timestamp)  # noqa: DTZ006
+        now = datetime.now()  # noqa: DTZ005
         delta = now - dt
 
         if delta.days > 365:

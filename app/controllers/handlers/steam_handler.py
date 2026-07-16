@@ -16,9 +16,9 @@ from loguru import logger
 from PySide6.QtCore import QProcess
 from PySide6.QtWidgets import QMessageBox
 
-import app.ui.dialogue as dialogue
 from app.core.app_info import AppInfo
 from app.core.ui_helpers import check_internet_connection, platform_specific_open
+from app.ui import dialogue
 from app.utils.steam.steambrowser.browser import SteamBrowser
 from app.utils.steam.workshop_utils import (
     WorkshopUpdateResult,
@@ -152,12 +152,15 @@ class SteamHandler:
             logger.debug("user cancelled reset of SteamCMD ACF data file")
 
     def do_browse_workshop(self) -> None:
+        self.do_browse_workshop_url("https://steamcommunity.com/app/294100/workshop/")
+
+    def do_browse_workshop_url(self, url: str) -> None:
         if self._panel.steam_browser:
             self._panel.steam_browser.close()
             self._panel.steam_browser.deleteLater()
 
         self._panel.steam_browser = SteamBrowser(
-            "https://steamcommunity.com/app/294100/workshop/",
+            url,
             self._panel.metadata_controller,
             self._settings,
         )
@@ -171,19 +174,26 @@ class SteamHandler:
     def do_check_for_workshop_updates(self) -> None:
         if not check_internet_connection():
             return
-        result: WorkshopUpdateResult = self._panel.do_threaded_loading_animation(
-            gif_path=str(
-                AppInfo().theme_data_folder / "default-icons" / "steam_api.gif"
-            ),
-            target=partial(
-                query_workshop_update_data,
-                mods=self._panel.metadata_controller.mods_metadata,
-                metadata_controller=self._panel.metadata_controller,
-            ),
-            text=self._panel.tr("Checking Steam Workshop mods for updates..."),
-        )
+        try:
+            result: WorkshopUpdateResult = self._panel.do_threaded_loading_animation(
+                gif_path=str(
+                    AppInfo().theme_data_folder / "default-icons" / "steam_api.gif"
+                ),
+                target=partial(
+                    query_workshop_update_data,
+                    mods=self._panel.metadata_controller.mods_metadata,
+                    metadata_controller=self._panel.metadata_controller,
+                ),
+                text=self._panel.tr("Checking Steam Workshop mods for updates..."),
+            )
+        except Exception as e:
+            logger.exception(f"Failed to check for Workshop updates: {e}")
+            self._panel.status_signal.emit(
+                self._panel.tr("Failed to check for Workshop updates")
+            )
+            return
 
-        if result.status == "no_workshop_mods":
+        if not result or result.status == "no_workshop_mods":
             self._panel.status_signal.emit(
                 self._panel.tr("No Workshop mods to check for updates")
             )
@@ -460,3 +470,5 @@ class SteamHandler:
                 "Processing Steam subscription action(s) via Steamworks API..."
             ),
         )
+        # Do a full refresh of metadata and UI
+        self._panel._do_refresh()

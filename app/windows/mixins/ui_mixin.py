@@ -6,7 +6,8 @@ shared event-filter / layout-clearing utilities.
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Sequence
+from collections.abc import Sequence
+from typing import TYPE_CHECKING, Any
 
 from PySide6.QtCore import QEvent, Qt
 from PySide6.QtGui import QKeyEvent
@@ -116,13 +117,13 @@ class UIBaseMixin(TrMixin, BaseModsPanelSurface):
         # tracked issue for all panels — see Agent.md §8.3 (was duplicated 4x).
         self.resize(900, 600)
 
-    def _setup_table(self, additional_columns: "Sequence[HeaderColumn]") -> None:
+    def _setup_table(self, additional_columns: Sequence[HeaderColumn]) -> None:
         """Set up the table configuration."""
-        pass  # Table setup is already done in _setup_ui
+        # Table setup is already done in _setup_ui
 
     def _setup_buttons(self) -> None:
         """Set up buttons if needed."""
-        pass  # Buttons are set up in _setup_ui
+        # Buttons are set up in _setup_ui
 
     def _initialize_components(self) -> None:
         """Initialize core components."""
@@ -134,7 +135,7 @@ class UIBaseMixin(TrMixin, BaseModsPanelSurface):
         window_title: str,
         title_text: str,
         details_text: str,
-        additional_columns: "Sequence[HeaderColumn]",
+        additional_columns: Sequence[HeaderColumn],
     ) -> None:
         """Set up UI and table components."""
         self._setup_ui_elements(object_name, window_title, title_text, details_text)

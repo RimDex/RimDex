@@ -70,7 +70,7 @@ class MainWindow(QMainWindow):
         add the three main views, and set up relevant signals and slots.
         """
         logger.info("Initializing MainWindow")
-        super(MainWindow, self).__init__()
+        super().__init__()
 
         self.settings = settings
         self._get_active_instance = get_active_instance
@@ -381,8 +381,6 @@ class MainWindow(QMainWindow):
                 instance.steam_client_integration = True
                 self._set_instance(instance)
 
-        return
-
     def __switch_to_instance(self, instance: str) -> None:
         """Switch to a different instance."""
         self.shutdown_watchdog()
@@ -405,7 +403,10 @@ class MainWindow(QMainWindow):
 
         :param instance: Name of the instance currently being used.
         """
-        self.setWindowTitle(f"RimDex {AppInfo().app_version} | {instance} Instance")
+        title = f"RimDex {AppInfo().app_version} | {instance} Instance"
+        if AppInfo().is_dev_mode:
+            title += " [DEV]"
+        self.setWindowTitle(title)
 
     def initialize_watchdog(self) -> None:
         logger.info("Initializing watchdog FS Observer")

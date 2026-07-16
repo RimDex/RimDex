@@ -25,13 +25,35 @@ class AppInfo:
 
     _instance: "None | AppInfo" = None
 
-    def __new__(cls) -> "AppInfo":
+    def __new__(cls) -> "AppInfo":  # noqa: PYI034
         """
         Create a new instance or return the existing singleton instance of the `AppInfo` class.
         """
         if not cls._instance:
-            cls._instance = super(AppInfo, cls).__new__(cls)
+            cls._instance = super().__new__(cls)
         return cls._instance
+
+    @staticmethod
+    def _resolve_dev_mode() -> bool:
+        """Determine whether the application is running in development mode.
+
+        Dev mode is only active when explicitly requested via the ``--dev``
+        CLI flag (which sets ``RIMDEX_DEV=1``) or the ``RIMDEX_DEV`` env
+        var directly.
+
+        ``RIMDEX_DEV`` values: ``"1"`` / ``"true"`` -> True;
+        ``"0"`` / ``"false"`` -> False.  Default (unset): False.
+        """
+        env = os.environ.get("RIMDEX_DEV", "").lower()
+        if env in ("1", "true"):
+            return True
+        if env in ("0", "false"):
+            return False
+        if env:
+            logger.warning(
+                f"Unrecognized RIMDEX_DEV value '{env}' — expected 1/true/0/false"
+            )
+        return False
 
     def __init__(self) -> None:
         """
@@ -59,6 +81,8 @@ class AppInfo:
                 else Path(main_file).resolve().parent.parent
             )
 
+        self._is_dev_mode = self._resolve_dev_mode()
+
         # Application metadata
         self._app_name = "RimDex"
         self._app_copyright = ""
@@ -77,10 +101,23 @@ class AppInfo:
                 if commit is not None and commit.text is not None:
                     self._app_version += f"+{commit[:7]}"
 
-        # Define important directories using platformdirs
-        platform_dirs = PlatformDirs(appname=self._app_name, appauthor=False)
-        self._app_storage_folder: Path = Path(platform_dirs.user_data_dir)
-        self._user_log_folder: Path = Path(platform_dirs.user_log_dir)
+        # Define important directories — dev mode redirects to a local folder
+        # so that running from source never touches production data.
+        if self._is_dev_mode:
+            dev_dir_env = os.environ.get("RIMDEX_DEV_DIR")
+            dev_root = (
+                Path(dev_dir_env).resolve()
+                if dev_dir_env
+                else self._application_folder / "dev"
+            )
+            self._dev_root: Path | None = dev_root
+            self._app_storage_folder: Path = dev_root / "data"
+            self._user_log_folder: Path = dev_root / "logs"
+        else:
+            platform_dirs = PlatformDirs(appname=self._app_name, appauthor=False)
+            self._dev_root = None
+            self._app_storage_folder = Path(platform_dirs.user_data_dir)
+            self._user_log_folder = Path(platform_dirs.user_log_dir)
 
         # Derive some secondary directory paths
         self._databases_folder: Path = self._app_storage_folder / "dbs"
@@ -94,6 +131,9 @@ class AppInfo:
         self._browser_profile_folder: Path = self._app_storage_folder / "browser"
         self._setup_web_channel_script_file: Path = (
             self._application_folder / "setup_web_channel_script.js"
+        )
+        self._setup_steam_recovery_script_file: Path = (
+            self._application_folder / "setup_steam_recovery_script.js"
         )
 
         # Backup directories
@@ -157,6 +197,16 @@ class AppInfo:
             str: The copyright information for the application.
         """
         return self._app_copyright
+
+    @property
+    def is_dev_mode(self) -> bool:
+        """Whether the application is running in development mode."""
+        return self._is_dev_mode
+
+    @property
+    def dev_root(self) -> Path | None:
+        """The dev data root directory, or None if not in dev mode."""
+        return self._dev_root if self._is_dev_mode else None
 
     @property
     def application_folder(self) -> Path:
@@ -288,6 +338,16 @@ class AppInfo:
         SteamBrowser uses this script to set up the web channel.
         """
         return self._setup_web_channel_script_file
+
+    @property
+    def setup_steam_recovery_script_file(self) -> Path:
+        """
+        Get the path to the Steam recovery script.
+
+        The Steam browser injects this script to recover from failed dynamic
+        module imports at runtime.
+        """
+        return self._setup_steam_recovery_script_file
 
     @property
     def backups_folder(self) -> Path:

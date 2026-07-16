@@ -1,4 +1,6 @@
 from app.models.metadata.metadata_structure import (
+    SOURCE_PRIORITY_DEFAULT,
+    SOURCE_PRIORITY_STEAM,
     AboutXmlMod,
     BaseRules,
     CaseInsensitiveSet,
@@ -21,6 +23,8 @@ from app.models.metadata.metadata_structure import (
 )
 
 __all__ = [
+    "SOURCE_PRIORITY_DEFAULT",
+    "SOURCE_PRIORITY_STEAM",
     "AboutXmlMod",
     "BaseRules",
     "CaseInsensitiveSet",
@@ -31,8 +35,8 @@ __all__ = [
     "ListedMod",
     "ModMetadata",
     "ModReplacement",
-    "ModsConfig",
     "ModType",
+    "ModsConfig",
     "Rules",
     "ScenarioMod",
     "SteamDbEntry",

@@ -89,6 +89,7 @@ class ToddsController:
         active_mod_paths: list[str] | None = None,
     ) -> bool:
         """
+        # jscpd:ignore-start
         Run todds texture optimization.
 
         :param runner: Process runner that satisfies the ToddsRunner protocol.
@@ -100,6 +101,7 @@ class ToddsController:
 
         todds_interface = ToddsInterface(
             preset=settings.todds_preset,
+            # jscpd:ignore-end
             dry_run=settings.todds_dry_run,
             overwrite=settings.todds_overwrite,
             custom_command=settings.todds_custom_command,

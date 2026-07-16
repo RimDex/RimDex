@@ -7,7 +7,6 @@ and move domain logic into focused handler classes.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import List
 
 from PySide6.QtCore import QObject, QThreadPool, Slot
 
@@ -21,7 +20,10 @@ from app.controllers.metadata_controller import MetadataController
 from app.core.app_info import AppInfo
 from app.core.constants import DATABASE_DISPLAY_NAMES
 from app.core.event_bus import EventBus
+from app.models.metadata.metadata_structure import ModType
 from app.models.settings import Settings
+from app.ui.dialogue import InformationBox
+from app.views.download_rimworld_dialog import DownloadRimWorldDialog
 from app.views.main_content_panel import MainContent
 
 
@@ -101,6 +103,13 @@ class MainContentController(QObject):
                 lambda: self.settings.external_no_version_warning_metadata_source,
                 DATABASE_DISPLAY_NAMES["no_version_warning"],
             ),
+            EventBus().do_download_rimworld_versions_db_from_github: (
+                AppInfo().databases_folder,
+                lambda: self.settings.external_rimworld_versions_repo_path,
+                lambda: self.settings.external_rimworld_versions_url,
+                lambda: self.settings.external_rimworld_versions_metadata_source,
+                DATABASE_DISPLAY_NAMES["rimworld_versions"],
+            ),
         }
 
         self._connect_signals()
@@ -118,6 +127,14 @@ class MainContentController(QObject):
         )
         EventBus().github_version_switch_requested.connect(
             self._github_mods.on_github_version_switch
+        )
+
+        # Update all git mods
+        EventBus().do_check_for_git_updates.connect(self._on_update_all_git_mods)
+
+        # Download RimWorld version (opens dialog)
+        EventBus().do_download_rimworld_version.connect(
+            self._do_download_rimworld_version
         )
 
         # Git update-check signals
@@ -165,5 +182,30 @@ class MainContentController(QObject):
         self._db_download.update_databases_on_startup_if_enabled_silent()
 
     @Slot(list)
-    def _on_push_requested(self, repos_paths: List[str]) -> None:
+    def _on_push_requested(self, repos_paths: list[str]) -> None:
         self._git_ops.on_push_requested([Path(p) for p in repos_paths])
+
+    @Slot()
+    def _on_update_all_git_mods(self) -> None:
+        """Collect all git mod paths from metadata and check for updates."""
+        git_paths: list[Path] = []
+        for mod_data in self.metadata_controller.mods_metadata.values():
+            if mod_data.mod_type == ModType.GIT and mod_data.mod_path:
+                git_paths.append(mod_data.mod_path)
+
+        # GitHub-managed mods have their own release-based update flow
+        git_paths = self._git_ops.filter_non_github_repos(git_paths)
+
+        if not git_paths:
+            InformationBox(
+                title=self.tr("No Git Mods Found"),
+                text=self.tr("No git-based mods were found in your local mods folder."),
+            ).exec()
+            return
+
+        self._git_ops.on_check_updates_requested(git_paths)
+
+    @Slot()
+    def _do_download_rimworld_version(self) -> None:
+        dialog = DownloadRimWorldDialog()
+        dialog.exec()

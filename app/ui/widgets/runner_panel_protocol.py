@@ -5,7 +5,8 @@ can type against the runner without importing ``app/windows/runner_panel``.
 Only the members actually used by those adapters are declared.
 """
 
-from typing import Any, Optional, Protocol, Sequence, runtime_checkable
+from collections.abc import Mapping, Sequence
+from typing import Any, Protocol, runtime_checkable
 
 
 @runtime_checkable
@@ -18,7 +19,8 @@ class RunnerPanelProtocol(Protocol):
         self,
         command: str,
         args: Sequence[str],
-        progress_bar: Optional[int] = None,
+        progress_bar: int | None = None,
+        environment: Mapping[str, str] | None = None,
     ) -> None: ...
 
     def close(self) -> bool: ...
@@ -27,3 +29,4 @@ class RunnerPanelProtocol(Protocol):
     _pending_steamcmd_batches: list[list[str]]
     _steamcmd_executable: str
     _steamcmd_wrapper: Any
+    _steamcmd_environment: dict[str, str] | None

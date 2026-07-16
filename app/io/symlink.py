@@ -68,6 +68,7 @@ def create_symlink(
 
     This method logs errors, warnings, and debug messages using loguru.
 
+    # jscpd:ignore-start
     If the dst_path exists and force is False:
         - If dst_path is a symlink/junction, it will be unlinked re-created based on method args.
         - If dst_path is a directory and empty, it will be deleted.
@@ -81,6 +82,7 @@ def create_symlink(
     :param dst_path: The destination path to create the symlink to.
     :type dst_path: str
     :param force: Force the creation of the symlink/junction, even if the dst_path exists. Default is False.
+    # jscpd:ignore-end
     """
     if not os.path.exists(src_path):
         logger.warning(

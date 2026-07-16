@@ -8,6 +8,7 @@ set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
 # Shared flag values to keep recipes DRY and consistent.
 ruff_config := "--config pyproject.toml"
 pytest_opts := "--doctest-modules --no-qt-log"
+cov_opts := "--junitxml=junit/test-results.xml --cov=app --cov-report=xml --cov-report=html --cov-report=term-missing"
 shfmt_version := "v3.13.1"
 
 # ─── Default Target (lists all available recipes) ────────────────────────
@@ -22,7 +23,7 @@ shfmt_version := "v3.13.1"
 run: dev-setup
     uv run python -m app
 
-# Run tests with doctest modules enabled
+# Run tests (enable verbose: just test verbose, enable coverage: just test coverage)
 test: dev-setup
     uv run pytest {{pytest_opts}} -s
 
@@ -32,7 +33,7 @@ test-verbose: dev-setup
 
 # Run tests with full coverage reports (XML, HTML, and terminal)
 test-coverage: dev-setup
-    uv run pytest {{pytest_opts}} --junitxml=junit/test-results.xml --cov=app --cov-report=xml --cov-report=html --cov-report=term-missing
+    uv run pytest {{pytest_opts}} {{cov_opts}}
 
 # Coverage floor for the leaf layers (core, services, utils, git, mods, io, net,
 # sort, models, cli). Guards the leaf-layer unit tests added in the restructuring
@@ -130,7 +131,7 @@ shfmt-fix:
 
 # Run copy/paste detection (jscpd) using the project's .jscpd.json config
 jscpd:
-    npx jscpd@4 . --config .jscpd.json
+    npx --yes jscpd@latest . --config .jscpd.json
 
 # Run all code quality checks: super-linter + typecheck + pyright
 [unix]
@@ -238,16 +239,18 @@ i18n-compile:
     Remove-Item -Force -ErrorAction SilentlyContinue locales/*.qm; Get-ChildItem locales/*.ts | ForEach-Object { uv run pyside6-lrelease $_.FullName -qm ($_.FullName -replace '\.ts$', '.qm') }
 
 # Extract translatable strings from source code into .ts files (for translators)
+# -extensions py is required: lupdate's directory scan does not include .py
+# in its default extension list, so without it every entry is marked obsolete
 [unix]
 i18n-update:
     #!/usr/bin/env bash
     set -euo pipefail
     shopt -s nullglob
-    uv run pyside6-lupdate app/ -ts locales/*.ts
+    uv run pyside6-lupdate -extensions py app/ -ts locales/*.ts
 
 [windows]
 i18n-update:
-    uv run pyside6-lupdate app/ -ts (Get-ChildItem locales/*.ts | ForEach-Object { $_.FullName })
+    uv run pyside6-lupdate -extensions py app/ -ts (Get-ChildItem locales/*.ts | ForEach-Object { $_.FullName })
 
 # Translate unfinished strings via AI (full pipeline: extract → translate → validate → compile)
 i18n-translate *ARGS='':

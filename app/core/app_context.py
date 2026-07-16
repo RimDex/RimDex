@@ -23,8 +23,8 @@ class AppContext:
     """
 
     def __init__(self) -> None:
-        self.main_window: "MainWindow | None" = None
-        self.settings: "Settings | None" = None
+        self.main_window: MainWindow | None = None
+        self.settings: Settings | None = None
 
 
 # Single process-wide instance, populated at startup via dependency injection

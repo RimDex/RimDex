@@ -1,5 +1,5 @@
 from functools import partial
-from typing import Optional, cast
+from typing import cast
 
 from loguru import logger
 from PySide6.QtCore import (
@@ -71,7 +71,7 @@ class ModsPanel(QWidget):
 
     # OPTIMIZATION: Class-level constant for sort text to enum mapping
     # Centralizes the text->enum conversion logic
-    SORT_TEXT_TO_KEY_MAP = {
+    SORT_TEXT_TO_KEY_MAP = {  # noqa: RUF012
         "Name": ModsPanelSortKey.MODNAME,
         "Author": ModsPanelSortKey.AUTHOR,
         "Modified Time": ModsPanelSortKey.FILESYSTEM_MODIFIED_TIME,
@@ -122,7 +122,7 @@ class ModsPanel(QWidget):
         Create a ListWidget using the dict of mods. This will
         create a row for every key-value pair in the dict.
         """
-        super(ModsPanel, self).__init__()
+        super().__init__()
 
         # Cache MetadataController instance and initialize panel
         logger.debug("Initializing ModsPanel")
@@ -140,9 +140,9 @@ class ModsPanel(QWidget):
             self.inactive_mods_sort_descending = True
 
         # Background folder-size sorting state
-        self._size_progress_dialog: Optional[QProgressDialog] = None
-        self._size_thread: Optional[QThread] = None
-        self._size_worker: Optional[FolderSizeWorker] = None
+        self._size_progress_dialog: QProgressDialog | None = None
+        self._size_thread: QThread | None = None
+        self._size_worker: FolderSizeWorker | None = None
         self._size_current_uuids: list[str] = []
 
         # Build search filter text-to-key mapping (translation-safe)
@@ -164,9 +164,9 @@ class ModsPanel(QWidget):
         self._sort_debounce_timer = QTimer()
         self._sort_debounce_timer.setSingleShot(True)
         self._sort_debounce_timer.timeout.connect(self._execute_pending_sort)
-        self._pending_sort_params: Optional[
-            tuple[str, list[str], ModsPanelSortKey, bool]
-        ] = None
+        self._pending_sort_params: (
+            tuple[str, list[str], ModsPanelSortKey, bool] | None
+        ) = None
 
         # Base layout with a splitter for resizable mod lists
         self.panel = QVBoxLayout()
@@ -323,10 +323,20 @@ class ModsPanel(QWidget):
             )
         )
 
+        # Show tags toggle
+        self.active_mods_show_tags_button = QToolButton()
+        self.active_mods_show_tags_button.setCheckable(True)
+        self.active_mods_show_tags_button.setText(self.tr("Tags"))
+        self.active_mods_show_tags_button.setToolTip(self.tr("Show tags in mod list"))
+        self.active_mods_show_tags_button.toggled.connect(
+            self.on_active_mods_show_tags_toggled
+        )
+
         # Active mods search layouts
         self.active_mods_search_layout.addWidget(self.active_mods_search, 45)
         self.active_mods_search_layout.addWidget(self.active_mods_search_filter, 70)
         self.active_mods_search_layout.addWidget(self.active_filter_button)
+        self.active_mods_search_layout.addWidget(self.active_mods_show_tags_button)
         self.active_mods_search_layout.addWidget(
             self.active_mods_search_mode_filter_button
         )
@@ -435,6 +445,7 @@ class ModsPanel(QWidget):
         self.inactive_mods_search_filter.setParent(self)
         self.inactive_mods_search_filter.setObjectName("MainUI")
         self.inactive_mods_search_filter.setMaximumWidth(140)
+        # jscpd:ignore-start
         self.inactive_mods_search_filter.addItems(
             [
                 self.tr("Name"),
@@ -450,10 +461,20 @@ class ModsPanel(QWidget):
 
         # FilterButton replaces old source/type/tag filter widgets
         self.inactive_filter_button = FilterButton(self)
+        # jscpd:ignore-end
         self.inactive_filter_button.filter_panel.filters_changed.connect(
             lambda: self.signal_search_and_filters(
                 list_type="Inactive", pattern=self.inactive_mods_search.text()
             )
+        )
+
+        # Show tags toggle
+        self.inactive_mods_show_tags_button = QToolButton()
+        self.inactive_mods_show_tags_button.setCheckable(True)
+        self.inactive_mods_show_tags_button.setText(self.tr("Tags"))
+        self.inactive_mods_show_tags_button.setToolTip(self.tr("Show tags in mod list"))
+        self.inactive_mods_show_tags_button.toggled.connect(
+            self.on_inactive_mods_show_tags_toggled
         )
 
         self.inactive_mods_sort_combobox: QComboBox = QComboBox()
@@ -521,6 +542,7 @@ class ModsPanel(QWidget):
         self.inactive_mods_search_layout.addWidget(self.inactive_mods_search, 45)
         self.inactive_mods_search_layout.addWidget(self.inactive_mods_search_filter, 70)
         self.inactive_mods_search_layout.addWidget(self.inactive_filter_button)
+        self.inactive_mods_search_layout.addWidget(self.inactive_mods_show_tags_button)
         self.inactive_mods_search_layout.addWidget(
             self.inactive_mods_search_mode_filter_button
         )
@@ -631,7 +653,7 @@ class ModsPanel(QWidget):
                 pass  # Signal not connected
 
             lw.clear()
-            lw.paths = list()
+            lw.paths = []
 
             # Get aux controller once for performance
             aux_metadata_controller = (
@@ -686,7 +708,7 @@ class ModsPanel(QWidget):
             if self._size_worker is not None:
                 try:
                     self._size_worker.deleteLater()
-                except Exception:
+                except Exception:  # noqa: S110
                     pass
                 self._size_worker = None
 
@@ -852,6 +874,14 @@ class ModsPanel(QWidget):
     def on_inactive_mods_mode_filter_toggle(self) -> None:
         self.signal_search_mode_filter(list_type="Inactive")
 
+    def on_active_mods_show_tags_toggled(self, checked: bool) -> None:
+        """Toggle visibility of tags in active mods list."""
+        self.active_mods_list.set_tags_visible(checked)
+
+    def on_inactive_mods_show_tags_toggled(self, checked: bool) -> None:
+        """Toggle visibility of tags in inactive mods list."""
+        self.inactive_mods_list.set_tags_visible(checked)
+
     def refresh_all_tag_filter_selectors(self) -> None:
         """Refresh the available tags in both filter panels from the aux DB."""
         try:
@@ -927,7 +957,7 @@ class ModsPanel(QWidget):
                             "is_new", False
                         ):
                             new_count += 1
-                except Exception:
+                except Exception:  # noqa: S110
                     pass
 
             padding = " "
@@ -976,7 +1006,7 @@ class ModsPanel(QWidget):
                             "is_recently_updated", False
                         ):
                             updated_count += 1
-                except Exception:
+                except Exception:  # noqa: S110
                     pass
             self.updated_icon.setHidden(updated_count == 0)
             self.updated_text.setHidden(updated_count == 0)
@@ -1045,9 +1075,10 @@ class ModsPanel(QWidget):
         for path, note in rows:
             note_lower = note.lower()
             # Fast substring check first — avoids fuzz entirely for exact/simple matches
-            if pattern in note_lower:
-                matching_paths.add(path)
-            elif fuzz.partial_ratio(pattern, note_lower) >= fuzz_threshold:
+            if (
+                pattern in note_lower
+                or fuzz.partial_ratio(pattern, note_lower) >= fuzz_threshold
+            ):
                 matching_paths.add(path)
 
         # Cache result for this pattern
@@ -1194,9 +1225,10 @@ class ModsPanel(QWidget):
             elif search_filter == "packageid" and isinstance(mod_obj, AboutXmlMod):
                 if pattern_lower not in str(mod_obj.package_id).lower():
                     item_filtered = True
-            elif search_filter == "authors":
-                author = str(getattr(mod_obj, "author", "") or "")
-                if pattern_lower not in author.lower():
+            elif pattern and search_filter == "authors":
+                if not isinstance(mod_obj, AboutXmlMod) or not any(
+                    pattern_lower in author.lower() for author in mod_obj.authors
+                ):
                     item_filtered = True
             elif search_filter == "publishedfileid":
                 pfid = str(mod_obj.published_file_id or "")
@@ -1466,7 +1498,7 @@ class ModsPanel(QWidget):
 
         # Build a mapping: pfid -> packageId for all installed mods
         pfid_to_packageid: dict[str, str] = {}
-        for _path, meta in all_local_metadata.items():
+        for meta in all_local_metadata.values():
             pfid = meta.published_file_id
             packageid = (
                 str(meta.package_id).lower() if isinstance(meta, AboutXmlMod) else ""
@@ -1475,7 +1507,7 @@ class ModsPanel(QWidget):
                 pfid_to_packageid[pfid] = packageid
 
         # Iterate through all installed mods to find translations
-        for _path, meta in all_local_metadata.items():
+        for meta in all_local_metadata.values():
             pfid = meta.published_file_id
 
             # Skip if this mod doesn't have a publishedfileid (local-only mod)
@@ -1488,16 +1520,18 @@ class ModsPanel(QWidget):
 
             steam_entry = steam_db_database[pfid]
 
+            # jscpd:ignore-start
             # Build tag set for fast lookups
             tag_set = {tag_item.get("tag", "").lower() for tag_item in steam_entry.tags}
 
             # Check if this mod has "translation" tag
             if "translation" not in tag_set:
                 continue
+            # jscpd:ignore-end
 
             # Check dependencies to find target mods
             # For each dependency, if it's an installed mod, mark it as having a translation
-            for dep_pfid in steam_entry.dependencies.keys():
+            for dep_pfid in steam_entry.dependencies:
                 # Check if the dependency is an installed mod
                 if dep_pfid in pfid_to_packageid:
                     target_packageid = pfid_to_packageid[dep_pfid]
@@ -1581,7 +1615,7 @@ class ModsPanel(QWidget):
             # Check if this translation targets any active mod
             targets_active_mod = False
             target_mod_name = ""
-            for dep_pfid in steam_entry.dependencies.keys():
+            for dep_pfid in steam_entry.dependencies:
                 if dep_pfid in active_pfids:
                     targets_active_mod = True
                     # Get the target mod's name for similarity check
@@ -1626,26 +1660,28 @@ class ModsPanel(QWidget):
         count = 0
         added_uuids: list[str] = []
         for uuid in mods_to_add:
-            if uuid not in self.active_mods_list.paths:
+            if (
+                uuid not in self.active_mods_list.paths
+                and uuid in self.inactive_mods_list.paths
+            ):
                 # Need to find the item in inactive list
-                if uuid in self.inactive_mods_list.paths:
-                    index = self.inactive_mods_list.paths.index(uuid)
-                    item = self.inactive_mods_list.takeItem(
-                        index
-                    )  # This removes from list widget
-                    self.inactive_mods_list.paths.pop(index)
+                index = self.inactive_mods_list.paths.index(uuid)
+                item = self.inactive_mods_list.takeItem(
+                    index
+                )  # This removes from list widget
+                self.inactive_mods_list.paths.pop(index)
 
-                    self.active_mods_list.addItem(item)
-                    # self.active_mods_list.paths is updated via handle_rows_inserted signal
+                self.active_mods_list.addItem(item)
+                # self.active_mods_list.paths is updated via handle_rows_inserted signal
 
-                    # Ensure item data is updated (list_type)
-                    data = item.data(Qt.ItemDataRole.UserRole)
-                    if data:
-                        data["list_type"] = "Active"
-                        item.setData(Qt.ItemDataRole.UserRole, data)
+                # Ensure item data is updated (list_type)
+                data = item.data(Qt.ItemDataRole.UserRole)
+                if data:
+                    data["list_type"] = "Active"
+                    item.setData(Qt.ItemDataRole.UserRole, data)
 
-                    count += 1
-                    added_uuids.append(uuid)
+                count += 1
+                added_uuids.append(uuid)
 
         if count > 0:
             logger.info(f"Added {count} translation mods.")

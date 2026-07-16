@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Sequence
+from collections.abc import Sequence
 
 from PySide6.QtWidgets import QWidget
 
@@ -67,6 +67,16 @@ class BaseModsPanel(  # pyright: ignore[reportIncompatibleMethodOverride]
 
 
 __all__ = [
+    "COL_AUTHOR",
+    "COL_MOD_DOWNLOADED",
+    "COL_MOD_NAME",
+    "COL_PACKAGE_ID",
+    "COL_PATH",
+    "COL_PUBLISHED_FILE_ID",
+    "COL_SOURCE",
+    "COL_SUPPORTED_VERSIONS",
+    "COL_UPDATED_ON_WORKSHOP",
+    "COL_WORKSHOP_PAGE",
     "BaseModsPanel",
     "ButtonConfig",
     "ButtonType",
@@ -74,14 +84,4 @@ __all__ = [
     "HeaderColumn",
     "Layouts",
     "UIElements",
-    "COL_MOD_NAME",
-    "COL_AUTHOR",
-    "COL_PACKAGE_ID",
-    "COL_PUBLISHED_FILE_ID",
-    "COL_SUPPORTED_VERSIONS",
-    "COL_MOD_DOWNLOADED",
-    "COL_UPDATED_ON_WORKSHOP",
-    "COL_SOURCE",
-    "COL_PATH",
-    "COL_WORKSHOP_PAGE",
 ]

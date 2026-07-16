@@ -13,8 +13,8 @@ from pathlib import Path
 
 from loguru import logger
 
-import app.ui.dialogue as dialogue
 from app.core.launch_command_parser import parse_launch_command
+from app.ui import dialogue
 
 
 def get_executable_path(game_install_path: Path) -> str | None:

@@ -1,7 +1,7 @@
 """Tests for app.mods.mod_utils — mod utility functions."""
 
+from collections.abc import Generator
 from pathlib import Path
-from typing import Generator
 from unittest.mock import MagicMock, patch
 
 import pytest

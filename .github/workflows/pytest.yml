@@ -1,5 +1,8 @@
 name: Run Pytest
 on:
+  push:
+    branches:
+      - main
   workflow_call: null
   workflow_dispatch: null
   merge_group:
@@ -62,6 +65,12 @@ jobs:
         env:
           QT_DEBUG_PLUGINS: "1"
           PYTHONIOENCODING: "utf-8"
+          # QtWebEngine (Chromium) cannot initialize a GPU/EGL surface on the
+          # headless Linux runner, which crashes the renderer (SIGSEGV, exit 139)
+          # in tests/utils/steam/test_setup_web_channel_script.py. Force software
+          # rendering with the GPU disabled so QWebEnginePage loads headlessly.
+          QTWEBENGINE_DISABLE_GPU: "1"
+          QTWEBENGINE_CHROMIUM_FLAGS: "--disable-gpu --disable-gpu-compositing --no-sandbox"
 
       - name: Upload coverage to Codecov
         if: matrix.os == 'ubuntu-latest'

@@ -6,7 +6,7 @@ setting, counting, and clearing rows, plus runtime sort toggling.
 
 from __future__ import annotations
 
-from typing import Sequence
+from collections.abc import Sequence
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QStandardItem, QStandardItemModel
@@ -23,12 +23,12 @@ from app.windows.mixins._shared import BaseModsPanelSurface, ColumnIndex, Header
 class TableMixin(BaseModsPanelSurface):
     """Table model and row operations for BaseModsPanel."""
 
-    editor_model: "QStandardItemModel"
-    editor_table_view: "QTableView"
+    editor_model: QStandardItemModel
+    editor_table_view: QTableView
 
     def _setup_table_and_model(
         self,
-        additional_columns: "Sequence[HeaderColumn]",
+        additional_columns: Sequence[HeaderColumn],
         sorting_enabled: bool = False,
     ) -> None:
         """

@@ -8,6 +8,7 @@ from PySide6.QtWidgets import QApplication, QLineEdit, QPlainTextEdit, QTextEdit
 from app.core.event_bus import EventBus
 from app.core.ui_helpers import open_url_browser
 from app.models.settings import Settings
+from app.ui.dialogue import show_dialogue_conditional
 from app.views.menu_bar import MenuBar
 
 
@@ -63,6 +64,9 @@ class MenuBarController(QObject):
         self.menu_bar.open_mod_list_action.triggered.connect(
             EventBus().do_open_mod_list.emit
         )
+        self.menu_bar.append_mod_list_action.triggered.connect(
+            EventBus().do_append_mod_list.emit
+        )
         self.menu_bar.save_mod_list_action.triggered.connect(
             EventBus().do_save_mod_list_as.emit
         )
@@ -80,6 +84,9 @@ class MenuBarController(QObject):
         )
         self.menu_bar.export_to_rentry_action.triggered.connect(
             EventBus().do_export_mod_list_to_rentry
+        )
+        self.menu_bar.modlist_history_action.triggered.connect(
+            EventBus().do_open_modlist_history.emit
         )
 
         for action in self.menu_bar.upload_log_actions:
@@ -140,6 +147,9 @@ class MenuBarController(QObject):
         )
 
         # Download menu
+        self.menu_bar.download_rimworld_version_action.triggered.connect(
+            EventBus().do_download_rimworld_version.emit
+        )
         self.menu_bar.add_git_mod_action.triggered.connect(
             EventBus().do_add_git_mod.emit
         )
@@ -155,8 +165,11 @@ class MenuBarController(QObject):
         self.menu_bar.update_workshop_mods_action.triggered.connect(
             EventBus().do_check_for_workshop_updates
         )
+        self.menu_bar.update_git_mods_action.triggered.connect(
+            EventBus().do_check_for_git_updates
+        )
         self.menu_bar.steam_verify_game_files_action.triggered.connect(
-            EventBus().do_steam_verify_game_files
+            self._on_steam_verify_game_files_triggered
         )
 
         # View menu
@@ -230,15 +243,26 @@ class MenuBarController(QObject):
         )
         self.menu_bar.instances_submenu.setActiveAction(
             next(
-                (
-                    action
-                    for action in self.menu_bar.instances_submenu.actions()
-                    if action.text() == current_instance
-                )
+                action
+                for action in self.menu_bar.instances_submenu.actions()
+                if action.text() == current_instance
             )
         )
         if initialize:
             EventBus().do_activate_current_instance.emit(current_instance)
+
+    @Slot()
+    def _on_steam_verify_game_files_triggered(self) -> None:
+        """Confirm before verifying RimWorld game files through Steam."""
+        if not show_dialogue_conditional(
+            title=self.tr("Verify Game Files"),
+            text=self.tr(
+                "Are you sure you want to verify RimWorld's game files through Steam?"
+                "<br><br>This process cannot be canceled once it has started."
+            ),
+        ):
+            return
+        EventBus().do_steam_verify_game_files.emit()
 
     def _on_menu_bar_reset_warnings_triggered(self) -> None:
         EventBus().reset_warnings_signal.emit()

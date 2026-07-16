@@ -13,6 +13,10 @@ from app.io.xml import json_to_xml_write
 from app.models.metadata.metadata_structure import AboutXmlMod, ModType
 from app.models.mod_list import MetadataProvider
 from app.models.settings import Settings
+from app.services.mod_list_parser import (
+    parse_mod_list_file,
+    parsed_to_mods_config_dict,
+)
 from app.ui.widgets.divider import is_divider_uuid
 from app.utils.rentry.wrapper import RentryUpload
 from app.utils.steam.webapi.wrapper import (
@@ -79,10 +83,13 @@ class ImportExportService:
 
             seen.add(package_id)
 
-            if duplicate_mods and package_id in duplicate_mods:
-                if mod.mod_type == ModType.STEAM_WORKSHOP:
-                    data.active_mods.append(package_id + "_steam")
-                    continue
+            if (
+                duplicate_mods
+                and package_id in duplicate_mods
+                and mod.mod_type == ModType.STEAM_WORKSHOP
+            ):
+                data.active_mods.append(package_id + "_steam")
+                continue
 
             data.active_mods.append(package_id)
             data.packageid_to_uuid[package_id] = uuid
@@ -298,3 +305,26 @@ class ImportExportService:
         )
         json_to_xml_write(mods_config_data, mods_config_path)
         return mods_config_path
+
+    def import_from_file(
+        self,
+        path: str,
+        target: str = "mods_config",
+    ) -> list[str]:
+        """Import a mod list file in JSON or XML format.
+
+        :param path: Path to the mod list file.
+        :param target: ``mods_config`` writes ModsConfig.xml; ``ui`` returns package IDs only.
+        :return: List of package IDs from the file.
+        :raises ModListFormatError: If the file format is not recognized.
+        """
+        parsed = parse_mod_list_file(path)
+        if target == "ui":
+            return parsed.package_ids
+
+        mods_config_path = str(
+            Path(self.settings.instances[self.settings.current_instance].config_folder)
+            / "ModsConfig.xml"
+        )
+        json_to_xml_write(parsed_to_mods_config_dict(parsed), mods_config_path)
+        return parsed.package_ids

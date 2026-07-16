@@ -5,8 +5,9 @@ Extracted from ``MainContentController`` to keep the facade slim.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING
 
 from loguru import logger
 from PySide6.QtCore import Slot
@@ -181,9 +182,9 @@ class GitOpsHandler:
 
         details_msg = ""
         for repo_path, messages in updates.items():
-            details_msg += f"{repo_path}<br>"
+            details_msg += f"{repo_path}\n"
             for msg in messages:
-                details_msg += f"\t{msg}<br>"
+                details_msg += f"\t{msg}\n"
 
         binary_diag = BinaryChoiceDialog(
             title=self._tr("Git Updates Found"),
@@ -231,20 +232,20 @@ class GitOpsHandler:
         for repo_path in successful:
             repo_name = Path(repo_path).name
             info = commit_info.get(str(repo_path), "No commit info")
-            success_details += f"✓ {repo_name}<br>  └─ {info}<br><br>"
+            success_details += f"✓ {repo_name}\n  └─ {info}\n\n"
 
         failure_details = ""
         for repo_path, err in failed:
-            failure_details += f"{Path(repo_path).name}: {err}<br>"
+            failure_details += f"{Path(repo_path).name}: {err}\n"
 
-        partial_details = self._tr("Successful updates:<br>")
+        partial_details = self._tr("Successful updates:\n")
         for repo_path in successful:
             repo_name = Path(repo_path).name
             info = commit_info.get(str(repo_path), "No commit info")
-            partial_details += f"  ✓ {repo_name}<br>    └─ {info}<br>"
-        partial_details += f"<br>{self._tr('Failed updates:')}<br>"
+            partial_details += f"  ✓ {repo_name}\n    └─ {info}\n"
+        partial_details += f"\n{self._tr('Failed updates:')}\n"
         for repo_path, err in failed:
-            partial_details += f"  ✗ {Path(repo_path).name}: {err}<br>"
+            partial_details += f"  ✗ {Path(repo_path).name}: {err}\n"
 
         self._show_batch_results(
             successful,
@@ -458,7 +459,7 @@ class GitOpsHandler:
                 self._git_clone_worker.error.disconnect()
                 self._git_clone_worker.quit()
                 self._git_clone_worker.wait()
-            except Exception:
+            except Exception:  # noqa: S110
                 pass
             self._git_clone_worker = None
 
@@ -496,7 +497,7 @@ class GitOpsHandler:
                 self._git_clone_worker.finished.disconnect()
                 self._git_clone_worker.progress.disconnect()
                 self._git_clone_worker.error.disconnect()
-            except Exception:
+            except Exception:  # noqa: S110
                 pass
             self._git_clone_worker = None
 

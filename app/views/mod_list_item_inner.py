@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, cast
+from typing import cast
 
 from loguru import logger
 from PySide6.QtCore import (
@@ -31,6 +31,11 @@ from app.mods.aux_db_utils import auxdb_get_mod_tags
 from app.sort.mod_sorting import _FOLDER_SIZE_CACHE
 from app.ui.widgets.custom_list_widget_item import CustomListWidgetItem
 from app.ui.widgets.custom_qlabels import ClickableQLabel
+from app.utils.startup_impact import (
+    IMPACT_HIGH_THRESHOLD_S,
+    IMPACT_WARN_THRESHOLD_S,
+    format_impact,
+)
 from app.views.mod_list_icons import ModListIcons
 
 
@@ -52,7 +57,7 @@ class ModListItemInner(QWidget):
         mod_color: QColor,
         metadata_controller: MetadataController | None = None,
     ) -> None:
-        super(ModListItemInner, self).__init__()
+        super().__init__()
 
         self.setAttribute(Qt.WidgetAttribute.WA_Hover)
         self._selected = False
@@ -139,6 +144,10 @@ class ModListItemInner(QWidget):
         )
         self.updated_icon_label.setToolTip(self.tr("Recently updated on Workshop"))
         self.updated_icon_label.setHidden(True)
+        # Startup impact (load time) text label, hidden by default; opt-in via settings
+        self.startup_impact_label = QLabel()
+        self.startup_impact_label.setObjectName("startupImpactLabel")
+        self.startup_impact_label.setHidden(True)
         self.in_save_icon_label = QLabel()
         self.in_save_icon_label.setPixmap(
             ModListIcons.clear_icon().pixmap(QSize(20, 20))
@@ -224,6 +233,10 @@ class ModListItemInner(QWidget):
         self.main_item_layout.addWidget(
             self.error_icon_label, Qt.AlignmentFlag.AlignRight
         )
+        if self.settings.mod_list_startup_impact:
+            self.main_item_layout.addWidget(
+                self.startup_impact_label, Qt.AlignmentFlag.AlignRight
+            )
         self.main_item_layout.addStretch()
         self.setLayout(self.main_item_layout)
 
@@ -258,14 +271,14 @@ class ModListItemInner(QWidget):
 
     def update_translation_status(self, is_translated: bool) -> None:
         if is_translated:
-            self.translation_status_label.setText("🟢")
+            self.translation_status_label.setText("ðŸŸ¢")
             self.translation_status_label.setToolTip(
                 self.tr(
                     "Translation available - This mod has a translation or is already localized"
                 )
             )
         else:
-            self.translation_status_label.setText("🔴")
+            self.translation_status_label.setText("ðŸ”´")
             self.translation_status_label.setToolTip(
                 self.tr(
                     "No translation found - This mod does not have a translation installed"
@@ -314,7 +327,7 @@ class ModListItemInner(QWidget):
             try:
                 if widget.isHidden():
                     return 0
-            except Exception:
+            except Exception:  # noqa: S110
                 pass
             pixmap = widget.pixmap()
             if pixmap and not pixmap.isNull():
@@ -381,7 +394,7 @@ class ModListItemInner(QWidget):
         fs_time_val = mod.internal_time_touched if mod is not None else None
         if isinstance(fs_time_val, int) and fs_time_val > 0:
             try:
-                dt_fs = datetime.fromtimestamp(fs_time_val)
+                dt_fs = datetime.fromtimestamp(fs_time_val)  # noqa: DTZ006
                 formatted_time = dt_fs.strftime("%Y-%m-%d %H:%M:%S")
                 last_touched_line = f"Filesystem Modified: {formatted_time}"
             except (ValueError, OSError, OverflowError):
@@ -389,20 +402,7 @@ class ModListItemInner(QWidget):
         else:
             last_touched_line = "Filesystem Modified: Not available"
 
-        return "".join(
-            [
-                name_line,
-                tags_line,
-                color_line,
-                author_line,
-                package_id_line,
-                modversion_line,
-                folder_size_line,
-                supported_versions_line,
-                path_line,
-                last_touched_line,
-            ]
-        )
+        return f"{name_line}{tags_line}{color_line}{author_line}{package_id_line}{modversion_line}{folder_size_line}{supported_versions_line}{path_line}{last_touched_line}"
 
     def get_icon(self) -> QIcon:
         mod = self.metadata_controller.get_mod(self.path)
@@ -422,6 +422,13 @@ class ModListItemInner(QWidget):
             icon_count = self.count_icons(self)
 
         icon_width = icon_count * 20
+        if not self.startup_impact_label.isHidden():
+            icon_width += (
+                self.startup_impact_label.fontMetrics()
+                .boundingRect(self.startup_impact_label.text())
+                .width()
+                + 6
+            )
         if not self.translation_status_label.isHidden():
             icon_width += (
                 self.translation_status_label.fontMetrics()
@@ -538,6 +545,34 @@ class ModListItemInner(QWidget):
         else:
             self.updated_icon_label.setHidden(True)
 
+        # Startup impact label (both lists) depends on the setting
+        startup_impact_was_hidden = self.startup_impact_label.isHidden()
+        startup_impact_old_text = self.startup_impact_label.text()
+        startup_impact_s = item_data.__dict__.get("startup_impact_s")
+        if self.settings.mod_list_startup_impact and startup_impact_s is not None:
+            self.startup_impact_label.setText(format_impact(startup_impact_s))
+            if startup_impact_s >= IMPACT_HIGH_THRESHOLD_S:
+                self.startup_impact_label.setStyleSheet("color: #d9534f;")
+            elif startup_impact_s >= IMPACT_WARN_THRESHOLD_S:
+                self.startup_impact_label.setStyleSheet("color: #f0ad4e;")
+            else:
+                self.startup_impact_label.setStyleSheet("color: #5cb85c;")
+            self.startup_impact_label.setToolTip(
+                item_data.__dict__.get("startup_impact_tooltip", "")
+            )
+            self.startup_impact_label.setHidden(False)
+        else:
+            self.startup_impact_label.setHidden(True)
+            self.startup_impact_label.setText("")
+            self.startup_impact_label.setToolTip("")
+        # Text labels are not part of count_icons, so a change here must
+        # trigger the name eliding recalculation explicitly
+        if (
+            self.startup_impact_label.isHidden() != startup_impact_was_hidden
+            or self.startup_impact_label.text() != startup_impact_old_text
+        ):
+            self._resize_text_after_icon_toggle()
+
         new_icon_count = self.count_icons(self)
         if new_icon_count != self._last_icon_count:
             self._resize_text_after_icon_toggle(icon_count=new_icon_count)
@@ -546,7 +581,7 @@ class ModListItemInner(QWidget):
     def handle_mod_color_change(
         self, item: CustomListWidgetItem | None = None, init: bool = False
     ) -> None:
-        new_mod_color_name: Optional[str] = None
+        new_mod_color_name: str | None = None
         if init:
             if self.mod_color:
                 new_mod_color_name = self.mod_color.name()

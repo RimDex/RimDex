@@ -199,7 +199,7 @@ class MissingModsPrompt(BaseModsPanel):
                 dependencies = {
                     key: value
                     for key, value in entry.dependencies.items()
-                    if key not in RIMWORLD_DLC_METADATA.keys()
+                    if key not in RIMWORLD_DLC_METADATA
                 }
 
                 # Populate variants_by_packageid dict
@@ -412,7 +412,9 @@ class MissingModsPrompt(BaseModsPanel):
         """
         combo_box = self.sender()
         if not isinstance(combo_box, QComboBox):
-            raise ValueError(f"Sender is not a QComboBox!: {combo_box}")
+            raise ValueError(  # noqa: TRY004
+                f"Sender is not a QComboBox!: {combo_box}"
+            )
         row = self._find_row_for_combo_box(combo_box)
         if row is None:
             return

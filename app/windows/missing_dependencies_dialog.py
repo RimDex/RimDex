@@ -1,6 +1,6 @@
 from functools import partial
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (
     QCheckBox,
     QDialog,
@@ -13,6 +13,16 @@ from PySide6.QtWidgets import (
 )
 
 from app.controllers.metadata_controller import MetadataController
+from app.core.event_bus import EventBus
+from app.services.dependency_resolver import DepResolveResult
+from app.utils.steam.workshop_urls import build_workshop_text_search_url
+
+_DEPS_SUMMARY_ARGS_DOC = (
+    "deps_summary: dict mapping each mod package ID to a dict with keys:\n"
+    '    - "satisfied": set of dep package IDs already active\n'
+    '    - "local": set of dep package IDs available locally but not active\n'
+    '    - "download": set of dep package IDs that need to be downloaded'
+)
 
 
 class MissingDependenciesDialog(QDialog):
@@ -25,6 +35,8 @@ class MissingDependenciesDialog(QDialog):
         - Local dependencies (available but not active)
         - Dependencies that need to be downloaded
     """
+
+    download_requested = Signal(str)
 
     def __init__(
         self,
@@ -39,6 +51,7 @@ class MissingDependenciesDialog(QDialog):
         self.metadata_controller = metadata_controller
         self.selected_mods: set[str] = set()
         self.checkboxes: dict[str, QCheckBox] = {}
+        self._dep_resolve: dict[str, DepResolveResult] = {}
         self._setup_ui()
 
     def _setup_ui(self) -> None:
@@ -98,22 +111,22 @@ class MissingDependenciesDialog(QDialog):
         self,
         deps_summary: dict[str, dict[str, set[str]]],
         missing_deps: dict[str, set[str]],
+        dep_resolve: dict[str, DepResolveResult] | None = None,
     ) -> set[str]:
         """
         Show the dialog with all dependencies (satisfied + missing) for each mod.
 
         Args:
-            deps_summary: dict mapping each mod package ID to a dict with keys:
-                - "satisfied": set of dep package IDs already active
-                - "local": set of dep package IDs available locally but not active
-                - "download": set of dep package IDs that need to be downloaded
+            deps_summary: See module constant ``_DEPS_SUMMARY_ARGS_DOC``.
             missing_deps: dict mapping mod package IDs to sets of missing
                           dependency package IDs (same as before, used to
                           determine if there are any missing deps at all)
+            dep_resolve: optional map of download dep package IDs to workshop resolve results
 
         Returns:
             Set of selected mod package IDs if user accepted, empty set otherwise.
         """
+        self._dep_resolve = dep_resolve or {}
         self._populate_dependencies(deps_summary)
 
         result = self.exec()
@@ -261,6 +274,9 @@ class MissingDependenciesDialog(QDialog):
                     dep_name = self.metadata_controller.get_mod_name_from_package_id(
                         dep_id
                     )
+                    row = QWidget()
+                    row_layout = QHBoxLayout(row)
+                    row_layout.setContentsMargins(0, 0, 0, 0)
                     checkbox = QCheckBox(f"  🌐 {dep_name}  ({dep_id})")
                     checkbox.setToolTip(
                         self.tr("Needs to be downloaded - requires SteamCMD")
@@ -268,8 +284,40 @@ class MissingDependenciesDialog(QDialog):
                     checkbox.stateChanged.connect(
                         partial(self._toggle_mod_selection, mod_id=dep_id)
                     )
-                    self.scroll_layout.addWidget(checkbox)
+                    row_layout.addWidget(checkbox, stretch=1)
                     self.checkboxes[dep_id] = checkbox
+
+                    resolve = self._dep_resolve.get(dep_id)
+                    open_btn = QPushButton(self.tr("Open Workshop"))
+                    open_btn.clicked.connect(
+                        partial(self._open_workshop, dep_id=dep_id, resolve=resolve)
+                    )
+                    row_layout.addWidget(open_btn)
+
+                    download_btn = QPushButton(self.tr("Download"))
+                    has_workshop_id = resolve is not None and resolve.workshop_id
+                    download_btn.setEnabled(bool(has_workshop_id))
+                    if has_workshop_id and resolve is not None:
+                        pfid = str(resolve.workshop_id)
+
+                        def _emit_download(
+                            _checked: bool = False, workshop_pfid: str = pfid
+                        ) -> None:
+                            self.download_requested.emit(workshop_pfid)
+
+                        download_btn.clicked.connect(_emit_download)
+                    row_layout.addWidget(download_btn)
+                    self.scroll_layout.addWidget(row)
+
+                    if not has_workshop_id:
+                        hint = QLabel(
+                            self.tr(
+                                "Workshop ID not found — open Workshop to find manually"
+                            )
+                        )
+                        hint.setObjectName("missingWorkshopHint")
+                        hint.setWordWrap(True)
+                        self.scroll_layout.addWidget(hint)
 
             # Add a separator between mods
             self.scroll_layout.addSpacing(10)
@@ -349,3 +397,17 @@ class MissingDependenciesDialog(QDialog):
             Set of selected mod package IDs.
         """
         return self.selected_mods
+
+    def _open_workshop(
+        self,
+        dep_id: str,
+        resolve: DepResolveResult | None,
+    ) -> None:
+        if resolve and resolve.workshop_url:
+            url = resolve.workshop_url
+        else:
+            mod_name = self.metadata_controller.get_mod_name_from_package_id(dep_id)
+            url = build_workshop_text_search_url(mod_name)
+        EventBus().workshop_restore_target = self
+        self.hide()
+        EventBus().do_browse_workshop_url.emit(url)

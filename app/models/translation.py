@@ -13,7 +13,7 @@ import json
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, Optional, TypedDict
+from typing import Any, TypedDict
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -62,7 +62,7 @@ class TranslationConfig:
     use_cache: bool = True
 
     @classmethod
-    def from_dict(cls, config_dict: Dict[str, Any]) -> TranslationConfig:
+    def from_dict(cls, config_dict: dict[str, Any]) -> TranslationConfig:
         retry = RetryConfig(**config_dict.get("retry_config", {}))
         timeout = TimeoutConfig(**config_dict.get("timeout_config", {}))
         return cls(
@@ -79,12 +79,13 @@ class TranslationConfig:
 
 
 class LangMapEntry(TypedDict, total=False):
-    google: Optional[str]
-    deepl: Optional[str]
-    openai: Optional[str]
+    google: str | None
+    deepl: str | None
+    openai: str | None
 
 
-LANG_MAP: Dict[str, LangMapEntry] = {
+# jscpd:ignore-start
+LANG_MAP: dict[str, LangMapEntry] = {
     "zh_CN": {"google": "zh-cn", "deepl": "ZH", "openai": "Simplified Chinese"},
     "zh_TW": {"google": "zh-tw", "deepl": "ZH", "openai": "Traditional Chinese"},
     "en_US": {"google": "en", "deepl": "EN", "openai": "English"},
@@ -97,6 +98,7 @@ LANG_MAP: Dict[str, LangMapEntry] = {
     "tr_TR": {"google": "tr", "deepl": None, "openai": None},
     "pt_BR": {"google": "pt", "deepl": None, "openai": None},
 }
+# jscpd:ignore-end
 
 # ---------------------------------------------------------------------------
 # Translation cache
@@ -112,7 +114,7 @@ class TranslationCache:
     Shared between the CLI tool and the in-app UI so results are reused.
     """
 
-    _cache: Dict[str, str] = field(default_factory=dict)
+    _cache: dict[str, str] = field(default_factory=dict)
     _cache_file: Path = field(default_factory=lambda: _CACHE_FILE)
     _loaded: bool = field(init=False, default=False)
 
@@ -124,7 +126,7 @@ class TranslationCache:
             try:
                 with open(self._cache_file, "r", encoding="utf-8") as f:
                     self._cache = json.load(f)
-            except (IOError, json.JSONDecodeError):
+            except (OSError, json.JSONDecodeError):
                 self._cache = {}
 
     def save(self) -> None:
@@ -141,7 +143,7 @@ class TranslationCache:
 
     def get(
         self, text: str, target_lang: str, source_lang: str, service: str
-    ) -> Optional[str]:
+    ) -> str | None:
         self._load_if_needed()
         return self._cache.get(self._key(text, target_lang, source_lang, service))
 

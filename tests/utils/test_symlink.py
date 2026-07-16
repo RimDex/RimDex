@@ -31,10 +31,6 @@ class TestExceptions:
         assert issubclass(SymlinkDstParentNotExistError, SymlinkCreationError)
 
 
-@pytest.mark.skipif(
-    sys.platform == "win32",
-    reason="os.symlink requires admin/Developer Mode on Windows",
-)
 class TestIsJunctionOrLink:
     def test_regular_file_returns_false(self, tmp_path: Path) -> None:
         f = tmp_path / "file.txt"
@@ -50,7 +46,14 @@ class TestIsJunctionOrLink:
         target = tmp_path / "target"
         target.mkdir()
         link = tmp_path / "link"
-        os.symlink(target, link)
+        if sys.platform == "win32":
+            # os.symlink requires admin/Developer Mode on Windows; junctions
+            # do not, and os.readlink resolves them the same way.
+            from _winapi import CreateJunction
+
+            CreateJunction(str(target), str(link))
+        else:
+            os.symlink(target, link)
         assert is_junction_or_link(link) is True
 
     def test_nonexistent_returns_false(self, tmp_path: Path) -> None:

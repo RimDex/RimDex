@@ -5,8 +5,9 @@ Extracted from ``MainContentController`` to keep the facade slim.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING
 
 from loguru import logger
 from PySide6.QtCore import Slot
@@ -92,6 +93,12 @@ class DatabaseDownloadHandler:
                 settings.external_use_this_instead_repo_path,
                 settings.external_use_this_instead_url,
                 DATABASE_DISPLAY_NAMES["use_this_instead"],
+            ),
+            (
+                settings.external_rimworld_versions_metadata_source,
+                settings.external_rimworld_versions_repo_path,
+                settings.external_rimworld_versions_url,
+                DATABASE_DISPLAY_NAMES["rimworld_versions"],
             ),
         ]
 

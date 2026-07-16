@@ -19,6 +19,8 @@ from app.io.acf_utils import load_acf_from_path
 from app.io.xml import json_to_xml_write, xml_path_to_json
 from app.models.metadata.metadata_mediator import MetadataMediator
 from app.models.metadata.metadata_structure import (
+    SOURCE_PRIORITY_DEFAULT,
+    SOURCE_PRIORITY_STEAM,
     AboutXmlMod,
     CompiledDependencyData,
     ListedMod,
@@ -127,9 +129,11 @@ class MetadataController(QObject):
                     entry = self.metadata_db_controller.get_or_create(session, path)
                     entry.type = str(mod_data.mod_type)
                     entry.published_file_id = mod_data.published_file_id
-                except Exception:
+                except Exception as e:
                     session.rollback()
-                    logger.exception(f"Failed to update aux metadata for mod at {path}")
+                    logger.exception(
+                        f"Failed to update aux metadata for mod at {path} error {e}"
+                    )
 
             self.metadata_db_controller.update_from_acf(
                 session,
@@ -481,9 +485,10 @@ class MetadataController(QObject):
         missing_packageid: list[str] = []
         missing_publishfieldid: list[str] = []
         for path, mod in self.mods_metadata.items():
-            if not isinstance(mod, AboutXmlMod):
-                missing_packageid.append(path)
-            elif str(mod.package_id) == app_constants.DEFAULT_MISSING_PACKAGEID:
+            if (
+                not isinstance(mod, AboutXmlMod)
+                or str(mod.package_id) == app_constants.DEFAULT_MISSING_PACKAGEID
+            ):
                 missing_packageid.append(path)
             if mod.published_file_id is not None:
                 continue
@@ -558,12 +563,6 @@ class MetadataController(QObject):
         :param mod_list: Path to .rws/.xml mod list file, or list of package IDs
         :return: (active_mod_paths, inactive_mod_paths, duplicate_mods, missing_mods)
         """
-        SOURCE_PRIORITY_STEAM: list[ModType] = [ModType.STEAM_WORKSHOP, ModType.LOCAL]
-        SOURCE_PRIORITY_DEFAULT: list[ModType] = [
-            ModType.LUDEON,
-            ModType.LOCAL,
-            ModType.STEAM_WORKSHOP,
-        ]
 
         all_mods = self.mods_metadata
         active_mod_paths: list[str] = []
@@ -657,9 +656,7 @@ class MetadataController(QObject):
         logger.debug(f"Generated active mods with {len(active_mod_paths)} mods")
 
         logger.info("Generating inactive mod list")
-        inactive_mod_paths = [
-            path for path in all_mods.keys() if path not in active_mod_paths
-        ]
+        inactive_mod_paths = [path for path in all_mods if path not in active_mod_paths]
         logger.info(f"# active mods: {len(active_mod_paths)}")
         logger.info(f"# inactive mods: {len(inactive_mod_paths)}")
         logger.info(f"# duplicate mods: {len(duplicate_mods)}")
@@ -810,7 +807,7 @@ class MetadataController(QObject):
         ``AppInfo().databases_folder / <repo-name> / <file_name>``, not
         at the settings default.
         """
-        if source == "Disabled":
+        if source in {"None", "Disabled"}:
             return None
         if source == "Configured file path":
             return Path(file_path) if file_path else None
