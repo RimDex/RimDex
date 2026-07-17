@@ -17,6 +17,14 @@
         executable: "yes"
       dest_path: "todds"
     - from_filenames:
+        relative_path: "../db_builder"
+        prefixes:
+          - "RimDexDatabaseBuilder"
+          - "rimdex_db_builder"
+          - "db_builder"
+        executable: "yes"
+      dest_path: "db_builder"
+    - from_filenames:
         relative_path: "../libs"
         prefixes:
           - "steam*"

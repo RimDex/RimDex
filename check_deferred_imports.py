@@ -42,10 +42,9 @@ ALLOWED: set[str] = {
     "app/controllers/translation_controller.py: from app.windows.translation_manager import TranslationManagerDialog",
     # Controller wired lazily alongside other controllers in MainWindow
     "app/views/main_window.py: from app.controllers.translation_controller import TranslationController",
-    # build_db transitively imports PySide6 (db_builder_core -> webapi.wrapper);
-    # deferred so headless commands (e.g. `translate run-all`) load without Qt on
-    # runners lacking Qt system libraries (e.g. libEGL.so.1)
-    "app/cli/main.py: from app.cli.build_db import build_db",
+    # Lazy launch of the standalone Database Builder subprocess via its thin
+    # wrapper (keeps the wrapper import out of the controller's module load path)
+    "app/controllers/menu_bar_controller.py: from app.utils.db_builder.wrapper import DatabaseBuilderInterface",
 }
 
 

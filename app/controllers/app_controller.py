@@ -6,7 +6,6 @@ from loguru import logger
 from PySide6.QtCore import QCoreApplication, QLibraryInfo, QObject, QTranslator
 from PySide6.QtWidgets import QApplication
 
-from app.controllers.database_builder_controller import DatabaseBuilderController
 from app.controllers.instance_controller import InstanceController
 from app.controllers.main_window_controller import MainWindowController
 from app.controllers.metadata_controller import MetadataController
@@ -53,8 +52,6 @@ class AppController(QObject):
         self.initialize_metadata_controller()
         # Initialize the instance service (self-subscribes to EventBus)
         self.initialize_instance_service()
-        # Initialize the database builder (standalone tool)
-        self.initialize_database_builder()
         # Initialize the main window controller
         self.initialize_main_window()
 
@@ -174,12 +171,6 @@ class AppController(QObject):
             aux_metadata_controller=self.metadata_controller.metadata_db_controller,
         )
 
-    def initialize_database_builder(self) -> None:
-        """Initializes the standalone Database Builder dialog."""
-        self.database_builder_controller = DatabaseBuilderController(
-            settings=self.settings,
-        )
-
     def initialize_main_window(self) -> None:
         """Initializes the main window and its controller."""
         self.main_window = MainWindow(
@@ -188,8 +179,6 @@ class AppController(QObject):
             set_instance=self.settings_controller.set_instance,
             show_settings_dialog=self.settings_controller.show_settings_dialog,
             metadata_controller=self.metadata_controller,
-            show_database_builder_dialog=self.database_builder_controller.show,
-            database_builder_controller=self.database_builder_controller,
         )
         self.main_window_controller = MainWindowController(self.main_window)
 

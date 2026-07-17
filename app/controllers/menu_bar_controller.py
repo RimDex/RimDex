@@ -17,14 +17,12 @@ class MenuBarController(QObject):
         view: MenuBar,
         settings: Settings,
         show_settings_dialog: Callable[[], None],
-        show_database_builder_dialog: Callable[[], None] | None = None,
     ) -> None:
         super().__init__()
 
         self.menu_bar = view
         self.settings = settings
         self._show_settings_dialog = show_settings_dialog
-        self._show_database_builder_dialog = show_database_builder_dialog
 
         # Application menu
         instance = QApplication.instance()
@@ -48,13 +46,10 @@ class MenuBarController(QObject):
         # Settings menu
         self.menu_bar.settings_action.triggered.connect(self._show_settings_dialog)
 
-        # Tools menu
-        if self._show_database_builder_dialog is not None:
-            self.menu_bar.database_builder_action.triggered.connect(
-                self._show_database_builder_dialog
-            )
-        else:
-            self.menu_bar.database_builder_action.setVisible(False)
+        # Tools menu — launch the standalone Database Builder subprocess.
+        self.menu_bar.database_builder_action.triggered.connect(
+            self._on_launch_standalone_db_builder
+        )
         self.menu_bar.translation_manager_action.triggered.connect(
             EventBus().do_open_translation_manager.emit
         )
@@ -301,3 +296,9 @@ class MenuBarController(QObject):
         """
         for action in self.menu_bar.menu_bar.actions():
             action.setEnabled(True)
+
+    @Slot()
+    def _on_launch_standalone_db_builder(self) -> None:
+        from app.utils.db_builder.wrapper import DatabaseBuilderInterface
+
+        DatabaseBuilderInterface().launch_gui()

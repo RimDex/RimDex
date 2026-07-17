@@ -4,7 +4,6 @@ from functools import partial
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from app.controllers.database_builder_controller import DatabaseBuilderController
     from app.views.settings_dialog import SettingsDialog
 
 from loguru import logger
@@ -61,8 +60,6 @@ class MainWindow(QMainWindow):
         show_settings_dialog: Callable[..., None],
         metadata_controller: MetadataController,
         settings_dialog: "SettingsDialog | None" = None,
-        show_database_builder_dialog: Callable[[], None] | None = None,
-        database_builder_controller: "DatabaseBuilderController | None" = None,
         debug_mode: bool = False,
     ) -> None:
         """
@@ -76,7 +73,6 @@ class MainWindow(QMainWindow):
         self._get_active_instance = get_active_instance
         self._set_instance = set_instance
         self._show_settings_dialog = show_settings_dialog
-        self._show_database_builder_dialog = show_database_builder_dialog
         self.metadata_controller = metadata_controller
 
         # Inject runtime references into the shared app context
@@ -231,20 +227,12 @@ class MainWindow(QMainWindow):
             view=self.menu_bar,
             settings=self.settings,
             show_settings_dialog=self._show_settings_dialog,
-            show_database_builder_dialog=self._show_database_builder_dialog,
         )
         from app.controllers.translation_controller import TranslationController
 
         self.translation_controller = TranslationController(
             window_manager=self.main_content_panel.window_manager
         )
-
-        # Register the Database Builder controller's window manager so its
-        # dialog (and any background work it owns) is closed on app exit.
-        if database_builder_controller is not None:
-            self.main_content_panel.window_manager.register_manager(
-                database_builder_controller._window_manager
-            )
 
         self.main_content_controller = MainContentController(
             view=self.main_content_panel,

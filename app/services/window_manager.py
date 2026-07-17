@@ -34,7 +34,7 @@ class WindowManager:
     def register_manager(self, manager: WindowManager) -> None:
         """Track a child WindowManager so its windows are closed too.
 
-        Controllers (e.g. TranslationController, DatabaseBuilderController)
+        Controllers (e.g. TranslationController)
         own their own dialogs via a separate WindowManager. Registering those
         sub-managers into the MainContent root manager ensures a single
         ``close_all()`` (driven from MainWindow.closeEvent) tears down every

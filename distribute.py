@@ -16,6 +16,7 @@ import platform
 import shutil
 import subprocess
 import sys
+import tarfile
 from io import BytesIO
 from stat import S_IEXEC
 from zipfile import ZipFile
@@ -417,6 +418,84 @@ def get_latest_todds_release() -> None:
         print(f"Error: {e}")
 
 
+def get_latest_db_builder_release() -> None:
+    # Parse latest release of the standalone Database Builder.
+    headers = None
+    browser_download_url = ""
+    # If GITHUB_TOKEN is set, use it to authenticate the request
+    if "GITHUB_TOKEN" in os.environ:
+        headers = {"Authorization": f"token {os.environ['GITHUB_TOKEN']}"}
+    raw = handle_request(
+        "https://api.github.com/repos/RimDex/RimDex-Database-Builder/releases/latest",
+        headers=headers,
+    )
+
+    json_response = raw.json()
+    tag_name = json_response["tag_name"]
+    db_builder_path = os.path.join(_CWD, "db_builder")
+    os.makedirs(db_builder_path, exist_ok=True)
+    print(f"Latest Database Builder release: {tag_name}\n")
+
+    # The child publishes per-platform tarballs named
+    # RimDexDatabaseBuilder_<Platform>_<Arch>.tar
+    # (Platform in {Darwin, Linux, Windows}; Arch in {i386, arm, x86_64}).
+    if _SYSTEM == "Darwin":
+        print(f"Darwin/MacOS system detected with a {_ARCH} {_PROCESSOR} CPU...")
+        target_archive = f"RimDexDatabaseBuilder_{_SYSTEM}_{_PROCESSOR}_{tag_name}.tar"
+    elif _SYSTEM == "Linux":
+        print(f"Linux system detected with a {_ARCH} {_PROCESSOR} CPU...")
+        target_archive = f"RimDexDatabaseBuilder_{_SYSTEM}_{_PROCESSOR}_{tag_name}.tar"
+    elif _SYSTEM == "Windows":
+        print(f"Windows system detected with a {_ARCH} {_PROCESSOR} CPU...")
+        target_archive = f"RimDexDatabaseBuilder_{_SYSTEM}_{_PROCESSOR}_{tag_name}.tar"
+    else:
+        print(f"Unsupported system {_SYSTEM} {_ARCH} {_PROCESSOR}")
+        print(
+            "Skipping Database Builder download. The resultant RimDex build will "
+            "not include the Database Builder!"
+        )
+        return
+
+    # Try to find a valid release asset
+    for asset in json_response["assets"]:
+        if asset["name"] == target_archive:
+            browser_download_url = asset["browser_download_url"]
+    if not browser_download_url:
+        print(
+            f"Failed to find valid RimDex/RimDex-Database-Builder release asset "
+            f"{target_archive} for {_SYSTEM} {_ARCH} {_PROCESSOR}"
+        )
+        return
+
+    # Try to download & extract the Database Builder release
+    try:
+        print(f"Downloading & extracting Database Builder from: {browser_download_url}")
+        with tarfile.open(
+            fileobj=BytesIO(handle_request(browser_download_url).content)
+        ) as tarobj:
+            tarobj.extractall(db_builder_path)
+        # The tarball may wrap a single executable or a .app bundle; make any
+        # top-level executable runnable (tar may not preserve +x).
+        for root, _dirs, files in os.walk(db_builder_path):
+            for fname in files:
+                if fname in (
+                    "RimDexDatabaseBuilder",
+                    "RimDexDatabaseBuilder.exe",
+                    "rimdex_db_builder",
+                    "rimdex_db_builder.exe",
+                    "rimdex_db_builder.bin",
+                ):
+                    fpath = os.path.join(root, fname)
+                    original_stat = os.stat(fpath)
+                    os.chmod(fpath, original_stat.st_mode | S_IEXEC)
+    except Exception as e:
+        print(f"Failed to download: {browser_download_url}")
+        print(
+            "Did the file/url change?\nDoes your environment have access to the Internet?"
+        )
+        print(f"Error: {e}")
+
+
 def freeze_application() -> None:
     """Build the RimDex application using Nuitka."""
     # Check if NUITKA_CACHE_DIR exists in environment
@@ -589,6 +668,13 @@ def make_args() -> argparse.ArgumentParser:
         "--skip-todds",
         action="store_true",
         help="skip grabbing latest todds release",
+    )
+
+    # Skip Database Builder
+    parser.add_argument(
+        "--skip-db-builder",
+        action="store_true",
+        help="skip grabbing latest RimDex Database Builder release",
     )
 
     # Don't build

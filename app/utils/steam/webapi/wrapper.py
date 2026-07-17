@@ -408,6 +408,384 @@ class DynamicQuery(QObject):
         ]
         return missing_children
 
+    @staticmethod
+    def _minimal_interfaces() -> dict[str, Any]:
+        """Return a stub ``GetSupportedAPIList`` response.
+
+        Newer Steam API keys (``ctx7sk-*`` format) return 403 for the
+        ``GetSupportedAPIList`` endpoint even though the individual API
+        methods still work.  This stub supplies the minimal interface
+        definitions that ``WebAPI.load_interfaces`` needs so that
+        ``WebAPI.call(method_path=...)`` can resolve interface + method
+        names to callable objects.
+        """
+        return {
+            "apilist": {
+                "interfaces": [
+                    {
+                        "name": "ISteamWebAPIUtil",
+                        "methods": [
+                            {
+                                "name": "GetServerInfo",
+                                "version": 1,
+                                "httpmethod": "GET",
+                                "parameters": [],
+                            }
+                        ],
+                    },
+                    {
+                        "name": "IPublishedFileService",
+                        "methods": [
+                            {
+                                "name": "QueryFiles",
+                                "version": 1,
+                                "httpmethod": "GET",
+                                "parameters": [
+                                    {
+                                        "name": "key",
+                                        "type": "string",
+                                        "optional": False,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "query_type",
+                                        "type": "uint32",
+                                        "optional": False,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "page",
+                                        "type": "uint32",
+                                        "optional": False,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "cursor",
+                                        "type": "string",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "numperpage",
+                                        "type": "uint32",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "appid",
+                                        "type": "uint32",
+                                        "optional": False,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "creator_appid",
+                                        "type": "uint32",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "requiredtags",
+                                        "type": "string",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "excludedtags",
+                                        "type": "string",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "match_all_tags",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "required_flags",
+                                        "type": "string",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "omitted_flags",
+                                        "type": "string",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "search_text",
+                                        "type": "string",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "filetype",
+                                        "type": "uint32",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "child_publishedfileid",
+                                        "type": "uint64",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "days",
+                                        "type": "uint32",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "include_recent_votes_only",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "required_kv_tags",
+                                        "type": "string",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "taggroups",
+                                        "type": "string",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "date_range_created",
+                                        "type": "PublishedFileQueryRange",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "date_range_updated",
+                                        "type": "PublishedFileQueryRange",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "excluded_content_descriptors",
+                                        "type": "string",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "special_filter",
+                                        "type": "string",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "appids_required_for_use",
+                                        "type": "string",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "excluded_appids_required_for_use",
+                                        "type": "string",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "search_text_target",
+                                        "type": "string",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "use_keys_only",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "totalonly",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "ids_only",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "return_vote_data",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "return_tags",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "return_kv_tags",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "return_previews",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "return_children",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "return_short_description",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "return_for_sale_data",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "return_playtime_stats",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "return_details",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "strip_description_bbcode",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "admin_query",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                ],
+                            },
+                            {
+                                "name": "GetDetails",
+                                "version": 1,
+                                "httpmethod": "GET",
+                                "parameters": [
+                                    {
+                                        "name": "key",
+                                        "type": "string",
+                                        "optional": False,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "publishedfileids[0]",
+                                        "type": "uint64",
+                                        "optional": False,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "includetags",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "includeadditionalpreviews",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "includechildren",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "includekvtags",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "includevotes",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "short_description",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "includeforsaledata",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "includemetadata",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "return_playtime_stats",
+                                        "type": "uint32",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "appid",
+                                        "type": "uint32",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "strip_description_bbcode",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "includereactions",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                    {
+                                        "name": "admin_query",
+                                        "type": "bool",
+                                        "optional": True,
+                                        "description": "",
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ]
+            }
+        }
+
     def __initialize_webapi(self) -> None:
         if self.api:
             # Make a request to GetServerInfo to check if the API is active
@@ -421,7 +799,24 @@ class DynamicQuery(QObject):
         logger.debug("WebAPI is not active!")
         try:  # Try to initialize the API
             self.api = WebAPI(self.apikey, format="json", https=True)
-        except Exception as e:
+        except Exception as exc:
+            logger.debug(
+                "GetSupportedAPIList rejected key (%s); "
+                "falling back to manual interface loading",
+                type(exc).__name__,
+            )
+            self.api = WebAPI(
+                self.apikey, format="json", https=True, auto_load_interfaces=False
+            )
+            self.api.load_interfaces(self._minimal_interfaces())
+            logger.debug("Loaded minimal interface stubs; verifying with GetServerInfo")
+            try:
+                response = self.api.call(method_path="ISteamWebAPIUtil.GetServerInfo")
+                if response.get("servertime") is not None:
+                    logger.debug("WebAPI is active via minimal interface stubs!")
+                    return
+            except Exception:
+                pass
             self.api = None
             # Catch exceptions that can potentially leak Steam API key
             stacktrace = traceback.format_exc()
@@ -432,7 +827,7 @@ class DynamicQuery(QObject):
                     - (len(stacktrace) - (stacktrace.find(pattern) + len(pattern)))
                 ]  # If an HTTPError/SSLError from steam/urllib3 module(s) somehow is uncaught, try to remove the Steam API key from the stacktrace
             logger.warning(
-                f"Dynamic Query received an uncaught exception: {e.__class__.__name__}"
+                f"Dynamic Query received an uncaught exception: {exc.__class__.__name__}"
             )
             self._emit_message(
                 "\nDynamicQuery failed to initialize WebAPI query!"

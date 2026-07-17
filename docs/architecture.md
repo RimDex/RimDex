@@ -74,6 +74,15 @@ cross-layer notification channel: models/services emit, views/windows/controller
 connect. Signals are grouped below by the menu/area that originates or consumes
 them. Payloads are noted in parentheses (empty `()` = no payload).
 
+> **Note (2026-07-18):** the Steam Workshop Database Builder was extracted into the
+> standalone `RimDex/RimDex-Database-Builder` repo and is launched as a **separate
+> subprocess** via `app/utils/db_builder/wrapper.py` (`DatabaseBuilderInterface`).
+> The 5 DB-Builder-only signals (`do_download_all_mods_via_steamcmd`,
+> `do_download_all_mods_via_steam`, `do_compare_steam_workshop_databases`,
+> `do_merge_steam_workshop_databases`, `do_build_steam_workshop_database`) were
+> removed as part of that migration — the builder no longer emits or consumes
+> EventBus signals. See `db_builder_submodule_migration.md`.
+
 ### Menu bar — Mod list
 
 - `do_open_mod_list` ()
@@ -145,11 +154,6 @@ them. Payloads are noted in parentheses (empty `()` = no payload).
 - `do_download_use_this_instead_db_from_github` ()
 - `do_upload_log` `(Path)`
 - `do_open_default_editor` `(Path)`
-- `do_download_all_mods_via_steamcmd` ()
-- `do_download_all_mods_via_steam` ()
-- `do_compare_steam_workshop_databases` ()
-- `do_merge_steam_workshop_databases` ()
-- `do_build_steam_workshop_database` ()
 - `do_clear_steamcmd_depot_cache` ()
 - `do_import_acf` ()
 - `do_export_acf` ()

@@ -7,3 +7,7 @@
 	url = https://github.com/RimDex/SteamworksPy_RimDex
 	ignore = dirty
 	branch = RimDex
+[submodule "DatabaseBuilder"]
+	path = submodules/DatabaseBuilder
+	url = https://github.com/RimDex/RimDex-Database-Builder
+	branch = main

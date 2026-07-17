@@ -50,7 +50,6 @@ from app.io.json_utils import atomic_json_dump
 from app.io.zip_extractor import ZipExtractThread
 from app.models.metadata.metadata_structure import AboutXmlMod, ModType
 from app.models.settings import Settings
-from app.mods.db_builder import DatabaseBuilder
 from app.net import http
 from app.services.import_export_service import ImportExportService
 from app.services.window_manager import WindowManager
@@ -118,7 +117,6 @@ class MainContent(QObject):
             self.initialized = True
 
     def _init_services(self) -> None:
-        self.db_builder = DatabaseBuilder(self.settings)
         self.steam_browser: SteamBrowser | None = None
         self.steamcmd_runner: RunnerPanel | None = None
         self.steamcmd_wrapper = SteamcmdInterface.instance()
@@ -182,21 +180,6 @@ class MainContent(QObject):
         EventBus().do_export_mod_list_to_rentry.connect(self._do_upload_list_rentry)
         EventBus().do_upload_log.connect(self._upload_file)
         EventBus().do_open_default_editor.connect(self._open_in_default_editor)
-        EventBus().do_download_all_mods_via_steamcmd.connect(
-            self.db_builder._on_do_download_all_mods_via_steamcmd
-        )
-        EventBus().do_download_all_mods_via_steam.connect(
-            self.db_builder._on_do_download_all_mods_via_steam
-        )
-        EventBus().do_compare_steam_workshop_databases.connect(
-            self.db_builder._do_generate_metadata_comparison_report
-        )
-        EventBus().do_merge_steam_workshop_databases.connect(
-            self.db_builder._do_merge_databases
-        )
-        EventBus().do_build_steam_workshop_database.connect(
-            self.db_builder._do_build_database_thread
-        )
         EventBus().do_import_acf.connect(self._do_import_steamcmd_acf_data)
         EventBus().do_export_acf.connect(self._do_export_steamcmd_acf_data)
         EventBus().do_delete_acf.connect(self._do_reset_steamcmd_acf_data)

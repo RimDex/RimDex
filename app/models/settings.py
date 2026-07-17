@@ -133,9 +133,6 @@ class Settings(QObject):
         self.inactive_mods_sort_descending: bool = True
 
         # DB Builder
-        self.db_builder_include: str = "all_mods"
-        self.build_steam_database_dlc_data: bool = True
-        self.build_steam_database_update_toggle: bool = False
         self.steam_apikey: str = ""
 
         # SteamCMD
