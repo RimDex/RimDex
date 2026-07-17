@@ -1,6 +1,35 @@
 # Database Builder → Independent, Prebuilt, Wrapper-Launched App: Migration Plan
 
-> Status: **PLAN ONLY** — no code changes yet.
+> Status: **IN PROGRESS** — Stages 1–4 done; Stage 5 applied (2026-07-18).
+>
+> What's applied so far:
+> - Stages 1–3: standalone repo (`RimDex/RimDex-Database-Builder`), Nuitka build + child
+>   CI, and the `submodules/DatabaseBuilder` submodule (added to RimDex `.gitmodules`,
+>   branch `main`).
+> - Stage 4: `app/utils/db_builder/wrapper.py` (`DatabaseBuilderInterface`) implemented
+>   and verified launching the child GUI from the source fallback; the `build-db` CLI in
+>   the child **fully supports `--include {all_mods,no_local}` + `--mods-file`** (so the
+>   wrapper now forwards `--include` and a `--mods-file` when driving `all_mods`);
+>   `distribute.py::get_latest_db_builder_release()` + `--skip-db-builder`; `.gitignore`
+>   `/db_builder`; `rimdex.nuitka-package.config.yml` bundles `../db_builder`. The
+>   "Database Builder (standalone test)" Tools-menu action was removed and the real
+>   `Database Builder…` action now launches the child GUI via the wrapper.
+> - Stage 5 (done): deleted in-repo F1–F6 (`app/mods/db_builder.py`,
+>   `app/mods/db_builder_core.py`, `app/utils/steam/db_builder_thread.py`,
+>   `app/controllers/database_builder_controller.py`, `app/views/database_builder_dialog.py`,
+>   `app/cli/build_db.py`) and all wiring; removed the 5 DB-Builder-only EventBus signals;
+>   removed the `db_builder_include` / `build_steam_database_*` settings; moved the two
+>   RimDex `db_builder*` tests into the child repo (`tests/test_orchestrator.py`,
+>   `tests/test_thread.py`). RimDex `just check` + full suite green (1344 passed).
+> - Post-Stage 5 (2026-07-18): fixed 5 mypy errors + 2 pyright errors + 6 ruff errors
+>   in the child repo (`steamworks_query.py` null-guard / `_time()` fix / dynamic-attr
+>   suppressions, `tests/test_thread.py` missing import, `core.py` import order,
+>   `tests/test_orchestrator.py` unused var). Updated child `Agent.md` (accurate module
+>   counts: 21 project modules + 16 vendored `steamworks/` subpackage; added
+>   `steamworks_query.py` to architecture table; documented vendored SteamworksPy
+>   subpackage). Child `just check` green (pyright 0 errors, ruff clean, mypy clean).
+> - Remaining: Stage 6 (real `just build` + per-platform smoke test of the bundled
+>   binary), Stage 7 (docs: Agent.md / docs/architecture.md / child README).
 >
 > **Goal (final, per user):** The Database Builder becomes a **fully independent
 > application** that:
@@ -107,10 +136,19 @@ submodules/DatabaseBuilder/                 # own git repo, own CI
 │   ├── dialog.py                           # was database_builder_dialog.py (F5)
 │   ├── thread.py                           # was db_builder_thread.py (F2)
 │   ├── core.py                             # was db_builder_core.py (F1)
+│   ├── config.py                           # DbBuilderConfig (replaces Settings + AppInfo)
 │   ├── constants.py                        # vendored DB_BUILDER_* + RIMWORLD_DLC_METADATA
+│   ├── steamworks_query.py                 # native DLC deps via vendored SteamworksPy + libs/
 │   ├── steam/webapi.py                     # vendored DynamicQuery (+ its webapi deps)
+│   ├── steamworks/                         # vendored SteamworksPy pure-Python package (16 files)
+│   │   ├── __init__.py                     # self-registers as top-level "steamworks" in sys.modules
+│   │   ├── enums.py, exceptions.py, methods.py, structs.py, util.py
+│   │   └── interfaces/                     # apps, friends, input, matchmaking, etc.
 │   ├── ui/{dialogue,gui_info,runner_panel}.py   # vendored minimal UI helpers
 │   └── _util/{dict_utils,json_utils}.py    # vendored recursively_update_dict / atomic_json_dump
+├── libs/                                   # prebuilt Steamworks native libs (committed, not a submodule)
+│   ├── SteamworksPy64.dll / SteamworksPy.dylib / ...
+│   └── steam_api64.dll / libsteam_api.so / ...
 └── tests/                                  # moved + new tests, zero RimDex deps
 ```
 
@@ -133,6 +171,14 @@ submodules/DatabaseBuilder/                 # own git repo, own CI
 > simplest, keeps the child's build trivial). Option **(B)**: child nests its **own**
 > SteamworksPy submodule + builds the native lib in its own `distribute.py` for full
 > `--dlc-data` parity (heavier build).
+>
+> **Implemented approach (hybrid):** The child vendors the SteamworksPy pure-Python
+> package (`rimdex_db_builder/steamworks/`, 16 files copied from `submodules/SteamworksPy`)
+> and prebuilt native libs (`libs/`, identical copies from the main repo's
+> `submodules/SteamworksPy`). This gives full DLC query capability without requiring
+> a SteamworksPy submodule or native build in the child. The trade-off: if the main
+> repo's `submodules/SteamworksPy` native libs are updated, the child's `libs/` must
+> be manually updated too (independent copies).
 
 ---
 
@@ -256,10 +302,15 @@ The child owns a **complete, standalone build** — no RimDex involvement:
 `tests/models/metadata/test_metadata_structure.py` (mod metadata, not the app).
 
 **Add:**
-- `app/utils/db_builder/wrapper.py` (`DatabaseBuilderInterface`) — §2.
+- `app/utils/db_builder/wrapper.py` (`DatabaseBuilderInterface`) — §2. **DONE.**
 - Rewire `app/views/menu_bar.py::database_builder_action` → wrapper (via a callback
-  from `AppController`/`MainWindow`, current wiring style).
-- Serialize `mods_metadata` → temp `--mods-file` in the wrapper when `all_mods`.
+   from `AppController`/`MainWindow`, current wiring style).
+   **DONE** — the real `Database Builder…` action launches the child GUI via the
+   wrapper (`MenuBarController._on_launch_standalone_db_builder`). The temporary
+   "standalone test" action was removed.
+  - Serialize `mods_metadata` → temp `--mods-file` in the wrapper when `all_mods`.
+   **DONE** — the child's `build-db` CLI supports `--include`/`--mods-file`
+   (see `RimDex-Database-Builder` Agent.md §5); the wrapper forwards both.
 - `.gitmodules` stanza (mirrors SteamworksPy):
   ```
   [submodule "DatabaseBuilder"]
@@ -268,10 +319,11 @@ The child owns a **complete, standalone build** — no RimDex involvement:
       ignore = dirty
       branch = main
   ```
-- `.gitignore`: add `/db_builder`.
+  **DONE.**
+- `.gitignore`: add `/db_builder`. **DONE.**
 - `distribute.py`: add `get_latest_db_builder_release()` (todds clone) + call it in
-  `main()`; add `--skip-db-builder` flag (parity with `--skip-todds`).
-- `rimdex.nuitka-package.config.yml`: add the `db_builder/` `dlls` bundle entry.
+  `main()`; add `--skip-db-builder` flag (parity with `--skip-todds`). **DONE.**
+- `rimdex.nuitka-package.config.yml`: add the `db_builder/` `dlls` bundle entry. **DONE.**
 - `.github/workflows/build.yml`: (only if needed) ensure the fetch runs before Nuitka.
 
 **Guards afterward:** `check_layer_violations.py` / `check_deferred_imports.py` shrink
@@ -282,12 +334,12 @@ become the child's own (§8 Q5).
 
 ## 8. Open decisions (before Stage 1)
 
-1. **Repo/package/binary name + branch.** Proposed repo `RimDex/RimDexDatabaseBuilder`,
+1. **Repo/package/binary name + branch.** **RESOLVED:** repo `RimDex/RimDexDatabaseBuilder`,
    submodule path `submodules/DatabaseBuilder`, package `rimdex_db_builder`, binary
-   `RimDexDatabaseBuilder`, ship dir `db_builder/`, branch `main`. Confirm/rename.
-2. **DLC data / `DynamicQuery`.** (A) WebAPI-only, no SteamworksPy in the child,
-   `--dlc-data` degrades; or (B) child nests its own SteamworksPy submodule + native
-   build for full parity. (A) recommended for a lightweight independent build.
+   `RimDexDatabaseBuilder` (Nuitka onefile may also emit `rimdex_db_builder[.exe/.bin]`;
+   the wrapper accepts both), ship dir `db_builder/`, branch `main`.
+2. **DLC data / `DynamicQuery`.** **RESOLVED → (A):** WebAPI-only child, no SteamworksPy;
+   `--dlc-data` degrades gracefully (warns, proceeds without DLC deps).
 3. **How RimDex obtains the prebuilt child in CI.** (a) download the child's GitHub
    **release asset** (todds-exact, best for "ship with prebuilt"); or (b) build the
    child in the same workflow and copy the artifact. (a) recommended.
@@ -315,11 +367,22 @@ become the child's own (§8 Q5).
   package config + `.github/workflows/build.yml` producing per-platform release
   assets. Verify a green 3-platform build in the child repo.
 - **Stage 3 — Add submodule to RimDex.** `git submodule add` + `.gitmodules` stanza.
+  **DONE** (submodule `DatabaseBuilder`, branch `main`).
 - **Stage 4 — Wrapper + fetch/bundle.** `app/utils/db_builder/wrapper.py`;
   `distribute.py::get_latest_db_builder_release()`; `.gitignore /db_builder`; Nuitka
   config bundle entry; rewire menu to the wrapper; `--mods-file` serialization.
+   **DONE (2026-07-18):** wrapper implemented + verified launching the child
+   GUI from source; fetch func + `--skip-db-builder`; `.gitignore`; Nuitka bundle entry;
+   the real `Database Builder…` menu action launches the child GUI via the wrapper
+   (replacing the in-repo dialog); the wrapper forwards `--include`/`--mods-file`
+   now that the child supports `all_mods`.
 - **Stage 5 — Delete in-RimDex feature.** Remove F1–F6 + all wiring (§7); shrink
-  guards; RimDex green.
+   guards; RimDex green. **DONE (2026-07-18)** — F1–F6 deleted, the 5 DB-Builder-only
+   EventBus signals removed, `db_builder_include`/`build_steam_database_*` settings
+   removed, the two RimDex `db_builder*` tests moved into the child repo, and
+   `app/cli/main.py` build-db registration + the deferred-import guard entry removed.
+   RimDex `just check` + full suite green (1344 passed). The child already supported
+   `all_mods` (`--include`/`--mods-file`), so the documented Stage-5 blocker was moot.
 - **Stage 6 — RimDex build/CI + smoke test.** Real `just build`; confirm the bundled
   `db_builder/<exe>` launches from the built RimDex on each platform; adjust CI.
 - **Stage 7 — Docs.** Update `Agent.md` (§0 counts, §5 notes), `docs/architecture.md`
@@ -361,3 +424,13 @@ two independent Nuitka/CI pipelines (Stages 2 & 6).
 - **v2 (separate process, but ship source):** superseded by this v3, which ships a
   **prebuilt Nuitka binary** (todds model) so RimDex can be shipped with just the
   prebuilt Database Builder.
+
+
+## Important Note
+
+
+1) if submodules\DatabaseBuilder need some code you will have to edit in D:\Github\RimDex-Database-Builder
+2) if any files are edited in D:\Github\RimDex-Database-Builder you will have to commit the changes and push since its a repo
+3) for any changes done in D:\Github\RimDex-Database-Builder and reflect in submodules\DatabaseBuilder u will have to delete submodules\DatabaseBuilder and run the below command:-
+python distribute.py --skip-build
+

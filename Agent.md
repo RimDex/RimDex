@@ -100,15 +100,22 @@ list** — the table in §2 (P0) — referenced from here rather than re-listed.
   the app hung on shutdown. **Fixed:** `WindowManager` gained a `register_manager`
   method and `close_all()` now recurses into any registered sub-managers
   (`app/services/window_manager.py`). `TranslationController.__init__` and
-  `DatabaseBuilderController` (now tracks its dialog via its own `WindowManager`)
-  register their managers into the `MainContent` root manager — wired in
-  `MainWindow` (which receives `database_builder_controller` from
-  `AppController.initialize_main_window`). A single `close_all()` now tears down
-  every child window, and each dialog's `closeEvent` (e.g. the translation
-  workers' `wait(3000)`) lets background work unwind before exit. Added
-  `tests/services/test_window_manager.py` (5 tests) covering recursive
-   `close_all`, `register_manager` self/duplicate handling, and tracking reset.
-   ruff / pyright / deferred-import / layer-check guards clean; 5/5 new tests pass.
+   `DatabaseBuilderController` (now tracks its dialog via its own `WindowManager`)
+   register their managers into the `MainContent` root manager — wired in
+   `MainWindow` (which receives `database_builder_controller` from
+   `AppController.initialize_main_window`). A single `close_all()` now tears down
+   every child window, and each dialog's `closeEvent` (e.g. the translation
+   workers' `wait(3000)`) lets background work unwind before exit. Added
+   `tests/services/test_window_manager.py` (5 tests) covering recursive
+    `close_all`, `register_manager` self/duplicate handling, and tracking reset.
+    ruff / pyright / deferred-import / layer-check guards clean; 5/5 new tests pass.
+
+   > Note (2026-07-18): `DatabaseBuilderController` and its in-repo dialog were
+   > deleted as part of the Database Builder → standalone `RimDex-Database-Builder`
+   > submodule migration (see `db_builder_submodule_migration.md` §9 Stage 5). The
+   > Database Builder is now launched as a separate subprocess via
+   > `app/utils/db_builder/wrapper.py`, so the `WindowManager.register_manager`
+   > recursion fix now only applies to `TranslationController`.
 
 **Found & fixed while greening `just check` (2026-07-17):**
 
@@ -145,7 +152,8 @@ list** — the table in §2 (P0) — referenced from here rather than re-listed.
 - Add a coverage floor (`just cov-gate`) for the leaf layers.
 - Document the `EventBus` signal catalogue in `docs/architecture.md`.
 - Finish remaining leaf-layer tests (`cli/`, `ui/widgets/`, `core/*`, `services/*`,
-  `git/` repo ops, `mods/db_builder*`).
+  `git/` repo ops). (`mods/db_builder*` tests moved to the standalone
+  `RimDex-Database-Builder` repo — see §5 note.)
 
 ### Test results (last full run — 2026-07-12)
 
@@ -248,10 +256,10 @@ file_search, aux_db_utils), `services/` (mod_path_service, path_autodetect_servi
 `git/` (repo ops beyond worker). These
 (`cli/translate` is already covered by `tests/cli/test_translate.py`;
 `services/window_manager`, `services/instance_service`,
-`services/import_export_service` gained tests on 2026-07-17; `mods/db_builder`
-orchestration — `app/mods/db_builder.py` — gained `tests/mods/test_db_builder.py`
-on 2026-07-17, joining the earlier `db_builder_thread` test.)
-are the most pure/testable logic and the highest-ROI coverage targets.
+`services/import_export_service` gained tests on 2026-07-17; the Database Builder
+orchestration + thread tests were moved into the standalone
+`RimDex-Database-Builder` repo on 2026-07-18 as part of the submodule migration —
+see §5 note) are the most pure/testable logic and the highest-ROI coverage targets.
 (`core/update_check`, `core/win_find_steam`, and `core/app_info` gained
 dedicated tests on 2026-07-16 — see the leaf-layer test note in §2 P3.)
 
@@ -571,10 +579,11 @@ in §2 (mirrored in §1 "Open work"). Order completed:
   5. **Remaining:** `main_content_panel.py` sub-feature split, remaining leaf-layer
      tests (`core/constants`, `core/app_info`,
      `git/git_worker` repo ops, `ui/widgets/*`). `cli/translate` is already covered
-     by `tests/cli/test_translate.py`; `mods/db_builder` (orchestration) gained
-     `tests/mods/test_db_builder.py`; `services/instance_service`,
+     by `tests/cli/test_translate.py`; `services/instance_service`,
      `services/import_export_service`, and `services/window_manager` gained dedicated
-     tests on 2026-07-17. The `update_utils.py`
+     tests on 2026-07-17. The Database Builder `mods/db_builder` tests were moved
+     into the standalone `RimDex-Database-Builder` repo (submodule migration,
+     2026-07-18). The `update_utils.py`
     split is **DONE** (see §2 P1 / §8.1) — this line was stale. The coverage floor
     (`just cov-gate`) and EventBus signal catalogue are **DONE** (see §2 P3). The
     leaf-layer test batch now also covers `core/update_check` and `core/win_find_steam`.
@@ -690,7 +699,9 @@ rules keep the gate from silently rotting between runs:
 - `app/ui/` is now a namespace package (`__init__.py` only) plus `ui/dialogue.py`
   and `ui/widgets/` — the dialogue module is the "thin ui bridge" for leaf layers.
 - `app/utils/` contains substantive modules (steam/*, github/*, rentry/*, workshop_utils,
-  db_builder_thread) at 5.1k LOC across 31 files.
+  db_builder/wrapper) at 5.1k LOC across 31 files. (The former `db_builder_thread`
+  moved into the standalone `RimDex-Database-Builder` submodule on 2026-07-18; a thin
+  `app/utils/db_builder/wrapper.py` now launches it as a subprocess — see §5 note.)
 - The `base_mods_panel` vs `mods_panel` naming split is intentionally accepted
   (base/shared class in `windows/`, independent reusable panel in `views/`).
 - jscpd enforces a 0% duplication threshold. The last **3 clones were deduplicated**
@@ -1285,3 +1296,43 @@ over suppressions. Re-scan with `grep "# type: ignore" app/` /
 `TrMixin` ×7 and the missing-stub cases are explicitly **keep** until their
 libraries/refactors land. Do not reintroduce suppressions while doing this
 work — verify with `just check`.
+
+## 9. Database Builder → standalone subprocess integration (2026-07-18, DONE)
+
+The Steam Workshop Database Builder has been extracted into the independent
+`RimDex/RimDex-Database-Builder` repo (consumed as `submodules/DatabaseBuilder`,
+see `db_builder_submodule_migration.md`). Stages 1–4 (standalone repo, Nuitka build,
+submodule add, wrapper + fetch/bundle) are done, and Stage 5 (delete the in-repo
+feature) is **complete as of 2026-07-18**:
+
+- **Done:** `app/utils/db_builder/wrapper.py` (`DatabaseBuilderInterface`) — locates
+  the prebuilt `RimDexDatabaseBuilder` binary under `AppInfo().application_folder /
+  "db_builder"` (or the Nuitka onefile default names), with a source fallback to
+  `uv run python -m rimdex_db_builder` in `submodules/DatabaseBuilder`. Exposes
+  `launch_gui()`, `build_database()` (forwards `--include`/`--mods-file` for
+  `all_mods`), `query_pfids()`; build/query stream progress into a `RunnerPanel` and
+  honor the child's exit code.
+- **Done:** `distribute.py::get_latest_db_builder_release()` + `--skip-db-builder`;
+  `.gitignore` `/db_builder`; `rimdex.nuitka-package.config.yml` bundles `../db_builder`.
+- **Done:** the real `Database Builder…` Tools-menu action launches the child GUI via
+  the wrapper (`MenuBarController._on_launch_standalone_db_builder`); the temporary
+  "standalone test" action was removed.
+- **Done (Stage 5):** deleted in-repo F1–F6 (`app/mods/db_builder.py`,
+  `app/mods/db_builder_core.py`, `app/utils/steam/db_builder_thread.py`,
+  `app/controllers/database_builder_controller.py`, `app/views/database_builder_dialog.py`,
+  `app/cli/build_db.py`) + their wiring; removed the 5 DB-Builder-only EventBus signals
+  (`do_download_all_mods_via_steamcmd`, `do_download_all_mods_via_steam`,
+  `do_compare_steam_workshop_databases`, `do_merge_steam_workshop_databases`,
+  `do_build_steam_workshop_database`); removed the `db_builder_include` /
+  `build_steam_database_dlc_data` / `build_steam_database_update_toggle` settings; the
+  two RimDex `db_builder*` tests were ported into the child repo as
+  `tests/test_orchestrator.py` and `tests/test_thread.py`. The child already supported
+  `all_mods` (`--include`/`--mods-file`), so the documented Stage-5 blocker was moot.
+  RimDex `just check` + full suite green (1344 passed).
+- **Guardrails:** new `app/utils/db_builder/` leaf passes `check_layer_violations.py`
+  and `ruff`; the wrapper import in `menu_bar_controller` is allow-listed in
+  `check_deferred_imports.py`.
+- **Remaining (see migration doc Stages 6–7):** a real `just build` + per-platform
+  smoke test of the bundled `db_builder/<exe>`, and doc updates to
+  `docs/architecture.md` (drop the 5 EventBus signals; document the wrapper +
+  prebuilt-binary model).
