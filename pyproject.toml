@@ -23,7 +23,7 @@ dependencies = [
     "psutil==7.2.2",
     "pygit2==1.20.0",
     "pygithub==2.10.0",
-    "pyside6==6.11.1",
+    "pyside6==6.11.2",
     "rapidfuzz>=3.14.6",
     "requests==2.34.2",
     "sqlalchemy==2.0.52",
@@ -135,7 +135,7 @@ reportMissingModuleSource = "none"
 # are settable at runtime, so assignment to `.text` (in translation_helper.py and
 # tests/core/test_translation_utils.py) is valid. We scope the attribute-access
 # diagnostic off rather than adding per-call `# type: ignore` suppressions
-# (per Agent.md 59->11 goal). Attribute-access is still checked by mypy in CI,
+# (per AGENTS.md 59->11 goal). Attribute-access is still checked by mypy in CI,
 # so type coverage is preserved.
 [[tool.pyright.executionEnvironments]]
 root = "."

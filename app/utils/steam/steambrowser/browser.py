@@ -5,7 +5,7 @@ from functools import partial
 from pathlib import Path
 
 from loguru import logger
-from PySide6.QtCore import QPoint, Qt, QUrl
+from PySide6.QtCore import QPoint, Qt, QTimer, QUrl, Signal
 from PySide6.QtGui import QAction, QCloseEvent, QPixmap
 from PySide6.QtWebChannel import QWebChannel
 from PySide6.QtWebEngineCore import QWebEnginePage, QWebEngineProfile, QWebEngineScript
@@ -43,11 +43,21 @@ from app.utils.steam.webapi.wrapper import (
     ISteamRemoteStorage_GetPublishedFileDetails,
 )
 
+CHROME_USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/131.0.0.0 Safari/537.36"
+)
+
 
 class SteamBrowser(QWidget):
     """
     A generic panel used to browse Workshop content — downloader included.
     """
+
+    # Emitted from closeEvent before the window tears itself down, so callers
+    # can preserve the downloader wait-list regardless of what triggered the
+    # close (programmatic .close() or the user closing the window).
+    about_to_close = Signal()
 
     web_view: QWebEngineView | None
     web_profile: QWebEngineProfile | None
@@ -56,6 +66,10 @@ class SteamBrowser(QWidget):
     js_bridge: JavaScriptBridge | None
     download_list_mgr: DownloadListManager | None
     page_scripts: PageScriptManager | None
+    _load_stall_timer: QTimer | None
+    _load_progress_fallback_timer: QTimer | None
+    _load_show_fallback_timer: QTimer | None
+    _load_stall_reloaded: bool
 
     def __init__(
         self,
@@ -103,6 +117,8 @@ class SteamBrowser(QWidget):
         self.web_profile.setPersistentCookiesPolicy(
             QWebEngineProfile.PersistentCookiesPolicy.ForcePersistentCookies
         )
+        # Steam serves a degraded / bot-checked page to non-browser user agents.
+        self.web_profile.setHttpUserAgent(CHROME_USER_AGENT)
 
         # ------------------------------------------------------------------
         # Layouts
@@ -171,7 +187,6 @@ class SteamBrowser(QWidget):
         self.web_view.loadFinished.connect(self._web_view_load_finished)
         self.web_view.setContextMenuPolicy(Qt.ContextMenuPolicy.NoContextMenu)
         self.startpage = QUrl(startpage)
-        self.web_view.load(self.startpage)
 
         # QWebChannel setup
         self.channel = QWebChannel(self)
@@ -181,6 +196,11 @@ class SteamBrowser(QWidget):
 
         _inject_qwebchannel_js(self.web_view.page())
         self._inject_steam_recovery_script()
+
+        # Deferred so the channel and the qwebchannel.js profile script are
+        # installed before the first document is created; otherwise the bridge
+        # can miss the initial page and the add/remove buttons stay dead.
+        QTimer.singleShot(0, self._start_initial_load)
 
         # Location box
         self.location = QLineEdit()
@@ -325,6 +345,22 @@ class SteamBrowser(QWidget):
     def _clear_downloader_list(self) -> None:
         if self.download_list_mgr:
             self.download_list_mgr.clear()
+
+    def get_download_list_snapshot(self) -> dict[str, str]:
+        """Capture the downloader wait-list as {publishedfileid: title}."""
+        if self.download_list_mgr is None:
+            return {}
+        return self.download_list_mgr.get_download_list_snapshot()
+
+    def restore_download_list(self, snapshot: dict[str, str]) -> None:
+        """Re-populate the downloader wait-list from a captured snapshot."""
+        if self.download_list_mgr is not None:
+            self.download_list_mgr.restore_download_list(snapshot)
+
+    def remove_mod_if_queued(self, publishedfileid: str) -> None:
+        """Remove a mod from the downloader list if it is currently queued."""
+        if self.download_list_mgr is not None:
+            self.download_list_mgr.remove_mod_if_queued(publishedfileid)
 
     def _open_mod_url(self, publishedfileid: str) -> None:
         if self.web_view:
@@ -476,20 +512,80 @@ class SteamBrowser(QWidget):
     # WebView load lifecycle
     # ------------------------------------------------------------------
 
+    def _start_initial_load(self) -> None:
+        assert self.web_view is not None
+        self.web_view.load(self.startpage)
+
     def _web_view_load_started(self) -> None:
         self.progress_bar.setTextVisible(True)
         self.nav_bar.removeAction(self.add_to_list_button)
+        self._load_stall_reloaded = False
+        self._stop_load_timers()
+        self._load_stall_timer = QTimer(self)
+        self._load_stall_timer.setSingleShot(True)
+        self._load_stall_timer.timeout.connect(self._on_load_stall)
+        self._load_stall_timer.start(10000)
+        self._load_progress_fallback_timer = QTimer(self)
+        self._load_progress_fallback_timer.setSingleShot(True)
+        self._load_progress_fallback_timer.timeout.connect(
+            self._reset_stuck_progress_bar
+        )
+        self._load_progress_fallback_timer.start(15000)
+        self._load_show_fallback_timer = QTimer(self)
+        self._load_show_fallback_timer.setSingleShot(True)
+        self._load_show_fallback_timer.timeout.connect(self._on_load_show_fallback)
+        self._load_show_fallback_timer.start(1200)
+
+    def _stop_load_timers(self) -> None:
+        for name in (
+            "_load_stall_timer",
+            "_load_progress_fallback_timer",
+            "_load_show_fallback_timer",
+        ):
+            timer = getattr(self, name, None)
+            if timer is not None:
+                timer.stop()
+            setattr(self, name, None)
+
+    def _on_load_stall(self) -> None:
+        if self.progress_bar.value() > 0 or self._load_stall_reloaded:
+            return
+        self._load_stall_reloaded = True
+        logger.warning("Steam browser load stalled at 0%; reloading once per session")
+        assert self.web_view is not None
+        self.web_view.reload()
+
+    def _on_load_show_fallback(self) -> None:
+        # A navigation that never reports progress (offline, DNS failure, a
+        # hung TLS handshake) would otherwise leave the placeholder up forever.
+        if self.progress_bar.value() > 0:
+            return
+        assert self.web_view is not None
+        self.web_view_loading_placeholder.hide()
+        self.web_view.show()
+
+    def _reset_stuck_progress_bar(self) -> None:
+        if self.progress_bar.value() > 0:
+            self.progress_bar.setValue(0)
+            self.progress_bar.setTextVisible(False)
 
     def _web_view_load_progress(self, progress: int) -> None:
         self.progress_bar.setValue(progress)
         if progress > 25 and self.web_view:
+            if self._load_stall_timer is not None:
+                self._load_stall_timer.stop()
+            if self._load_show_fallback_timer is not None:
+                self._load_show_fallback_timer.stop()
             self.web_view_loading_placeholder.hide()
             self.web_view.show()
 
-    def _web_view_load_finished(self) -> None:
+    def _web_view_load_finished(self, ok: bool = True) -> None:
         assert self.web_view is not None
+        self._stop_load_timers()
         self.progress_bar.setValue(0)
         self.progress_bar.setTextVisible(False)
+        if not ok:
+            logger.warning("Steam browser page load failed")
 
         # Cache page info
         self.current_title = self.web_view.title()
@@ -620,6 +716,7 @@ class SteamBrowser(QWidget):
 
     def closeEvent(self, event: QCloseEvent) -> None:
         logger.debug("Cleaning up SteamBrowser resources...")
+        self.about_to_close.emit()
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
 
         if self.web_view is not None:

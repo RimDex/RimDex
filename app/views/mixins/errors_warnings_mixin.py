@@ -501,6 +501,14 @@ class ErrorsWarningsMixin(ModListWidgetMixinBase):
             )
         return "\n".join(lines)
 
+    def invalidate_save_comparison(self) -> None:
+        """Drop the cached latest-save package ids so they are re-read on next use.
+
+        Called after a mod list rebuild, since the newest save (and therefore the
+        "In save" / "New mod" indicators) may have changed since the cache was filled.
+        """
+        self._latest_save_package_ids = None
+
     def _get_latest_save_package_ids(self) -> set[str] | None:
         """Attempt to find the latest RimWorld save file in the configured instance and extract modIds.
 

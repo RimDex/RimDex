@@ -221,16 +221,37 @@ def path_to_mod_updated(
     return 0
 
 
+def _entry_is_link(entry: Any) -> bool:
+    is_reparse_point = getattr(entry, "is_reparse_point", None)
+    if callable(is_reparse_point):
+        return bool(is_reparse_point())
+    is_symlink = getattr(entry, "is_symlink", None)
+    if callable(is_symlink):
+        try:
+            if is_symlink():
+                return True
+        except OSError:
+            pass
+    return os.path.isjunction(entry.path)
+
+
 def get_dir_size(path: str) -> int:
     total = 0
     stack = [path]
+    visited = {os.path.normcase(os.path.realpath(path))}
     while stack:
         current = stack.pop()
         try:
             for entry in scanpath(current):
+                if _entry_is_link(entry):
+                    continue
                 if entry.is_file():
                     total += entry.stat().st_size
                 elif entry.is_dir():
+                    resolved = os.path.normcase(os.path.realpath(entry.path))
+                    if resolved in visited:
+                        continue
+                    visited.add(resolved)
                     stack.append(entry.path)
         except OSError:
             pass  # Skip file
@@ -512,3 +533,23 @@ class FolderSizeWorker(QObject):
 
         # Signal completion with results
         self.finished.emit(sizes)
+
+
+class FolderSizeRequestWorker(QObject):
+    requested = Signal(str, int)
+    result = Signal(str, int, int)
+    error = Signal(str, int)
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.requested.connect(self._compute)
+
+    @Slot(str, int)
+    def _compute(self, uuid: str, request_id: int) -> None:
+        try:
+            size = path_to_folder_size(uuid)
+        except Exception as e:
+            logger.error(f"Error calculating folder size for UUID {uuid}: {e}")
+            self.error.emit(uuid, request_id)
+            return
+        self.result.emit(uuid, request_id, size)
