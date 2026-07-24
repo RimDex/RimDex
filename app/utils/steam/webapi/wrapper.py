@@ -805,20 +805,20 @@ class DynamicQuery(QObject):
                 "falling back to manual interface loading",
                 type(exc).__name__,
             )
-            self.api = WebAPI(
-                self.apikey, format="json", https=True, auto_load_interfaces=False
-            )
-            self.api.load_interfaces(self._minimal_interfaces())
-            logger.debug("Loaded minimal interface stubs; verifying with GetServerInfo")
-            try:
-                response = self.api.call(method_path="ISteamWebAPIUtil.GetServerInfo")
-                if response.get("servertime") is not None:
-                    logger.debug("WebAPI is active via minimal interface stubs!")
-                    return
-            except Exception:
-                pass
-            self.api = None
-            # Catch exceptions that can potentially leak Steam API key
+        assert self.api is not None
+        self.api = WebAPI(
+            self.apikey, format="json", https=True, auto_load_interfaces=False
+        )
+        self.api.load_interfaces(self._minimal_interfaces())
+        logger.debug("Loaded minimal interface stubs; verifying with GetServerInfo")
+        try:
+            response = self.api.call(method_path="ISteamWebAPIUtil.GetServerInfo")
+            if response.get("servertime") is not None:
+                logger.debug("WebAPI is active via minimal interface stubs!")
+                return
+        except (
+            Exception
+        ) as exc:  # Catch exceptions that can potentially leak Steam API key
             stacktrace = traceback.format_exc()
             pattern = "&key="
             if pattern in stacktrace:
@@ -881,6 +881,13 @@ class DynamicQuery(QObject):
         :param database: a database to update using IPublishedFileService_GetDetails queries
         :param publishedfileids: a list of PublishedFileIDs to query
         """
+
+        if not self.api:
+            self._emit_message(
+                "Dynamic Query failed to initialize WebAPI query! "
+                "Critical failure. Aborting steam_db creation."
+            )
+            return None
 
         self.__initialize_webapi()
 
