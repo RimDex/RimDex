@@ -11,6 +11,7 @@
 # nuitka-project: --user-package-configuration-file={MAIN_DIRECTORY}/../rimdex.nuitka-package.config.yml
 # nuitka-project: --include-data-file={MAIN_DIRECTORY}/../steam_appid.txt=steam_appid.txt
 # nuitka-project: --include-data-file={MAIN_DIRECTORY}/../setup_web_channel_script.js=setup_web_channel_script.js
+# nuitka-project: --include-data-file={MAIN_DIRECTORY}/../setup_steam_recovery_script.js=setup_steam_recovery_script.js
 # nuitka-project-if: {OS} == "Windows":
 #   nuitka-project: --include-data-file={MAIN_DIRECTORY}/../update.bat=update.bat
 # nuitka-project-else:
@@ -38,16 +39,14 @@ import traceback
 from logging import WARNING, getLogger
 from multiprocessing import freeze_support, set_start_method
 from types import TracebackType
-from typing import Type
 
-import loguru
 from loguru import logger
 
 from app.controllers.app_controller import AppController
 from app.core.app_info import AppInfo
-from app.core.obfuscate_message import obfuscate_message
 from app.core.single_instance import SingleInstanceLock
 from app.ui.dialogue import show_fatal_error
+from app.utils.log_setup import setup_logging
 
 SYSTEM = platform.system()
 # Watchdog conditionals
@@ -67,7 +66,7 @@ elif SYSTEM == "Windows":
 
 
 def handle_exception(
-    exc_type: Type[BaseException],
+    exc_type: type[BaseException],
     exc_value: BaseException,
     exc_traceback: TracebackType | None,
 ) -> None:
@@ -108,6 +107,15 @@ if "--disable-updater" in sys.argv:
     # Remove all instances of the flag
     while "--disable-updater" in sys.argv:
         sys.argv.remove("--disable-updater")
+    # Note: logger not yet configured, so can't log here
+
+
+# Process --dev flag if present (before any other initialization)
+if "--dev" in sys.argv:
+    os.environ["RIMSORT_DEV"] = "1"
+    # Remove all instances of the flag
+    while "--dev" in sys.argv:
+        sys.argv.remove("--dev")
     # Note: logger not yet configured, so can't log here
 
 
@@ -165,6 +173,29 @@ if __name__ == "__main__":
 
     # CRITICAL: Check for CLI mode BEFORE any imports that might use Qt
     # This must happen before AppInfo() or any other code that could trigger Qt initialization
+
+    # Intercept --steamcmd-helper flag before the single-instance lock.
+    # Runs the helper script inside this process instead of launching the full GUI.
+    if len(sys.argv) > 2 and sys.argv[1] == "--steamcmd-helper":
+        if sys.platform == "win32" and "__compiled__" in globals():
+            try:
+                # Nuitka's attach mode doesn't update C-runtime fds.
+                # Map standard streams to the active console explicitly.
+                sys.stdin = open("CONIN$", "r", encoding="utf-8", errors="replace")
+                sys.stdout = open("CONOUT$", "w", encoding="utf-8", buffering=1)
+                sys.stderr = open("CONOUT$", "w", encoding="utf-8", buffering=1)
+            except Exception:
+                pass  # No console available; carry on silently.
+
+        import runpy
+
+        # Override sys.argv so the helper script receives the correct arguments
+        # Original: [RimDex.exe, --steamcmd-helper, script.py, config_b64]
+        # New: [script.py, config_b64]
+        sys.argv = [sys.argv[2]] + sys.argv[3:]
+        runpy.run_path(sys.argv[0], run_name="__main__")
+        sys.exit(0)
+
     if len(sys.argv) > 1 and sys.argv[1] in ["build-db", "--help", "--version"]:
         # CLI mode - import and run without any GUI setup
         try:
@@ -181,44 +212,18 @@ if __name__ == "__main__":
         sys.exit(0)
 
     # GUI mode continues below with normal initialization
-    # Set the log level from the presence (or absence) of a "DEBUG" file in the app_data_folder
-    debug_file_path = AppInfo().app_storage_folder / "DEBUG"
-    if debug_file_path.exists() and debug_file_path.is_file():
+    # Dev mode always enables debug logging; production checks for a DEBUG file
+    if AppInfo().is_dev_mode:
         DEBUG_MODE = True
     else:
-        DEBUG_MODE = False
+        debug_file_path = AppInfo().app_storage_folder / "DEBUG"
+        DEBUG_MODE = debug_file_path.exists() and debug_file_path.is_file()
 
     # We have log_file (foo.log) and old_log_file (foo.old.log). If old_log_file exists,
     # remove it. If log_file exists, rename it to old_log_file. When we pass log_file to
     # the logger as an argument, it will automatically be created.
-    log_file = AppInfo().user_log_folder / (AppInfo().app_name + ".log")
-    old_log_file = AppInfo().user_log_folder / (AppInfo().app_name + ".old.log")
-    if old_log_file.exists() and old_log_file.is_file():
-        old_log_file.unlink()
-    if log_file.exists() and log_file.is_file():
-        log_file.rename(old_log_file)
-
-    # Define the log format string
-
-    def formatter(record: "loguru.Record") -> str:
-        """Custom formatter for loguru logger"""
-        format_string = "[{level}][{time:YYYY-MM-DD HH:mm:ss}][{process.id}][{thread.name}][{module}][{function}][{line}] : "
-
-        record["extra"]["obfuscated_message"] = obfuscate_message(record["message"])
-        return format_string + "{extra[obfuscated_message]}\n"
-
-    # Remove the default stderr logger
-    logger.remove()
-
-    # Create the file logger
-    logger.add(log_file, level="DEBUG" if DEBUG_MODE else "INFO", format=formatter)
-
-    # Add a "WARNING" or higher stderr logger
-    logger.add(
-        sys.stderr,
-        level="WARNING",
-        format=formatter,
-        colorize=False,
+    setup_logging(
+        log_dir=AppInfo().user_log_folder, debug=DEBUG_MODE, app_name=AppInfo().app_name
     )
 
     if "__compiled__" not in globals():
@@ -241,20 +246,35 @@ if __name__ == "__main__":
 
     logger.info(f"Initializing RimDex application: {AppInfo().app_version}")
 
+    if AppInfo().is_dev_mode:
+        logger.info(
+            f"Running in dev mode - data stored at {AppInfo().app_storage_folder.parent}"
+        )
+
     # Single-instance lock: prevent multiple RimDex instances from running
     lock: SingleInstanceLock | None = None
     try:
         lock = SingleInstanceLock(AppInfo().app_storage_folder / "rimdex.lock")
         if not lock.acquire():
+            from PySide6.QtCore import QCoreApplication
             from PySide6.QtWidgets import QApplication, QMessageBox
 
             _app = QApplication(sys.argv)
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Icon.Warning)
-            msg.setWindowTitle("RimDex Already Running")
-            msg.setText("Another instance of RimDex is already running.")
+            msg.setWindowTitle(
+                QCoreApplication.translate("RimDex", "RimDex Already Running")
+            )
+            msg.setText(
+                QCoreApplication.translate(
+                    "RimDex", "Another instance of RimDex is already running."
+                )
+            )
             msg.setInformativeText(
-                "Please close the existing instance before starting a new one."
+                QCoreApplication.translate(
+                    "RimDex",
+                    "Please close the existing instance before starting a new one.",
+                )
             )
             msg.setStandardButtons(QMessageBox.StandardButton.Ok)
             msg.exec()

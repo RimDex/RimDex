@@ -180,7 +180,6 @@ class TestCreateSteamDbCaching:
         assert "C" in dq.database["database"]["A"]["dependencies"]
         assert dq.database["database"]["A"]["dependencies"]["C"][0] == "Mod C"
 
-    # jscpd:ignore-start
     def test_no_missing_children_single_query(self, dq: DynamicQuery) -> None:
         """When all deps are in the initial set, only 1 round of API calls."""
         mods = {
@@ -195,8 +194,6 @@ class TestCreateSteamDbCaching:
         all_queried = [pfid for batch in batches for pfid in batch]
         assert all_queried == ["A", "B"]
         assert "B" in dq.database["database"]["A"]["dependencies"]
-
-    # jscpd:ignore-end
 
     def test_cached_replay_resolves_unknown_names(self, dq: DynamicQuery) -> None:
         """

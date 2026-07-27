@@ -4,9 +4,10 @@ import sys
 import time
 import traceback
 import webbrowser
+from collections.abc import Callable
 from functools import partial
 from pathlib import Path
-from typing import Any, Callable, Literal, Optional, cast, overload
+from typing import Any, Literal, Optional, cast, overload
 
 from loguru import logger
 from PySide6.QtCore import (
@@ -27,7 +28,6 @@ from PySide6.QtWidgets import (
 )
 
 import app.core.constants as app_constants
-import app.ui.dialogue as dialogue
 from app.controllers.handlers.import_export_handler import ImportExportHandler
 from app.controllers.handlers.steam_handler import SteamHandler
 from app.controllers.handlers.zip_mod_handler import ZipModHandler
@@ -42,7 +42,7 @@ from app.core.system_info import SystemInfo
 from app.core.ui_helpers import (
     copy_to_clipboard_safely,
     platform_specific_open,
-    upload_data_to_0x0_st,
+    upload_log_to_privatebin,
 )
 from app.core.update_utils import UpdateManager
 from app.io.files import create_backup_in_thread
@@ -53,11 +53,14 @@ from app.models.settings import Settings
 from app.mods.db_builder import DatabaseBuilder
 from app.net import http
 from app.services.import_export_service import ImportExportService
+from app.services.modlist_history_service import ModlistHistoryService
 from app.services.window_manager import WindowManager
 from app.sort.mod_sorting import ModsPanelSortKey
+from app.ui import dialogue
 from app.ui.widgets.animations import LoadingAnimation
 from app.ui.widgets.custom_list_widget_item import CustomListWidgetItem
 from app.ui.widgets.divider import is_divider_uuid
+from app.utils.startup_impact import invalidate_startup_impact_cache
 from app.utils.steam.steambrowser.browser import SteamBrowser
 from app.utils.steam.steamcmd.wrapper import SteamcmdInterface
 from app.views.mod_info_panel import ModInfoPanel
@@ -70,6 +73,7 @@ from app.windows.ignore_json_editor import IgnoreJsonEditor
 from app.windows.missing_dependencies_dialog import MissingDependenciesDialog
 from app.windows.missing_mod_properties_panel import MissingModPropertiesPanel
 from app.windows.missing_mods_panel import MissingModsPrompt
+from app.windows.modlist_history_panel import ModlistHistoryPanel
 from app.windows.rule_editor_panel import RuleEditor
 from app.windows.runner_panel import RunnerPanel
 from app.windows.use_this_instead_panel import UseThisInsteadPanel
@@ -92,7 +96,7 @@ class MainContent(QObject):
 
     def __new__(cls, *args: Any, **kwargs: Any) -> "MainContent":
         if cls._instance is None:
-            cls._instance = super(MainContent, cls).__new__(cls)
+            cls._instance = super().__new__(cls)
         return cls._instance
 
     def __init__(
@@ -123,6 +127,9 @@ class MainContent(QObject):
         self.steamcmd_runner: RunnerPanel | None = None
         self.steamcmd_wrapper = SteamcmdInterface.instance()
         self._import_export_service = ImportExportService(
+            self.metadata_controller, self.settings
+        )
+        self._modlist_history_service = ModlistHistoryService(
             self.metadata_controller, self.settings
         )
         self._import_export_handler = ImportExportHandler(
@@ -168,6 +175,7 @@ class MainContent(QObject):
         EventBus().settings_have_changed.connect(self._on_settings_have_changed)
         EventBus().do_check_for_application_update.connect(self._do_check_for_update)
         EventBus().do_open_mod_list.connect(self._do_import_list_file_xml)
+        EventBus().do_append_mod_list.connect(self._do_append_list_file_xml)
         EventBus().do_import_mod_list_from_rentry.connect(self._do_import_list_rentry)
         EventBus().do_import_mod_list_from_workshop_collection.connect(
             self._do_import_list_workshop_collection
@@ -180,6 +188,7 @@ class MainContent(QObject):
             self._do_export_list_clipboard
         )
         EventBus().do_export_mod_list_to_rentry.connect(self._do_upload_list_rentry)
+        EventBus().do_open_modlist_history.connect(self._do_open_modlist_history)
         EventBus().do_upload_log.connect(self._upload_file)
         EventBus().do_open_default_editor.connect(self._open_in_default_editor)
         EventBus().do_download_all_mods_via_steamcmd.connect(
@@ -244,6 +253,7 @@ class MainContent(QObject):
 
         EventBus().do_add_zip_mod.connect(self._do_add_zip_mod)
         EventBus().do_browse_workshop.connect(self._do_browse_workshop)
+        EventBus().do_browse_workshop_url.connect(self._do_browse_workshop_url)
         EventBus().do_check_for_workshop_updates.connect(
             self._do_check_for_workshop_updates
         )
@@ -303,7 +313,7 @@ class MainContent(QObject):
         self.active_mods_uuids_restore_state: list[str] = []
         self.inactive_mods_uuids_restore_state: list[str] = []
         self.duplicate_mods: dict[str, Any] = {}
-        self._extract_progress_widget: Optional[TaskProgressWindow] = None
+        self._extract_progress_widget: TaskProgressWindow | None = None
         self._extract_thread: ZipExtractThread | None = None
         self.window_manager = WindowManager()
         self._active_loading_loop: QEventLoop | None = None
@@ -446,8 +456,7 @@ class MainContent(QObject):
                 if not getattr(i.data(Qt.ItemDataRole.UserRole), "is_divider", False)
             ]
             if items_to_move:
-                first_selected = sorted(aml.row(i) for i in items_to_move)[0]
-
+                first_selected = min(aml.row(i) for i in items_to_move)
                 # Remove items from current list
                 for item in items_to_move:
                     data = item.data(Qt.ItemDataRole.UserRole)
@@ -489,6 +498,8 @@ class MainContent(QObject):
             aml.setFocus()
             if not aml.selectedIndexes():
                 aml.setCurrentRow(self.___get_relative_middle(aml))
+            if not aml.selectedItems():
+                return
             item = aml.selectedItems()[0]
             data = item.data(Qt.ItemDataRole.UserRole)
             uuid = data["path"]
@@ -500,8 +511,7 @@ class MainContent(QObject):
 
             items_to_move = iml.selectedItems().copy()
             if items_to_move:
-                first_selected = sorted(iml.row(i) for i in items_to_move)[0]
-
+                first_selected = min(iml.row(i) for i in items_to_move)
                 # Remove items from current list
                 for item in items_to_move:
                     data = item.data(Qt.ItemDataRole.UserRole)
@@ -705,14 +715,12 @@ class MainContent(QObject):
             self.missing_mods,
         ) = self.metadata_controller.get_mods_from_list(
             mod_list=str(
-                (
-                    Path(
-                        self.settings.instances[
-                            self.settings.current_instance
-                        ].config_folder
-                    )
-                    / "ModsConfig.xml"
+                Path(
+                    self.settings.instances[
+                        self.settings.current_instance
+                    ].config_folder
                 )
+                / "ModsConfig.xml"
             )
         )
         self.active_mods_uuids_last_save = active_mods_uuids
@@ -788,6 +796,8 @@ class MainContent(QObject):
         # If the loop was quit externally (e.g. window close), skip UI cleanup
         if not loading_animation.animation_finished:
             return None
+        if loading_animation.exception:
+            raise loading_animation.exception
         data = loading_animation.data
         # Remove text label if it was passed
         if text and loading_animation_text_label is not None:
@@ -808,6 +818,8 @@ class MainContent(QObject):
         """
         EventBus().refresh_started.emit()
         EventBus().do_save_button_animation_stop.emit()
+        # Force a re-read of the startup impact report on the next recalculation
+        invalidate_startup_impact_cache()
         # If we are refreshing cache from user action
         if not is_initial:
             # Reset the data source filters to default and clear searches
@@ -1081,8 +1093,105 @@ class MainContent(QObject):
     def _do_import_list_file_xml(self) -> None:
         self._import_export_handler.do_import_list_file_xml()
 
+    def _do_append_list_file_xml(self) -> None:
+        """
+        Open a user-selected XML file. Append new active mods from this file
+        on top of the existing active list, and remove them from the inactive list.
+        """
+        logger.info("Opening file dialog to select input file for appending")
+        file_path = dialogue.show_dialogue_file(
+            mode="open",
+            caption="Append RimWorld mod list",
+            _dir=str(AppInfo().saved_modlists_folder),
+            _filter="RimWorld mod list (*.rml *.rws *.xml)",
+        )
+        logger.info(f"Selected path for appending: {file_path}")
+        if file_path:
+            self.mods_panel.reset_all_filters_and_search("Active")
+            self.mods_panel.reset_all_filters_and_search("Inactive")
+            logger.info(f"Trying to append mods list from XML: {file_path}")
+            (
+                active_mods_uuids,
+                _inactive_mods_uuids,
+                new_duplicate_mods,
+                new_missing_mods,
+            ) = self.metadata_controller.get_mods_from_list(mod_list=file_path)
+            logger.info("Got new mods according to appended XML")
+
+            current_active = list(self.mods_panel.active_mods_list.paths)
+            current_inactive = list(self.mods_panel.inactive_mods_list.paths)
+
+            active_set = {u for u in current_active if not is_divider_uuid(u)}
+
+            appended_count = 0
+            for u in active_mods_uuids:
+                if u not in active_set and not is_divider_uuid(u):
+                    current_active.append(u)
+                    appended_count += 1
+                    if u in current_inactive:
+                        current_inactive.remove(u)
+
+            logger.info(f"Appended {appended_count} new mods to active list")
+            self._insert_data_into_lists(current_active, current_inactive)
+
+            # Update duplicate/missing states and trigger prompts if any exist
+            self.duplicate_mods = new_duplicate_mods
+            self.missing_mods = new_missing_mods
+
+            # check if we have duplicate mods, prompt user
+            self._duplicate_mods_prompt()
+
+            # check if we have missing mods, prompt user
+            self._missing_mods_prompt()
+        else:
+            logger.info("USER ACTION: pressed cancel, passing")
+
     def _do_export_list_file_xml(self) -> None:
         self._import_export_handler.do_export_list_file_xml()
+
+    def _do_open_modlist_history(self) -> None:
+        """Open the Mod List History dialog for the current instance."""
+        panel = ModlistHistoryPanel(
+            history_service=self._modlist_history_service,
+            restore_callback=self._restore_modlist_snapshot,
+        )
+        self.window_manager.register(panel)
+        panel.show()
+
+    def _restore_modlist_snapshot(self, package_ids: list[str]) -> None:
+        """Load a history snapshot's active list into the UI (does not save)."""
+        self.mods_panel.reset_all_filters_and_search("Active")
+        self.mods_panel.reset_all_filters_and_search("Inactive")
+        logger.info(
+            f"Restoring mod list from history snapshot ({len(package_ids)} active mods)"
+        )
+        self._apply_imported_package_ids(package_ids)
+
+    def _apply_imported_package_ids(self, package_ids: list[str]) -> None:
+        """Load a plain list of package IDs into the active/inactive lists.
+
+        Shared by file import and mod list history restore. Only updates the
+        in-memory lists; the user still has to press Save to persist.
+        """
+        (
+            active_mods_uuids,
+            inactive_mods_uuids,
+            self.duplicate_mods,
+            self.missing_mods,
+        ) = self.metadata_controller.get_mods_from_list(mod_list=package_ids)
+        logger.info("Got new mods according to imported list")
+        # Plain package-ID lists carry no RimDex UI divider metadata. Clear
+        # persisted divider state so dividers from the previously loaded list are
+        # not reinserted at stale numeric positions.
+        self.settings.active_mods_dividers = []
+        self.settings.save()
+        self._insert_data_into_lists(active_mods_uuids, inactive_mods_uuids)
+
+        # check if we have duplicate mods, prompt user
+        self._duplicate_mods_prompt()
+
+        # check if we have missing mods, prompt user
+        self._missing_mods_prompt()
 
     def _do_import_list_rentry(self) -> None:
         self._import_export_handler.do_import_list_rentry()
@@ -1185,19 +1294,35 @@ class MainContent(QObject):
             )
             return
 
-        success, ret = self.do_threaded_loading_animation(
-            gif_path=str(AppInfo().theme_data_folder / "default-icons" / "rimdex.gif"),
-            target=partial(upload_data_to_0x0_st, str(path)),
-            text=self.tr("Uploading {path.name} to 0x0.st...").format(path=path),
-        )
+        try:
+            result = self.do_threaded_loading_animation(
+                gif_path=str(
+                    AppInfo().theme_data_folder / "default-icons" / "rimdex.gif"
+                ),
+                target=partial(upload_log_to_privatebin, str(path)),
+                text=self.tr("Uploading {path.name} to PrivateBin...").format(
+                    path=path
+                ),
+            )
+        except Exception as e:
+            logger.exception(f"Failed to upload file: {e}")
+            dialogue.show_warning(
+                title=self.tr("Upload failed"),
+                text=self.tr("Failed to upload the file to PrivateBin."),
+                details=str(e),
+            )
+            return
+
+        if result is None:
+            return
+
+        success, ret = result
 
         if success:
             copy_to_clipboard_safely(ret)
             dialogue.show_information(
                 title=self.tr("Uploaded file"),
-                text=self.tr("Uploaded {path.name} to https://0x0.st/").format(
-                    path=path
-                ),
+                text=self.tr("Uploaded {path.name} to PrivateBin").format(path=path),
                 information=self.tr(
                     "The URL has been copied to your clipboard:<br><br>{ret}"
                 ).format(ret=ret),
@@ -1206,7 +1331,7 @@ class MainContent(QObject):
         else:
             dialogue.show_warning(
                 title=self.tr("Failed to upload file."),
-                text=self.tr("Failed to upload the file to 0x0.st"),
+                text=self.tr("Failed to upload the file to PrivateBin."),
                 information=ret,
             )
 
@@ -1246,8 +1371,10 @@ class MainContent(QObject):
         self.active_mods_uuids_last_save = active_mods_uuids
         logger.info(f"Collected {len(data.active_mods)} active mods for saving")
 
+        save_succeeded = False
         try:
             self._import_export_service.save_to_mods_config(data.active_mods)
+            save_succeeded = True
         except Exception:
             logger.error("Could not save active mods")
             dialogue.show_fatal_error(
@@ -1255,6 +1382,15 @@ class MainContent(QObject):
                 text=self.tr("Failed to save active mods to file:"),
                 details=traceback.format_exc(),
             )
+
+        if save_succeeded and self.settings.modlist_history_enabled:
+            try:
+                self._modlist_history_service.write_snapshot(
+                    active_mods_uuids, inactive_mods_uuids
+                )
+            except Exception:
+                logger.exception("Failed to write mod list history snapshot")
+
         EventBus().do_save_button_animation_stop.emit()
         # Save current modlists to their respective restore states
         self.active_mods_uuids_restore_state = active_mods_uuids
@@ -1400,6 +1536,9 @@ class MainContent(QObject):
 
     def _do_browse_workshop(self) -> None:
         self._steam_handler.do_browse_workshop()
+
+    def _do_browse_workshop_url(self, url: str) -> None:
+        self._steam_handler.do_browse_workshop_url(url)
 
     def _do_check_for_workshop_updates(self) -> None:
         self._steam_handler.do_check_for_workshop_updates()
@@ -1572,8 +1711,9 @@ class MainContent(QObject):
         cr_path = self.metadata_controller.community_rules_path
         if rules_source == "Community Rules" and cr_path:
             path = str(cr_path)
-        elif rules_source == "User Rules" and str(
-            AppInfo().databases_folder / "userRules.json"
+        elif (
+            rules_source == "User Rules"
+            and (AppInfo().databases_folder / "userRules.json").exists()
         ):
             path = str(AppInfo().databases_folder / "userRules.json")
         else:
@@ -1656,7 +1796,7 @@ class MainContent(QObject):
             logger.warning(
                 f"Tried to access instance {self.settings.current_instance} that does not exist!"
             )
-            return None
+            return
 
         steamcmd_prefix = instance.steamcmd_install_path
 
@@ -1714,7 +1854,6 @@ class MainContent(QObject):
                 logger.info(
                     "User chose to ignore unsaved changes and proceed with running the game anyway."
                 )
-                pass
             elif answer == QMessageBox.StandardButton.Cancel:
                 logger.info("User chose to cancel.")
                 return

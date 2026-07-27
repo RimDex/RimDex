@@ -1,7 +1,7 @@
 import os
+from collections.abc import Callable
 from functools import partial
 from pathlib import Path
-from typing import Callable
 
 from PySide6.QtCore import QObject
 from PySide6.QtGui import QAction, QKeySequence
@@ -30,12 +30,14 @@ class MenuBar(QObject):
         self.settings_action: QAction
         self.quit_action: QAction
         self.open_mod_list_action: QAction
+        self.append_mod_list_action: QAction
         self.save_mod_list_action: QAction
         self.import_from_rentry_action: QAction
         self.import_from_workshop_collection_action: QAction
         self.import_from_save_file_action: QAction
         self.export_to_clipboard_action: QAction
         self.export_to_rentry_action: QAction
+        self.modlist_history_action: QAction
         self.upload_log_actions: list[QAction] = []
         self.default_open_log_actions: list[QAction] = []
         self.upload_rimdex_log_action: QAction
@@ -60,8 +62,10 @@ class MenuBar(QObject):
         self.add_zip_mod_action: QAction
         self.browse_workshop_action: QAction
         self.update_workshop_mods_action: QAction
+        self.update_git_mods_action: QAction
         self.github_mods_action: QAction
         self.steam_verify_game_files_action: QAction
+        self.download_rimworld_version_action: QAction
         self.backup_instance_action: QAction
         self.restore_instance_action: QAction
         self.clone_instance_action: QAction
@@ -128,6 +132,9 @@ class MenuBar(QObject):
         self.open_mod_list_action = self._add_action(
             file_menu, self.tr("Open Mod List…"), "Ctrl+O"
         )
+        self.append_mod_list_action = self._add_action(
+            file_menu, self.tr("Append Mod List…"), "Ctrl+Alt+O"
+        )
         file_menu.addSeparator()
         self.save_mod_list_action = self._add_action(
             file_menu, self.tr("Save Mod List As…"), "Ctrl+Shift+S"
@@ -151,6 +158,10 @@ class MenuBar(QObject):
         )
         self.export_to_rentry_action = self._add_action(
             self.export_submenu, self.tr("To Rentry.co…")
+        )
+        file_menu.addSeparator()
+        self.modlist_history_action = self._add_action(
+            file_menu, self.tr("Mod List History…")
         )
         file_menu.addSeparator()
 
@@ -296,6 +307,10 @@ class MenuBar(QObject):
             QMenu: The created "Download" menu.
         """
         download_menu = self.menu_bar.addMenu(self.tr("Download"))
+        self.download_rimworld_version_action = self._add_action(
+            download_menu, self.tr("Download RimWorld Version")
+        )
+        download_menu.addSeparator()
         self.add_git_mod_action = self._add_action(
             download_menu, self.tr("Add Git Mod")
         )
@@ -308,6 +323,9 @@ class MenuBar(QObject):
         )
         self.update_workshop_mods_action = self._add_action(
             download_menu, self.tr("Update Workshop Mods")
+        )
+        self.update_git_mods_action = self._add_action(
+            download_menu, self.tr("Update Git Mods")
         )
         download_menu.addSeparator()
         self.github_mods_action = self._add_action(

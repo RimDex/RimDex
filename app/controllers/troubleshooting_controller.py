@@ -1,18 +1,19 @@
-import json
 import re
-import xml.etree.ElementTree as ElementTree
 from pathlib import Path
 from shutil import copy2, rmtree
-from typing import List, Optional
+from xml.etree import ElementTree
 
 from loguru import logger
 from PySide6.QtCore import QCoreApplication
 
+from app.controllers.metadata_controller import MetadataController
 from app.core.event_bus import EventBus
 from app.core.ui_helpers import platform_specific_open
 from app.io.acf_utils import cleanup_orphaned_workshop_items
 from app.io.json_utils import atomic_json_dump
 from app.models.settings import Settings
+from app.services.import_export_service import ImportExportService
+from app.services.mod_list_parser import ModListFormatError
 from app.ui.dialogue import show_information, show_warning
 from app.ui.widgets.gui_info import (
     show_dialogue_conditional,
@@ -60,19 +61,19 @@ class TroubleshootingController:
         )
 
     @property
-    def game_location(self) -> Optional[str]:
+    def game_location(self) -> str | None:
         return self.settings.instances[self.settings.current_instance].game_folder
 
     @property
-    def config_location(self) -> Optional[str]:
+    def config_location(self) -> str | None:
         return self.settings.instances[self.settings.current_instance].config_folder
 
     @property
-    def steam_mods_location(self) -> Optional[str]:
+    def steam_mods_location(self) -> str | None:
         return self.settings.instances[self.settings.current_instance].workshop_folder
 
     def _delete_files_in_directory(
-        self, directory: Path, exclude: Optional[List[str]] = None
+        self, directory: Path, exclude: list[str] | None = None
     ) -> None:
         """Helper method to delete files and folders in a directory, excluding specified names."""
         if exclude is None:
@@ -95,7 +96,7 @@ class TroubleshootingController:
         if not self.steam_mods_location:
             logger.warning("Steam user Check failed, skipping deleteing game files.")
             self.show_steam_user_warning()
-            return None
+            return
 
         # Check if game location is set
         if not self.game_location:
@@ -162,7 +163,7 @@ class TroubleshootingController:
         if not self.steam_mods_location:
             logger.warning("Steam mods location not set, skipping deleting steam mods.")
             self.show_steam_user_warning()
-            return None
+            return
 
         steam_mods_dir = Path(self.steam_mods_location)
         if not steam_mods_dir.exists():
@@ -563,36 +564,26 @@ class TroubleshootingController:
         ):
             return
 
+        service = ImportExportService(MetadataController.instance(), self.settings)
         try:
-            # read and validate import file
-            with open(import_path) as f:
-                import_data = json.load(f)
-
-            if not all(key in import_data for key in ["version", "activeMods"]):
-                raise ValueError("Invalid mod list format")
-
-            # create new ModsConfig.xml content
-            root = ElementTree.Element("ModsConfigData")
-            version = ElementTree.SubElement(root, "version")
-            version.text = import_data["version"]
-
-            active_mods = ElementTree.SubElement(root, "activeMods")
-            for mod in import_data["activeMods"]:
-                mod_elem = ElementTree.SubElement(active_mods, "li")
-                mod_elem.text = mod
-
-            known_expansions = ElementTree.SubElement(root, "knownExpansions")
-            for exp in import_data.get("knownExpansions", []):
-                exp_elem = ElementTree.SubElement(known_expansions, "li")
-                exp_elem.text = exp
-
-            tree = ElementTree.ElementTree(root)
-            tree.write(mods_config, encoding="utf-8", xml_declaration=True)
-
+            service.import_from_file(str(import_path), target="mods_config")
             # refresh mod list so user dont need to click refresh button in main window
             EventBus().do_refresh_mods_lists.emit()
-
-        except (json.JSONDecodeError, ValueError, KeyError) as e:
+        except ModListFormatError as e:
+            logger.error(f"Failed to import mod list: {e}")
+            show_warning(
+                title=QCoreApplication.translate("TroubleshootingController", "Error"),
+                text=QCoreApplication.translate(
+                    "TroubleshootingController", "Failed to import mod list"
+                ),
+                information=QCoreApplication.translate(
+                    "TroubleshootingController",
+                    "The selected file is not a valid mod list file.<br>"
+                    "Expected RimWorld ModsConfig XML or RimSort JSON export.<br>"
+                    "Details: {e}",
+                ).format(e=str(e)),
+            )
+        except Exception as e:
             logger.error(f"Failed to import mod list: {e}")
             show_dialogue_conditional(
                 QCoreApplication.translate("TroubleshootingController", "Error"),
@@ -605,7 +596,7 @@ class TroubleshootingController:
                 ).format(e=str(e)),
             )
 
-    def _get_steam_root_from_workshop(self) -> Optional[Path]:
+    def _get_steam_root_from_workshop(self) -> Path | None:
         """Get Steam root directory from configured workshop folder path."""
         if not self.steam_mods_location:
             logger.warning("Steam mods location not set, skipping getting steam root.")

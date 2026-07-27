@@ -974,7 +974,7 @@ class ModInfoPanel:
             if os.path.exists(workshop_folder_path):
                 about_folder_name = "About"
                 about_folder_target_path = str(
-                    (Path(workshop_folder_path) / about_folder_name)
+                    Path(workshop_folder_path) / about_folder_name
                 )
                 if os.path.exists(about_folder_target_path):
                     # Look for a case-insensitive About folder
@@ -991,7 +991,7 @@ class ModInfoPanel:
                     invalid_file_path_found = True
                     preview_file_name = "Preview.png"
                     for temp_file in scanpath(
-                        str((Path(workshop_folder_path) / about_folder_name))
+                        str(Path(workshop_folder_path) / about_folder_name)
                     ):
                         if (
                             temp_file.name.lower() == preview_file_name.lower()
@@ -1013,11 +1013,9 @@ class ModInfoPanel:
                     else:
                         logger.debug("Preview image found")
                         image_path = str(
-                            (
-                                Path(workshop_folder_path)
-                                / about_folder_name
-                                / preview_file_name
-                            )
+                            Path(workshop_folder_path)
+                            / about_folder_name
+                            / preview_file_name
                         )
                         pixmap = QPixmap(image_path)
                         self.preview_picture.setPixmap(

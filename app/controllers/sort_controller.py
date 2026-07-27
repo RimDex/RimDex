@@ -45,7 +45,7 @@ class Sorter:
         # Precompute them here and pass down when sort function signatures
         # are finalized in PR 3.
 
-        if isinstance(sort_method, SortMethod) or isinstance(sort_method, str):
+        if isinstance(sort_method, (SortMethod, str)):
             logger.info(f"Created sorter instance with {sort_method} sort method")
 
             if sort_method == SortMethod.ALPHABETICAL:

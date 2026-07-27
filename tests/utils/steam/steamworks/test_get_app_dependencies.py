@@ -28,14 +28,14 @@ _steamworks_path = str(_project_root / "submodules" / "SteamworksPy")
 if _steamworks_path not in sys.path:
     sys.path.insert(0, _steamworks_path)
 
-import pytest  # noqa: E402
+import pytest
 
 pytest.importorskip("steamworks.structs")
-from steamworks.structs import GetAppDependenciesResult  # noqa: E402
+from steamworks.structs import GetAppDependenciesResult
 
-from app.core.fs_utils import chunks  # noqa: E402
-from app.utils.steam.availability import check_steam_available  # noqa: E402
-from app.utils.steam.steamworks.wrapper import (  # noqa: E402
+from app.core.fs_utils import chunks
+from app.utils.steam.availability import check_steam_available
+from app.utils.steam.steamworks.wrapper import (
     OPERATION_INTERVAL,
     SteamworksAppDependenciesQuery,
     SteamworksInterface,

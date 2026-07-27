@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import asyncio
 import sys
-from typing import Any, Optional
+from typing import Any
 
 import click
 
@@ -45,7 +45,7 @@ def _log_red(msg: str, quiet: bool) -> None:
     click.secho(msg, fg="red", err=True)
 
 
-def _resolve_languages(lang: Optional[str], quiet: bool) -> list[str]:
+def _resolve_languages(lang: str | None, quiet: bool) -> list[str]:
     if lang and lang != "all":
         return [lang]
     languages = get_translation_languages()
@@ -95,10 +95,10 @@ def _add_translate_options(func: Any) -> Any:
 
 def _setup_translate(
     provider: str,
-    api_key: Optional[str],
+    api_key: str | None,
     concurrency: int,
     no_cache: bool,
-    lang: Optional[str],
+    lang: str | None,
     quiet: bool,
 ) -> tuple[list[str], dict[str, str]]:
     """Common setup for translate commands. Returns (languages, service_kwargs)."""
@@ -145,7 +145,7 @@ def translate_group() -> None:
     help="Language code (e.g. de_DE). Omit or 'all' for all languages.",
 )
 @click.option("--quiet", is_flag=True, help="Suppress progress output.")
-def extract_cmd(lang: Optional[str], quiet: bool) -> None:
+def extract_cmd(lang: str | None, quiet: bool) -> None:
     """Extract translatable strings from source via pyside6-lupdate."""
     target = lang if lang and lang != "all" else None
     label = target or "all"
@@ -166,9 +166,9 @@ def extract_cmd(lang: Optional[str], quiet: bool) -> None:
 @translate_group.command("translate")
 @_add_translate_options
 def translate_cmd(
-    lang: Optional[str],
+    lang: str | None,
     provider: str,
-    api_key: Optional[str],
+    api_key: str | None,
     model: str,
     concurrency: int,
     no_cache: bool,
@@ -227,7 +227,7 @@ async def _translate_language(
     help="Language code (e.g. de_DE). Omit or 'all' for all languages.",
 )
 @click.option("--quiet", is_flag=True, help="Suppress progress output.")
-def validate_cmd(lang: Optional[str], quiet: bool) -> None:
+def validate_cmd(lang: str | None, quiet: bool) -> None:
     """Validate translation files (check placeholders, HTML tags, language attrs)."""
     _log("Validating…", quiet)
     issues, fixed = validate_translation(lang)
@@ -258,7 +258,7 @@ def validate_cmd(lang: Optional[str], quiet: bool) -> None:
     help="Language code (e.g. de_DE). Omit or 'all' for all languages.",
 )
 @click.option("--quiet", is_flag=True, help="Suppress progress output.")
-def compile_cmd(lang: Optional[str], quiet: bool) -> None:
+def compile_cmd(lang: str | None, quiet: bool) -> None:
     """Compile .ts files to .qm via pyside6-lrelease."""
     target = lang if lang and lang != "all" else None
     label = target or "all"
@@ -279,9 +279,9 @@ def compile_cmd(lang: Optional[str], quiet: bool) -> None:
 @translate_group.command("run-all")
 @_add_translate_options
 def run_all_cmd(
-    lang: Optional[str],
+    lang: str | None,
     provider: str,
-    api_key: Optional[str],
+    api_key: str | None,
     model: str,
     concurrency: int,
     no_cache: bool,

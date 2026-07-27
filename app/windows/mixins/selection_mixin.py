@@ -8,8 +8,9 @@ from __future__ import annotations
 
 import os
 import shutil
+from collections.abc import Callable
 from functools import partial
-from typing import Any, Callable, TypeVar
+from typing import Any, TypeVar
 
 from loguru import logger
 from PySide6.QtWidgets import QCheckBox, QComboBox
@@ -48,7 +49,7 @@ class SelectionMixin(TrMixin, BaseModsPanelSurface):
             if self._row_is_checked(row)
         }
 
-    def _run_for_selected_rows(self, fn: Callable[[int], "T"]) -> list["T"]:
+    def _run_for_selected_rows(self, fn: Callable[[int], T]) -> list[T]:
         return [fn(row) for row in self._get_selected_row_indices()]
 
     def _get_selected_text_by_column(self, column: int) -> Callable[[int], str]:

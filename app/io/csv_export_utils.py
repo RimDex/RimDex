@@ -14,7 +14,7 @@ from __future__ import annotations
 import csv
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from loguru import logger
 from PySide6.QtCore import QCoreApplication, Qt
@@ -78,7 +78,7 @@ def export_to_csv(panel: BaseModsPanel) -> None:
         )
 
 
-def _prepare_csv_export(panel: BaseModsPanel) -> Optional[str]:
+def _prepare_csv_export(panel: BaseModsPanel) -> str | None:
     """
     Prepare CSV export by prompting user for file path and validating it.
 
@@ -189,16 +189,11 @@ def _write_csv_metadata(panel: BaseModsPanel, writer: Any) -> None:
 
     # Add SteamCMD ACF path if available (AcfLogReader has this)
     acf_path = None
-    if hasattr(panel, "metadata_controller") and hasattr(
-        panel.metadata_controller, "steamcmd_wrapper"
-    ):
-        acf_path = getattr(
-            panel.metadata_controller.steamcmd_wrapper,
-            "steamcmd_appworkshop_acf_path",
-            None,
-        )
-    elif hasattr(panel, "metadata_controller") and hasattr(
-        panel.metadata_controller, "steamcmd_wrapper"
+    if (
+        hasattr(panel, "metadata_controller")
+        and hasattr(panel.metadata_controller, "steamcmd_wrapper")
+        or hasattr(panel, "metadata_controller")
+        and hasattr(panel.metadata_controller, "steamcmd_wrapper")
     ):
         acf_path = getattr(
             panel.metadata_controller.steamcmd_wrapper,
@@ -263,7 +258,7 @@ def _finalize_csv_export(panel: BaseModsPanel, file_path: str) -> None:
 def _handle_csv_export_error(
     message: str,
     title: str,
-    details: Optional[str] = None,
+    details: str | None = None,
 ) -> None:
     """
     Handle CSV export errors with logging and user notification.

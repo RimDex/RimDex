@@ -24,7 +24,7 @@ import traceback
 from datetime import datetime
 from pathlib import Path
 from tempfile import gettempdir
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import requests
 from loguru import logger
@@ -32,7 +32,6 @@ from PySide6.QtCore import QEventLoop, QObject, QThread, Signal
 from PySide6.QtWidgets import QApplication, QMessageBox
 
 import app.core.update_check as check
-import app.ui.dialogue as dialogue
 from app.core.app_info import AppInfo
 from app.core.ui_helpers import check_internet_connection
 from app.io.zip_extractor import (
@@ -43,6 +42,7 @@ from app.io.zip_extractor import (
     validate_zip_integrity,
 )
 from app.net import http
+from app.ui import dialogue
 from app.views.task_progress_window import TaskProgressWindow
 from packaging import version
 
@@ -114,7 +114,7 @@ class TarExtractThread(QThread):
 
         except Exception as e:
             logger.exception("tar.gz extraction failed")
-            self.finished.emit(False, f"Extraction error: {str(e)}")
+            self.finished.emit(False, f"Extraction error: {e!s}")
 
     def stop(self) -> None:
         """Signal the thread to abort extraction on next iteration."""
@@ -150,9 +150,9 @@ class UpdateManager(QObject):
 
     def __init__(
         self,
-        settings: "Settings",
+        settings: Settings,
         main_content: Any,
-        mod_info_panel: Optional[Any] = None,
+        mod_info_panel: Any | None = None,
     ) -> None:
         super().__init__()
         self.settings = settings
@@ -160,7 +160,7 @@ class UpdateManager(QObject):
         self.mod_info_panel = mod_info_panel
         self._update_content: bytes | None = None
         self._extracted_path: Path | None = None
-        self._elevation_needed: Optional[bool] = None  # Cache elevation check result
+        self._elevation_needed: bool | None = None  # Cache elevation check result
         # Cache platform info to avoid repeated calls
         self._system = platform.system()
         # On macOS, platform.architecture()[0] returns "64bit" for both Intel and
@@ -176,11 +176,11 @@ class UpdateManager(QObject):
             else None
         )
         self._download_cancelled = False
-        self._detected_terminal: Optional[str] = (
+        self._detected_terminal: str | None = (
             None  # Cache detected terminal emulator (for fallback only)
         )
         # Progress window for update operations
-        self._progress_widget: Optional[TaskProgressWindow] = None
+        self._progress_widget: TaskProgressWindow | None = None
 
     # ------------------------------------------------------------------
     # Elevation / protected-path helpers (UI-free, but live here because they
@@ -230,7 +230,7 @@ class UpdateManager(QObject):
             test_file.unlink()
             logger.debug("Write test passed; no elevation needed")
             return True
-        except (OSError, IOError, PermissionError) as write_err:
+        except (OSError, PermissionError) as write_err:
             logger.info(f"Write access test failed ({write_err}); elevation required")
             return False
 
@@ -306,7 +306,7 @@ class UpdateManager(QObject):
             dialogue.show_warning(
                 title=self.tr("Update failed"),
                 text=self.tr("An unexpected error occurred during the update process."),
-                information=f"Unexpected error during update check: {str(e)}",
+                information=f"Unexpected error during update check: {e!s}",
                 details=traceback.format_exc(),
             )
 
@@ -342,7 +342,7 @@ class UpdateManager(QObject):
 
         return True
 
-    def _fetch_and_compare_versions(self) -> Optional[dict[str, Any]]:
+    def _fetch_and_compare_versions(self) -> dict[str, Any] | None:
         """
         Fetch latest release information and compare versions.
 
@@ -664,7 +664,7 @@ class UpdateManager(QObject):
                     self._extract_update_with_progress(is_msi, is_tar_gz)
                 except Exception as e:
                     logger.error(f"Extraction/preparation failed: {e}")
-                    raise UpdateExtractionError(f"Extraction failed: {str(e)}") from e
+                    raise UpdateExtractionError(f"Extraction failed: {e!s}") from e
 
                 update_source_path = self._extracted_path
 
@@ -722,28 +722,28 @@ class UpdateManager(QObject):
             dialogue.show_warning(
                 title=self.tr("Download failed"),
                 text=self.tr("Failed to download the update."),
-                information=f"Error: {str(e)}<br>URL: {download_url}",
+                information=f"Error: {e!s}<br>URL: {download_url}",
             )
         except UpdateExtractionError as e:
             logger.exception("Update extraction failed")
             dialogue.show_warning(
                 title=self.tr("Extraction failed"),
                 text=self.tr("Failed to extract the downloaded update."),
-                information=f"Error: {str(e)}",
+                information=f"Error: {e!s}",
             )
         except UpdateScriptLaunchError as e:
             logger.exception("Update script launch failed")
             dialogue.show_warning(
                 title=self.tr("Launch failed"),
                 text=self.tr("Failed to launch the update script."),
-                information=f"Error: {str(e)}",
+                information=f"Error: {e!s}",
             )
         except Exception as e:
             logger.exception("Unexpected update process failure")
             dialogue.show_warning(
                 title=self.tr("Update failed"),
                 text=self.tr("An unexpected error occurred during the update process."),
-                information=f"Error: {str(e)}<br>URL: {download_url}",
+                information=f"Error: {e!s}<br>URL: {download_url}",
                 details=traceback.format_exc(),
             )
         finally:
@@ -1379,7 +1379,7 @@ class UpdateManager(QObject):
                 # Move item to the specific destination path (not just to the directory)
                 shutil.move(str(item), str(dest))
                 moved_items += 1
-            except (OSError, IOError, FileNotFoundError) as e:
+            except (OSError, FileNotFoundError) as e:
                 logger.warning(f"Failed to move {item} to {dest}: {e}. Skipping item.")
                 continue
         return moved_items
@@ -1523,9 +1523,7 @@ class UpdateManager(QObject):
             logger.error(
                 f"Children: {[c.name for c in extract_path.iterdir()] if extract_path.exists() else 'N/A'}"
             )
-            raise UpdateExtractionError(
-                f"Structure normalization failed: {str(e)}"
-            ) from e
+            raise UpdateExtractionError(f"Structure normalization failed: {e!s}") from e
 
     def _launch_update_script(
         self,
@@ -1765,6 +1763,9 @@ class UpdateManager(QObject):
 
         # Try primary method first (direct bash for Linux, osascript for macOS)
         try:
+            if self._system == "Linux" and needs_elevation:
+                raise Exception("sudo requires a terminal emulator on Linux")
+
             logger.debug(f"Attempting primary launch method on {self._system}")
             p = subprocess.Popen(
                 args_repr,
@@ -1847,7 +1848,7 @@ class UpdateManager(QObject):
         # Ensure log directory exists
         try:
             log_path.parent.mkdir(parents=True, exist_ok=True)
-        except (OSError, IOError) as e:
+        except OSError as e:
             logger.warning(f"Could not create log directory: {e}")
 
         # Build msiexec command
@@ -1906,7 +1907,7 @@ class UpdateManager(QObject):
 
     def _get_script_info(
         self, update_source_path: Path, log_path: Path, needs_elevation: bool
-    ) -> tuple[Path, str | list[str], Optional[bool], Path]:
+    ) -> tuple[Path, str | list[str], bool | None, Path]:
         """
         Get the script path, arguments representation, and session flag for the platform.
 
@@ -1977,9 +1978,7 @@ class UpdateManager(QObject):
         else:
             progress_widget.show()
 
-    def _hide_progress_widget(
-        self, progress_widget: Optional[TaskProgressWindow]
-    ) -> None:
+    def _hide_progress_widget(self, progress_widget: TaskProgressWindow | None) -> None:
         """Close and remove progress widget from panel."""
         try:
             if progress_widget:

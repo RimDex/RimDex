@@ -32,6 +32,7 @@ from __future__ import annotations
 import os
 import sys
 import threading
+from collections.abc import Callable
 from ctypes import CFUNCTYPE
 from multiprocessing import Process
 from multiprocessing.synchronize import Lock as MpLock
@@ -40,7 +41,7 @@ from pathlib import Path
 from shutil import copy2
 from threading import Thread
 from time import sleep, time
-from typing import Any, Callable, Union
+from typing import Any
 
 from loguru import logger
 
@@ -48,7 +49,7 @@ from loguru import logger
 # Ensure that this is available by running via: git submodule update --init --recursive
 # You can automatically ensure this is done by utilizing distribute.py
 if "__compiled__" not in globals():
-    sys.path.append(str((Path(getcwd()) / "submodules" / "SteamworksPy")))
+    sys.path.append(str(Path(getcwd()) / "submodules" / "SteamworksPy"))
 
 from steamworks import STEAMWORKS
 from steamworks.structs import GetAppDependenciesResult
@@ -193,17 +194,13 @@ class SteamworksInterface:
         while not self.steamworks.loaded():
             logger.warning("Waiting for Steamworks...")
             sleep(0.1)
-        else:
-            logger.info("Steamworks loaded!")
+        logger.info("Steamworks loaded!")
 
         # Main callback loop - process events every 100ms until signaled to stop
         while not self.end_callbacks.is_set():
             self.steamworks.run_callbacks()
             sleep(0.1)
-        else:
-            logger.info(
-                f"{self.callbacks_count} callback(s) received. Ending thread..."
-            )
+        logger.info(f"{self.callbacks_count} callback(s) received. Ending thread...")
 
     # TODO: Rework this for proper static type checking
     def _cb_app_dependencies_result_callback(self, *args: Any, **kwargs: Any) -> None:
@@ -227,10 +224,11 @@ class SteamworksInterface:
         except (AttributeError, IndexError, TypeError) as e:
             logger.warning(f"Failed to parse GetAppDependencies callback: {e}")
         # Check for multiple actions
-        if self.multiple_queries and self.callbacks_count == self.callbacks_total:
-            # Set flag so that _callbacks cease
-            self.end_callbacks.set()
-        elif not self.multiple_queries:
+        if (
+            self.multiple_queries
+            and self.callbacks_count == self.callbacks_total
+            or not self.multiple_queries
+        ):
             # Set flag so that _callbacks cease
             self.end_callbacks.set()
 
@@ -267,7 +265,7 @@ class SteamworksInterface:
 
 
 # Per-process shared SteamworksInterface (set by _pool_init_worker, reused across chunks)
-WORKER_INTERFACE: list["SteamworksInterface | None"] = [None]
+WORKER_INTERFACE: list[SteamworksInterface | None] = [None]
 
 
 def _pool_init_worker(project_root: str, libs_path: str, init_lock: MpLock) -> None:
@@ -294,7 +292,7 @@ class SteamworksAppDependenciesQuery:
 
     def __init__(
         self,
-        pfid_or_pfids: Union[int, list[int]],
+        pfid_or_pfids: int | list[int],
         interval: float = 1,
         _libs: str | None = None,
     ) -> None:
@@ -465,7 +463,7 @@ class SteamworksSubscriptionHandler(Process):
     def __init__(
         self,
         action: str,
-        pfid_or_pfids: Union[int, list[int]],
+        pfid_or_pfids: int | list[int],
         _libs: str | None = None,
     ):
         """
@@ -512,9 +510,15 @@ class SteamworksSubscriptionHandler(Process):
             f"=== SteamworksSubscriptionHandler START: action={self.action}, mods={len(self.pfid_or_pfids)} ==="
         )
 
-        # We don't set a strict callback count since Steam may not fire callbacks reliably
-        # Instead, we queue operations, wait for processing, and trust Steam handled them
-        callbacks_total = None
+        # Track the expected callback count so we can return as soon as Steam
+        # confirms every queued operation, instead of always blocking for the
+        # full timeout. Resubscribe queues both an unsubscribe and a subscribe
+        # callback per mod; DownloadItem callbacks are tracked separately and
+        # don't count here. If Steam fails to fire a callback for some items
+        # (documented as unreliable for large batches), _wait_for_callbacks
+        # still falls back to the full time-based timeout below.
+        callback_multiplier = 2 if self.action == "resubscribe" else 1
+        callbacks_total = len(self.pfid_or_pfids) * callback_multiplier
         logger.warning(f"Queuing {len(self.pfid_or_pfids)} mod(s) for {self.action}")
 
         steamworks_interface = SteamworksInterface(

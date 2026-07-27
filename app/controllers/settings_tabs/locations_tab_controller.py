@@ -1,5 +1,5 @@
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
 
 from PySide6.QtCore import QCoreApplication, Slot
 from PySide6.QtWidgets import QMessageBox

@@ -29,7 +29,7 @@ class ModRowsMixin(BaseModsPanelSurface):
 
     def _add_mod_row(
         self,
-        mod_info: "ModInfo",
+        mod_info: ModInfo,
         additional_items: list[QStandardItem] | None = None,
         default_checkbox_state: bool = False,
     ) -> None:

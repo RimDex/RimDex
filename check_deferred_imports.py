@@ -56,7 +56,7 @@ def _normalise(line: str) -> str:
 def _import_key(file_rel: str, node: ast.AST) -> str | None:
     if isinstance(node, ast.Import):
         names = [a.name for a in node.names]
-        app_names = [n for n in names if n.startswith("app") or n.startswith("app.")]
+        app_names = [n for n in names if n.startswith(("app", "app."))]
         if not app_names:
             return None
         return f"{file_rel}: import {', '.join(sorted(app_names))}"

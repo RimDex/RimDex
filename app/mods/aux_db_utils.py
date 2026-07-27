@@ -54,6 +54,7 @@ def auxdb_get_mod_color(
     :param session: Session | None, optional SQLAlchemy session to use for the query; if None, a new session will be created and closed within this function
     :return: QColor | None, Color of the mod, or None if no color
     """
+
     entry = auxdb_get_aux_db_entry(settings, path, aux_db_controller, session)
     mod_color = None
     if entry:
@@ -79,6 +80,7 @@ def auxdb_get_mod_user_notes(
     :param session: Session | None, optional SQLAlchemy session to use for the query; if None, a new session will be created and closed within this function
     :return: str, User notes for the mod, or empty string if no notes
     """
+
     entry = auxdb_get_aux_db_entry(settings, path, aux_db_controller, session)
     user_notes = ""
     if entry:
@@ -102,6 +104,7 @@ def auxdb_get_mod_warning_toggled(
     :param session: Session | None, optional SQLAlchemy session to use for the query; if None, a new session will be created and closed within this function
     :return: bool, Warning toggled status for the mod
     """
+
     entry = auxdb_get_aux_db_entry(settings, path, aux_db_controller, session)
     warning_toggled = False
     if entry:

@@ -13,7 +13,7 @@ from difflib import SequenceMatcher
 from pathlib import Path
 from shutil import copy2, copytree
 from traceback import format_exc
-from typing import Any, Dict, cast
+from typing import Any, cast
 
 from loguru import logger
 from PySide6.QtCore import QCoreApplication, QEvent, QObject, Qt
@@ -523,7 +523,7 @@ class ContextMenuMixin(ModListWidgetMixinBase):
             # Get all selected CustomListWidgetItems
             selected_items = self.selectedItems()
             # Track all paths selected
-            all_selected_paths: Dict[int, str] = {}
+            all_selected_paths: dict[int, str] = {}
             # Single item selected
             if len(selected_items) == 1:
                 logger.debug(f"{len(selected_items)} items selected")
@@ -788,6 +788,7 @@ class ContextMenuMixin(ModListWidgetMixinBase):
                         change_mod_color_action = QAction()
                         change_mod_color_action.setText("Change mod colors")
                         reset_mod_color_action = QAction()
+
                         reset_mod_color_action.setText("Reset mod colors")
 
                         add_mod_tags_action = QAction()
@@ -1082,8 +1083,8 @@ class ContextMenuMixin(ModListWidgetMixinBase):
                         folder_name,
                         publishedfileid,
                     ) in local_steamcmd_name_to_publishedfileid.items():
-                        original_mod_path = str((Path(local_folder) / folder_name))
-                        renamed_mod_path = str((Path(local_folder) / publishedfileid))
+                        original_mod_path = str(Path(local_folder) / folder_name)
+                        renamed_mod_path = str(Path(local_folder) / publishedfileid)
                         if os.path.exists(original_mod_path):
                             if not os.path.exists(renamed_mod_path):
                                 try:
@@ -1119,8 +1120,8 @@ class ContextMenuMixin(ModListWidgetMixinBase):
                             if mod_name
                             else f"{publishedfileid}_local"
                         )
-                        original_mod_path = str((Path(local_folder) / publishedfileid))
-                        renamed_mod_path = str((Path(local_folder) / mod_name))
+                        original_mod_path = str(Path(local_folder) / publishedfileid)
+                        renamed_mod_path = str(Path(local_folder) / mod_name)
                         if os.path.exists(original_mod_path):
                             if not os.path.exists(renamed_mod_path):
                                 try:
@@ -1211,17 +1212,15 @@ class ContextMenuMixin(ModListWidgetMixinBase):
                         if mod_name:
                             mod_name = sanitize_filename(mod_name)
                         renamed_mod_path = str(
-                            (
-                                Path(
-                                    self.settings.instances[
-                                        self.settings.current_instance
-                                    ].local_folder
-                                )
-                                / (
-                                    mod_name
-                                    if mod_name
-                                    else publishedfileid_from_folder_name
-                                )
+                            Path(
+                                self.settings.instances[
+                                    self.settings.current_instance
+                                ].local_folder
+                            )
+                            / (
+                                mod_name
+                                if mod_name
+                                else publishedfileid_from_folder_name
                             )
                         )
                         if os.path.exists(path):

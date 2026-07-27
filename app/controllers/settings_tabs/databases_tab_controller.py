@@ -1,4 +1,4 @@
-from typing import Callable
+from collections.abc import Callable
 
 from PySide6.QtWidgets import QApplication
 
@@ -235,6 +235,17 @@ class DatabasesTabController(BaseTabController):
                 upload_event="do_upload_use_this_instead_db_to_github",
                 download_event="do_download_use_this_instead_db_from_github",
                 file_filter="JSON Files (*.json *.json.gz)",
+            ),
+            DatabaseSourceGroup(
+                prefix="rimworld_versions_db",
+                source_attr="external_rimworld_versions_metadata_source",
+                file_path_attr="external_rimworld_versions_file_path",
+                repo_attr="external_rimworld_versions_repo_path",
+                url_attr="external_rimworld_versions_url",
+                display_name="RimWorld Versions",
+                upload_event="do_upload_rimworld_versions_db_to_github",
+                download_event="do_download_rimworld_versions_db_from_github",
+                file_filter="JSON Files (*.json)",
             ),
         ]
 

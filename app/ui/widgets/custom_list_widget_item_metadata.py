@@ -110,6 +110,10 @@ class CustomListWidgetItemMetadata:
         self.updated_timestamp: int | None = self.get_updated_timestamp_by_path(
             path, settings, aux_metadata_controller, aux_metadata_session
         )
+        # Startup impact (per-mod load time), stamped during the bulk
+        # errors/warnings recompute when the feature is enabled
+        self.startup_impact_s: float | None = None
+        self.startup_impact_tooltip: str = ""
         # Persist list type for UI logic that depends on which list the item is in (Active/Inactive)
         self.list_type = list_type
 

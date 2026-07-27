@@ -1,5 +1,7 @@
 """Test Settings model default values for HTTP database syncing."""
 
+from pathlib import Path
+from typing import Any
 from unittest.mock import MagicMock, patch
 
 
@@ -77,7 +79,54 @@ class TestSettingsURLDefaults:
         assert hasattr(settings, "external_use_this_instead_repo_path")
 
 
-class TestRecentlyUpdatedIndicatorDefaults:
+class TestRimWorldVersionsDefaults:
+    """Test defaults for the new RimWorld Versions DB feature."""
+
+    def _default_settings(self, mock_app_info: MagicMock, mock_qapp: MagicMock) -> Any:
+        mock_qapp.font.return_value.family.return_value = "monospace"
+        mock_app_info.return_value.databases_folder = MagicMock()
+        mock_app_info.return_value.app_settings_file = MagicMock()
+
+        from app.models.settings import Settings
+
+        return Settings()
+
+    @patch("app.models.settings.QApplication")
+    @patch("app.models.settings.AppInfo")
+    def test_rimworld_versions_source_defaults_to_configured_url(
+        self, mock_app_info: MagicMock, mock_qapp: MagicMock
+    ) -> None:
+        settings = self._default_settings(mock_app_info, mock_qapp)
+        assert settings.external_rimworld_versions_metadata_source == "Configured URL"
+
+    @patch("app.models.settings.QApplication")
+    @patch("app.models.settings.AppInfo")
+    def test_rimworld_versions_url_defaults(
+        self, mock_app_info: MagicMock, mock_qapp: MagicMock
+    ) -> None:
+        settings = self._default_settings(mock_app_info, mock_qapp)
+        assert (
+            settings.external_rimworld_versions_url
+            == "https://github.com/bukforks/rimworld-versions/archive/refs/heads/main.zip"
+        )
+        assert "archive" in settings.external_rimworld_versions_url
+
+    @patch("app.models.settings.QApplication")
+    @patch("app.models.settings.AppInfo")
+    def test_rimworld_versions_file_path_ends_in_json(
+        self, mock_app_info: MagicMock, mock_qapp: MagicMock
+    ) -> None:
+        mock_qapp.font.return_value.family.return_value = "monospace"
+        mock_app_info.return_value.databases_folder = Path("/mock/databases")
+        mock_app_info.return_value.app_settings_file = MagicMock()
+
+        from app.models.settings import Settings
+
+        settings = Settings()
+        assert settings.external_rimworld_versions_file_path.endswith(
+            "rimworld_versions.json"
+        )
+
     """Test defaults for the recently-updated mods indicator feature."""
 
     @patch("app.models.settings.QApplication")

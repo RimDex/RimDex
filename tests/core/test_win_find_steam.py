@@ -1,4 +1,5 @@
 import sys
+from typing import Self
 
 import pytest
 
@@ -17,13 +18,13 @@ def test_find_steam_folder_windows(monkeypatch: pytest.MonkeyPatch) -> None:
     import winreg
 
     class _FakeKey:
-        def __enter__(self, *a: object) -> "_FakeKey":
+        def __enter__(self, *a: object) -> Self:
             return self
 
         def __exit__(self, *a: object) -> None:
             return None
 
-        def QueryValueEx(self, name: str) -> tuple[str, int]:  # noqa: N802
+        def QueryValueEx(self, name: str) -> tuple[str, int]:
             return (r"C:\Program Files (x86)\Steam", 1)
 
     monkeypatch.setattr(winreg, "OpenKey", lambda *a, **k: _FakeKey())

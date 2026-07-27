@@ -420,7 +420,7 @@ class ListItemMixin(ModListWidgetMixinBase):
             pass  # Signal not connected
 
         self.clear()
-        self.paths = list()
+        self.paths = []
         if uuids:  # Insert data...
             # Filter out dividers up-front so we can bulk-fetch real UUIDs
             real_uuids = [u for u in uuids if not is_divider_uuid(u)]

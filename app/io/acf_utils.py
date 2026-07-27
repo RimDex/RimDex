@@ -230,6 +230,7 @@ def _merge_workshop_items_from_sources(
             seen_pfids.add(pfid_str)
 
     # Process second source, skipping any PFIDs already added
+
     for pfid, item in steam_items.items():
         if not isinstance(item, dict):
             continue
@@ -242,6 +243,7 @@ def _merge_workshop_items_from_sources(
                     f"Invalid timeupdated for PFID {pfid_str}: {item.get('timeupdated')}"
                 )
             entries.append((pfid_str, steam_source, timeupdated_int))
+
             seen_pfids.add(pfid_str)
 
     return entries

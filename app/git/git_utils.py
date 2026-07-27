@@ -30,7 +30,7 @@ import directly from ``app.git.git_operations`` or
 
 from __future__ import annotations
 
-from app.git.git_notifications import (  # noqa: F401 — re-export
+from app.git.git_notifications import (
     CORRUPTION_INDICATORS,
     DefaultNotificationHandler,
     GitError,
@@ -39,7 +39,7 @@ from app.git.git_notifications import (  # noqa: F401 — re-export
     GitOperationType,
     _handle_git_error,
 )
-from app.git.git_operations import (  # noqa: F401 — re-export
+from app.git.git_operations import (
     GitCloneResult,
     GitPullResult,
     GitPushResult,
@@ -79,19 +79,18 @@ from app.git.git_operations import (  # noqa: F401 — re-export
 # ``pygit2`` was historically re-exported from here so callers could write
 # ``from app.git.git_utils import pygit2``.  Preserve that for backwards
 # compatibility by re-exporting it from the same source the operations use.
-from app.git.pygit2_loader import pygit2  # noqa: E402, F401 — re-export
+from app.git.pygit2_loader import pygit2
 
 __all__ = [
     # notifications / UI
     "CORRUPTION_INDICATORS",
     "DefaultNotificationHandler",
+    # operations
+    "GitCloneResult",
     "GitError",
     "GitNotificationHandler",
     "GitOperationConfig",
     "GitOperationType",
-    "_handle_git_error",
-    # operations
-    "GitCloneResult",
     "GitPullResult",
     "GitPushResult",
     "GitStageCommitResult",
@@ -99,6 +98,7 @@ __all__ = [
     "ParsedGitUrl",
     "_attempt_repository_repair",
     "_fetch_with_timeout",
+    "_handle_git_error",
     "_is_repository_corrupted",
     "_parse_https_git_url",
     "_parse_ssh_git_url",

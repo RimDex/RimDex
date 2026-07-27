@@ -1,5 +1,6 @@
 import subprocess
-from typing import Any, Generator, Union
+from collections.abc import Generator
+from typing import Any
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -55,7 +56,7 @@ def auto_accept_dialogs(monkeypatch: pytest.MonkeyPatch) -> None:
 
 
 @pytest.fixture(scope="function")
-def qapp() -> Generator[Union[QApplication, QCoreApplication], None, None]:
+def qapp() -> Generator[QApplication | QCoreApplication, None, None]:
     """Create a QApplication instance for Qt tests."""
     app = QApplication.instance()
     if app is None:
@@ -95,6 +96,8 @@ def mock_app_info(
     stub._app_name = "RimDex"
     stub._app_version = "0.0.0-test"
     stub._app_copyright = ""
+    stub._is_dev_mode = False
+    stub._dev_root = None
     stub._application_folder = base / "app"
     stub._app_storage_folder = storage
     stub._user_log_folder = logs

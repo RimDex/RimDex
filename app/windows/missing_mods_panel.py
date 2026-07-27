@@ -199,7 +199,7 @@ class MissingModsPrompt(BaseModsPanel):
                 dependencies = {
                     key: value
                     for key, value in entry.dependencies.items()
-                    if key not in RIMWORLD_DLC_METADATA.keys()
+                    if key not in RIMWORLD_DLC_METADATA
                 }
 
                 # Populate variants_by_packageid dict

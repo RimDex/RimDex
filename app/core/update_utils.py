@@ -29,16 +29,16 @@ from app.core.update_apply import (
 )
 
 __all__ = [
-    "UpdateError",
-    "UpdateNetworkError",
-    "UpdateDownloadError",
-    "UpdateExtractionError",
-    "UpdateScriptLaunchError",
-    "ReleaseInfo",
+    "PLATFORM_PATTERNS",
     "DownloadInfo",
     "PlatformPatterns",
+    "ReleaseInfo",
     "ScriptConfig",
-    "PLATFORM_PATTERNS",
     "TarExtractThread",
+    "UpdateDownloadError",
+    "UpdateError",
+    "UpdateExtractionError",
     "UpdateManager",
+    "UpdateNetworkError",
+    "UpdateScriptLaunchError",
 ]

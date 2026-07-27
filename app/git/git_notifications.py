@@ -19,9 +19,10 @@ backward-compatible re-export shim.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Callable, Optional, Protocol
+from typing import Any, Protocol
 
 from loguru import logger
 from PySide6.QtWidgets import QMessageBox
@@ -32,7 +33,7 @@ from app.ui.dialogue import InformationBox
 class GitError(Exception):
     """Base exception for git operations."""
 
-    def __init__(self, message: str, details: Optional[str] = None):
+    def __init__(self, message: str, details: str | None = None):
         super().__init__(message)
         self.message = message
         self.details = details
@@ -59,9 +60,7 @@ class GitOperationType(Enum):
 class GitNotificationHandler(Protocol):
     """Protocol for handling git operation notifications."""
 
-    def show_error(
-        self, title: str, message: str, details: Optional[str] = None
-    ) -> None:
+    def show_error(self, title: str, message: str, details: str | None = None) -> None:
         """Show error notification to user."""
         ...
 
@@ -69,9 +68,7 @@ class GitNotificationHandler(Protocol):
 class DefaultNotificationHandler:
     """Default implementation using QMessageBox for notifications."""
 
-    def show_error(
-        self, title: str, message: str, details: Optional[str] = None
-    ) -> None:
+    def show_error(self, title: str, message: str, details: str | None = None) -> None:
         """Show error notification using InformationBox."""
         InformationBox(
             title=title,
@@ -91,7 +88,7 @@ class GitOperationConfig:
     """
 
     notify_errors: bool = True
-    notification_handler: Optional[GitNotificationHandler] = None
+    notification_handler: GitNotificationHandler | None = None
     fetch_timeout: int = 30  # Timeout for fetch operations in seconds
     connection_timeout: int = 10  # Timeout for connection checks in seconds
 
@@ -104,21 +101,19 @@ class GitOperationConfig:
         return self.notification_handler or DefaultNotificationHandler()
 
     @classmethod
-    def create_silent(cls) -> "GitOperationConfig":
+    def create_silent(cls) -> GitOperationConfig:
         """Create a config that suppresses error notifications."""
         return cls(notify_errors=False)
 
     @classmethod
-    def create_with_handler(
-        cls, handler: GitNotificationHandler
-    ) -> "GitOperationConfig":
+    def create_with_handler(cls, handler: GitNotificationHandler) -> GitOperationConfig:
         """Create a config with a specific notification handler."""
         return cls(notify_errors=True, notification_handler=handler)
 
     @classmethod
     def create_with_timeout(
         cls, fetch_timeout: int = 30, connection_timeout: int = 10
-    ) -> "GitOperationConfig":
+    ) -> GitOperationConfig:
         """Create a config with custom timeout values."""
         return cls(fetch_timeout=fetch_timeout, connection_timeout=connection_timeout)
 
@@ -141,10 +136,10 @@ def _handle_git_error(
     error: Exception,
     config: GitOperationConfig,
     context: str = "",
-    repo_path: Optional[str | Any] = None,
-    repo_url: Optional[str] = None,
-    repo: Optional[Any] = None,
-    repair_callback: Optional[Callable[..., bool]] = None,
+    repo_path: str | Any | None = None,
+    repo_url: str | None = None,
+    repo: Any | None = None,
+    repair_callback: Callable[..., bool] | None = None,
     **kwargs: Any,
 ) -> bool:
     """Centralized error handling for git operations.

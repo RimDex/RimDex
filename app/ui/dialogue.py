@@ -1,7 +1,6 @@
 import os
 import sys
 from pathlib import Path
-from typing import Union
 
 from loguru import logger
 from PySide6.QtCore import (
@@ -35,7 +34,7 @@ from app.core.event_bus import EventBus
 from app.core.ui_helpers import (
     copy_to_clipboard_safely,
     platform_specific_open,
-    upload_data_to_0x0_st,
+    upload_log_to_privatebin,
 )
 
 # Constants
@@ -61,7 +60,7 @@ def show_dialogue_conditional(
     details: str | None = None,
     button_text_override: list[str] | None = None,
     parent: QWidget | None = None,
-) -> Union[str, QMessageBox.StandardButton]:
+) -> str | QMessageBox.StandardButton:
     """
     Displays a dialogue, prompting the user for input
 
@@ -148,7 +147,6 @@ def show_dialogue_file(
     return str(Path(os.path.normpath(path)).resolve()) if path != "" else None
 
 
-# jscpd:ignore-start
 def show_information(
     title: str | None = None,
     text: str | None = None,
@@ -170,7 +168,7 @@ def show_information(
     :param parent: The parent widget
     :type parent: QWidget | None
     """
-    # jscpd:ignore-end
+
     logger.info(
         f"Showing information box with input: [{title}], [{text}], [{information}], [{details}]"
     )
@@ -200,7 +198,6 @@ def show_information(
     info_message_box.exec_()
 
 
-# jscpd:ignore-start
 def show_warning(
     title: str | None = None,
     text: str | None = None,
@@ -221,7 +218,7 @@ def show_warning(
     :param parent: The parent widget
     :type parent: QWidget | None
     """
-    # jscpd:ignore-end
+
     logger.info(
         f"Showing warning box with input: [{title}], [{text}], [{information}], [{details}]"
     )
@@ -507,6 +504,7 @@ class BinaryChoiceDialog(_BaseMessageBox):
         :type parent: QWidget | None, optional
         :raises ValueError: If the positive and negative buttons are the same
         """
+
         super().__init__(
             title, text, information, icon, details, modal=modal, parent=parent
         )
@@ -553,7 +551,7 @@ class BinaryChoiceDialog(_BaseMessageBox):
 class FatalErrorDialog(_BaseDialogue):
     """Custom dialog to display fatal errors.
 
-    Has button to show more details, open the log directory, and upload the log file to 0x0.
+    Has button to show more details, open the log directory, and upload the log file to PrivateBin.
     """
 
     def __init__(
@@ -576,7 +574,7 @@ class FatalErrorDialog(_BaseDialogue):
         self.close_btn = QPushButton(self.tr("Close"))
         self.open_log_btn = QPushButton(self.tr("Open Log Directory"))
         self.upload_log_btn = QPushButton(self.tr("Upload Log"))
-        self.upload_log_btn.setToolTip(self.tr("Upload the log file to 0x0.st"))
+        self.upload_log_btn.setToolTip(self.tr("Upload the log file to PrivateBin"))
 
         btn_layout = QHBoxLayout()
         btn_layout.addWidget(self.open_log_btn)
@@ -639,7 +637,7 @@ class FatalErrorDialog(_BaseDialogue):
         )
 
         def _upload_log(parent: FatalErrorDialog) -> None:
-            """Helper function to upload the log file to 0x0. Displays a loading dialog while doing so. When finished, copy the URL to the clipboard and display the link."""
+            """Helper function to upload the log file to PrivateBin. Displays a loading dialog while doing so. When finished, copy the URL to the clipboard and display the link."""
             progress_diag = _UploadLogDialog(parent)
             progress_diag.show()
 
@@ -701,7 +699,7 @@ class UploadLogTask(QRunnable):
     @Slot()
     def run(self) -> None:
         # Perform the upload task
-        result, url = upload_data_to_0x0_st(
+        result, url = upload_log_to_privatebin(
             str(AppInfo().user_log_folder / "RimDex.log")
         )
 
@@ -757,7 +755,7 @@ class SettingsFailureDialog(QDialog):
         super().__init__()
 
         # Set up the message box
-        self.setWindowTitle("Unable to parse settings file!")
+        self.setWindowTitle(self.tr("Unable to parse settings file!"))
         self.setModal(True)
         self.setObjectName("dialogue")
 
@@ -820,7 +818,7 @@ class SettingsFailureDialog(QDialog):
             platform_specific_open(AppInfo().app_storage_folder)
 
         def _reset_settings_file() -> None:
-            EventBus().reset_settings_file.emit
+            EventBus().reset_settings_file.emit()
             self.accept()
 
         self.open_settings_file_btn.clicked.connect(lambda: _open_settings_file())
@@ -836,7 +834,7 @@ def _setup_error_icon(
     diag: QDialog, details_btn: QPushButton | None = None
 ) -> QVBoxLayout:
     l_layout = QVBoxLayout()
-    piximap = getattr(QStyle, "SP_MessageBoxCritical")
+    piximap = QStyle.StandardPixmap.SP_MessageBoxCritical
     icon = diag.style().standardIcon(piximap)
     label = QLabel()
     label.setPixmap(icon.pixmap(64, 64))

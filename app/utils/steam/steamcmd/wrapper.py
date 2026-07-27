@@ -13,10 +13,10 @@ from loguru import logger
 from PySide6.QtCore import QCoreApplication
 from PySide6.QtWidgets import QMessageBox
 
-import app.io.symlink as symlink
 from app.core.event_bus import EventBus
 from app.core.fs_utils import handle_remove_read_only
 from app.core.fs_utils import rmtree as g_rmtree
+from app.io import symlink
 from app.models.settings import Instance, Settings
 from app.net import http
 from app.ui.dialogue import (
@@ -45,7 +45,7 @@ class SteamcmdInterface:
 
     def __new__(cls, *args: Any, **kwargs: Any) -> "SteamcmdInterface":
         if cls._instance is None:
-            cls._instance = super(SteamcmdInterface, cls).__new__(cls)
+            cls._instance = super().__new__(cls)
         return cls._instance
 
     def __init__(self, steamcmd_prefix: str, validate: bool) -> None:
@@ -53,7 +53,7 @@ class SteamcmdInterface:
             self.initialized = True
             self.setup = False
             self.steamcmd_prefix = steamcmd_prefix
-            super(SteamcmdInterface, self).__init__()
+            super().__init__()
             logger.debug("Initializing SteamcmdInterface")
             self.initialize_prefix(steamcmd_prefix, validate)
 
@@ -76,17 +76,17 @@ class SteamcmdInterface:
             self.steamcmd_url = (
                 "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_osx.tar.gz"
             )
-            self.steamcmd = str((Path(self.steamcmd_install_path) / "steamcmd.sh"))
+            self.steamcmd = str(Path(self.steamcmd_install_path) / "steamcmd.sh")
         elif self.system == "Linux":
             self.steamcmd_url = (
                 "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz"
             )
-            self.steamcmd = str((Path(self.steamcmd_install_path) / "steamcmd.sh"))
+            self.steamcmd = str(Path(self.steamcmd_install_path) / "steamcmd.sh")
         elif self.system == "Windows":
             self.steamcmd_url = (
                 "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
             )
-            self.steamcmd = str((Path(self.steamcmd_install_path) / "steamcmd.exe"))
+            self.steamcmd = str(Path(self.steamcmd_install_path) / "steamcmd.exe")
         else:
             show_fatal_error(
                 "SteamcmdInterface",
@@ -104,15 +104,13 @@ class SteamcmdInterface:
         if not os.path.exists(self.steamcmd_steam_path):
             os.makedirs(self.steamcmd_steam_path)
         self.steamcmd_appworkshop_acf_path = str(
-            (
-                Path(self.steamcmd_steam_path)
-                / "steamapps"
-                / "workshop"
-                / "appworkshop_294100.acf"
-            )
+            Path(self.steamcmd_steam_path)
+            / "steamapps"
+            / "workshop"
+            / "appworkshop_294100.acf"
         )
         self.steamcmd_content_path = str(
-            (Path(self.steamcmd_steam_path) / "steamapps" / "workshop" / "content")
+            Path(self.steamcmd_steam_path) / "steamapps" / "workshop" / "content"
         )
 
     @classmethod
@@ -161,6 +159,7 @@ class SteamcmdInterface:
         :type runner: RunnerPanel
         :return: True if the symlink/junction was created successfully. False otherwise.
         """
+
         if runner is not None:
             runner.message(f"[{src_path}] -> " + dst_path)
 
@@ -209,12 +208,12 @@ class SteamcmdInterface:
         except Exception as e:
             if runner is not None:
                 runner.message(
-                    f"Failed to create symlink. Error: {type(e).__name__}: {str(e)}"
+                    f"Failed to create symlink. Error: {type(e).__name__}: {e!s}"
                 )
             show_warning(
                 "Failed to Create Symlink",
                 f"Failed to create symlink for {sys.platform}",
-                details=f"Error: {type(e).__name__}: {str(e)}",
+                details=f"Error: {type(e).__name__}: {e!s}",
             )
 
             return False
@@ -260,7 +259,8 @@ class SteamcmdInterface:
         :return: True if the symlink/junction was created successfully. False otherwise.
         :rtype: bool
         """
-        msg = f"Failed to create symlink. Error: {type(e).__name__}: {str(e)}"
+
+        msg = f"Failed to create symlink. Error: {type(e).__name__}: {e!s}"
         if runner is not None:
             runner.message(msg)
 
@@ -302,6 +302,9 @@ class SteamcmdInterface:
             "login anonymous",
         ]
         for pfid in publishedfileids:
+            if not pfid.isdigit():
+                logger.warning(f"Skipping non-numeric published file id: {pfid!r}")
+                continue
             if self.validate_downloads:
                 script_lines.append(f"{download_cmd} {pfid} validate")
             else:
@@ -388,6 +391,201 @@ class SteamcmdInterface:
             [f'+runscript "{script_path}"'],
             total,
         )
+
+    def download_game_version(
+        self,
+        username: str,
+        install_dir: str,
+        manifests: list[tuple[int, str]],
+    ) -> None:
+        """Download specific game depots (base game + DLCs) via SteamCMD.
+
+        Because ``download_depot`` requires interactive authentication
+        (password and Steam Guard) **and** ignores ``force_install_dir``,
+        we spawn SteamCMD inside a dedicated terminal window.  A small
+        helper Python script is written to disk and executed there; it
+        drives SteamCMD, copies the downloaded depots into *install_dir*,
+        and keeps the terminal open so any error output remains visible.
+
+        Configuration (paths, depot list) is passed to the helper script
+        as a base-64-encoded JSON blob on the command line, avoiding all
+        string-escaping pitfalls.
+
+        :param username:    Steam account name (password is entered interactively).
+        :param install_dir: Destination directory for the game files.
+        :param manifests:   List of ``(depot_id, manifest_id)`` tuples.
+        """
+        if not self.setup:
+            logger.error("SteamCMD is not set up.")
+            return
+
+        import base64
+        import json
+        import subprocess
+        import tempfile
+        import textwrap
+
+        # ── 1. Serialise configuration as a base-64 JSON blob ────────────
+        config = {
+            "steamcmd": self.steamcmd,
+            "username": username,
+            "install_dir": install_dir,
+            "manifests": [
+                [depot_id, manifest_id] for depot_id, manifest_id in manifests
+            ],
+        }
+        config_b64 = base64.b64encode(json.dumps(config).encode()).decode()
+
+        # ── 2. Write the helper script ───────────────────────────────────
+        #    This is a *real* Python file with normal indentation – not a
+        #    fragile list-of-strings hack.  It receives its configuration
+        #    via sys.argv[1] (base-64 JSON) so there are zero escaping
+        #    issues regardless of the paths involved.
+        helper_source = textwrap.dedent("""\
+            import base64
+            import json
+            import shutil
+            import subprocess
+            import sys
+            import traceback
+            from pathlib import Path
+
+            def main() -> None:
+                cfg = json.loads(base64.b64decode(sys.argv[1]))
+                steamcmd_exe = Path(cfg["steamcmd"])
+                install_dir  = Path(cfg["install_dir"])
+                username     = cfg["username"]
+                manifests    = cfg["manifests"]          # [[depot_id, manifest_id], ...]
+
+                print("=" * 60)
+                print("RimSort - SteamCMD Depot Downloader")
+                print("=" * 60)
+                print(f"\\nSteamCMD : {steamcmd_exe}")
+                print(f"Target   : {install_dir}")
+                print(f"Depots   : {len(manifests)} to download")
+
+                # download_depot places files under <steamcmd>/steamapps/content/app_294100/
+                steamcmd_dir = steamcmd_exe.parent
+                app_dir = steamcmd_dir / "steamapps" / "content" / "app_294100"
+
+                # Run SteamCMD ONCE PER DEPOT.  SteamCMD aborts all remaining
+                # +download_depot commands when one fails (e.g. "missing license
+                # for depot").  By isolating each depot into its own invocation
+                # we ensure that owned depots are downloaded even when some DLC
+                # depots fail.  After the first login SteamCMD caches the session,
+                # so subsequent runs won't re-prompt for password/Steam Guard.
+                succeeded: list[str] = []
+                failed: list[str] = []
+
+                for i, (depot_id, manifest_id) in enumerate(manifests, 1):
+                    depot_id_str = str(depot_id)
+                    print(f"\\n{'─' * 60}")
+                    print(f"[{i}/{len(manifests)}] Downloading depot {depot_id_str}  (manifest {manifest_id})")
+                    print("─" * 60)
+
+                    args = [
+                        str(steamcmd_exe),
+                        "+login", username,
+                        "+download_depot", "294100", depot_id_str, str(manifest_id),
+                        "+quit",
+                    ]
+                    print(f"Command: {' '.join(args)}\\n")
+
+                    result = subprocess.run(
+                        args,
+                        stdin=sys.stdin,
+                        stdout=sys.stdout,
+                        stderr=sys.stderr,
+                    )
+                    print(f"\\nSteamCMD exited with code {result.returncode}")
+
+                    # Check if the depot was actually downloaded
+                    depot_dir = app_dir / f"depot_{depot_id_str}"
+                    if depot_dir.exists():
+                        succeeded.append(depot_id_str)
+                        print(f"  OK: depot_{depot_id_str} downloaded successfully.")
+                    else:
+                        failed.append(depot_id_str)
+                        print(f"  FAILED: depot_{depot_id_str} was not downloaded.")
+                        print(f"  (Check SteamCMD output above — common cause: missing license/DLC not owned)")
+
+                # ── Copy all successfully downloaded depots ───────────────
+                print(f"\\n{'=' * 60}")
+                print("Download Summary")
+                print("=" * 60)
+                print(f"  Succeeded : {len(succeeded)} depot(s)")
+                print(f"  Failed    : {len(failed)} depot(s)")
+                if failed:
+                    print(f"  Failed IDs: {', '.join(failed)}")
+
+                if succeeded:
+                    install_dir.mkdir(parents=True, exist_ok=True)
+                    print(f"\\nCopying downloaded files to {install_dir} ...")
+                    for depot_id_str in succeeded:
+                        depot_dir = app_dir / f"depot_{depot_id_str}"
+                        if depot_dir.exists():
+                            print(f"  Copying depot {depot_id_str} ...")
+                            shutil.copytree(depot_dir, install_dir, dirs_exist_ok=True)
+                            print(f"  Cleaning up depot {depot_id_str} from SteamCMD cache ...")
+                            shutil.rmtree(depot_dir, ignore_errors=True)
+                    print("\\nDone!")
+                else:
+                    print("\\nNo depots were downloaded successfully. Nothing to copy.")
+
+            if __name__ == "__main__":
+                try:
+                    main()
+                except Exception:
+                    traceback.print_exc()
+                finally:
+                    # Always keep the window open so the user can inspect output/errors.
+                    input("\\nPress Enter to close this window...")
+        """)
+
+        script_path = Path(tempfile.gettempdir()) / "rimsort_steamcmd_download.py"
+        script_path.write_text(helper_source, encoding="utf-8")
+        logger.info(f"Wrote SteamCMD helper script to {script_path}")
+
+        # ── 3. Launch the helper in a new terminal window ────────────────
+        python_exe = sys.executable
+
+        if "__compiled__" in globals():
+            # In compiled mode, RimDex.exe is a GUI app without its own console.
+            # We use cmd.exe as a CUI host to provide a real console window.
+            # - /C terminates cmd.exe after the command finishes.
+            # - start /WAIT /B launches RimDex.exe synchronously in the SAME console.
+            cmd_args = [
+                "cmd.exe",
+                "/C",
+                "start",
+                "/WAIT",
+                "/B",
+                "",
+                sys.executable,
+                "--steamcmd-helper",
+                str(script_path),
+                config_b64,
+            ]
+        else:
+            cmd_args = [python_exe, str(script_path), config_b64]
+
+        try:
+            current_system = platform.system()
+            if current_system == "Windows":
+                subprocess.Popen(
+                    cmd_args,
+                    creationflags=getattr(subprocess, "CREATE_NEW_CONSOLE", 0x00000010),
+                )
+            else:
+                raise NotImplementedError(
+                    f"Interactive SteamCMD downloads are currently not implemented for {current_system}. "
+                    "Maintainers: please feel free to implement this!"
+                )
+
+            logger.info("SteamCMD helper launched in a new terminal.")
+        except Exception as e:
+            logger.error(f"Failed to launch SteamCMD terminal: {e}")
+            raise  # Re-raise so the caller can display the error to the user
 
     def check_for_steamcmd(self, prefix: str) -> bool:
         executable_name = os.path.split(self.steamcmd)[1] if self.steamcmd else None
@@ -543,6 +741,16 @@ class SteamcmdInterface:
                     with ZipFile(
                         BytesIO(http.get(self.steamcmd_url).content)
                     ) as zipobj:
+                        for member_name in zipobj.namelist():
+                            member_path = (
+                                Path(self.steamcmd_install_path) / member_name
+                            ).resolve()
+                            if not str(member_path).startswith(
+                                str(Path(self.steamcmd_install_path).resolve())
+                            ):
+                                raise ValueError(
+                                    f"Refusing to extract zip member outside target: {member_name}"
+                                )
                         zipobj.extractall(self.steamcmd_install_path)
                     runner.message("Installation completed")
                     installed = True
@@ -553,6 +761,16 @@ class SteamcmdInterface:
                             fileobj=BytesIO(rx.content), mode="r:gz"
                         ) as tarobj,
                     ):
+                        for member in tarobj.getmembers():
+                            member_path = (
+                                Path(self.steamcmd_install_path) / member.name
+                            ).resolve()
+                            if not str(member_path).startswith(
+                                str(Path(self.steamcmd_install_path).resolve())
+                            ):
+                                raise ValueError(
+                                    f"Refusing to extract tar member outside target: {member.name}"
+                                )
                         tarobj.extractall(self.steamcmd_install_path)
                     runner.message("Installation completed")
                     installed = True
@@ -562,7 +780,7 @@ class SteamcmdInterface:
                     "SteamcmdInterface",
                     f"Failed to download steamcmd for {self.system}",
                     "Did the file/url change?<br>Does your environment have access to the internet?",
-                    details=f"Error: {type(e).__name__}: {str(e)}",
+                    details=f"Error: {type(e).__name__}: {e!s}",
                 )
         else:
             runner.message("SteamCMD already installed...")
@@ -586,9 +804,7 @@ class SteamcmdInterface:
                 runner.message(
                     f"Workshop content path does not exist. Creating for symlinking:\n\n{self.steamcmd_content_path}\n"
                 )
-            symlink_destination_path = str(
-                (Path(self.steamcmd_content_path) / "294100")
-            )
+            symlink_destination_path = str(Path(self.steamcmd_content_path) / "294100")
             runner.message(f"Symlink source : {symlink_source_path}")
             runner.message(f"Symlink destination: {symlink_destination_path}")
             if symlink.is_junction_or_link(

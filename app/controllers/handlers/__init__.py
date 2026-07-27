@@ -11,7 +11,7 @@ from app.controllers.handlers.import_export_handler import ImportExportHandler
 __all__ = [
     "DatabaseDownloadHandler",
     "DatabaseUploadHandler",
-    "GitOpsHandler",
     "GitHubModsHandler",
+    "GitOpsHandler",
     "ImportExportHandler",
 ]

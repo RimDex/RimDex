@@ -180,6 +180,7 @@ class SteamBrowser(QWidget):
         self.web_view.page().setWebChannel(self.channel)
 
         _inject_qwebchannel_js(self.web_view.page())
+        self._inject_steam_recovery_script()
 
         # Location box
         self.location = QLineEdit()
@@ -664,6 +665,22 @@ class SteamBrowser(QWidget):
                     widget.deleteLater()
                 else:
                     self.clear_layout(item.layout())
+
+    def _inject_steam_recovery_script(self) -> None:
+        recovery_path = Path(AppInfo().setup_steam_recovery_script_file)
+        try:
+            source_code = recovery_path.read_text(encoding="utf-8")
+        except OSError as exc:
+            logger.error(f"Failed to read Steam recovery script: {exc}")
+            return
+        script = QWebEngineScript()
+        script.setSourceCode(source_code)
+        script.setInjectionPoint(QWebEngineScript.InjectionPoint.DocumentCreation)
+        script.setWorldId(QWebEngineScript.ScriptWorldId.MainWorld)
+        script.setRunsOnSubFrames(True)
+        if self.web_view is None:
+            return
+        self.web_view.page().profile().scripts().insert(script)
 
 
 # ======================================================================

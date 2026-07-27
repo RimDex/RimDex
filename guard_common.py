@@ -9,9 +9,8 @@ from __future__ import annotations
 
 import ast
 import sys
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from pathlib import Path
-from typing import Callable
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 
@@ -58,7 +57,7 @@ def run_guard(
     for path in iter_py(target):
         try:
             errors.extend(checker(path))
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             print(f"Error scanning {path}: {exc}", file=sys.stderr)
             return 1
 

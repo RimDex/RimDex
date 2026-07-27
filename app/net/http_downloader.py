@@ -9,11 +9,11 @@ import json
 import shutil
 import tempfile
 import zipfile
+from collections.abc import Callable
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from enum import Enum, auto
 from pathlib import Path
-from typing import Callable
 
 import requests
 from loguru import logger
@@ -79,7 +79,7 @@ class HttpDatabaseDownloader:
         :param last_modified: Last-Modified header value from the server response
         """
         cache_data: dict[str, str] = {
-            "downloaded_at": datetime.now(timezone.utc).isoformat(),
+            "downloaded_at": datetime.now(UTC).isoformat(),
         }
         if etag:
             cache_data["etag"] = etag
@@ -126,6 +126,12 @@ class HttpDatabaseDownloader:
         temp_extract.mkdir(parents=True)
 
         with zipfile.ZipFile(zip_path, "r") as zf:
+            for member in zf.namelist():
+                member_path = (temp_extract / member).resolve()
+                if not str(member_path).startswith(str(temp_extract.resolve())):
+                    raise ValueError(
+                        f"Refusing to extract zip member outside target: {member}"
+                    )
             zf.extractall(temp_extract)
 
         # GitHub zips extract to <repo>-<branch>/ — unwrap if single top-level dir

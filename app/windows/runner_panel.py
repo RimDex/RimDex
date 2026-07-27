@@ -1,14 +1,16 @@
 import os
+from collections.abc import Sequence
+from pathlib import Path
 from platform import system
 from re import compile, search
-from typing import TYPE_CHECKING, Any, Optional, Sequence
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from app.utils.steam.steamcmd.wrapper import SteamcmdInterface
 
 import psutil
 from loguru import logger
-from PySide6.QtCore import QProcess, Qt, Signal
+from PySide6.QtCore import QProcess, Qt, QTimer, Signal
 from PySide6.QtGui import QCloseEvent, QFont, QIcon, QKeyEvent, QTextCursor
 from PySide6.QtWidgets import (
     QHBoxLayout,
@@ -44,8 +46,8 @@ class RunnerPanel(QWidget):
     def __init__(
         self,
         todds_dry_run_support: bool = False,
-        steamcmd_download_tracking: Optional[list[str]] = None,
-        steam_db: Optional[dict[str, Any]] = None,
+        steamcmd_download_tracking: list[str] | None = None,
+        steam_db: dict[str, Any] | None = None,
         auto_close_on_complete: bool = False,
     ):
         """
@@ -76,15 +78,21 @@ class RunnerPanel(QWidget):
         self.process_last_output = ""
         self.process_last_command = ""
         self.process_last_args: Sequence[str] = []
-        self.steamcmd_current_pfid: Optional[str] = None
+        self.steamcmd_current_pfid: str | None = None
         self.login_error = False
         self.redownloading = False
 
         # Batch-download state (populated by SteamcmdInterface.download_mods)
         self._pending_steamcmd_batches: list[list[str]] = []
         self._steamcmd_executable: str = ""
-        self._steamcmd_wrapper: Optional["SteamcmdInterface"] = None
+        self._steamcmd_wrapper: SteamcmdInterface | None = None
         self._steamcmd_batch_index: int = 1  # 1-based; first batch already sent
+
+        # SteamCMD console_log.txt tail (live logs on Windows)
+        self._steamcmd_log_timer: QTimer | None = None
+        self._steamcmd_log_offset: int = 0
+        self._steamcmd_log_partial: str = ""
+        self._steamcmd_console_log_path: str = ""
 
         # Continuous progress across phases
         self._progress_offset = 0
@@ -248,6 +256,9 @@ class RunnerPanel(QWidget):
             self.process_killed = True
             logger.debug(f"Process {pid} terminated successfully")
 
+            if self._is_process_running("steamcmd"):
+                self._stop_steamcmd_log_tail()
+
         except Exception as e:
             logger.error(f"Error killing process: {e}")
             # Try direct kill as fallback
@@ -292,7 +303,7 @@ class RunnerPanel(QWidget):
                 with open(file_path, "w", encoding="utf-8") as outfile:
                     outfile.write(self.text.toPlainText())
                 logger.info("Output successfully saved")
-            except IOError as e:
+            except OSError as e:
                 logger.error(f"Error writing to file: {e}")
 
         except Exception as e:
@@ -307,7 +318,7 @@ class RunnerPanel(QWidget):
         self,
         command: str,
         args: Sequence[str],
-        progress_bar: Optional[int] = None,
+        progress_bar: int | None = None,
     ) -> None:
         """
         Execute the given command in a new terminal-like GUI
@@ -339,19 +350,111 @@ class RunnerPanel(QWidget):
         if progress_bar is not None:
             self.progress_bar.show()
             self.progress_bar.setValue(0)
-            if progress_bar > 0:
-                if "steamcmd" in command:
-                    self.progress_bar.setRange(0, progress_bar)
-                    self.progress_bar.setFormat("%v/%m")
+            if progress_bar > 0 and "steamcmd" in command:
+                self.progress_bar.setRange(0, progress_bar)
+                self.progress_bar.setFormat("%v/%m")
 
         # Display command being executed (unless in dry run mode)
         if not self.todds_dry_run_support:
             self.message(f"\nExecuting command:\n{command} {' '.join(args)}\n\n")
 
+        # SteamCMD console_log.txt tail (live logs on Windows)
+        # SteamCMD writes its console log to <install_dir>/logs/console_log.txt
+        if "steamcmd" in command:
+            self._steamcmd_console_log_path = str(
+                Path(command).resolve().parent / "logs" / "console_log.txt"
+            )
+            self._start_steamcmd_log_tail()
+
         # Start the process
         self.process.start()
 
+    def _start_steamcmd_log_tail(self) -> None:
+        """Tail SteamCMD console_log.txt for live line-by-line output."""
+        log_path = self._steamcmd_console_log_path
+        if not log_path:
+            return
+
+        self._stop_steamcmd_log_tail(flush=False)
+
+        try:
+            self._steamcmd_log_offset = (
+                os.path.getsize(log_path) if os.path.exists(log_path) else 0
+            )
+        except OSError:
+            self._steamcmd_log_offset = 0
+
+        self._steamcmd_log_partial = ""
+
+        self._steamcmd_log_timer = QTimer(self)
+        self._steamcmd_log_timer.setInterval(150)
+        self._steamcmd_log_timer.timeout.connect(self._poll_steamcmd_log)
+        self._steamcmd_log_timer.start()
+
+    def _stop_steamcmd_log_tail(self, *, flush: bool = True) -> None:
+        """Stop the console_log.txt tail timer and optionally flush remaining bytes."""
+        if self._steamcmd_log_timer is not None:
+            self._steamcmd_log_timer.stop()
+            self._steamcmd_log_timer.deleteLater()
+            self._steamcmd_log_timer = None
+
+        if flush:
+            self._poll_steamcmd_log(final=True)
+
+    def _poll_steamcmd_log(self, *, final: bool = False) -> None:
+        """Read new bytes from console_log.txt and emit complete lines."""
+        log_path = self._steamcmd_console_log_path
+        if not log_path or not os.path.exists(log_path):
+            if final and self._steamcmd_log_partial:
+                self.message(self.ansi_escape.sub("", self._steamcmd_log_partial))
+                self._steamcmd_log_partial = ""
+            return
+
+        try:
+            with open(log_path, "rb") as log_file:
+                log_file.seek(self._steamcmd_log_offset)
+                new_bytes = log_file.read()
+                self._steamcmd_log_offset = log_file.tell()
+        except OSError as exc:
+            logger.debug(f"Failed to read SteamCMD console log: {exc}")
+            return
+
+        if not new_bytes:
+            if final and self._steamcmd_log_partial:
+                self.message(self.ansi_escape.sub("", self._steamcmd_log_partial))
+                self._steamcmd_log_partial = ""
+            return
+
+        combined = self._steamcmd_log_partial + new_bytes.decode(
+            "utf-8", errors="replace"
+        )
+        combined = combined.replace("\r\n", "\n").replace("\r", "\n")
+        lines = combined.split("\n")
+
+        if combined.endswith("\n"):
+            self._steamcmd_log_partial = ""
+            complete_lines = lines[:-1]
+        else:
+            self._steamcmd_log_partial = lines.pop() if lines else ""
+            complete_lines = lines
+
+        for line in complete_lines:
+            cleaned = self.ansi_escape.sub("", line)
+            if cleaned:
+                self.message(cleaned)
+
+        if final and self._steamcmd_log_partial:
+            self.message(self.ansi_escape.sub("", self._steamcmd_log_partial))
+            self._steamcmd_log_partial = ""
+
     def handle_output(self) -> None:
+        if (
+            self.system == "Windows"
+            and self._is_process_running("steamcmd")
+            and self._steamcmd_console_log_path
+        ):
+            return
+
         data = self.process.readAll()
         stdout = self.ansi_escape.sub("", bytes(data.data()).decode("utf8"))
         if self._is_process_running("steamcmd"):
@@ -374,8 +477,12 @@ class RunnerPanel(QWidget):
         overwrite = False
 
         # Log the message with appropriate context
-        if self.process and self.process.state() == QProcess.ProcessState.Running:
-            program_name = self.process.program().split("/")[-1]
+        if self._is_process_running("steamcmd"):
+            stripped = line.strip()
+            if stripped:
+                logger.info(f"[SteamCMD] {stripped}")
+        elif self.process and self.process.state() == QProcess.ProcessState.Running:
+            program_name = self.process.program().replace("\\", "/").split("/")[-1]
             logger.debug(f"[{program_name}]\n{line}")
         else:
             logger.debug(f"{line}")
@@ -486,7 +593,7 @@ class RunnerPanel(QWidget):
             line,
         )
         if match:
-            operation, pagination, start_str, end_str = match.groups()
+            _operation, _pagination, start_str, end_str = match.groups()
             start, end = int(start_str), int(end_str)
             if self.progress_bar.isHidden():
                 self.progress_bar.show()
@@ -536,6 +643,7 @@ class RunnerPanel(QWidget):
                 if self._pending_steamcmd_batches and not self.redownloading:
                     self._start_next_steamcmd_batch()
                     return
+                self._stop_steamcmd_log_tail()
                 self._handle_steamcmd_completion()
             elif "todds" in self.windowTitle():
                 self._handle_todds_completion()

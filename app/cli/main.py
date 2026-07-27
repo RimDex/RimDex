@@ -44,7 +44,6 @@ def cli() -> None:
     Global flags (processed before CLI):
       --disable-updater    Disable automatic update checks (same as RIMDEX_DISABLE_UPDATER env var)
     """
-    pass
 
 
 # Register subcommands. `build-db` is intentionally NOT registered here so its

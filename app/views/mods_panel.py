@@ -1,5 +1,5 @@
 from functools import partial
-from typing import Optional, cast
+from typing import cast
 
 from loguru import logger
 from PySide6.QtCore import (
@@ -122,7 +122,7 @@ class ModsPanel(QWidget):
         Create a ListWidget using the dict of mods. This will
         create a row for every key-value pair in the dict.
         """
-        super(ModsPanel, self).__init__()
+        super().__init__()
 
         # Cache MetadataController instance and initialize panel
         logger.debug("Initializing ModsPanel")
@@ -140,9 +140,9 @@ class ModsPanel(QWidget):
             self.inactive_mods_sort_descending = True
 
         # Background folder-size sorting state
-        self._size_progress_dialog: Optional[QProgressDialog] = None
-        self._size_thread: Optional[QThread] = None
-        self._size_worker: Optional[FolderSizeWorker] = None
+        self._size_progress_dialog: QProgressDialog | None = None
+        self._size_thread: QThread | None = None
+        self._size_worker: FolderSizeWorker | None = None
         self._size_current_uuids: list[str] = []
 
         # Build search filter text-to-key mapping (translation-safe)
@@ -164,9 +164,9 @@ class ModsPanel(QWidget):
         self._sort_debounce_timer = QTimer()
         self._sort_debounce_timer.setSingleShot(True)
         self._sort_debounce_timer.timeout.connect(self._execute_pending_sort)
-        self._pending_sort_params: Optional[
-            tuple[str, list[str], ModsPanelSortKey, bool]
-        ] = None
+        self._pending_sort_params: (
+            tuple[str, list[str], ModsPanelSortKey, bool] | None
+        ) = None
 
         # Base layout with a splitter for resizable mod lists
         self.panel = QVBoxLayout()
@@ -323,10 +323,20 @@ class ModsPanel(QWidget):
             )
         )
 
+        # Show tags toggle
+        self.active_mods_show_tags_button = QToolButton()
+        self.active_mods_show_tags_button.setCheckable(True)
+        self.active_mods_show_tags_button.setText(self.tr("Tags"))
+        self.active_mods_show_tags_button.setToolTip(self.tr("Show tags in mod list"))
+        self.active_mods_show_tags_button.toggled.connect(
+            self.on_active_mods_show_tags_toggled
+        )
+
         # Active mods search layouts
         self.active_mods_search_layout.addWidget(self.active_mods_search, 45)
         self.active_mods_search_layout.addWidget(self.active_mods_search_filter, 70)
         self.active_mods_search_layout.addWidget(self.active_filter_button)
+        self.active_mods_search_layout.addWidget(self.active_mods_show_tags_button)
         self.active_mods_search_layout.addWidget(
             self.active_mods_search_mode_filter_button
         )
@@ -456,6 +466,15 @@ class ModsPanel(QWidget):
             )
         )
 
+        # Show tags toggle
+        self.inactive_mods_show_tags_button = QToolButton()
+        self.inactive_mods_show_tags_button.setCheckable(True)
+        self.inactive_mods_show_tags_button.setText(self.tr("Tags"))
+        self.inactive_mods_show_tags_button.setToolTip(self.tr("Show tags in mod list"))
+        self.inactive_mods_show_tags_button.toggled.connect(
+            self.on_inactive_mods_show_tags_toggled
+        )
+
         self.inactive_mods_sort_combobox: QComboBox = QComboBox()
         self.inactive_mods_sort_combobox.setParent(self)
         self.inactive_mods_sort_combobox.setObjectName("MainUI")
@@ -521,6 +540,7 @@ class ModsPanel(QWidget):
         self.inactive_mods_search_layout.addWidget(self.inactive_mods_search, 45)
         self.inactive_mods_search_layout.addWidget(self.inactive_mods_search_filter, 70)
         self.inactive_mods_search_layout.addWidget(self.inactive_filter_button)
+        self.inactive_mods_search_layout.addWidget(self.inactive_mods_show_tags_button)
         self.inactive_mods_search_layout.addWidget(
             self.inactive_mods_search_mode_filter_button
         )
@@ -852,6 +872,14 @@ class ModsPanel(QWidget):
     def on_inactive_mods_mode_filter_toggle(self) -> None:
         self.signal_search_mode_filter(list_type="Inactive")
 
+    def on_active_mods_show_tags_toggled(self, checked: bool) -> None:
+        """Toggle visibility of tags in active mods list."""
+        self.active_mods_list.set_tags_visible(checked)
+
+    def on_inactive_mods_show_tags_toggled(self, checked: bool) -> None:
+        """Toggle visibility of tags in inactive mods list."""
+        self.inactive_mods_list.set_tags_visible(checked)
+
     def refresh_all_tag_filter_selectors(self) -> None:
         """Refresh the available tags in both filter panels from the aux DB."""
         try:
@@ -1045,9 +1073,10 @@ class ModsPanel(QWidget):
         for path, note in rows:
             note_lower = note.lower()
             # Fast substring check first — avoids fuzz entirely for exact/simple matches
-            if pattern in note_lower:
-                matching_paths.add(path)
-            elif fuzz.partial_ratio(pattern, note_lower) >= fuzz_threshold:
+            if (
+                pattern in note_lower
+                or fuzz.partial_ratio(pattern, note_lower) >= fuzz_threshold
+            ):
                 matching_paths.add(path)
 
         # Cache result for this pattern

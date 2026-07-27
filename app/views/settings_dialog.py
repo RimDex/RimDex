@@ -376,6 +376,7 @@ class SettingsDialog(QDialog):
         self._do_steam_workshop_db_group(tab_layout)
         self._do_no_version_warning_db_group(tab_layout)
         self._do_use_this_instead_db_group(tab_layout)
+        self._do_rimworld_versions_db_group(tab_layout)
 
     def _do_backup_settings_group(self, tab_layout: QBoxLayout) -> None:
         backup_group_label = self._make_section_label(
@@ -440,6 +441,41 @@ class SettingsDialog(QDialog):
         )
         row_layout.addWidget(self.show_save_comparison_indicators_checkbox)
         tab_layout.addLayout(row_layout)
+
+        self._do_modlist_history_group(tab_layout)
+
+    def _do_modlist_history_group(self, tab_layout: QBoxLayout) -> None:
+        section_label = self._make_section_label(
+            self.tr("Mod list history"), Qt.AlignmentFlag.AlignCenter
+        )
+        tab_layout.addWidget(section_label)
+
+        self.modlist_history_enabled_checkbox = QCheckBox(
+            self.tr("Save a snapshot of the mod list every time it is saved")
+        )
+        self.modlist_history_enabled_checkbox.setToolTip(
+            self.tr(
+                "If enabled, RimDex writes a timestamped copy of the active and "
+                "inactive mod lists on every save so you can compare them later "
+                "(File → Mod List History…)."
+            )
+        )
+        tab_layout.addWidget(self.modlist_history_enabled_checkbox)
+
+        retention_layout = QHBoxLayout()
+        retention_label = QLabel(self.tr("Number of snapshots to keep:"))
+        retention_label.setToolTip(
+            self.tr("The number of mod list snapshots to keep. Set to -1 to keep all.")
+        )
+        retention_layout.addWidget(retention_label)
+        self.modlist_history_retention_count_spinbox = QSpinBox()
+        self.modlist_history_retention_count_spinbox.setRange(-1, 9999)
+        self.modlist_history_retention_count_spinbox.setSizePolicy(
+            QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed
+        )
+        retention_layout.addWidget(self.modlist_history_retention_count_spinbox)
+        retention_layout.addStretch()
+        tab_layout.addLayout(retention_layout)
 
     def __create_db_group(
         self, section_lbl: str, none_lbl: str, tab_layout: QBoxLayout
@@ -660,6 +696,24 @@ class SettingsDialog(QDialog):
             self.use_this_instead_db_local_file_choose_button,
         ) = self.__create_db_group(section_lbl, none_lbl, tab_layout)
 
+    def _do_rimworld_versions_db_group(self, tab_layout: QBoxLayout) -> None:
+        section_lbl = self.tr("RimWorld Versions Database")
+        none_lbl = self.tr("RimWorld Versions Database")
+        (
+            _,
+            self.rimworld_versions_db_none_radio,
+            self.rimworld_versions_db_github_radio,
+            self.rimworld_versions_db_github_url,
+            self.rimworld_versions_db_github_upload_button,
+            self.rimworld_versions_db_github_download_button,
+            self.rimworld_versions_db_url_radio,
+            self.rimworld_versions_db_url_input,
+            self.rimworld_versions_db_url_download_button,
+            self.rimworld_versions_db_local_file_radio,
+            self.rimworld_versions_db_local_file,
+            self.rimworld_versions_db_local_file_choose_button,
+        ) = self.__create_db_group(section_lbl, none_lbl, tab_layout)
+
     def _do_aux_db_time_limit_group(self, tab_layout: QBoxLayout) -> None:
         self.aux_db_time_limit_label = self._make_section_label(
             self.tr(
@@ -875,6 +929,20 @@ This basically preserves your mod coloring, user notes etc. for this many second
         updated_threshold_layout.addWidget(self.mod_list_updated_threshold_spinbox)
         modlist_option_group_box_layout.addLayout(updated_threshold_layout)
 
+        # Startup impact (load time) indicator checkbox
+        self.mod_list_startup_impact_checkbox = QCheckBox(
+            self.tr("Show startup load time per mod")
+        )
+        self.mod_list_startup_impact_checkbox.setToolTip(
+            self.tr(
+                "Shows each mod's game startup time, measured by the 'Loading "
+                "Progress' mod. Requires that mod with its 'Track startup loading "
+                "impact' setting enabled, and a saved startup impact report "
+                "(StartupImpactData.xml in the RimWorld save data folder)."
+            )
+        )
+        modlist_option_group_box_layout.addWidget(self.mod_list_startup_impact_checkbox)
+
         # Hide invalid mod filtering checkbox
         self.hide_invalid_mods_when_filtering_checkbox = QCheckBox(
             self.tr("Hide invalid mods when filtering")
@@ -935,11 +1003,9 @@ This basically preserves your mod coloring, user notes etc. for this many second
             self.tr("Automatically clear depot cache")
         )
         self.steamcmd_auto_clear_depot_cache_checkbox.setToolTip(
-            (
-                self.tr(
-                    "Automatically clear the depot cache before downloading mods through SteamCMD.\n"
-                    "This may potentially prevent some issues with downloading mods such as download failures and deleted mods repopulating."
-                )
+            self.tr(
+                "Automatically clear the depot cache before downloading mods through SteamCMD.\n"
+                "This may potentially prevent some issues with downloading mods such as download failures and deleted mods repopulating."
             )
         )
         group_layout.addWidget(self.steamcmd_auto_clear_depot_cache_checkbox)

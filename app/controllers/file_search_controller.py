@@ -36,7 +36,7 @@ class SearchWorker(QThread):
         root_paths: list[str],
         pattern: str,
         options: dict[str, Any],
-        active_mod_ids: Optional[set[str]] = None,
+        active_mod_ids: set[str] | None = None,
         scope: str = "all mods",
     ) -> None:
         """
@@ -70,12 +70,6 @@ class SearchWorker(QThread):
         self.memory_warning_threshold = 0.85  # 85% of available memory
         self.last_memory_check = 0
         self.memory_warning_shown = False
-
-        # Set thread priority to lower to avoid UI freezing
-        if not self.isRunning():
-            logger.warning("Thread is not running. Skipping priority setting.")
-            return
-        self.setPriority(QThread.Priority.LowPriority)
 
         # Validate regex pattern if using regex
         if options.get("use_regex", False):
@@ -221,7 +215,7 @@ class SearchWorker(QThread):
             except UnicodeDecodeError:
                 # Try the next encoding
                 continue
-            except IOError as e:
+            except OSError as e:
                 logger.warning(f"Error reading file {file_path}: {e}")
                 return ""
 
@@ -421,7 +415,7 @@ class SearchWorker(QThread):
                         return element
 
                     # Check attributes
-                    for attr, value in element.attrib.items():
+                    for value in element.attrib.values():
                         if not case_sensitive:
                             value = value.lower()
                         if search_text in value:
@@ -522,6 +516,14 @@ class SearchWorker(QThread):
             logger.info(f"Search options: {self.options}")
             logger.info(f"Search paths: {self.root_paths}")
 
+            # Set thread priority to lower to avoid UI freezing. Priority can
+            # only be applied while the thread is running; setting it earlier
+            # (e.g. in __init__) is a silent no-op.
+            if self.isRunning():
+                self.setPriority(QThread.Priority.LowPriority)
+            else:
+                logger.warning("Thread is not running. Skipping priority setting.")
+
             # Initialize counters
             self.processed_files = 0
             self.found_files = 0
@@ -595,7 +597,7 @@ class FileSearchController(QObject):
         settings: Settings,
         dialog: FileSearchDialog,
         metadata_controller: MetadataController,
-        active_mod_ids: Optional[set[str]] = None,
+        active_mod_ids: set[str] | None = None,
     ) -> None:
         """
         Initialize the FileSearchController.
@@ -618,7 +620,7 @@ class FileSearchController(QObject):
             active_mod_ids or set()
         )  # This is used for the controller, not the worker
         self.search_results: list[SearchResult] = []
-        self.search_worker: Optional[SearchWorker] = None
+        self.search_worker: SearchWorker | None = None
         self.searcher = FileSearch(metadata_controller=metadata_controller)
 
         # connect signals
@@ -672,7 +674,7 @@ class FileSearchController(QObject):
         root_paths: list[str],
         pattern: str,
         options: dict[str, Any],
-        active_mod_ids: Optional[set[str]] = None,
+        active_mod_ids: set[str] | None = None,
         scope: str = "all mods",
     ) -> SearchWorker:
         """
@@ -842,7 +844,7 @@ class FileSearchController(QObject):
         root_paths: list[str],
         search_text: str,
         options: dict[str, Any],
-        mod_ids: Optional[set[str]] = None,
+        mod_ids: set[str] | None = None,
         scope: str = "all mods",
     ) -> None:
         """

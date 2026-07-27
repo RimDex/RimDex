@@ -8,16 +8,17 @@ from __future__ import annotations
 import os
 import shutil
 import sys
+from collections.abc import Callable, Generator
 from errno import EACCES
 from pathlib import Path
 from re import sub
 from stat import S_IRWXG, S_IRWXO, S_IRWXU
-from typing import Any, Callable, Generator
+from typing import Any
 
 import vdf  # type: ignore
 from loguru import logger
 
-import app.ui.dialogue as dialogue
+from app.ui import dialogue
 from app.utils.platform.windows import scanpath_win32
 
 
@@ -106,7 +107,7 @@ def delete_files_with_condition(
     for root, dirs, files in os.walk(directory):
         for file in files:
             if condition(file):
-                file_path = str((Path(root) / file))
+                file_path = str(Path(root) / file)
                 try:
                     os.remove(file_path)
                 except OSError as e:
@@ -116,7 +117,7 @@ def delete_files_with_condition(
 
     for root, dirs, _ in os.walk(directory, topdown=False):
         for _dir in dirs:
-            dir_path = str((Path(root) / _dir))
+            dir_path = str(Path(root) / _dir)
             if not os.listdir(dir_path):
                 shutil.rmtree(
                     dir_path,
@@ -173,20 +174,23 @@ def directories(mods_path: Path | str) -> list[str]:
 def attempt_chmod(
     func: Callable[[str], Any], path: str, excinfo: BaseException
 ) -> bool:
-    if excinfo is not None and isinstance(excinfo, OSError):
-        if (
+    if (
+        excinfo is not None
+        and isinstance(excinfo, OSError)
+        and (
             func in (os.rmdir, os.remove, os.unlink, os.listdir)
             and excinfo.errno == EACCES
-        ):
-            os.chmod(path, S_IRWXU | S_IRWXG | S_IRWXO)  # 0777
-            try:
-                func(path)
-                return True
-            except Exception as e:
-                logger.warning(
-                    f"attempt_chmod for {func.__name__} double failure at {path}: {e}"
-                )
-                return False
+        )
+    ):
+        os.chmod(path, S_IRWXU | S_IRWXG | S_IRWXO)  # 0777
+        try:
+            func(path)
+            return True
+        except Exception as e:
+            logger.warning(
+                f"attempt_chmod for {func.__name__} double failure at {path}: {e}"
+            )
+            return False
 
     return False
 
@@ -221,9 +225,7 @@ def flatten_to_list(obj: Any) -> list[Any] | dict[Any, Any] | Any:
     """
     if isinstance(obj, set):
         return list(obj)
-    elif isinstance(obj, list):
-        return [flatten_to_list(e) for e in obj]
-    elif isinstance(obj, tuple):
+    elif isinstance(obj, (list, tuple)):
         return [flatten_to_list(e) for e in obj]
     elif isinstance(obj, dict):
         return {k: flatten_to_list(v) for k, v in obj.items()}
@@ -272,7 +274,7 @@ def find_steam_rimworld(steam_folder: Path | str) -> str:
         library_folders = data.get("libraryfolders", None)
         if not library_folders:
             return ""
-        for _, folder in library_folders.items():
+        for folder in library_folders.values():
             if "294100" in folder.get("apps", {}):
                 rimworld_path = folder.get("path", "")
                 break

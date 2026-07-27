@@ -12,9 +12,9 @@ from typing import TYPE_CHECKING
 
 from loguru import logger
 
-import app.ui.dialogue as dialogue
 from app.core.app_info import AppInfo
 from app.core.ui_helpers import check_internet_connection, copy_to_clipboard_safely
+from app.ui import dialogue
 from app.utils.rentry.wrapper import RentryImport
 from app.utils.steam.webapi.wrapper import CollectionImport
 
@@ -51,6 +51,11 @@ class ImportExportHandler:
                 self._panel.missing_mods,
             ) = self._panel.metadata_controller.get_mods_from_list(mod_list=file_path)
             logger.info("Got new mods according to imported XML")
+            # Normal RimWorld XML mod lists only contain package IDs, not RimDex UI
+            # divider metadata. Clear persisted divider state so dividers from the
+            # previously loaded list are not reinserted at stale numeric positions.
+            self._settings.active_mods_dividers = []
+            self._settings.save()
             self._panel._insert_data_into_lists(active_mods_uuids, inactive_mods_uuids)
             self._panel._duplicate_mods_prompt()
             self._panel._missing_mods_prompt()
