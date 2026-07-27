@@ -1,4 +1,4 @@
-from typing import Callable
+from collections.abc import Callable
 
 from PySide6.QtWidgets import QApplication
 
@@ -18,14 +18,14 @@ class DatabaseSourceGroup:
     that are enabled/disabled based on the active source.
     """
 
-    _SOURCE_VALUES = {
+    _SOURCE_VALUES = {  # noqa: RUF012
         "none": "None",
         "github": "Configured git repository",
         "url": "Configured URL",
         "local_file": "Configured file path",
     }
 
-    _ALL_WIDGETS = [
+    _ALL_WIDGETS = [  # noqa: RUF012
         "github_url",
         "github_download_button",
         "url_input",
@@ -34,7 +34,7 @@ class DatabaseSourceGroup:
         "local_file_choose_button",
     ]
 
-    _ENABLED_WIDGETS = {
+    _ENABLED_WIDGETS = {  # noqa: RUF012
         "none": [],
         "github": ["github_url", "github_download_button"],
         "url": ["url_input", "url_download_button"],
@@ -235,6 +235,17 @@ class DatabasesTabController(BaseTabController):
                 upload_event="do_upload_use_this_instead_db_to_github",
                 download_event="do_download_use_this_instead_db_from_github",
                 file_filter="JSON Files (*.json *.json.gz)",
+            ),
+            DatabaseSourceGroup(
+                prefix="rimworld_versions_db",
+                source_attr="external_rimworld_versions_metadata_source",
+                file_path_attr="external_rimworld_versions_file_path",
+                repo_attr="external_rimworld_versions_repo_path",
+                url_attr="external_rimworld_versions_url",
+                display_name="RimWorld Versions",
+                upload_event="do_upload_rimworld_versions_db_to_github",
+                download_event="do_download_rimworld_versions_db_from_github",
+                file_filter="JSON Files (*.json)",
             ),
         ]
 

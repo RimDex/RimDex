@@ -25,7 +25,7 @@ class ColumnsMixin(TrMixin, BaseModsPanelSurface):
     ) -> bool:  # overridden by UIBaseMixin
         raise NotImplementedError()
 
-    def _get_standard_mod_columns(self) -> list["HeaderColumn"]:
+    def _get_standard_mod_columns(self) -> list[HeaderColumn]:
         """
         Get the standard list of columns for displaying mod information.
 

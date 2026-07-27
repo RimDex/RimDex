@@ -576,6 +576,7 @@ class ModInfoPanel:
         except Exception:
             logger.debug("Could not refresh GitHub info for current mod")
 
+    # jscpd:ignore-start
     def _update_github_info(self, mod_path: str | None) -> None:
         """Check if mod is GitHub-tracked and show/hide info accordingly."""
         if not mod_path:
@@ -649,6 +650,7 @@ class ModInfoPanel:
         except Exception:
             logger.debug("Could not check GitHub mod status for {}", mod_path)
             self.hide_github_info()
+            # jscpd:ignore-end
 
     def update_user_mod_notes(self) -> None:
         if self.current_mod_item is None:
@@ -781,7 +783,7 @@ class ModInfoPanel:
         """Set timestamp information with consistent error handling."""
         if timestamp and timestamp != 0:
             try:
-                dt = datetime.fromtimestamp(int(timestamp))
+                dt = datetime.fromtimestamp(int(timestamp))  # noqa: DTZ006
                 formatted_time = dt.strftime("%Y-%m-%d %H:%M:%S")
                 label.setText(formatted_time)
             except (ValueError, OSError, OverflowError) as e:
@@ -813,7 +815,7 @@ class ModInfoPanel:
 
         if external_time_created is not None and external_time_created > 0:
             try:
-                dt_created = datetime.fromtimestamp(int(external_time_created))
+                dt_created = datetime.fromtimestamp(int(external_time_created))  # noqa: DTZ006
                 external_times.append(
                     f"Created: {dt_created.strftime('%Y-%m-%d %H:%M:%S')}"
                 )
@@ -822,7 +824,7 @@ class ModInfoPanel:
 
         if external_time_updated is not None and external_time_updated > 0:
             try:
-                dt_updated = datetime.fromtimestamp(int(external_time_updated))
+                dt_updated = datetime.fromtimestamp(int(external_time_updated))  # noqa: DTZ006
                 external_times.append(
                     f"Updated: {dt_updated.strftime('%Y-%m-%d %H:%M:%S')}"
                 )
@@ -831,7 +833,7 @@ class ModInfoPanel:
 
         if internal_time_updated is not None and internal_time_updated > 0:
             try:
-                dt_int_updated = datetime.fromtimestamp(int(internal_time_updated))
+                dt_int_updated = datetime.fromtimestamp(int(internal_time_updated))  # noqa: DTZ006
                 external_times.append(
                     f"Steam Updated: {dt_int_updated.strftime('%Y-%m-%d %H:%M:%S')}"
                 )
@@ -974,7 +976,7 @@ class ModInfoPanel:
             if os.path.exists(workshop_folder_path):
                 about_folder_name = "About"
                 about_folder_target_path = str(
-                    (Path(workshop_folder_path) / about_folder_name)
+                    Path(workshop_folder_path) / about_folder_name
                 )
                 if os.path.exists(about_folder_target_path):
                     # Look for a case-insensitive About folder
@@ -991,7 +993,7 @@ class ModInfoPanel:
                     invalid_file_path_found = True
                     preview_file_name = "Preview.png"
                     for temp_file in scanpath(
-                        str((Path(workshop_folder_path) / about_folder_name))
+                        str(Path(workshop_folder_path) / about_folder_name)
                     ):
                         if (
                             temp_file.name.lower() == preview_file_name.lower()
@@ -1013,11 +1015,9 @@ class ModInfoPanel:
                     else:
                         logger.debug("Preview image found")
                         image_path = str(
-                            (
-                                Path(workshop_folder_path)
-                                / about_folder_name
-                                / preview_file_name
-                            )
+                            Path(workshop_folder_path)
+                            / about_folder_name
+                            / preview_file_name
                         )
                         pixmap = QPixmap(image_path)
                         self.preview_picture.setPixmap(
@@ -1146,7 +1146,7 @@ class ModInfoPanel:
                 metadata["acf_time_touched"] = acf_touched
             if ext_updated is not None:
                 metadata["external_time_updated"] = ext_updated
-            # Extract tags and color from the single aux fetch — avoids
+            # Extract tags and color from the single aux fetch â€” avoids
             # separate DB round-trips in _set_mod_tags_info / _set_mod_color_info.
             # Tags are eagerly loaded (lazy-triggered in get_metadata_with_path)
             # so the list is available on the detached instance.

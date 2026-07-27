@@ -295,7 +295,7 @@ class FilterPanel(QFrame):
 
     filters_changed = Signal()
 
-    SOURCE_LABELS: dict[str, str] = {
+    SOURCE_LABELS: dict[str, str] = {  # noqa: RUF012
         "workshop": "Workshop",
         "local": "Local",
         "expansion": "Expansion",
@@ -303,13 +303,13 @@ class FilterPanel(QFrame):
         "git_repo": "Git",
     }
 
-    TYPE_LABELS: dict[str, str] = {
+    TYPE_LABELS: dict[str, str] = {  # noqa: RUF012
         "all": "All",
         "csharp": "C# Mods",
         "xml": "XML-only",
     }
 
-    TAG_MATCH_MODE_LABELS: dict[str, str] = {
+    TAG_MATCH_MODE_LABELS: dict[str, str] = {  # noqa: RUF012
         "or": "Any",
         "and": "All",
     }
@@ -335,7 +335,7 @@ class FilterPanel(QFrame):
 
         # Source column
         source_col = QVBoxLayout()
-        source_header = QLabel("Mod Source")
+        source_header = QLabel(self.tr("Mod Source"))
         header_font = source_header.font()
         header_font.setBold(True)
         source_header.setFont(header_font)
@@ -352,7 +352,7 @@ class FilterPanel(QFrame):
 
         # Type column
         type_col = QVBoxLayout()
-        type_header = QLabel("Mod Type")
+        type_header = QLabel(self.tr("Mod Type"))
         type_header.setFont(header_font)
         type_col.addWidget(type_header)
 
@@ -378,7 +378,7 @@ class FilterPanel(QFrame):
 
         # --- Tags section ---
         tags_header_row = QHBoxLayout()
-        tags_label = QLabel("Tags")
+        tags_label = QLabel(self.tr("Tags"))
         tags_label.setFont(header_font)
         tags_header_row.addWidget(tags_label)
         self._tag_match_mode_group = QButtonGroup(self)
@@ -395,7 +395,7 @@ class FilterPanel(QFrame):
             tags_header_row.addWidget(rb)
         tags_header_row.addStretch()
 
-        self._select_all_label = QLabel("Select All")
+        self._select_all_label = QLabel(self.tr("Select All"))
         self._select_all_label.setCursor(Qt.CursorShape.PointingHandCursor)
         self._select_all_label.setStyleSheet("color: palette(link);")
         assign_event_handler(
@@ -406,7 +406,7 @@ class FilterPanel(QFrame):
         divider_label = QLabel("|")
         tags_header_row.addWidget(divider_label)
 
-        self._select_none_label = QLabel("None")
+        self._select_none_label = QLabel(self.tr("None"))
         self._select_none_label.setCursor(Qt.CursorShape.PointingHandCursor)
         self._select_none_label.setStyleSheet("color: palette(link);")
         assign_event_handler(
@@ -450,7 +450,7 @@ class FilterPanel(QFrame):
         # --- Clear All button ---
         clear_row = QHBoxLayout()
         clear_row.addStretch()
-        self._clear_label = QLabel("Clear All")
+        self._clear_label = QLabel(self.tr("Clear All"))
         self._clear_label.setCursor(Qt.CursorShape.PointingHandCursor)
         self._clear_label.setStyleSheet("color: palette(link);")
         assign_event_handler(self._clear_label, "mousePressEvent", self._on_clear_all)

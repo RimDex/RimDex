@@ -1,7 +1,8 @@
 import errno
+from collections.abc import Callable
 from pathlib import Path
 from shutil import rmtree
-from typing import Any, Callable
+from typing import Any
 
 from loguru import logger
 from PySide6.QtGui import QAction
@@ -280,7 +281,7 @@ class ModDeletionMenu(QMenu):
         # Show success message
         if result.success_count > 0:
             show_information(
-                title=self.tr("RimSort"),
+                title=self.tr("RimDex"),
                 text=self.tr(
                     f"Successfully deleted {result.success_count} selected mods."
                 ),

@@ -195,8 +195,7 @@ class TestCreateSteamDbCaching:
         all_queried = [pfid for batch in batches for pfid in batch]
         assert all_queried == ["A", "B"]
         assert "B" in dq.database["database"]["A"]["dependencies"]
-
-    # jscpd:ignore-end
+        # jscpd:ignore-end
 
     def test_cached_replay_resolves_unknown_names(self, dq: DynamicQuery) -> None:
         """

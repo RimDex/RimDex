@@ -90,7 +90,7 @@ class TestGetPublishedFileDetailsRetry:
         mock_post.side_effect = requests.exceptions.ConnectionError(
             "Connection refused"
         )
-        metadata, failed_pfids, errors = ISteamRemoteStorage_GetPublishedFileDetails(
+        metadata, failed_pfids, _errors = ISteamRemoteStorage_GetPublishedFileDetails(
             PFIDS
         )
         assert metadata == []
@@ -100,7 +100,7 @@ class TestGetPublishedFileDetailsRetry:
     def test_http_503_records_failure(self, mock_post: MagicMock) -> None:
         """Retryable status after retries exhausted → recorded as failed."""
         mock_post.return_value = _make_mock_response(503)
-        metadata, failed_pfids, errors = ISteamRemoteStorage_GetPublishedFileDetails(
+        metadata, failed_pfids, _errors = ISteamRemoteStorage_GetPublishedFileDetails(
             PFIDS
         )
         assert metadata == []
@@ -109,7 +109,7 @@ class TestGetPublishedFileDetailsRetry:
     @patch("app.utils.steam.webapi.wrapper.http.post")
     def test_http_429_records_failure(self, mock_post: MagicMock) -> None:
         mock_post.return_value = _make_mock_response(429)
-        metadata, failed_pfids, errors = ISteamRemoteStorage_GetPublishedFileDetails(
+        metadata, failed_pfids, _errors = ISteamRemoteStorage_GetPublishedFileDetails(
             PFIDS
         )
         assert metadata == []
@@ -140,7 +140,7 @@ class TestGetPublishedFileDetailsNonRetryable:
         self, mock_post: MagicMock, mock_sleep: MagicMock
     ) -> None:
         mock_post.return_value = _make_mock_response(400)
-        metadata, failed_pfids, errors = ISteamRemoteStorage_GetPublishedFileDetails(
+        metadata, failed_pfids, _errors = ISteamRemoteStorage_GetPublishedFileDetails(
             PFIDS
         )
         assert metadata == []

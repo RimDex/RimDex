@@ -17,7 +17,7 @@ import re
 import shlex
 import sys
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Optional, TypedDict, cast
+from typing import TYPE_CHECKING, Any, TypedDict, cast
 
 from loguru import logger
 
@@ -68,31 +68,21 @@ if TYPE_CHECKING:
 class UpdateError(Exception):
     """Base exception for update-related errors."""
 
-    pass
-
 
 class UpdateNetworkError(UpdateError):
     """Raised when network-related errors occur."""
-
-    pass
 
 
 class UpdateDownloadError(UpdateError):
     """Raised when download fails."""
 
-    pass
-
 
 class UpdateExtractionError(UpdateError):
     """Raised when extraction fails."""
 
-    pass
-
 
 class UpdateScriptLaunchError(UpdateError):
     """Raised when launching update script fails."""
-
-    pass
 
 
 class ReleaseInfo(TypedDict):
@@ -129,7 +119,7 @@ class ScriptConfig:
     def __init__(
         self,
         script_name: str,
-        start_new_session: Optional[bool],
+        start_new_session: bool | None,
         platform: str,
     ) -> None:
         self.script_name = script_name
@@ -154,8 +144,8 @@ class ScriptConfig:
         temp_path: Path,
         log_path: Path,
         needs_elevation: bool = False,
-        install_dir: Optional[Path] = None,
-        update_manager: Optional["UpdateManager"] = None,
+        install_dir: Path | None = None,
+        update_manager: UpdateManager | None = None,
     ) -> str | list[str]:
         """
         Get the appropriate arguments for launching the update script based on platform and elevation needs.
@@ -251,7 +241,7 @@ class ScriptConfig:
         base_args: list[str],
         script_path: Path,
         needs_elevation: bool,
-        update_manager: Optional["UpdateManager"] = None,
+        update_manager: UpdateManager | None = None,
     ) -> str | list[str]:
         """
         Build platform-specific arguments for launching the update script.
@@ -404,11 +394,11 @@ def asset_matches(
         return False
 
     # If architecture is required, check arch patterns
-    if require_arch and arch_patterns:
-        if not any(pattern.lower() in asset_name_lower for pattern in arch_patterns):
-            return False
-
-    return True
+    return not (
+        require_arch
+        and arch_patterns
+        and not any(pattern.lower() in asset_name_lower for pattern in arch_patterns)
+    )
 
 
 def find_best_asset_match(

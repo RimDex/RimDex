@@ -53,21 +53,21 @@ class WindowManager:
         for sub in self._sub_managers:
             try:
                 sub.close_all()
-            except Exception:
+            except Exception:  # noqa: S110
                 pass
         for instance, attr_name in self._tracked_attrs:
             window = getattr(instance, attr_name, None)
             if window is not None:
                 try:
                     window.close()
-                except Exception:
+                except Exception:  # noqa: S110
                     # Avoid RuntimeError: libshiboken: Internal C++ object (Panel) already deleted.
                     pass
         for window in self._child_windows:
             if window is not None:
                 try:
                     window.close()
-                except Exception:
+                except Exception:  # noqa: S110
                     # Avoid RuntimeError: libshiboken: Internal C++ object (Panel) already deleted.
                     pass
         self._child_windows.clear()

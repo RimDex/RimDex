@@ -10,17 +10,17 @@ import os
 import subprocess
 import sys
 import webbrowser
+from collections.abc import Callable
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 import requests
 from loguru import logger
 from PySide6.QtCore import QCoreApplication
 from PySide6.QtWidgets import QApplication
 
-import app.ui.dialogue as dialogue
-from app.core.app_info import AppInfo
-from app.net import http
+from app.net import http, privatebin
+from app.ui import dialogue
 
 
 def copy_to_clipboard_safely(text: str) -> None:
@@ -175,38 +175,26 @@ def check_internet_connection(timeout: float = 10) -> bool:
     return False
 
 
-def upload_data_to_0x0_st(path: str) -> tuple[bool, str]:
-    """Upload data to https://0x0.st/
+def upload_log_to_privatebin(path: str) -> tuple[bool, str]:
+    """Upload a log file to a PrivateBin v2 instance.
 
     :param path: a string path to a file containing data to upload
     :return: a tuple of (success, url_or_error)
     """
-    logger.info(f"Uploading data to https://0x0.st/: {path}")
-    try:
-        with open(path, "rb") as f:
-            headers = {"User-Agent": f"RimDex/{AppInfo().app_version}"}
-            request = http.post(
-                url="https://0x0.st/",
-                files={"file": (Path(path).name, f)},
-                headers=headers,
-            )
-    except requests.exceptions.ConnectionError as e:
-        logger.error(f"Connection Error. Failed to upload data to https://0x0.st: {e}")
-        return False, str(e)
-    except requests.exceptions.RequestException as e:
-        logger.error(f"Request Error. Failed to upload data to https://0x0.st: {e}")
-        return False, str(e)
+    logger.info(f"Uploading log to PrivateBin: {path}")
+    text = _read_log_file(path)
+    if text is None:
+        return False, f"Cannot read log file: {path}"
+    return privatebin.upload_to_privatebin(text)
 
-    if request.status_code == 200:
-        url = request.text.strip()
-        logger.info(f"Uploaded! Uploaded data can be found at: {url}")
-        return True, url
-    else:
-        body_snippet = request.text.strip()
-        logger.warning(
-            f"Failed to upload data to https://0x0.st. Status code: {request.status_code}; body: {body_snippet[:200]}"
-        )
-        return False, f"Status code: {request.status_code}\n{body_snippet}"
+
+def _read_log_file(path: str) -> str | None:
+    try:
+        with open(path, "r", encoding="utf-8", errors="replace") as f:
+            return f.read()
+    except OSError as e:
+        logger.error(f"Failed to read log file {path}: {e}")
+        return None
 
 
 def assign_event_handler(widget: Any, name: str, handler: Callable[..., Any]) -> None:

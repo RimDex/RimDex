@@ -197,6 +197,7 @@ class InstanceService:
                 existing_instance_config_folder, target_config_folder
             )
 
+    # jscpd:ignore-start
     def _check_essential_paths_are_set(self, prompt: bool = True) -> bool:
         current_instance = self.settings.current_instance
         inst = self.settings.instances[current_instance]
@@ -243,6 +244,7 @@ class InstanceService:
                 ],
             )
             return answer == QCoreApplication.translate("InstanceService", "Yes")
+            # jscpd:ignore-end
 
     def _subscribe_to_eventbus(self) -> None:
         EventBus().do_backup_existing_instance.connect(self.backup_existing_instance)
@@ -575,24 +577,26 @@ class InstanceService:
                     str(Path(existing_instance_game_folder) / local_folder_name)
                     == existing_instance_local_folder
                 )
-                if existing_instance_local_folder and not local_folder_in_game:
-                    if os.path.exists(existing_instance_local_folder) and os.path.isdir(
-                        existing_instance_local_folder
-                    ):
-                        EventBus().do_threaded_loading_animation.emit(
-                            str(
-                                AppInfo().theme_data_folder
-                                / "default-icons"
-                                / "rimworld.gif"
-                            ),
-                            partial(
-                                InstanceService.copy_local_folder,
-                                existing_instance_local_folder,
-                                target_local_folder,
-                            ),
-                            f"Cloning local mods folder from [{existing_instance_name}]"
-                            f" instance to [{new_instance_name}] instance...",
-                        )
+                if (
+                    existing_instance_local_folder
+                    and not local_folder_in_game
+                    and os.path.exists(existing_instance_local_folder)
+                    and os.path.isdir(existing_instance_local_folder)
+                ):
+                    EventBus().do_threaded_loading_animation.emit(
+                        str(
+                            AppInfo().theme_data_folder
+                            / "default-icons"
+                            / "rimworld.gif"
+                        ),
+                        partial(
+                            InstanceService.copy_local_folder,
+                            existing_instance_local_folder,
+                            target_local_folder,
+                        ),
+                        f"Cloning local mods folder from [{existing_instance_name}]"
+                        f" instance to [{new_instance_name}] instance...",
+                    )
                 if existing_instance_workshop_folder:
                     _answer = show_dialogue_conditional(
                         title=QCoreApplication.translate(

@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import asyncio
 from collections.abc import Callable
-from typing import Any, Optional
+from typing import Any
 
 from loguru import logger
 from PySide6.QtCore import QThread, Signal
@@ -32,9 +32,9 @@ class SubprocessWorker(QThread):
 
     def __init__(
         self,
-        func: Callable[[Optional[str]], bool],
+        func: Callable[[str | None], bool],
         label: str,
-        language: Optional[str] = None,
+        language: str | None = None,
     ) -> None:
         super().__init__()
         self._func = func
@@ -59,7 +59,7 @@ class ValidateWorker(QThread):
     progress = Signal(str)
     finished = Signal(list, int)  # list of issue strings, fixed_count
 
-    def __init__(self, language: Optional[str] = None) -> None:
+    def __init__(self, language: str | None = None) -> None:
         super().__init__()
         self._language = language
 
@@ -89,7 +89,7 @@ class TranslateBatchWorker(QThread):
         self,
         language: str,
         service_name: str = "google",
-        service_kwargs: Optional[dict[str, Any]] = None,
+        service_kwargs: dict[str, Any] | None = None,
     ) -> None:
         super().__init__()
         self._language = language

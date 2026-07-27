@@ -8,7 +8,7 @@ from app.controllers.metadata_controller import MetadataController
 from app.models.metadata.metadata_db import AuxMetadataEntry
 from app.models.metadata.metadata_structure import AboutXmlMod, ListedMod, ModType
 
-# ----  Centralised ModType → source-string mappings  ----
+# ----  Centralised ModType â†’ source-string mappings  ----
 
 # Filter-oriented: groups GIT / STEAM_CMD / UNKNOWN under "local" so that the
 # source-filter panel doesn't expose fine-grained provenance to the user.
@@ -37,7 +37,7 @@ def resolve_aux_timestamps(
 ) -> tuple[int | None, int | None]:
     """Extract download-time and workshop-update-time from an aux DB entry.
 
-    *Download time*:  ACF ``timetouched`` (``WorkshopItemsInstalled``) — the
+    *Download time*:  ACF ``timetouched`` (``WorkshopItemsInstalled``) â€” the
     actual moment Steam/SteamCMD last touched the mod on disk.  This is the
     best available ``downloaded_time_raw`` for SteamCMD mods.
 
@@ -112,7 +112,7 @@ def is_recently_updated(
     if updated_timestamp is None or updated_timestamp <= 0:
         return False
     if now is None:
-        now = datetime.now().timestamp()
+        now = datetime.now().timestamp()  # noqa: DTZ005
     cutoff = now - threshold_days * 86400
     return updated_timestamp >= cutoff
 
@@ -191,7 +191,7 @@ def _format_timestamp(ts: int) -> str:
     if ts <= 0:
         return "N/A"
     try:
-        return datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S")
+        return datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S")  # noqa: DTZ006
     except (ValueError, OSError, OverflowError):
         return f"<invalid:{ts}>"
 
@@ -237,12 +237,12 @@ def filter_eligible_mods_for_update(
             )
             continue
 
-        # ── Resolve internal timestamp ──────────────────────────────────
+        # â”€â”€ Resolve internal timestamp â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         # ``internal_time`` = when we last had the mod on disk.
         # We try two sources and take the more recent one:
-        #   1. File mtime  (mod.internal_time_touched) – the mod folder's
+        #   1. File mtime  (mod.internal_time_touched) â€“ the mod folder's
         #      last-modified time on the filesystem.
-        #   2. ACF time_updated  (aux DB) – the timestamp written by
+        #   2. ACF time_updated  (aux DB) â€“ the timestamp written by
         #      Steam/SteamCMD when it last downloaded the mod.
         #
         # Steam/SteeamCMD often preserve original workshop upload timestamps
@@ -257,16 +257,19 @@ def filter_eligible_mods_for_update(
             timestamp_source = "internal_time_touched"
 
         _, aux_entry = metadata_controller.get_metadata_with_path(path)
-        if aux_entry is not None and aux_entry.acf_time_updated > 0:
-            if internal_time is None or aux_entry.acf_time_updated > internal_time:
-                internal_time = aux_entry.acf_time_updated
-                timestamp_source = "acf_time_updated"
+        if (
+            aux_entry is not None
+            and aux_entry.acf_time_updated > 0
+            and (internal_time is None or aux_entry.acf_time_updated > internal_time)
+        ):
+            internal_time = aux_entry.acf_time_updated
+            timestamp_source = "acf_time_updated"
 
         # 0 signals "no valid internal timestamp" in the decision logic below
         if internal_time is None:
             internal_time = 0
 
-        # ── External timestamp (from Steam API via aux DB) ──────────────
+        # â”€â”€ External timestamp (from Steam API via aux DB) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         # ``external_time`` = when Steam Workshop says the mod was last
         # updated.  Populated by query_workshop_update_data().  Falls back
         # to acf_time_updated (from ACF WorkshopItemDetails.timeupdated)
@@ -275,7 +278,7 @@ def filter_eligible_mods_for_update(
         acf_touched, external_time_raw = resolve_aux_timestamps(aux_entry)
         external_time = external_time_raw if external_time_raw is not None else 0
 
-        # ── Decision ────────────────────────────────────────────────────
+        # â”€â”€ Decision â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         # Include the mod if it needs any form of user action:
         if external_time > internal_time:
             # Steam reports a newer version than what we have on disk.
@@ -293,7 +296,7 @@ def filter_eligible_mods_for_update(
             skipped_no_external_time += 1
             reason = "no_external_time"
         else:
-            # Both timestamps exist and internal >= external → up-to-date.
+            # Both timestamps exist and internal >= external â†’ up-to-date.
             skipped_up_to_date += 1
             logger.debug(
                 "[mod_update] SKIP (up to date) mod={mod_name!r} pfid={pfid} "

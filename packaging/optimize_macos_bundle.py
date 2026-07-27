@@ -39,6 +39,7 @@ def _is_fat_binary(path: str) -> bool:
             ["lipo", "-info", path],
             capture_output=True,
             text=True,
+            check=False,
         )
         return "Architectures in the fat file" in result.stdout
     except Exception:

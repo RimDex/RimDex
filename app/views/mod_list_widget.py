@@ -38,7 +38,8 @@ class ModListWidget(  # pyright: ignore[reportIncompatibleMethodOverride]
     their own lists or moved from one list to another.
     """
 
-    SORT_TEXT_TO_KEY_MAP = {
+    # jscpd:ignore-start
+    SORT_TEXT_TO_KEY_MAP = {  # noqa: RUF012
         "Name": ModsPanelSortKey.MODNAME,
         "Author": ModsPanelSortKey.AUTHOR,
         "Modified Time": ModsPanelSortKey.FILESYSTEM_MODIFIED_TIME,
@@ -49,6 +50,7 @@ class ModListWidget(  # pyright: ignore[reportIncompatibleMethodOverride]
         "Tags": ModsPanelSortKey.MOD_TAGS,
         "Workshop Updated": ModsPanelSortKey.MOD_UPDATED,
     }
+    # jscpd:ignore-end
 
     @staticmethod
     def _text_to_sort_key(text: str) -> ModsPanelSortKey:
@@ -87,7 +89,7 @@ class ModListWidget(  # pyright: ignore[reportIncompatibleMethodOverride]
 
         self.settings = settings
 
-        super(ModListWidget, self).__init__()
+        super().__init__()
 
         # Track when a custom widget (ModListItemInner) is selected/not selected
         self.selectionModel().selectionChanged.connect(self.on_selection_changed)
@@ -190,7 +192,7 @@ class ModListWidget(  # pyright: ignore[reportIncompatibleMethodOverride]
         drop_action = event.dropAction()
         # Only manipulate paths for within-list reorder (same source and dest).
         # For cross-list drops, handle_rows_inserted (queued) handles path
-        # insertion exclusively — doing it here too creates duplicates that
+        # insertion exclusively â€” doing it here too creates duplicates that
         # break the count guard in handle_rows_inserted.
         if drop_action == Qt.DropAction.MoveAction and source_widget == self:
             new_indexes = [index.row() for index in self.selectedIndexes()]

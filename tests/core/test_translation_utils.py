@@ -203,7 +203,7 @@ def test_get_translation_languages_excludes_source(locales_tmp: Path) -> None:
 
 def test_validate_fixes_placeholder_mismatch(locales_tmp: Path) -> None:
     _make_ts(locales_tmp / "de_DE.ts", [("Hello {name}", "Hallo", "")])
-    issues, fixed = tu.validate_translation("de_DE")
+    _issues, fixed = tu.validate_translation("de_DE")
     assert fixed >= 1
     tree: Any = ET.parse(str(locales_tmp / "de_DE.ts"))
     tr = tree.getroot().find("context").find("message").find("translation")
@@ -222,7 +222,7 @@ def test_validate_adds_missing_language_attr(locales_tmp: Path) -> None:
     t.text = "Hallo"
     tu.save_ts_file(ET.ElementTree(root), locales_tmp / "de_DE.ts")
 
-    issues, fixed = tu.validate_translation("de_DE")
+    _issues, fixed = tu.validate_translation("de_DE")
     assert fixed >= 1
     tree: Any = ET.parse(str(locales_tmp / "de_DE.ts"))
     assert tree.getroot().get("language") == "de_DE"

@@ -61,7 +61,6 @@ def _request(
         return session.request(method, url, **kwargs)
 
 
-# jscpd:ignore-start
 def get(url: str, **kwargs: Any) -> requests.Response:
     """Perform a GET request with retries and default timeout."""
     return _request("GET", url, **kwargs)
@@ -84,6 +83,3 @@ def post(url: str, *, retry: bool = False, **kwargs: Any) -> requests.Response:
 def head(url: str, **kwargs: Any) -> requests.Response:
     """Perform a HEAD request with retries and default timeout."""
     return _request("HEAD", url, **kwargs)
-
-
-# jscpd:ignore-end

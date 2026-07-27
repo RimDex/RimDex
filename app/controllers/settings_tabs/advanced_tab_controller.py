@@ -27,6 +27,15 @@ class AdvancedTabController(BaseTabController):
             self._on_include_mod_notes_in_mod_name_filter_changed
         )
 
+        try:
+            self.dialog.modlist_history_enabled_checkbox.toggled.connect(
+                self._on_toggle_modlist_history_enabled
+            )
+        except (AttributeError, TypeError):
+            logger.warning(
+                "modlist_history_enabled_checkbox not available for signal wiring"
+            )
+
     def update_view_from_model(self) -> None:
         try:
             self.dialog.show_save_comparison_indicators_checkbox.setChecked(
@@ -64,6 +73,13 @@ class AdvancedTabController(BaseTabController):
             self.settings.enable_backup_before_update
         )
         self.dialog.max_backups_spinbox.setValue(self.settings.max_backups)
+
+        self.dialog.modlist_history_enabled_checkbox.setChecked(
+            self.settings.modlist_history_enabled
+        )
+        self.dialog.modlist_history_retention_count_spinbox.setValue(
+            self.settings.modlist_history_retention_count
+        )
 
         # Auxiliary DB
         self.dialog.aux_db_time_limit.setText(str(self.settings.aux_db_time_limit))
@@ -109,6 +125,13 @@ class AdvancedTabController(BaseTabController):
         )
         self.settings.max_backups = self.dialog.max_backups_spinbox.value()
 
+        self.settings.modlist_history_enabled = (
+            self.dialog.modlist_history_enabled_checkbox.isChecked()
+        )
+        self.settings.modlist_history_retention_count = (
+            self.dialog.modlist_history_retention_count_spinbox.value()
+        )
+
         # Auxiliary DB
         try:
             self.settings.aux_db_time_limit = int(self.dialog.aux_db_time_limit.text())
@@ -134,6 +157,11 @@ class AdvancedTabController(BaseTabController):
     @Slot(bool)
     def _on_toggle_show_save_comparison_indicators(self, checked: bool) -> None:
         self.settings.show_save_comparison_indicators = checked
+        self.settings.save()
+
+    @Slot(bool)
+    def _on_toggle_modlist_history_enabled(self, checked: bool) -> None:
+        self.settings.modlist_history_enabled = checked
         self.settings.save()
 
     @Slot()

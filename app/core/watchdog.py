@@ -75,7 +75,7 @@ class WatchdogHandler(FileSystemEventHandler, QObject):
                 logger.warning("Watchdog Mods Observer is None. Unable to start.")
         except Exception as e:
             logger.warning(
-                f"Unable to start Watchdog Observer(s) due to exception: {str(e)}"
+                f"Unable to start Watchdog Observer(s) due to exception: {e!s}"
             )
 
     def stop(self) -> None:
@@ -124,14 +124,18 @@ class WatchdogHandler(FileSystemEventHandler, QObject):
         :return: None
         """
         for path in targets:
-            if path and os.path.exists(path) and os.path.isdir(path):
-                if self.watchdog_mods_observer is not None:
-                    logger.debug(f"Scheduling observer for mod source: {path}")
-                    self.watchdog_mods_observer.schedule(
-                        self,
-                        path,
-                        recursive=True,
-                    )
+            if (
+                path
+                and os.path.exists(path)
+                and os.path.isdir(path)
+                and self.watchdog_mods_observer is not None
+            ):
+                logger.debug(f"Scheduling observer for mod source: {path}")
+                self.watchdog_mods_observer.schedule(
+                    self,
+                    path,
+                    recursive=True,
+                )
 
     def __check_acf_file(self, event: FileSystemEvent, event_scr_path: Path) -> bool:
         """Check if the file created is an .acf file that we track metadata from.

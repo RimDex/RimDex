@@ -7,6 +7,7 @@ errors/warnings tooltip text.
 
 from __future__ import annotations
 
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -19,6 +20,12 @@ from app.io.xml import extract_xml_package_ids, fast_rimworld_xml_save_validatio
 from app.models.metadata.metadata_structure import AboutXmlMod, ListedMod
 from app.mods.mod_utils import is_recently_updated
 from app.ui.widgets.divider import is_divider_uuid
+from app.utils.startup_impact import (
+    StartupImpactMod,
+    StartupImpactReport,
+    format_impact,
+    load_startup_impact_report,
+)
 from app.views.mixins._shared import ModListWidgetMixinBase
 
 
@@ -200,6 +207,17 @@ class ErrorsWarningsMixin(ModListWidgetMixinBase):
         else:
             latest_save_ids = None
 
+        # Load the startup impact report once for this run, only if enabled
+        startup_impact_report: StartupImpactReport | None = None
+        if self.settings.mod_list_startup_impact:
+            try:
+                cfg_path = self.settings.instances[
+                    self.settings.current_instance
+                ].config_folder
+                startup_impact_report = load_startup_impact_report(cfg_path)
+            except (KeyError, AttributeError):
+                startup_impact_report = None
+
         for uuid, mod_errors in package_id_to_errors.items():
             current_mod_index = self.paths.index(uuid)
             current_item = self.item(current_mod_index)
@@ -250,6 +268,24 @@ class ErrorsWarningsMixin(ModListWidgetMixinBase):
             pkg_id_str = (
                 str(mod_data.package_id) if isinstance(mod_data, AboutXmlMod) else ""
             )
+            # Stamp the mod's startup impact from the Loading Progress report
+            impact_entry = (
+                startup_impact_report.find(pkg_id_str or None, mod_data.name)
+                if startup_impact_report is not None
+                else None
+            )
+            if impact_entry is not None and startup_impact_report is not None:
+                current_item_data.__dict__["startup_impact_s"] = (
+                    impact_entry.total_impact_s
+                )
+                current_item_data.__dict__["startup_impact_tooltip"] = (
+                    self._build_startup_impact_tooltip(
+                        impact_entry, startup_impact_report
+                    )
+                )
+            else:
+                current_item_data.__dict__["startup_impact_s"] = None
+                current_item_data.__dict__["startup_impact_tooltip"] = ""
             # Check mod supportedversions against currently loaded version of game
             mod_errors["version_mismatch"] = self._check_version_mismatch(uuid)
             # Set an item's validity dynamically based on the version mismatch value
@@ -380,13 +416,11 @@ class ErrorsWarningsMixin(ModListWidgetMixinBase):
                 ).format(alternative=current_item_data["alternative"])
             # Add to error summary if any missing dependencies or incompatibilities
             if self.list_type == "Active" and any(
-                [
-                    mod_errors[key]
-                    for key in [
-                        "missing_dependencies",
-                        "conflicting_incompatibilities",
-                        "reverse_incompatibilities",
-                    ]
+                mod_errors[key]
+                for key in [
+                    "missing_dependencies",
+                    "conflicting_incompatibilities",
+                    "reverse_incompatibilities",
                 ]
             ):
                 num_errors += 1
@@ -401,14 +435,12 @@ class ErrorsWarningsMixin(ModListWidgetMixinBase):
                 self.list_type == "Active"
                 and pkg_id_str not in self.ignore_warning_list
                 and any(
-                    [
-                        mod_errors[key]
-                        for key in [
-                            "load_before_violations",
-                            "load_after_violations",
-                            "version_mismatch",
-                            "use_this_instead",
-                        ]
+                    mod_errors[key]
+                    for key in [
+                        "load_before_violations",
+                        "load_after_violations",
+                        "version_mismatch",
+                        "use_this_instead",
                     ]
                 )
             ):
@@ -425,6 +457,49 @@ class ErrorsWarningsMixin(ModListWidgetMixinBase):
             current_item.setData(Qt.ItemDataRole.UserRole, current_item_data)
         logger.info(f"Finished recalculating {self.list_type} list errors and warnings")
         return total_error_text, total_warning_text, num_errors, num_warnings
+
+    def _build_startup_impact_tooltip(
+        self, entry: StartupImpactMod, report: StartupImpactReport
+    ) -> str:
+        """Build the tooltip for a mod's startup impact label."""
+        lines = [
+            QCoreApplication.translate(
+                "ModListWidget", "Startup impact: {time}"
+            ).format(time=format_impact(entry.total_impact_s))
+        ]
+        if entry.off_thread_total_impact_s > 0:
+            lines.append(
+                QCoreApplication.translate(
+                    "ModListWidget", "Off-thread (loading screen): {time}"
+                ).format(time=format_impact(entry.off_thread_total_impact_s))
+            )
+        top_metrics = sorted(
+            entry.metrics.items(), key=lambda metric: metric[1], reverse=True
+        )[:3]
+        for category, seconds in top_metrics:
+            if seconds <= 0:
+                continue
+            # Category keys look like "LoadingProgress.StartupImpact.LoadModXml"
+            lines.append(f"    {category.rsplit('.', 1)[-1]}: {format_impact(seconds)}")
+        measured = (
+            datetime.fromtimestamp(report.file_mtime, tz=UTC)
+            .astimezone()
+            .astimezone()
+            .strftime("%Y-%m-%d %H:%M")
+        )
+        if report.loading_time_s > 0:
+            lines.append(
+                QCoreApplication.translate(
+                    "ModListWidget", "Measured {datetime} — total game startup: {time}"
+                ).format(datetime=measured, time=format_impact(report.loading_time_s))
+            )
+        else:
+            lines.append(
+                QCoreApplication.translate(
+                    "ModListWidget", "Measured {datetime}"
+                ).format(datetime=measured)
+            )
+        return "\n".join(lines)
 
     def _get_latest_save_package_ids(self) -> set[str] | None:
         """Attempt to find the latest RimWorld save file in the configured instance and extract modIds.

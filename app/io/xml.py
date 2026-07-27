@@ -1,12 +1,15 @@
 import gzip
 import os
-import xml.dom.minidom as minidom
 import xml.etree.ElementTree as ET
 from typing import Any
+from xml.dom import minidom
 
 import zstandard as zstd
 from bs4 import BeautifulSoup
+from bs4.builder import LXMLTreeBuilderForXML  # type: ignore[attr-defined]
+from defusedxml.ElementTree import parse as safe_et_parse
 from loguru import logger
+from lxml import etree as _lxml_etree
 
 
 def etree_to_dict(t: ET.Element) -> dict[str, Any]:
@@ -97,26 +100,35 @@ def xml_path_to_json(path: str) -> dict[str, Any]:
         logger.error(f"XML file does not exist at: {path}")
         return data
     try:
-        # Parse XML file using xml.etree.ElementTree for standard library parsing
+        # Parse XML file using a hardened parser (defusedxml) to prevent
+        # entity-expansion / XXE attacks from untrusted imported mod-list files.
         with __open_file_maybe_compressed(path) as f:
-            tree = ET.parse(f)
+            tree = safe_et_parse(f)
             root = tree.getroot()
+            if root is None:
+                logger.error(f"XML file has no root element at: {path}")
+                return data
             data = etree_to_dict(root)
     except Exception as e:
-        # If ET parsing fails, attempt parsing with BeautifulSoup
+        # If ET parsing fails, attempt parsing with BeautifulSoup (also hardened)
         logger.debug(f"Error parsing XML file with xml.etree.ElementTree: {e}")
         logger.debug("Trying to parse with BeautifulSoup as a fallback")
         try:
             with __open_file_maybe_compressed(path) as f:
-                soup = BeautifulSoup(f.read(), "lxml-xml")
-                # Find and remove empty tags
-                empty_tags = soup.find_all(
-                    lambda tag: not tag.text.strip() or len(tag) == 0
+                builder = LXMLTreeBuilderForXML(
+                    parser=_lxml_etree.XMLParser(
+                        resolve_entities=False, no_network=True, load_dtd=False
+                    )
                 )
-                for empty_tag in empty_tags:
-                    empty_tag.extract()
-                # Convert the BeautifulSoup object to a dictionary
-                data = bs4_to_dict(soup)
+                soup = BeautifulSoup(f.read(), builder=builder)
+            # Find and remove empty tags
+            empty_tags = soup.find_all(
+                lambda tag: not tag.text.strip() or len(tag) == 0
+            )
+            for empty_tag in empty_tags:
+                empty_tag.extract()
+            # Convert the BeautifulSoup object to a dictionary
+            data = bs4_to_dict(soup)
         except Exception as e2:
             logger.debug(f"Error parsing XML file with BeautifulSoup: {e2}")
             logger.error(f"Error parsing XML file: {path}")
@@ -147,7 +159,7 @@ def json_to_xml_write(
             f.write(reparsed.toprettyxml(indent="  ", encoding=None))
     except Exception as e:
         if raise_errs:
-            raise e
+            raise
         logger.error(f"Error writing XML file: {e}")
         return
 

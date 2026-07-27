@@ -111,22 +111,22 @@ COL_PATH = "Path"
 COL_WORKSHOP_PAGE = "Workshop Page"
 
 __all__ = [
-    "HeaderColumn",
-    "UIElements",
-    "Layouts",
-    "TrMixin",
-    "ColumnIndex",
-    "COL_MOD_NAME",
     "COL_AUTHOR",
-    "COL_PACKAGE_ID",
-    "COL_PUBLISHED_FILE_ID",
-    "COL_SUPPORTED_VERSIONS",
     "COL_MOD_DOWNLOADED",
-    "COL_UPDATED_ON_WORKSHOP",
-    "COL_SOURCE",
+    "COL_MOD_NAME",
+    "COL_PACKAGE_ID",
     "COL_PATH",
+    "COL_PUBLISHED_FILE_ID",
+    "COL_SOURCE",
+    "COL_SUPPORTED_VERSIONS",
+    "COL_UPDATED_ON_WORKSHOP",
     "COL_WORKSHOP_PAGE",
     "BaseModsPanelSurface",
+    "ColumnIndex",
+    "HeaderColumn",
+    "Layouts",
+    "TrMixin",
+    "UIElements",
 ]
 
 

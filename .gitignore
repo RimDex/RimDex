@@ -51,6 +51,7 @@ nuitka-crash-report.xml
 
 # RimDex
 DEBUG
+dev/
 .DS_Store
 /todds
 steamworks_sdk_*.zip

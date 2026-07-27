@@ -285,7 +285,7 @@ class ListItemMixin(ModListWidgetMixinBase):
                 try:
                     data["list_type"] = self.list_type
                     item.setData(Qt.ItemDataRole.UserRole, data)
-                except Exception:
+                except Exception:  # noqa: S110
                     pass
                 uuid = data["path"]
                 self.paths.insert(idx, uuid)
@@ -420,7 +420,7 @@ class ListItemMixin(ModListWidgetMixinBase):
             pass  # Signal not connected
 
         self.clear()
-        self.paths = list()
+        self.paths = []
         if uuids:  # Insert data...
             # Filter out dividers up-front so we can bulk-fetch real UUIDs
             real_uuids = [u for u in uuids if not is_divider_uuid(u)]
@@ -516,7 +516,7 @@ class ListItemMixin(ModListWidgetMixinBase):
             if data is not None:
                 data["list_type"] = self.list_type
                 item.setData(Qt.ItemDataRole.UserRole, data)
-        except Exception:
+        except Exception:  # noqa: S110
             pass
 
         # Reconnect to ALL slots
