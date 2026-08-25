@@ -481,9 +481,10 @@ class MetadataController(QObject):
         missing_packageid: list[str] = []
         missing_publishfieldid: list[str] = []
         for path, mod in self.mods_metadata.items():
-            if not isinstance(mod, AboutXmlMod):
-                missing_packageid.append(path)
-            elif str(mod.package_id) == app_constants.DEFAULT_MISSING_PACKAGEID:
+            if (
+                not isinstance(mod, AboutXmlMod)
+                or str(mod.package_id) == app_constants.DEFAULT_MISSING_PACKAGEID
+            ):
                 missing_packageid.append(path)
             if mod.published_file_id is not None:
                 continue

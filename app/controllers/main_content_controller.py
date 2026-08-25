@@ -7,7 +7,6 @@ and move domain logic into focused handler classes.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import List
 
 from PySide6.QtCore import QObject, QThreadPool, Slot
 
@@ -165,5 +164,5 @@ class MainContentController(QObject):
         self._db_download.update_databases_on_startup_if_enabled_silent()
 
     @Slot(list)
-    def _on_push_requested(self, repos_paths: List[str]) -> None:
+    def _on_push_requested(self, repos_paths: list[str]) -> None:
         self._git_ops.on_push_requested([Path(p) for p in repos_paths])

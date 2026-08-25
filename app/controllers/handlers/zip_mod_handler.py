@@ -14,7 +14,6 @@ from typing import TYPE_CHECKING
 from loguru import logger
 from PySide6.QtWidgets import QApplication, QInputDialog, QMessageBox
 
-import app.ui.dialogue as dialogue
 from app.core.app_info import AppInfo
 from app.core.ui_helpers import check_internet_connection
 from app.io.zip_extractor import (
@@ -23,6 +22,7 @@ from app.io.zip_extractor import (
     get_zip_contents,
 )
 from app.net import http
+from app.ui import dialogue
 from app.views.task_progress_window import TaskProgressWindow
 
 if TYPE_CHECKING:

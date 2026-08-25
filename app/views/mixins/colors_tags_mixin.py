@@ -24,7 +24,7 @@ from app.views.mod_list_item_inner import ModListItemInner
 class ColorsTagsMixin(ModListWidgetMixinBase):
     """Mod colors, warning toggle, and user-tag handling."""
 
-    def SetUserCustomColors(self, color_dlg: QColorDialog) -> None:  # noqa: N802
+    def SetUserCustomColors(self, color_dlg: QColorDialog) -> None:
         """
         Sets the user's custom colors in the QColorDialog from settings.json.
         """
@@ -35,7 +35,7 @@ class ColorsTagsMixin(ModListWidgetMixinBase):
         for i in range(16):
             color_dlg.setCustomColor(i, colors[i])
 
-    def SaveUserCustomColors(self, color_dlg: QColorDialog) -> None:  # noqa: N802
+    def SaveUserCustomColors(self, color_dlg: QColorDialog) -> None:
         """
         Saves the user's custom colors from the QColorDialog to settings.json as list of hex strings.
         """

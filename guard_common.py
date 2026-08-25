@@ -9,9 +9,8 @@ from __future__ import annotations
 
 import ast
 import sys
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from pathlib import Path
-from typing import Callable
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 

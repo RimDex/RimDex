@@ -5,8 +5,9 @@ Extracted from ``MainContentController`` to keep the facade slim.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
-from typing import TYPE_CHECKING, Callable, Protocol
+from typing import TYPE_CHECKING, Protocol
 
 from loguru import logger
 from PySide6.QtCore import Slot
@@ -63,7 +64,7 @@ class GitHubModsHandler:
         self,
         settings: Settings,
         metadata_controller: MetadataController,
-        view: "HandlerViewProtocol",
+        view: HandlerViewProtocol,
         tr: Callable[..., str],
         git_ops_handler: GitOpsHandler,
     ) -> None:

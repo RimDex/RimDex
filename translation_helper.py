@@ -84,7 +84,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from io import TextIOWrapper
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, TypedDict, cast
+from typing import Any, TypedDict, cast
 
 # Global variables for caching and configuration
 import aiohttp
@@ -108,7 +108,7 @@ except ImportError:
     GoogleTranslator = None
 
 # Try to import openai library (optional dependency)
-openai_module: Optional[types.ModuleType]
+openai_module: types.ModuleType | None
 try:
     openai_module = importlib.import_module("openai")
 except ImportError:
@@ -193,7 +193,7 @@ class TranslationConfig:
     use_cache: bool = True
 
     @classmethod
-    def from_dict(cls, config_dict: Dict[str, Any]) -> "TranslationConfig":
+    def from_dict(cls, config_dict: dict[str, Any]) -> "TranslationConfig":
         """Create TranslationConfig from a dictionary.
 
         Args:
@@ -238,12 +238,12 @@ def save_ts_file(tree: Any, file_path: Path) -> None:
         raise
 
 
-def _get_translation_languages() -> List[str]:
+def _get_translation_languages() -> list[str]:
     return sorted(f.stem for f in LOCALES_DIR.glob("*.ts") if f.stem != "en_US")
 
 
 def _calc_completion_stats(
-    stats: Dict[str, Any],
+    stats: dict[str, Any],
 ) -> tuple[float, str]:
     completion = (
         (stats["translated"] / stats["total"]) * 100 if stats["total"] > 0 else 0
@@ -289,8 +289,8 @@ class TranslationCache:
         _cache_file: Optional file path for persistent cache
     """
 
-    _cache: Dict[str, str] = field(default_factory=dict)
-    _cache_file: Optional[Path] = None
+    _cache: dict[str, str] = field(default_factory=dict)
+    _cache_file: Path | None = None
     _loaded: bool = field(init=False, default=False)
 
     def _load_if_needed(self) -> None:
@@ -311,7 +311,7 @@ class TranslationCache:
                 print(
                     f"✅ Loaded {len(self._cache)} items from cache file: {self._cache_file}"
                 )
-            except (IOError, json.JSONDecodeError) as e:
+            except (OSError, json.JSONDecodeError) as e:
                 print(f"⚠️  Could not load cache file: {e}")
                 self._cache = {}
 
@@ -328,7 +328,7 @@ class TranslationCache:
                 print(
                     f"💾 Saved {len(self._cache)} items to cache file: {self._cache_file}"
                 )
-            except IOError as e:
+            except OSError as e:
                 print(f"❌ Could not save cache file: {e}")
 
     def _get_cache_key(
@@ -356,7 +356,7 @@ class TranslationCache:
 
     def get(
         self, text: str, target_lang: str, source_lang: str, service: str
-    ) -> Optional[str]:
+    ) -> str | None:
         """Retrieve a translation from cache if available.
 
         Args:
@@ -400,7 +400,7 @@ class TranslationCache:
             try:
                 self._cache_file.unlink()
                 print(f"🗑️ Cache file removed: {self._cache_file}")
-            except IOError as e:
+            except OSError as e:
                 print(f"❌ Could not remove cache file: {e}")
 
     def size(self) -> int:
@@ -425,7 +425,7 @@ def get_translation_cache() -> TranslationCache:
 
 
 # === Input Validation ===
-def validate_language_code(language: Optional[str]) -> Optional[str]:
+def validate_language_code(language: str | None) -> str | None:
     """Validate and normalize a language code.
 
     Ensures the language code is in the supported list and properly formatted.
@@ -460,7 +460,7 @@ def validate_directory_path(dir_path: Path) -> Path:
     return dir_path
 
 
-def validate_api_key(api_key: Optional[str], service: str) -> str:
+def validate_api_key(api_key: str | None, service: str) -> str:
     """Validate API key for a translation service.
 
     Ensures API key is provided and meets minimum format requirements.
@@ -489,7 +489,7 @@ def validate_api_key(api_key: Optional[str], service: str) -> str:
     return api_key
 
 
-def validate_model_name(model: Optional[str]) -> str:
+def validate_model_name(model: str | None) -> str:
     """Validate OpenAI model name.
 
     Ensures model name is provided and properly formatted.
@@ -608,13 +608,13 @@ def validate_concurrent_requests(max_concurrent: int) -> int:
 
 
 class LangMapEntry(TypedDict, total=False):
-    google: Optional[str]
-    deepl: Optional[str]
-    openai: Optional[str]
+    google: str | None
+    deepl: str | None
+    openai: str | None
 
 
 # Global language map for all supported languages
-LANG_MAP: Dict[str, LangMapEntry] = {
+LANG_MAP: dict[str, LangMapEntry] = {
     "zh_CN": {"google": "zh-cn", "deepl": "ZH", "openai": "Simplified Chinese"},
     "zh_TW": {"google": "zh-tw", "deepl": "ZH", "openai": "Traditional Chinese"},
     "en_US": {"google": "en", "deepl": "EN", "openai": "English"},
@@ -640,7 +640,7 @@ class TranslationService:
 
     async def translate(
         self, text: str, target_lang: str, source_lang: str = "en_US"
-    ) -> Optional[str]:
+    ) -> str | None:
         """Translate text from source language to target language.
 
         Args:
@@ -707,7 +707,7 @@ class GoogleTranslateService(TranslationService):
 
     async def translate(
         self, text: str, target_lang: str, source_lang: str = "en_US"
-    ) -> Optional[str]:
+    ) -> str | None:
         config = get_translation_config()
         cache = get_translation_cache()
 
@@ -788,7 +788,7 @@ class DeepLService(TranslationService):
 
     async def translate(
         self, text: str, target_lang: str, source_lang: str = "en_US"
-    ) -> Optional[str]:
+    ) -> str | None:
         # First, check if the translation is already in the cache.
         config = get_translation_config()
         cache = get_translation_cache()
@@ -835,7 +835,7 @@ class DeepLService(TranslationService):
                                 text, target_lang, source_lang, "deepl", translation
                             )
                         return translation
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 # If the request times out, check if we should retry.
                 if attempt < self.config.retry_config.max_retries - 1:
                     # Calculate the delay for the next retry.
@@ -904,7 +904,7 @@ class OpenAIService(TranslationService):
 
     async def translate(
         self, text: str, target_lang: str, source_lang: str = "en_US"
-    ) -> Optional[str]:
+    ) -> str | None:
         if openai_module is None:
             raise ImportError("openai library not available")
 
@@ -921,11 +921,11 @@ class OpenAIService(TranslationService):
         source_name = self._get_service_code(source_lang, "openai")
 
         # The prompt to be sent to the OpenAI API.
-        prompt = """Translate the following {} text to {}.
+        prompt = f"""Translate the following {source_name} text to {target_name}.
 This is UI text from a software application. Keep it concise and user-friendly.
 Only return the translation, no explanation:
 
-{}""".format(source_name, target_name, text)
+{text}"""
 
         # Retry the translation up to the configured number of times.
         for attempt in range(self.config.retry_config.max_retries):
@@ -975,7 +975,7 @@ Only return the translation, no explanation:
 
 
 # === Existing Helper Functions ===
-def get_source_keys_from_file(source_file: Path) -> Set[str]:
+def get_source_keys_from_file(source_file: Path) -> set[str]:
     """Extract all translation keys from source language file."""
     try:
         tree = ET.parse(source_file)
@@ -1003,8 +1003,8 @@ def get_source_keys_from_file(source_file: Path) -> Set[str]:
 
 
 def parse_ts_file(
-    file_path: Path, source_keys: Optional[Set[str]] = None
-) -> Dict[str, Any]:
+    file_path: Path, source_keys: set[str] | None = None
+) -> dict[str, Any]:
     """Parse a .ts file and extract translation information."""
     try:
         tree = ET.parse(file_path)
@@ -1100,7 +1100,7 @@ class UnfinishedItem:
 
 def find_unfinished_translations(
     tree: Any,
-) -> List[UnfinishedItem]:
+) -> list[UnfinishedItem]:
     """Find all unfinished translation entries in a .ts file.
 
     Searches through the XML structure to identify entries that are either:
@@ -1224,7 +1224,7 @@ def create_translation_service(service_name: str, **kwargs: Any) -> TranslationS
 
 
 async def auto_translate_file(
-    language: Optional[str],
+    language: str | None,
     service_name: str = "google",
     continue_on_failure: bool = True,
     dry_run: bool = False,
@@ -1245,7 +1245,7 @@ async def auto_translate_file(
     locales_dir = LOCALES_DIR
 
     # Determine which languages to process
-    languages: List[str] = []
+    languages: list[str] = []
     if language:
         # If a language is specified, process only that one.
         languages = [language]
@@ -1294,7 +1294,7 @@ async def auto_translate_file(
 
             async def translate_item(
                 i: int, item: UnfinishedItem
-            ) -> tuple[int, UnfinishedItem, Optional[str]]:
+            ) -> tuple[int, UnfinishedItem, str | None]:
                 """Inner coroutine to translate a single item with concurrency control."""
                 source_text = item.source
                 # Skip trivial strings (empty, single char, numbers, symbols)
@@ -1313,7 +1313,7 @@ async def auto_translate_file(
                             service.translate(source_text, lang, "en_US"),
                             timeout=config.timeout_config.default_timeout,
                         )
-                    except asyncio.TimeoutError:
+                    except TimeoutError:
                         print(f"❌ Translation timeout for [{i}]")
                         translated = ""  # Return empty string for failures
                     except Exception as e:
@@ -1416,7 +1416,7 @@ async def auto_translate_file(
     return all_success
 
 
-def run_lupdate(language: Optional[str] = None) -> bool:
+def run_lupdate(language: str | None = None) -> bool:
     """Run pyside6-lupdate to update translation files with new strings.
 
     Extracts new translatable strings from Python source files and updates
@@ -1481,7 +1481,7 @@ def run_lupdate(language: Optional[str] = None) -> bool:
         return False
 
 
-def run_lrelease(language: Optional[str] = None) -> bool:
+def run_lrelease(language: str | None = None) -> bool:
     """Run pyside6-lrelease to compile translation files to binary format.
 
     Converts .ts (translation source) files to .qm (compiled translation) files
@@ -1546,9 +1546,7 @@ def run_lrelease(language: Optional[str] = None) -> bool:
         return False
 
 
-def check_translation(
-    language: Optional[str] = None, json_output: bool = False
-) -> None:
+def check_translation(language: str | None = None, json_output: bool = False) -> None:
     """Check translation completeness for a specific language or all languages.
 
     Compares each translation file against the source language (en_US) to verify
@@ -1582,7 +1580,7 @@ def check_translation(
             print(f"❌ {error_msg}")
         return
 
-    languages: List[str] = []
+    languages: list[str] = []
     if language:
         # Validate language code if provided
         try:
@@ -1599,13 +1597,13 @@ def check_translation(
         languages = _get_translation_languages()
 
     source_file: Path = locales_dir / "en_US.ts"  # Assume en_US is source
-    source_keys: Set[str] = set()
+    source_keys: set[str] = set()
     if source_file.exists():
         source_keys = get_source_keys_from_file(source_file)
         if not json_output:
             print(f"📚 Found {len(source_keys)} keys in source language")
 
-    results: List[Dict[str, Any]] = []
+    results: list[dict[str, Any]] = []
 
     for lang in languages:
         ts_file: Path = locales_dir / f"{lang}.ts"
@@ -1622,7 +1620,7 @@ def check_translation(
             print(f"🔍 Checking translation for {lang}...")
 
         # Parse the translation file to extract statistics and issues
-        result: Dict[str, Any] = parse_ts_file(ts_file, source_keys)
+        result: dict[str, Any] = parse_ts_file(ts_file, source_keys)
 
         # Check if there was an error during parsing
         if "error" in result:
@@ -1632,13 +1630,13 @@ def check_translation(
                 print(f"❌ Error parsing file: {result['error']}")
             continue
 
-        stats: Dict[str, Any] = result["stats"]
-        issues: List[str] = result["issues"]
+        stats: dict[str, Any] = result["stats"]
+        issues: list[str] = result["issues"]
 
         completion, status = _calc_completion_stats(stats)
 
         # Build result object with all relevant statistics
-        lang_result: Dict[str, Any] = {
+        lang_result: dict[str, Any] = {
             "language": lang,
             "completion_percentage": round(completion, 1),
             "status": status,
@@ -1726,11 +1724,11 @@ def show_all_stats(json_output: bool = False) -> None:
 
     # Get source keys
     source_file = locales_dir / "en_US.ts"
-    source_keys: Set[str] = set()
+    source_keys: set[str] = set()
     if source_file.exists():
         source_keys = get_source_keys_from_file(source_file)
 
-    results: List[Dict[str, Any]] = []
+    results: list[dict[str, Any]] = []
 
     if not json_output:
         print("📊 Translation Statistics for All Languages:\n")
@@ -1795,7 +1793,7 @@ def show_all_stats(json_output: bool = False) -> None:
         print(json.dumps({"type": "stats", "results": results}, indent=2))
 
 
-def validate_translation(language: Optional[str] = None, dry_run: bool = False) -> None:
+def validate_translation(language: str | None = None, dry_run: bool = False) -> None:
     """Validate and repair translation files for common issues.
 
     Checks for and automatically fixes:
@@ -1933,7 +1931,7 @@ def validate_translation(language: Optional[str] = None, dry_run: bool = False) 
 
 
 async def process_language(
-    language: Optional[str],
+    language: str | None,
     service: str,
     continue_on_failure: bool = True,
     dry_run: bool = False,
@@ -2134,7 +2132,7 @@ def _interactive_validate() -> None:
 
 def _get_interactive_translation_config() -> (
     tuple[
-        Optional[str],
+        str | None,
         str,
         dict[str, Any],
         bool,

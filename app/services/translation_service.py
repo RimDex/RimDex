@@ -12,7 +12,7 @@ import asyncio
 import importlib
 import inspect
 import logging
-from typing import Any, Optional
+from typing import Any
 
 import aiohttp
 
@@ -52,7 +52,7 @@ class TranslationService:
 
     async def translate(
         self, text: str, target_lang: str, source_lang: str = "en_US"
-    ) -> Optional[str]:
+    ) -> str | None:
         resolved = self._resolve_langs(text, target_lang, source_lang)
         if resolved is None:
             return None
@@ -61,7 +61,7 @@ class TranslationService:
 
     async def _translate_with_retry(
         self, text: str, target: str, source: str, config: TranslationConfig
-    ) -> Optional[str]:
+    ) -> str | None:
         for attempt in range(config.retry_config.max_retries):
             try:
                 translation = await self._call_api(text, target, source)
@@ -90,7 +90,7 @@ class TranslationService:
                     return None
         return None
 
-    async def _call_api(self, text: str, target: str, source: str) -> Optional[str]:
+    async def _call_api(self, text: str, target: str, source: str) -> str | None:
         raise NotImplementedError
 
     async def _on_retry_error(self, exc: Exception) -> None:
@@ -109,9 +109,7 @@ class TranslationService:
             return lang_code.upper()
         return lang_code
 
-    def _check_cache(
-        self, text: str, target_lang: str, source_lang: str
-    ) -> Optional[str]:
+    def _check_cache(self, text: str, target_lang: str, source_lang: str) -> str | None:
         config = get_translation_config()
         if config.use_cache:
             cached = get_translation_cache().get(
@@ -132,7 +130,7 @@ class TranslationService:
 
     def _resolve_langs(
         self, text: str, target_lang: str, source_lang: str
-    ) -> Optional[tuple[TranslationConfig, str, str]]:
+    ) -> tuple[TranslationConfig, str, str] | None:
         """Check cache; return ``(config, target, source)`` on miss, or ``None`` on cache hit."""
         cached = self._check_cache(text, target_lang, source_lang)
         if cached is not None:
@@ -172,7 +170,7 @@ class GoogleTranslateService(TranslationService):
         except AttributeError:
             pass
 
-    async def _call_api(self, text: str, target: str, source: str) -> Optional[str]:
+    async def _call_api(self, text: str, target: str, source: str) -> str | None:
         result = self.translator.translate(text, dest=target, src=source)
         if inspect.iscoroutine(result):
             result = await result
@@ -199,11 +197,12 @@ class DeepLService(TranslationService):
         self.base_url = "https://api-free.deepl.com/v2/translate"
         self.config = get_translation_config()
 
-    async def _call_api(self, text: str, target: str, source: str) -> Optional[str]:
+    async def _call_api(self, text: str, target: str, source: str) -> str | None:
         config = get_translation_config()
         timeout = aiohttp.ClientTimeout(total=config.timeout_config.deepl_timeout)
-        async with aiohttp.ClientSession() as session:
-            async with session.post(
+        async with (
+            aiohttp.ClientSession() as session,
+            session.post(
                 self.base_url,
                 data={
                     "auth_key": self.api_key,
@@ -212,10 +211,11 @@ class DeepLService(TranslationService):
                     "source_lang": source,
                 },
                 timeout=timeout,
-            ) as response:
-                response.raise_for_status()
-                result = await response.json()
-                return result["translations"][0]["text"]
+            ) as response,
+        ):
+            response.raise_for_status()
+            result = await response.json()
+            return result["translations"][0]["text"]
 
 
 # ---------------------------------------------------------------------------
@@ -238,7 +238,7 @@ class OpenAIService(TranslationService):
         )
         self.model = model
 
-    async def _call_api(self, text: str, target: str, source: str) -> Optional[str]:
+    async def _call_api(self, text: str, target: str, source: str) -> str | None:
         if openai_module is None:
             raise ImportError("openai library not available")
         prompt = (

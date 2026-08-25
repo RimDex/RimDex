@@ -13,10 +13,10 @@ from loguru import logger
 from PySide6.QtCore import QCoreApplication
 from PySide6.QtWidgets import QMessageBox
 
-import app.io.symlink as symlink
 from app.core.event_bus import EventBus
 from app.core.fs_utils import handle_remove_read_only
 from app.core.fs_utils import rmtree as g_rmtree
+from app.io import symlink
 from app.models.settings import Instance, Settings
 from app.net import http
 from app.ui.dialogue import (
@@ -45,7 +45,7 @@ class SteamcmdInterface:
 
     def __new__(cls, *args: Any, **kwargs: Any) -> "SteamcmdInterface":
         if cls._instance is None:
-            cls._instance = super(SteamcmdInterface, cls).__new__(cls)
+            cls._instance = super().__new__(cls)
         return cls._instance
 
     def __init__(self, steamcmd_prefix: str, validate: bool) -> None:
@@ -53,7 +53,7 @@ class SteamcmdInterface:
             self.initialized = True
             self.setup = False
             self.steamcmd_prefix = steamcmd_prefix
-            super(SteamcmdInterface, self).__init__()
+            super().__init__()
             logger.debug("Initializing SteamcmdInterface")
             self.initialize_prefix(steamcmd_prefix, validate)
 
@@ -76,17 +76,17 @@ class SteamcmdInterface:
             self.steamcmd_url = (
                 "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_osx.tar.gz"
             )
-            self.steamcmd = str((Path(self.steamcmd_install_path) / "steamcmd.sh"))
+            self.steamcmd = str(Path(self.steamcmd_install_path) / "steamcmd.sh")
         elif self.system == "Linux":
             self.steamcmd_url = (
                 "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz"
             )
-            self.steamcmd = str((Path(self.steamcmd_install_path) / "steamcmd.sh"))
+            self.steamcmd = str(Path(self.steamcmd_install_path) / "steamcmd.sh")
         elif self.system == "Windows":
             self.steamcmd_url = (
                 "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
             )
-            self.steamcmd = str((Path(self.steamcmd_install_path) / "steamcmd.exe"))
+            self.steamcmd = str(Path(self.steamcmd_install_path) / "steamcmd.exe")
         else:
             show_fatal_error(
                 "SteamcmdInterface",
@@ -104,15 +104,13 @@ class SteamcmdInterface:
         if not os.path.exists(self.steamcmd_steam_path):
             os.makedirs(self.steamcmd_steam_path)
         self.steamcmd_appworkshop_acf_path = str(
-            (
-                Path(self.steamcmd_steam_path)
-                / "steamapps"
-                / "workshop"
-                / "appworkshop_294100.acf"
-            )
+            Path(self.steamcmd_steam_path)
+            / "steamapps"
+            / "workshop"
+            / "appworkshop_294100.acf"
         )
         self.steamcmd_content_path = str(
-            (Path(self.steamcmd_steam_path) / "steamapps" / "workshop" / "content")
+            Path(self.steamcmd_steam_path) / "steamapps" / "workshop" / "content"
         )
 
     @classmethod
@@ -209,12 +207,12 @@ class SteamcmdInterface:
         except Exception as e:
             if runner is not None:
                 runner.message(
-                    f"Failed to create symlink. Error: {type(e).__name__}: {str(e)}"
+                    f"Failed to create symlink. Error: {type(e).__name__}: {e!s}"
                 )
             show_warning(
                 "Failed to Create Symlink",
                 f"Failed to create symlink for {sys.platform}",
-                details=f"Error: {type(e).__name__}: {str(e)}",
+                details=f"Error: {type(e).__name__}: {e!s}",
             )
 
             return False
@@ -260,7 +258,7 @@ class SteamcmdInterface:
         :return: True if the symlink/junction was created successfully. False otherwise.
         :rtype: bool
         """
-        msg = f"Failed to create symlink. Error: {type(e).__name__}: {str(e)}"
+        msg = f"Failed to create symlink. Error: {type(e).__name__}: {e!s}"
         if runner is not None:
             runner.message(msg)
 
@@ -562,7 +560,7 @@ class SteamcmdInterface:
                     "SteamcmdInterface",
                     f"Failed to download steamcmd for {self.system}",
                     "Did the file/url change?<br>Does your environment have access to the internet?",
-                    details=f"Error: {type(e).__name__}: {str(e)}",
+                    details=f"Error: {type(e).__name__}: {e!s}",
                 )
         else:
             runner.message("SteamCMD already installed...")
@@ -586,9 +584,7 @@ class SteamcmdInterface:
                 runner.message(
                     f"Workshop content path does not exist. Creating for symlinking:\n\n{self.steamcmd_content_path}\n"
                 )
-            symlink_destination_path = str(
-                (Path(self.steamcmd_content_path) / "294100")
-            )
+            symlink_destination_path = str(Path(self.steamcmd_content_path) / "294100")
             runner.message(f"Symlink source : {symlink_source_path}")
             runner.message(f"Symlink destination: {symlink_destination_path}")
             if symlink.is_junction_or_link(

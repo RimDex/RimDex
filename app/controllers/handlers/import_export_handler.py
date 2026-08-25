@@ -12,9 +12,9 @@ from typing import TYPE_CHECKING
 
 from loguru import logger
 
-import app.ui.dialogue as dialogue
 from app.core.app_info import AppInfo
 from app.core.ui_helpers import check_internet_connection, copy_to_clipboard_safely
+from app.ui import dialogue
 from app.utils.rentry.wrapper import RentryImport
 from app.utils.steam.webapi.wrapper import CollectionImport
 

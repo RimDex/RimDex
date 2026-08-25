@@ -1,5 +1,5 @@
 from functools import partial
-from typing import Optional, cast
+from typing import cast
 
 from loguru import logger
 from PySide6.QtCore import (
@@ -122,7 +122,7 @@ class ModsPanel(QWidget):
         Create a ListWidget using the dict of mods. This will
         create a row for every key-value pair in the dict.
         """
-        super(ModsPanel, self).__init__()
+        super().__init__()
 
         # Cache MetadataController instance and initialize panel
         logger.debug("Initializing ModsPanel")
@@ -140,9 +140,9 @@ class ModsPanel(QWidget):
             self.inactive_mods_sort_descending = True
 
         # Background folder-size sorting state
-        self._size_progress_dialog: Optional[QProgressDialog] = None
-        self._size_thread: Optional[QThread] = None
-        self._size_worker: Optional[FolderSizeWorker] = None
+        self._size_progress_dialog: QProgressDialog | None = None
+        self._size_thread: QThread | None = None
+        self._size_worker: FolderSizeWorker | None = None
         self._size_current_uuids: list[str] = []
 
         # Build search filter text-to-key mapping (translation-safe)
@@ -164,9 +164,9 @@ class ModsPanel(QWidget):
         self._sort_debounce_timer = QTimer()
         self._sort_debounce_timer.setSingleShot(True)
         self._sort_debounce_timer.timeout.connect(self._execute_pending_sort)
-        self._pending_sort_params: Optional[
-            tuple[str, list[str], ModsPanelSortKey, bool]
-        ] = None
+        self._pending_sort_params: (
+            tuple[str, list[str], ModsPanelSortKey, bool] | None
+        ) = None
 
         # Base layout with a splitter for resizable mod lists
         self.panel = QVBoxLayout()
@@ -1045,9 +1045,10 @@ class ModsPanel(QWidget):
         for path, note in rows:
             note_lower = note.lower()
             # Fast substring check first — avoids fuzz entirely for exact/simple matches
-            if pattern in note_lower:
-                matching_paths.add(path)
-            elif fuzz.partial_ratio(pattern, note_lower) >= fuzz_threshold:
+            if (
+                pattern in note_lower
+                or fuzz.partial_ratio(pattern, note_lower) >= fuzz_threshold
+            ):
                 matching_paths.add(path)
 
         # Cache result for this pattern

@@ -12,8 +12,9 @@ from __future__ import annotations
 import datetime
 import json
 import time
+from collections.abc import Callable
 from pathlib import Path
-from typing import TYPE_CHECKING, Callable, cast
+from typing import TYPE_CHECKING, cast
 
 from github import Github, Repository
 from loguru import logger
@@ -209,7 +210,7 @@ class DatabaseUploadHandler:
                     ),
                 ).exec()
                 return
-        except (json.JSONDecodeError, IOError) as e:
+        except (OSError, json.JSONDecodeError) as e:
             logger.error(f"Failed to parse database file: {e}")
             InformationBox(
                 title=self._tr("Database parse error"),
@@ -218,9 +219,7 @@ class DatabaseUploadHandler:
             ).exec()
             return
 
-        timezone_abbreviation = (
-            datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
-        )
+        timezone_abbreviation = datetime.datetime.now(datetime.UTC).astimezone().tzinfo
         database_version_human_readable = (
             time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(database_version))
             + f" {timezone_abbreviation}"

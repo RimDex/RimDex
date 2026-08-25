@@ -10,17 +10,18 @@ import os
 import subprocess
 import sys
 import webbrowser
+from collections.abc import Callable
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 import requests
 from loguru import logger
 from PySide6.QtCore import QCoreApplication
 from PySide6.QtWidgets import QApplication
 
-import app.ui.dialogue as dialogue
 from app.core.app_info import AppInfo
 from app.net import http
+from app.ui import dialogue
 
 
 def copy_to_clipboard_safely(text: str) -> None:

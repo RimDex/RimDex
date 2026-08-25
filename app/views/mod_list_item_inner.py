@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, cast
+from typing import cast
 
 from loguru import logger
 from PySide6.QtCore import (
@@ -52,7 +52,7 @@ class ModListItemInner(QWidget):
         mod_color: QColor,
         metadata_controller: MetadataController | None = None,
     ) -> None:
-        super(ModListItemInner, self).__init__()
+        super().__init__()
 
         self.setAttribute(Qt.WidgetAttribute.WA_Hover)
         self._selected = False
@@ -546,7 +546,7 @@ class ModListItemInner(QWidget):
     def handle_mod_color_change(
         self, item: CustomListWidgetItem | None = None, init: bool = False
     ) -> None:
-        new_mod_color_name: Optional[str] = None
+        new_mod_color_name: str | None = None
         if init:
             if self.mod_color:
                 new_mod_color_name = self.mod_color.name()

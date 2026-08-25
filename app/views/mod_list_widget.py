@@ -87,7 +87,7 @@ class ModListWidget(  # pyright: ignore[reportIncompatibleMethodOverride]
 
         self.settings = settings
 
-        super(ModListWidget, self).__init__()
+        super().__init__()
 
         # Track when a custom widget (ModListItemInner) is selected/not selected
         self.selectionModel().selectionChanged.connect(self.on_selection_changed)

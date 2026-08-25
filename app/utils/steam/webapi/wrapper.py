@@ -9,7 +9,7 @@ from math import ceil
 from multiprocessing import Lock, Pool, cpu_count
 from threading import Event
 from time import sleep, time
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 from urllib.parse import urlparse
 
 import requests
@@ -51,7 +51,7 @@ class CollectionImport:
     Class to handle importing workshop collection links and extracting package IDs.
     """
 
-    def __init__(self, metadata_controller: "MetadataProvider") -> None:
+    def __init__(self, metadata_controller: MetadataProvider) -> None:
         """
         Initialize the CollectionImport instance.
 
@@ -181,9 +181,7 @@ class CollectionImport:
                         details="\n".join(failed_mods),
                     )
         except Exception as e:
-            logger.error(
-                f"An error occurred while fetching collection content: {str(e)}"
-            )
+            logger.error(f"An error occurred while fetching collection content: {e!s}")
 
     def _get_package_id_from_pfid(self, pfid: str | int | None) -> str | None:
         """Map published id to package id if possible
@@ -246,7 +244,7 @@ class CollectionImport:
 
 def _find_value_in_dict(coll: dict[str, Any], key: str) -> Any:
     key = key.strip().lower()
-    key_found = next((_ for _ in coll.keys() if _.strip().lower() == key), None)
+    key_found = next((_ for _ in coll if _.strip().lower() == key), None)
     if not key_found:
         return None
     return coll.get(key_found)
@@ -271,7 +269,7 @@ class DynamicQuery(QObject):
         appid: int,
         get_appid_deps: bool = False,
         life: int = 0,
-        callback: Optional[Callable[[str], None]] = None,
+        callback: Callable[[str], None] | None = None,
         output_database_path: str = "",
     ) -> None:
         QObject.__init__(self)
@@ -796,11 +794,11 @@ class DynamicQuery(QObject):
                 # Since this is only run during the initial loop, we print out the 0
                 # needed for RunnerPanel progress bar calculations
                 self._emit_message(
-                    "IPublishedFileService/QueryFiles page [0" + f"/{str(self.pages)}]"
+                    "IPublishedFileService/QueryFiles page [0" + f"/{self.pages!s}]"
                 )
         self._emit_message(
-            f"IPublishedFileService/QueryFiles page [{str(self.pagenum)}"
-            + f"/{str(self.pages)}]"
+            f"IPublishedFileService/QueryFiles page [{self.pagenum!s}"
+            + f"/{self.pages!s}]"
         )
         ids_from_page = []
         for item in response_data.get("publishedfiledetails", []):
@@ -833,7 +831,7 @@ class DynamicQuery(QObject):
         self,
         publishedfileids: list[str],
         query: dict[str, Any],
-        pool: "MultiprocessingPool",
+        pool: MultiprocessingPool,
     ) -> dict[int, list[int]]:
         """
         Run Steamworks GetAppDependencies for a batch of pfids using
@@ -911,7 +909,7 @@ class DynamicQuery(QObject):
         self,
         publishedfileids: list[str],
         query: dict[str, Any],
-        pool: "MultiprocessingPool",
+        pool: MultiprocessingPool,
     ) -> None:
         """
         Run Steamworks GetAppDependencies and merge results into query.
@@ -950,7 +948,7 @@ def ISteamRemoteStorage_GetCollectionDetails(
             f"Querying details for {len(chunk)} collection(s) via Steam WebAPI"
         )
         # Construct arguments to pass to the API call
-        data = {"collectioncount": f"{str(len(chunk))}"}
+        data = {"collectioncount": f"{len(chunk)!s}"}
         for publishedfileid in chunk:
             count = chunk.index(publishedfileid)
             data[f"publishedfileids[{count}]"] = publishedfileid

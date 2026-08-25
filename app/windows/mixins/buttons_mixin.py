@@ -6,8 +6,9 @@ delete, custom, and the centralized config-driven dispatcher.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from functools import partial
-from typing import Any, Callable
+from typing import Any
 
 from PySide6.QtWidgets import QLabel, QPushButton
 

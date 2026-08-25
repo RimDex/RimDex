@@ -16,9 +16,9 @@ from loguru import logger
 from PySide6.QtCore import QProcess
 from PySide6.QtWidgets import QMessageBox
 
-import app.ui.dialogue as dialogue
 from app.core.app_info import AppInfo
 from app.core.ui_helpers import check_internet_connection, platform_specific_open
+from app.ui import dialogue
 from app.utils.steam.steambrowser.browser import SteamBrowser
 from app.utils.steam.workshop_utils import (
     WorkshopUpdateResult,

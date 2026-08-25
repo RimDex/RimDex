@@ -12,9 +12,10 @@ import re
 import subprocess
 import tempfile
 from collections import Counter
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Callable, List, Optional
+from typing import Any
 
 import lxml.etree as ET
 from loguru import logger
@@ -62,7 +63,7 @@ def save_ts_file(tree: Any, file_path: Path) -> None:
         raise
 
 
-def get_translation_languages() -> List[str]:
+def get_translation_languages() -> list[str]:
     """Return sorted language codes from .ts files, excluding ``en_US``."""
     return sorted(f.stem for f in LOCALES_DIR.glob("*.ts") if f.stem != "en_US")
 
@@ -79,7 +80,7 @@ class UnfinishedItem:
     element: Any
 
 
-def find_unfinished_translations(tree: Any) -> List[UnfinishedItem]:
+def find_unfinished_translations(tree: Any) -> list[UnfinishedItem]:
     """Find all unfinished or empty translation entries in a .ts tree."""
     unfinished: list[UnfinishedItem] = []
     root = tree.getroot()
@@ -136,14 +137,14 @@ def should_skip_translation(text: str) -> bool:
 # ---------------------------------------------------------------------------
 
 
-def validate_translation(language: Optional[str] = None) -> tuple[List[str], int]:
+def validate_translation(language: str | None = None) -> tuple[list[str], int]:
     """Validate and repair a .ts file.  Returns ``(issues, fixed_count)``.
 
     Checks for: missing ``language`` attribute, placeholder mismatches,
     and HTML-tag mismatches.  Auto-fixes where possible and saves the file.
     """
     languages = [language] if language else get_translation_languages()
-    all_issues: List[str] = []
+    all_issues: list[str] = []
     total_fixed = 0
 
     for lang in languages:
@@ -155,7 +156,7 @@ def validate_translation(language: Optional[str] = None) -> tuple[List[str], int
         try:
             tree = ET.parse(str(ts_file))
             root = tree.getroot()
-            issues: List[str] = []
+            issues: list[str] = []
             made_changes = False
 
             if root.tag != "TS":
@@ -225,7 +226,7 @@ def validate_translation(language: Optional[str] = None) -> tuple[List[str], int
 # ---------------------------------------------------------------------------
 
 
-def run_lupdate(language: Optional[str] = None) -> bool:
+def run_lupdate(language: str | None = None) -> bool:
     """Run ``pyside6-lupdate`` to sync .ts files with source strings."""
     try:
         cmd = ["pyside6-lupdate"]
@@ -268,7 +269,7 @@ def run_lupdate(language: Optional[str] = None) -> bool:
         return False
 
 
-def run_lrelease(language: Optional[str] = None) -> bool:
+def run_lrelease(language: str | None = None) -> bool:
     """Run ``pyside6-lrelease`` to compile .ts → .qm."""
     try:
         if not LOCALES_DIR.exists():
@@ -344,9 +345,9 @@ async def translate_language_batch(
     lang_code: str,
     service: Any,
     *,
-    on_progress: "Callable[[str], None] | None" = None,
-    on_item_done: "Callable[[int, str, str], None] | None" = None,
-    on_error: "Callable[[str], None] | None" = None,
+    on_progress: Callable[[str], None] | None = None,
+    on_item_done: Callable[[int, str, str], None] | None = None,
+    on_error: Callable[[str], None] | None = None,
 ) -> tuple[int, int]:
     """Translate all unfinished entries for one language.
 

@@ -1,7 +1,6 @@
 import os
 import sys
 from pathlib import Path
-from typing import Union
 
 from loguru import logger
 from PySide6.QtCore import (
@@ -61,7 +60,7 @@ def show_dialogue_conditional(
     details: str | None = None,
     button_text_override: list[str] | None = None,
     parent: QWidget | None = None,
-) -> Union[str, QMessageBox.StandardButton]:
+) -> str | QMessageBox.StandardButton:
     """
     Displays a dialogue, prompting the user for input
 
@@ -836,7 +835,7 @@ def _setup_error_icon(
     diag: QDialog, details_btn: QPushButton | None = None
 ) -> QVBoxLayout:
     l_layout = QVBoxLayout()
-    piximap = getattr(QStyle, "SP_MessageBoxCritical")
+    piximap = QStyle.SP_MessageBoxCritical
     icon = diag.style().standardIcon(piximap)
     label = QLabel()
     label.setPixmap(icon.pixmap(64, 64))
