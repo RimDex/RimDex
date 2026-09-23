@@ -114,7 +114,7 @@ class UIBaseMixin(TrMixin, BaseModsPanelSurface):
         self.layouts.lower_layout.addLayout(self.layouts.editor_layout)
         self.setLayout(layout)
         # TODO(#3): let user configure window launch state and size. Single
-        # tracked issue for all panels — see Agent.md §8.3 (was duplicated 4x).
+        # tracked issue for all panels — see AGENTS.md §8.3 (was duplicated 4x).
         self.resize(900, 600)
 
     def _setup_table(self, additional_columns: Sequence[HeaderColumn]) -> None:

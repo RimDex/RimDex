@@ -56,7 +56,7 @@ class DuplicateModsPanel(BaseModsPanel):
         # Sorting is disabled by default in _setup_table_and_model
 
         # TODO(#3): let user configure window launch state and size. Single
-        # tracked issue for all panels — see Agent.md §8.3 (was duplicated 4x).
+        # tracked issue for all panels — see AGENTS.md §8.3 (was duplicated 4x).
         self.showNormal()
 
     def _populate_from_metadata(self) -> None:

@@ -1,7 +1,7 @@
 """UI/status reporting layer for git operations.
 
 This module is the "UI" half of the ``git_utils`` split recommended in
-``TODO.md`` (P1 — split ``git/git_utils.py`` (operations vs. UI/status
+``AGENTS.md`` (P1 — split ``git/git_utils.py`` (operations vs. UI/status
 reporting)).  It owns:
 
 * the user-facing exception type (:class:`GitError`),
