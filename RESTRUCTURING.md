@@ -247,12 +247,14 @@ sub-feature splits, the last untested leaf modules, and the 3 un-audited
 All checks/tests are driven by `just` recipes (see `justfile`):
 
 - `just check` — Windows quality gate: typecheck (mypy) + pyright + jscpd (0% dup)
-  + deferred-imports + layer-check + i18n-check. **Keep it green on every change.**
+  + ruff + ruff-format + deferred-imports + layer-check + i18n-check.
+  **Keep it green on every change.**
 - `just layer-check` — runs `check_layer_violations.py` (P0 leaf-layer guard).
 - `just deferred-imports` — circular-import regression guard
   (`check_deferred_imports.py`).
 - `just typecheck` / `just pyright` — the P2 typing work is verified here.
-- `just ruff` — import sorting/formatting; run after any file move/split.
+- `just ruff` / `just ruff-format` — check-only import sorting/formatting; run
+  after any file move/split. Use `just fix` to apply.
 - `just test` / `just test-coverage` — full suite; `test-coverage` emits
   `--cov=app` XML/HTML.
 - `just ci` — `check` + `test-coverage` + `cov-gate` (full local CI simulation).
@@ -262,7 +264,7 @@ All checks/tests are driven by `just` recipes (see `justfile`):
   via the CLI (`translate run-all`; pass flags with `ARGS`).
 
 Unix CI additionally runs `super-lint` (super-linter container: ruff, ruff-format,
-jscpd, bash, json, yaml, checkov, gitleaks) via `just check`.
+jscpd, bash, json, yaml, markdown, checkov, gitleaks) via `just check`.
 
 ### 4.1 Full recipe index
 

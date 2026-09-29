@@ -38,7 +38,7 @@ Never run `uv lock --upgrade` (== `just update`) as part of a task — dependenc
 
 ## Code Quality (MUST pass before finishing)
 
-`just check` runs the quality gate. On **Windows** it is `typecheck` + `pyright` + `jscpd` + `deferred-imports` + `layer-check` + `i18n-check`; on **Unix** it is `super-lint` (container: ruff, ruff-format, jscpd, bash, json, yaml, checkov, gitleaks) + `typecheck` + `pyright`. `just fix` auto-fixes ruff check/format, shfmt, and markdownlint.
+`just check` runs the quality gate. On **Windows** it is `typecheck` + `pyright` + `jscpd` + `ruff` + `ruff-format` + `deferred-imports` + `layer-check` + `i18n-check`; on **Unix** it is `super-lint` (container: ruff, ruff-format, jscpd, bash, json, yaml, markdown, checkov, gitleaks) + `typecheck` + `pyright`. `just fix` auto-fixes ruff check/format, shfmt, and markdownlint.
 
 | Command | Purpose |
 | --- | --- |
@@ -48,9 +48,13 @@ Never run `uv lock --upgrade` (== `just update`) as part of a task — dependenc
 | `just deferred-imports` | Guard against new function-local `from app…` imports (see Traps) |
 | `just layer-check` | Guard: `models/`, `services/`, `utils/*` must not import `views`/`controllers`/`windows` (see Traps) |
 | `just i18n-check` | Guard: `self.tr(...)` only on QObject classes; `pyside6-lupdate`-extractable patterns only (see i18n) |
-| `just ruff` | Ruff auto-fix (`ruff check --fix` + `ruff format`) |
-| `just markdownlint-fix` | Markdown lint fix for root `*.md` + `docs/**` (`.markdownlint-cli2.jsonc`) |
-| `just shfmt-fix` | Shell script formatting (Windows downloads shfmt into `.tools/`) |
+| `just ruff` | Ruff lint check (`ruff check`, no writes) |
+| `just ruff-format` | Ruff format check (`ruff format --check`, no writes) |
+| `just markdownlint` | Markdown lint check for root `*.md` + `docs/**` (rules in `.markdownlint.json`) |
+| `just shfmt` | Shell script format check (Unix only — Windows `autocrlf` checkouts make every `.sh` differ; CI enforces it on Linux) |
+| `just fix` | Auto-fix: `ruff-fix` + `ruff-format-fix` + `shfmt-fix` + `markdownlint-fix` |
+
+`just ruff`, `just ruff-format`, `just markdownlint`, and `just shfmt` are **check-only** recipes — they never write. Use `just fix` (or the individual `*-fix` recipes) to apply changes.
 
 Run at minimum `just fix` + `just test` + `just typecheck` + `just pyright` + `just layer-check` + `just i18n-check` (or the full Windows `just check`, then `just test`) and get everything green before declaring a change complete. CI runs ruff, mypy, pyright, jscpd, and pytest on ubuntu/macos/windows.
 

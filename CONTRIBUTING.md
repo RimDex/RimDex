@@ -15,11 +15,12 @@ Before finalizing your PR, please read through the [Development Guide](https://g
 ## Development tooling
 
 All checks and tests are driven by `just` recipes (see `justfile`). Keep the
-quality gate green: `just check` (typecheck mypy + pyright + jscpd +
-deferred-imports + layer-check + i18n-check on Windows; super-lint + typecheck +
-pyright on Unix). The mandatory contributor guardrails live in `AGENTS.md`
-(Code Quality, Definition of Done, Traps) — run `just check` after every
-implementation and avoid `# type: ignore` unless genuinely necessary.
+quality gate green: `just check` (typecheck mypy + pyright + jscpd + ruff +
+ruff-format + deferred-imports + layer-check + i18n-check on Windows;
+super-lint + typecheck + pyright on Unix). The mandatory contributor guardrails
+live in `AGENTS.md` (Code Quality, Definition of Done, Traps) — run `just check`
+after every implementation and avoid `# type: ignore` unless genuinely
+necessary.
 
 ### Recipe index
 
@@ -45,12 +46,19 @@ implementation and avoid `# type: ignore` unless genuinely necessary.
 - `just submodules-init` — `git submodule update --init --recursive`.
 - `just install-hooks` — point git `core.hooksPath` at `.githooks`.
 
+**Lint / format (check-only)**
+
+- `just ruff` — `ruff check` (no writes).
+- `just ruff-format` — `ruff format --check` (no writes).
+- `just markdownlint` — markdownlint check over root `*.md` + `docs/**`.
+- `just shfmt` — check shell script formatting with `shfmt` (Unix only; Windows `autocrlf` checkouts make every `.sh` differ).
+
 **Lint / format (auto-fix)**
 
-- `just fix` — `ruff` + `shfmt-fix` + `markdownlint-fix`.
+- `just fix` — `ruff-fix` + `ruff-format-fix` + `shfmt-fix` + `markdownlint-fix`.
 - `just ruff-fix` — `ruff check --fix`.
 - `just ruff-format-fix` — `ruff format`.
-- `just markdownlint-fix` — `npx markdownlint-cli2 --fix`.
+- `just markdownlint-fix` — `npx --yes markdownlint-cli2 --fix`.
 - `just shfmt-fix` — format shell scripts with `shfmt` (unix: `fd`; windows: downloads shfmt).
 
 **i18n**
@@ -63,6 +71,6 @@ implementation and avoid `# type: ignore` unless genuinely necessary.
 **CI / gate**
 
 - `just ci` — `check` + test-coverage + `cov-gate` (full local CI simulation).
-- `just check` — quality gate (Windows: typecheck + pyright + jscpd +
-  deferred-imports + layer-check + i18n-check; Unix: super-lint + typecheck +
-  pyright).
+- `just check` — quality gate (Windows: typecheck + pyright + jscpd + ruff +
+  ruff-format + deferred-imports + layer-check + i18n-check; Unix:
+  super-lint + typecheck + pyright).
