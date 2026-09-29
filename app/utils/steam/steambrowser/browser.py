@@ -5,7 +5,7 @@ from functools import partial
 from pathlib import Path
 
 from loguru import logger
-from PySide6.QtCore import QPoint, Qt, QUrl
+from PySide6.QtCore import QPoint, Qt, QUrl, Signal
 from PySide6.QtGui import QAction, QCloseEvent, QPixmap
 from PySide6.QtWebChannel import QWebChannel
 from PySide6.QtWebEngineCore import QWebEnginePage, QWebEngineProfile, QWebEngineScript
@@ -48,6 +48,11 @@ class SteamBrowser(QWidget):
     """
     A generic panel used to browse Workshop content — downloader included.
     """
+
+    # Emitted from closeEvent before the window tears itself down, so callers
+    # can preserve the downloader wait-list regardless of what triggered the
+    # close (programmatic .close() or the user closing the window).
+    about_to_close = Signal()
 
     web_view: QWebEngineView | None
     web_profile: QWebEngineProfile | None
@@ -325,6 +330,22 @@ class SteamBrowser(QWidget):
     def _clear_downloader_list(self) -> None:
         if self.download_list_mgr:
             self.download_list_mgr.clear()
+
+    def get_download_list_snapshot(self) -> dict[str, str]:
+        """Capture the downloader wait-list as {publishedfileid: title}."""
+        if self.download_list_mgr is None:
+            return {}
+        return self.download_list_mgr.get_download_list_snapshot()
+
+    def restore_download_list(self, snapshot: dict[str, str]) -> None:
+        """Re-populate the downloader wait-list from a captured snapshot."""
+        if self.download_list_mgr is not None:
+            self.download_list_mgr.restore_download_list(snapshot)
+
+    def remove_mod_if_queued(self, publishedfileid: str) -> None:
+        """Remove a mod from the downloader list if it is currently queued."""
+        if self.download_list_mgr is not None:
+            self.download_list_mgr.remove_mod_if_queued(publishedfileid)
 
     def _open_mod_url(self, publishedfileid: str) -> None:
         if self.web_view:
@@ -620,6 +641,7 @@ class SteamBrowser(QWidget):
 
     def closeEvent(self, event: QCloseEvent) -> None:
         logger.debug("Cleaning up SteamBrowser resources...")
+        self.about_to_close.emit()
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
 
         if self.web_view is not None:
