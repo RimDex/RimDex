@@ -13,10 +13,11 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 from loguru import logger
-from PySide6.QtCore import QProcess
-from PySide6.QtWidgets import QMessageBox
+from PySide6.QtCore import QProcess, QUrl
+from PySide6.QtWidgets import QMessageBox, QWidget
 
 from app.core.app_info import AppInfo
+from app.core.event_bus import EventBus
 from app.core.ui_helpers import check_internet_connection, platform_specific_open
 from app.ui import dialogue
 from app.utils.steam.steambrowser.browser import SteamBrowser
@@ -40,6 +41,7 @@ class SteamHandler:
     def __init__(self, settings: Settings, panel: MainContent) -> None:
         self._settings = settings
         self._panel = panel
+        self._workshop_restore_target: QWidget | None = None
 
     def do_import_steamcmd_acf_data(self) -> None:
         """Import an ACF file to replace the current SteamCMD ACF data."""
@@ -155,9 +157,29 @@ class SteamHandler:
         self.do_browse_workshop_url("https://steamcommunity.com/app/294100/workshop/")
 
     def do_browse_workshop_url(self, url: str) -> None:
-        if self._panel.steam_browser:
-            self._panel.steam_browser.close()
-            self._panel.steam_browser.deleteLater()
+        restore_target = EventBus().workshop_restore_target
+        EventBus().workshop_restore_target = None
+
+        if self._panel.steam_browser is not None:
+            # Reuse the live browser rather than tearing down the web engine,
+            # so page/scroll state survives and the window keeps focus.
+            try:
+                self._panel.steam_browser.destroyed.disconnect(
+                    self._on_steam_browser_restore
+                )
+            except (TypeError, RuntimeError):
+                pass
+            self._workshop_restore_target = restore_target
+            assert self._panel.steam_browser.web_view is not None
+            self._panel.steam_browser.web_view.load(QUrl(url))
+            self._panel.steam_browser.show()
+            self._panel.steam_browser.raise_()
+            self._panel.steam_browser.activateWindow()
+            if self._workshop_restore_target is not None:
+                self._panel.steam_browser.destroyed.connect(
+                    self._on_steam_browser_restore
+                )
+            return
 
         self._panel.steam_browser = SteamBrowser(
             url,
@@ -165,11 +187,48 @@ class SteamHandler:
             self._settings,
         )
         self._panel.window_manager.register_attr(self._panel, "steam_browser")
+        self._panel.steam_browser.about_to_close.connect(self.snapshot_downloader_list)
+
+        if self._panel.pending_downloader_snapshot:
+            self._panel.steam_browser.restore_download_list(
+                self._panel.pending_downloader_snapshot
+            )
+            self._panel.pending_downloader_snapshot.clear()
+
+        self._workshop_restore_target = restore_target
 
         self._panel.steam_browser.destroyed.connect(
             lambda: setattr(self._panel, "steam_browser", None)
         )
+        if self._workshop_restore_target is not None:
+            self._panel.steam_browser.destroyed.connect(self._on_steam_browser_restore)
         self._panel.steam_browser.show()
+        self._panel.steam_browser.raise_()
+        self._panel.steam_browser.activateWindow()
+
+    def _on_steam_browser_restore(self) -> None:
+        """Bring back the dialog that hid itself before opening the browser."""
+        target = self._workshop_restore_target
+        self._workshop_restore_target = None
+        if target is None:
+            return
+        if not target.isVisible():
+            target.show()
+            target.raise_()
+            target.activateWindow()
+
+    def snapshot_downloader_list(self) -> None:
+        """Capture the browser's current wait-list before it tears down."""
+        if self._panel.steam_browser is not None:
+            self._panel.pending_downloader_snapshot.update(
+                self._panel.steam_browser.get_download_list_snapshot()
+            )
+
+    def on_steamcmd_mod_download_succeeded(self, publishedfileid: str) -> None:
+        """Drop a downloaded mod from the preserved or live wait-list."""
+        self._panel.pending_downloader_snapshot.pop(publishedfileid, None)
+        if self._panel.steam_browser is not None:
+            self._panel.steam_browser.remove_mod_if_queued(publishedfileid)
 
     def do_check_for_workshop_updates(self) -> None:
         if not check_internet_connection():
@@ -318,7 +377,24 @@ class SteamHandler:
                 ),
             )
 
+    def download_single_workshop_mod(self, publishedfileid: str) -> None:
+        """Download one Workshop mod, setting SteamCMD up first if needed.
+
+        The per-dependency Download button can fire on a fresh install where
+        SteamCMD was never set up, so the setup step has to run on demand.
+        """
+        wrapper = self._panel.steamcmd_wrapper
+        if not wrapper.setup:
+            self.do_setup_steamcmd()
+            if not wrapper.setup:
+                return
+        self.do_download_mods_with_steamcmd([publishedfileid])
+
     def do_download_mods_with_steamcmd(self, publishedfileids: list[str]) -> None:
+        # Copy defensively: this can be the same list object as
+        # SteamBrowser.downloader_list_mods_tracking (the download button emits
+        # it directly), which gets cleared when we close the browser below.
+        publishedfileids = list(publishedfileids)
         logger.debug(
             f"Attempting to download {len(publishedfileids)} mods with SteamCMD"
         )
@@ -381,8 +457,14 @@ class SteamHandler:
         logger.info(f"Validating mods with instruction: {instruction}")
         platform_specific_open(f"steam://validate/294100/{instruction[1]}")
 
-    def do_steamworks_api_call(self, instruction: list[Any]) -> None:
-        """Create & launch Steamworks API process to handle instructions received from connected signals."""
+    def do_steamworks_api_call(self, instruction: list[Any]) -> bool:
+        """Create & launch Steamworks API process to handle instructions received from connected signals.
+
+        :return: True if the instruction was dispatched to Steamworks, False if
+            it was skipped (Steam unavailable, already busy, unsupported
+            instruction, etc.) - callers use this to know whether it's safe to
+            treat the instruction's mods as handled.
+        """
         from app.utils.steam.availability import check_steam_available
         from app.utils.steam.steamworks.wrapper import (
             SteamworksGameLaunch,
@@ -394,7 +476,7 @@ class SteamHandler:
         if not self._panel.steamworks_in_use:
             if not check_steam_available(_libs=libs_path):
                 logger.error("Steam is not available, skipping Steamworks API call")
-                return
+                return False
             subscription_actions = ["resubscribe", "subscribe", "unsubscribe"]
             supported_actions = ["launch_game_process"]
             supported_actions.extend(subscription_actions)
@@ -415,6 +497,7 @@ class SteamHandler:
                         f"Steamworks API process wrapper completed for PID: {steamworks_api_process.pid}"
                     )
                     self._panel.steamworks_in_use = False
+                    return True
                 elif (
                     instruction[0] in subscription_actions and len(instruction[1]) >= 1
                 ):
@@ -433,17 +516,20 @@ class SteamHandler:
                     handler.start()
                     handler.join()
                     self._panel.steamworks_in_use = False
+                    return True
                 else:
                     logger.warning(
                         "Skipping Steamworks API call - only 1 Steamworks API initialization allowed at a time!!"
                     )
+                    return False
             else:
                 logger.error(f"Unsupported instruction {instruction}")
-                return
+                return False
         else:
             logger.warning(
                 "Steamworks API is already initialized! We do NOT want multiple interactions. Skipping instruction..."
             )
+            return False
 
     def do_steamworks_api_call_animated(
         self, instruction: list[list[str] | str]
@@ -463,12 +549,21 @@ class SteamHandler:
             return
         if self._panel.steam_browser:
             self._panel.steam_browser.close()
-        self._panel.do_threaded_loading_animation(
+        dispatched = self._panel.do_threaded_loading_animation(
             gif_path=str(AppInfo().theme_data_folder / "default-icons" / "steam.gif"),
             target=partial(self.do_steamworks_api_call, instruction=instruction),
             text=self._panel.tr(
                 "Processing Steam subscription action(s) via Steamworks API..."
             ),
         )
+        # Steamworks subscribe/unsubscribe has no granular per-mod
+        # success/failure reporting like SteamCMD does, so only whether the
+        # call was dispatched at all can be known (e.g. it is skipped outright
+        # if Steam isn't available). Only then treat every mod in it as
+        # handled; otherwise keep preserving them so a silent failure doesn't
+        # discard them.
+        if dispatched:
+            for publishedfileid in publishedfileids:
+                self._panel.pending_downloader_snapshot.pop(str(publishedfileid), None)
         # Do a full refresh of metadata and UI
         self._panel._do_refresh()

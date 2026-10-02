@@ -23,6 +23,8 @@ RimDex supports updating of mods installed via SteamCMD, meaning that you can ha
 
 ## Setting up SteamCMD
 
+On Linux, RimDex keeps SteamCMD's user configuration in a dedicated `home` directory inside the configured SteamCMD prefix. This prevents SteamCMD from changing the desktop Steam client's library configuration.
+
 ## Using the Workshop Browser
 
 ## Updating SteamCMD Mods

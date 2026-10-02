@@ -1566,6 +1566,7 @@ This basically preserves your mod coloring, user notes etc. for this many second
         db_expiry_group_layout.addWidget(database_expiry_label)
 
         self.database_expiry = self._style_line_edit(QLineEdit())
+        self.database_expiry.setValidator(QIntValidator())
         db_expiry_group_layout.addWidget(self.database_expiry)
 
         # === Authentication group ===

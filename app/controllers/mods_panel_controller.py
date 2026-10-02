@@ -370,7 +370,7 @@ class ModsPanelController(QObject):
             )
             stmt = (
                 delete(AuxMetadataEntry)
-                .where(AuxMetadataEntry.outdated)
+                .where(AuxMetadataEntry.outdated.is_(True))
                 .where(AuxMetadataEntry.db_time_touched < limit)
             )
             aux_metadata_session.execute(stmt)

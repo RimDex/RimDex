@@ -48,12 +48,15 @@ from app.core.update_utils import UpdateManager
 from app.io.files import create_backup_in_thread
 from app.io.json_utils import atomic_json_dump
 from app.io.zip_extractor import ZipExtractThread
+from app.models.instance import Instance
 from app.models.metadata.metadata_structure import AboutXmlMod, ModType
 from app.models.settings import Settings
 from app.mods.db_builder import DatabaseBuilder
 from app.net import http
+from app.services.dependency_resolver import build_dependencies_dialog_context
 from app.services.import_export_service import ImportExportService
 from app.services.modlist_history_service import ModlistHistoryService
+from app.services.path_autodetect_service import PathAutodetectService
 from app.services.window_manager import WindowManager
 from app.sort.mod_sorting import ModsPanelSortKey
 from app.ui import dialogue
@@ -124,6 +127,7 @@ class MainContent(QObject):
     def _init_services(self) -> None:
         self.db_builder = DatabaseBuilder(self.settings)
         self.steam_browser: SteamBrowser | None = None
+        self.pending_downloader_snapshot: dict[str, str] = {}
         self.steamcmd_runner: RunnerPanel | None = None
         self.steamcmd_wrapper = SteamcmdInterface.instance()
         self._import_export_service = ImportExportService(
@@ -238,6 +242,9 @@ class MainContent(QObject):
         )
 
         EventBus().do_steamcmd_download.connect(self._do_download_mods_with_steamcmd)
+        EventBus().steamcmd_mod_download_succeeded.connect(
+            self._steam_handler.on_steamcmd_mod_download_succeeded
+        )
 
         EventBus().do_steamworks_api_call.connect(self._do_steamworks_api_call_animated)
 
@@ -362,6 +369,62 @@ class MainContent(QObject):
         """Force Refresh metadata cache"""
         self.metadata_controller.refresh_metadata()
 
+    @staticmethod
+    def _instance_essential_paths_ready(instance: Instance) -> bool:
+        """Check that game, config and local mods paths are set and exist."""
+        return bool(
+            instance.game_folder
+            and instance.config_folder
+            and instance.local_folder
+            and os.path.exists(instance.game_folder)
+            and os.path.exists(instance.config_folder)
+            and os.path.exists(instance.local_folder)
+        )
+
+    def _autodetect_missing_essential_paths(self) -> bool:
+        """Silently auto-fill missing essential paths for the current instance.
+
+        Runs the platform path autodetection once and fills ONLY instance
+        fields that are empty with paths that actually exist, mirroring the
+        Autodetect button in the settings dialog, which never overwrites
+        existing values. Steam-integration checkboxes are intentionally left
+        untouched; the workshop path is only filled when it exists, so GOG
+        and other DRM-free installs stay clean.
+
+        :return: True when at least one path was filled and settings were saved.
+        """
+        autodetect = PathAutodetectService()
+        operating_system = SystemInfo().operating_system
+        if operating_system == SystemInfo.OperatingSystem.MACOS:
+            game_folder, config_folder, workshop_folder = autodetect.get_darwin_paths()
+        elif operating_system == SystemInfo.OperatingSystem.LINUX:
+            game_folder, config_folder, workshop_folder = autodetect.get_linux_paths()
+        elif operating_system == SystemInfo.OperatingSystem.WINDOWS:
+            game_folder, config_folder, workshop_folder = autodetect.get_windows_paths()
+        else:
+            logger.error("Cannot autodetect paths on an unknown operating system")
+            return False
+
+        instance = self.settings.instances[self.settings.current_instance]
+        candidate_paths = {
+            "game_folder": game_folder,
+            "config_folder": config_folder,
+            "local_folder": game_folder / "Mods",
+            "workshop_folder": workshop_folder,
+        }
+        changed = False
+        for field, detected_path in candidate_paths.items():
+            current_value = getattr(instance, field, "")
+            if (not current_value) and detected_path.exists():
+                logger.info(
+                    f"Auto-filling empty {field} with auto-detected path: {detected_path}"
+                )
+                setattr(instance, field, str(detected_path))
+                changed = True
+        if changed:
+            self.settings.save()
+        return changed
+
     def check_if_essential_paths_are_set(self, prompt: bool = True) -> bool:
         """
         When the user starts the app for the first time, none
@@ -376,39 +439,47 @@ class MainContent(QObject):
         logger.info(f"Game folder: {game_folder_path}")
         logger.info(f"Config folder: {config_folder_path}")
         logger.info(f"Local mods folder: {local_mods_folder_path}")
-        if (
-            game_folder_path
-            and config_folder_path
-            and local_mods_folder_path
-            and os.path.exists(game_folder_path)
-            and os.path.exists(config_folder_path)
-            and os.path.exists(local_mods_folder_path)
+        if self._instance_essential_paths_ready(
+            self.settings.instances[current_instance]
         ):
             logger.info("Essential paths set!")
             return True
-        else:
-            logger.warning("Essential path(s) are invalid or not set!")
-            answer = dialogue.show_dialogue_conditional(
-                title=self.tr("Essential path(s)"),
-                text=self.tr("Essential path(s) are invalid or not set!"),
-                information=(
-                    self.tr(
-                        "RimDex requires the below paths to be set.<br/><br/>"
-                        "1) Game folder (Folder where RimWorld is installed).<br/><br/>"
-                        "2) Config folder (Folder where ModsConfig.xml is located)<br/><br/>"
-                        "3) Local mods folder (Mods folder inside the RimWorld installation).<br/><br/>"
-                        "4) Steam mods folder (Only set if you use Steam user also enable Steam Client Integration)<br/><br/>"
-                        "Try Using the autodetect functionality to set all paths automatically.<br/><br/>"
-                        "Would you like to open the settings to configure them now?"
-                    )
-                ),
-            )
-            if (
-                answer == QMessageBox.StandardButton.Yes
-                and self._show_settings_dialog is not None
+
+        logger.warning("Essential path(s) are invalid or not set!")
+
+        # First-run convenience: silently run path autodetection and save any
+        # missing essential paths before bothering the user. Deliberate
+        # "Clear All Locations" flows reach the non-prompting refresh path
+        # (prompt=False) and are not affected by this.
+        if prompt:
+            self._autodetect_missing_essential_paths()
+            if self._instance_essential_paths_ready(
+                self.settings.instances[current_instance]
             ):
-                self._show_settings_dialog("Locations")
-            return False
+                logger.info("Essential paths were completed by silent autodetection")
+                return True
+
+        answer = dialogue.show_dialogue_conditional(
+            title=self.tr("Essential path(s)"),
+            text=self.tr("Essential path(s) are invalid or not set!"),
+            information=(
+                self.tr(
+                    "RimDex requires the below paths to be set.<br/><br/>"
+                    "1) Game folder (Folder where RimWorld is installed).<br/><br/>"
+                    "2) Config folder (Folder where ModsConfig.xml is located)<br/><br/>"
+                    "3) Local mods folder (Mods folder inside the RimWorld installation).<br/><br/>"
+                    "4) Steam mods folder (Only set if you use Steam user also enable Steam Client Integration)<br/><br/>"
+                    "Try Using the autodetect functionality to set all paths automatically.<br/><br/>"
+                    "Would you like to open the settings to configure them now?"
+                )
+            ),
+        )
+        if (
+            answer == QMessageBox.StandardButton.Yes
+            and self._show_settings_dialog is not None
+        ):
+            self._show_settings_dialog("Locations")
+        return False
 
     def ___get_relative_middle(self, some_list: ModListWidget) -> int:
         rect = some_list.contentsRect()
@@ -570,6 +641,8 @@ class MainContent(QObject):
             key=sort_key,
             descending=descending,
         )
+        self.mods_panel.active_mods_list.invalidate_save_comparison()
+        self.mods_panel.inactive_mods_list.invalidate_save_comparison()
         logger.info(
             f"Finished inserting mod data into active [{len(active_mods_uuids)}] and inactive [{len(inactive_mods_uuids)}] mod lists"
         )
@@ -960,25 +1033,24 @@ class MainContent(QObject):
 
         # Check for missing dependencies if enabled in settings and check_deps is True
         if check_deps and self.settings.check_dependencies_on_sort:
-            missing_deps = self.metadata_controller.get_missing_dependencies(
-                active_mods
-            )
+            # Delegate dependency classification + Workshop-ID resolution to the
+            # shared resolver so the sort path matches the mods-panel check and
+            # the dialog's Download buttons can actually resolve a Workshop ID.
+            (
+                deps_summary,
+                missing_deps,
+                dep_resolve,
+            ) = build_dependencies_dialog_context(self.metadata_controller, active_mods)
             if missing_deps:
                 dialog = MissingDependenciesDialog(
                     metadata_controller=self.metadata_controller
                 )
                 self.window_manager.register(dialog)
+                dialog.download_requested.connect(self._download_single_workshop_mod)
 
-                # Build a deps_summary from the missing deps for the dialog display
-                deps_summary: dict[str, dict[str, set[str]]] = {}
-                for mod_id, deps in missing_deps.items():
-                    deps_summary[mod_id] = {
-                        "satisfied": set(),
-                        "local": set(),
-                        "download": deps,
-                    }
-
-                selected_deps = dialog.show_dialog(deps_summary, missing_deps)
+                selected_deps = dialog.show_dialog(
+                    deps_summary, missing_deps, dep_resolve
+                )
 
                 if selected_deps:
                     # Add selected mods to active mods
@@ -1555,6 +1627,9 @@ class MainContent(QObject):
 
     def _do_download_mods_with_steamcmd(self, publishedfileids: list[str]) -> None:
         self._steam_handler.do_download_mods_with_steamcmd(publishedfileids)
+
+    def _download_single_workshop_mod(self, publishedfileid: str) -> None:
+        self._steam_handler.download_single_workshop_mod(publishedfileid)
 
     def _handle_steamworks_resubscribe(self, instruction: list[Any]) -> None:
         self._steam_handler.handle_steamworks_resubscribe(instruction)
