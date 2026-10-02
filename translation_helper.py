@@ -101,6 +101,18 @@ LOCALES_DIR = Path("locales")
 PLACEHOLDER_RE = re.compile(r"\{[^}]+\}")
 HTML_TAG_RE = re.compile(r"<[^>]+>")
 
+# Pre-compiled regex patterns for .ts file repair
+_TS_ENTITY_RE = re.compile(r"&\s+(#\w+|lt|gt|apos|amp|quot);")
+_TS_LT_RE = re.compile(r"<\s+")
+_TS_CLOSE_LT_RE = re.compile(r"</\s+")
+_TS_GT_RE = re.compile(r"\s+>")
+_TS_ATTR_RE = re.compile(r"<([^>]*)>")
+_TS_ATTR_EQ_RE = re.compile(r"\s*=\s*")
+_TS_STRIP_TEXT_RE = {
+    tag: re.compile(rf"(<{tag}>)(.*?)(</{tag}>)", re.DOTALL)
+    for tag in ("source", "name")
+}
+
 # Try to import googletrans library (optional dependency)
 try:
     from googletrans import Translator as GoogleTranslator
@@ -209,6 +221,38 @@ class TranslationConfig:
         return cls(retry_config, timeout_config, max_concurrent, use_cache)
 
 
+def atomic_write_text(file_path: Path, content: str, backup: bool = False) -> None:
+    """Write text to a file via a temp file, avoiding Windows file-locking.
+
+    lxml's parser can still hold a handle on the original file, so replacing
+    the file in place fails. Mirrors app/io/json_utils.py::atomic_json_dump.
+
+    :param file_path: Destination path.
+    :param content: Full text content to write.
+    :param backup: If True, copy the existing file to a ``.ts.bak`` sibling first.
+    """
+    if backup:
+        try:
+            shutil.copy2(file_path, file_path.with_suffix(".ts.bak"))
+        except OSError as e:
+            print(f"⚠️  Could not create backup for {file_path}: {e}")
+
+    dirpath = str(file_path.parent) or "."
+    fd, tmp_path = tempfile.mkstemp(suffix=".ts", dir=dirpath)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as tmp_f:
+            tmp_f.write(content)
+            tmp_f.flush()
+            os.fsync(fd)
+        os.replace(tmp_path, file_path)
+    except BaseException:
+        try:
+            os.unlink(tmp_path)
+        except OSError:
+            pass
+        raise
+
+
 def save_ts_file(tree: Any, file_path: Path) -> None:
     """Write an lxml ElementTree to a .ts file, preserving the DOCTYPE."""
     # Serialize to bytes first, then write — avoids [Errno 22] on Windows
@@ -225,20 +269,7 @@ def save_ts_file(tree: Any, file_path: Path) -> None:
     # where lxml's parser still holds a handle to the original file.
     # Pattern: app/io/json_utils.py::atomic_json_dump
 
-    dirpath = str(file_path.parent) or "."
-    fd, tmp_path = tempfile.mkstemp(suffix=".ts", dir=dirpath)
-    try:
-        with os.fdopen(fd, "w", encoding="utf-8") as tmp_f:
-            tmp_f.write(content)
-            tmp_f.flush()
-            os.fsync(fd)
-        os.replace(tmp_path, file_path)
-    except BaseException:
-        try:
-            os.unlink(tmp_path)
-        except OSError:
-            pass
-        raise
+    atomic_write_text(file_path, content)
 
 
 def _get_translation_languages() -> list[str]:
@@ -1420,12 +1451,170 @@ async def auto_translate_file(
     return all_success
 
 
+def validate_ts_xml(file_path: Path) -> bool:
+    """Validate that a .ts file is well-formed XML.
+
+    Args:
+        file_path: Path to the .ts file to validate.
+
+    Returns:
+        True if the file parses as valid XML, False otherwise.
+    """
+    try:
+        ET.parse(str(file_path))
+        return True
+    except (ET.XMLSyntaxError, OSError):
+        return False
+
+
+def _is_valid_xml_string(content: str) -> bool:
+    """Check if a string is well-formed XML.
+
+    Args:
+        content: XML content string to validate.
+
+    Returns:
+        True if the content parses as valid XML, False otherwise.
+    """
+    try:
+        ET.fromstring(content.encode("utf-8"))
+        return True
+    except ET.XMLSyntaxError:
+        return False
+
+
+def repair_ts_file(file_path: Path, backup: bool = False) -> bool:
+    """Repair a malformed Qt .ts file by fixing common XML corruption patterns.
+
+    Automatically fixes:
+
+    - Broken HTML entities (``& lt;`` -> ``&lt;``, ``& gt;`` -> ``&gt;``, etc.)
+    - Broken numeric character references (``& #xa0;`` -> ``&#xa0;``)
+    - Spaces inside XML tags (``< message >`` -> ``<message>``)
+    - Spaces around attribute equals signs (``type = "unfinished"`` -> ``type="unfinished"``)
+    - Trailing whitespace in ``<source>`` and ``<name>`` text content
+    - DOCTYPE trailing space (``<!DOCTYPE TS >`` -> ``<!DOCTYPE TS>``)
+    - Accumulated indentation (re-serialized with proper formatting)
+
+    The repair follows a minimal-diff strategy:
+
+    1. Apply regex fixes for all known corruption patterns.
+    2. Validate the regex-fixed result. If it is valid XML, write it back
+       directly (no re-serialization, minimal diff).
+    3. Only if the regex-fixed content is still invalid, parse with lxml
+       and re-serialize for clean indentation as a last resort.
+
+    Args:
+        file_path: Path to the .ts file to repair.
+        backup: If True, create a ``.bak`` copy of the file before writing
+            the repaired content.
+
+    Returns:
+        True if the file was repaired successfully, False otherwise.
+    """
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            content = f.read()
+    except OSError as e:
+        print(f"❌ Could not read {file_path}: {e}")
+        return False
+
+    # 1. Fix broken HTML entities and numeric character references
+    # Handles: & lt; -> &lt;, & apos; -> &apos;, & #xa0; -> &#xa0;
+    content = _TS_ENTITY_RE.sub(r"&\1;", content)
+
+    # 2. Remove spaces immediately after < (handles < message -> <message)
+    content = _TS_LT_RE.sub("<", content)
+
+    # 3. Remove spaces immediately after </ (handles </ source -> </source)
+    content = _TS_CLOSE_LT_RE.sub("</", content)
+
+    # 4. Remove spaces immediately before >
+    # Handles: message >, "utf-8" ?>, <!DOCTYPE TS >
+    content = _TS_GT_RE.sub(">", content)
+
+    # 5. Fix spaces around = in attributes (only within tags, not in text content)
+    # Handles: type = "unfinished" -> type="unfinished", type= "unfinished" -> type="unfinished"
+    content = _TS_ATTR_RE.sub(
+        lambda m: "<" + _TS_ATTR_EQ_RE.sub("=", m.group(1)) + ">",
+        content,
+    )
+
+    # 6. Strip trailing/leading whitespace from text content in key elements
+    for pattern in _TS_STRIP_TEXT_RE.values():
+        content = pattern.sub(
+            lambda m: m.group(1) + m.group(2).strip() + m.group(3),
+            content,
+        )
+
+    # 7. Smart re-serialization: only re-serialize if regex-fixed content
+    #    is still not valid XML (e.g. deeply corrupted indentation)
+    if not _is_valid_xml_string(content):
+        try:
+            parser = ET.XMLParser(remove_blank_text=True)
+            tree = ET.fromstring(content.encode("utf-8"), parser)
+
+            xml_bytes = ET.tostring(
+                tree, encoding="utf-8", xml_declaration=True, pretty_print=True
+            )
+            content = xml_bytes.decode("utf-8")
+
+            # Ensure DOCTYPE is present
+            if "<!DOCTYPE TS>" not in content:
+                lines = content.splitlines()
+                lines.insert(1, "<!DOCTYPE TS>")
+                content = "\n".join(lines)
+
+        except Exception as e:
+            # If lxml can't parse, save the regex-fixed content as-is (best-effort)
+            print(
+                f"⚠️  Could not parse {file_path.name} with lxml after regex fixes: {e}"
+            )
+
+    # 8. Write back atomically using a temp file
+    atomic_write_text(file_path, content, backup=backup)
+
+    return True
+
+
+def _validate_and_repair_ts(ts_file: Path, backup: bool = False) -> bool:
+    """Validate a .ts file and attempt repair if it is malformed.
+
+    Args:
+        ts_file: Path to the .ts file to check and repair.
+        backup: If True, create a .bak copy before overwriting.
+
+    Returns:
+        True if the file is valid (either originally or after repair),
+        False if repair was not possible.
+    """
+    if not ts_file.exists():
+        print(f"❌ Translation file not found: {ts_file}")
+        return False
+
+    if validate_ts_xml(ts_file):
+        return True
+
+    print(f"⚠️  Malformed XML detected in {ts_file.name}, attempting repair...")
+    if repair_ts_file(ts_file, backup=backup):
+        if validate_ts_xml(ts_file):
+            print(f"✅ Successfully repaired {ts_file.name}")
+            return True
+        print(f"❌ Repair did not produce valid XML for {ts_file.name}")
+        return False
+    print(f"❌ Could not repair {ts_file.name}")
+    return False
+
+
 def run_lupdate(language: str | None = None) -> bool:
     """Run pyside6-lupdate to update translation files with new strings.
 
     Extracts new translatable strings from Python source files and updates
     the corresponding .ts (translation source) files. Removes obsolete entries
     that are no longer needed.
+
+    Automatically validates and repairs malformed .ts files before running
+    lupdate to prevent parse errors from corrupted XML.
 
     Args:
         language: Language code to update (e.g., 'zh_CN'). If None, updates all
@@ -1453,12 +1642,27 @@ def run_lupdate(language: str | None = None) -> bool:
         if language:
             print(f"🔄 Updating translation file for {language}...")
             ts_file = LOCALES_DIR / f"{language}.ts"
+
+            # Validate and repair the .ts file before running lupdate
+            # backup=True in CI builds to preserve originals before any rewrite
+            if not _validate_and_repair_ts(ts_file, backup=True):
+                return False
+
             cmd.extend(["-ts", str(ts_file), "-no-obsolete", "-locations", "none"])
         else:
             print("🔄 Updating all translation files...")
             locales_dir = LOCALES_DIR
             ts_files = list(locales_dir.glob("*.ts"))
             if ts_files:
+                # Validate and repair all .ts files before running lupdate
+                all_valid = True
+                for ts_file in ts_files:
+                    if not _validate_and_repair_ts(ts_file, backup=True):
+                        all_valid = False
+                if not all_valid:
+                    print("❌ Cannot proceed with lupdate due to malformed .ts files.")
+                    return False
+
                 cmd.extend(
                     ["-ts"]
                     + [str(f) for f in ts_files]
@@ -1491,6 +1695,9 @@ def run_lrelease(language: str | None = None) -> bool:
     Converts .ts (translation source) files to .qm (compiled translation) files
     that can be loaded by PySide6 applications at runtime.
 
+    Automatically validates and repairs malformed .ts files before running
+    lrelease to prevent parse errors from corrupted XML.
+
     Args:
         language: Language code to compile (e.g., 'zh_CN'). If None, compiles all
                  .ts files in the locales directory
@@ -1513,6 +1720,10 @@ def run_lrelease(language: str | None = None) -> bool:
                 print(f"❌ Translation file not found: {ts_file}")
                 return False
 
+            # Validate and repair the .ts file before running lrelease
+            if not _validate_and_repair_ts(ts_file, backup=True):
+                return False
+
             print(f"🔄 Compiling translation for {language}...")
             cmd = ["pyside6-lrelease", str(ts_file)]
 
@@ -1527,9 +1738,20 @@ def run_lrelease(language: str | None = None) -> bool:
         else:
             print("🔄 Compiling all translation files...")
             ts_files = list(locales_dir.glob("*.ts"))
+
+            # Validate and repair all .ts files before running lrelease
+            valid_ts_files = []
+            for ts_file in ts_files:
+                if _validate_and_repair_ts(ts_file, backup=True):
+                    valid_ts_files.append(ts_file)
+
+            if not valid_ts_files:
+                print("❌ No valid .ts files to compile.")
+                return False
+
             success_count = 0
 
-            for ts_file in ts_files:
+            for ts_file in valid_ts_files:
                 cmd = ["pyside6-lrelease", str(ts_file)]
                 result = subprocess.run(
                     cmd, capture_output=True, text=True, check=False
@@ -1541,7 +1763,9 @@ def run_lrelease(language: str | None = None) -> bool:
                 else:
                     print(f"❌ Failed to compile {ts_file.stem}: {result.stderr}")
 
-            print(f"📊 Compiled {success_count}/{len(ts_files)} translation files")
+            print(
+                f"📊 Compiled {success_count}/{len(valid_ts_files)} translation files"
+            )
             return success_count > 0
 
     except FileNotFoundError:
