@@ -25,6 +25,9 @@ RimDex/
 │   ├── dependabot.yml
 │   ├── labeler.yml
 │   └── release.yml
+├── .kilo/
+│   ├── worktrees/
+│   └── .gitignore
 ├── .vscode/
 │   ├── launch.json
 │   └── settings.json
@@ -413,6 +416,7 @@ RimDex/
 │   │   ├── test_metadata_parity.py
 │   │   ├── test_path_autodetection.py
 │   │   ├── test_settings_location_validation.py
+│   │   ├── test_steam_handler_downloader_list.py
 │   │   ├── test_todds_controller.py
 │   │   └── test_troubleshooting.py
 │   ├── core/
@@ -528,6 +532,7 @@ RimDex/
 │   │   ├── test_mod_list.py
 │   │   ├── test_run_args_migration.py
 │   │   ├── test_settings_defaults.py
+│   │   ├── test_settings_load.py
 │   │   └── test_translation.py
 │   ├── mods/
 │   │   ├── __init__.py
@@ -563,6 +568,9 @@ RimDex/
 │   │   │   ├── test_models.py
 │   │   │   ├── test_provider.py
 │   │   │   └── test_updater.py
+│   │   ├── platform/
+│   │   │   ├── __init__.py
+│   │   │   └── test_windows.py
 │   │   ├── steam/
 │   │   │   ├── steamworks/
 │   │   │   │   ├── __init__.py
@@ -575,6 +583,7 @@ RimDex/
 │   │   │   ├── __init__.py
 │   │   │   ├── test_db_builder_thread.py
 │   │   │   ├── test_setup_web_channel_script.py
+│   │   │   ├── test_steam_browser_downloader_list.py
 │   │   │   ├── test_steam_browser_regex.py
 │   │   │   ├── test_steamcmd_wrapper.py
 │   │   │   └── test_workshop_utils.py
@@ -611,6 +620,7 @@ RimDex/
 │   │   ├── test_deletion_menu.py
 │   │   ├── test_dialogue.py
 │   │   ├── test_download_rimworld_dialog.py
+│   │   ├── test_essential_paths_autodetect.py
 │   │   ├── test_filter_panel.py
 │   │   ├── test_main_content_divider_import.py
 │   │   ├── test_main_content_run.py
@@ -618,10 +628,12 @@ RimDex/
 │   │   ├── test_main_window_watchdog.py
 │   │   ├── test_menu_bar.py
 │   │   ├── test_mod_info_panel.py
-│   │   └── test_mods_panel.py
+│   │   ├── test_mods_panel.py
+│   │   └── test_mods_panel_search.py
 │   ├── windows/
 │   │   ├── conftest.py
 │   │   ├── test_github_mods_panel.py
+│   │   ├── test_runner_panel.py
 │   │   └── test_runner_panel_regex.py
 │   ├── __init__.py
 │   ├── conftest.py
@@ -686,25 +698,30 @@ RimDex/
 ├── .gitmodules
 ├── .jscpd.json
 ├── .markdownlint-cli2.jsonc
+├── .markdownlint.json
 ├── .prettierignore
 ├── .python-version
 ├── AGENTS.md
 ├── check_deferred_imports.py
 ├── check_i18n_extraction.py
 ├── check_layer_violations.py
+├── CI_PLATFORM_FACTS.md
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
 ├── distribute.py
+├── EXCLUSION_MAP.md
 ├── guard_common.py
 ├── justfile
 ├── LICENSE.md
 ├── mapping.md
 ├── pyproject.toml
 ├── README.md
+├── RESTRUCTURING.md
 ├── rimdex.nuitka-package.config.yml
 ├── setup_steam_recovery_script.js
 ├── setup_web_channel_script.js
 ├── steam_appid.txt
+├── TODO.md
 ├── translation_helper.py
 ├── update.bat
 ├── update.sh
