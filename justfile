@@ -9,7 +9,9 @@ set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
 ruff_config := "--config pyproject.toml"
 pytest_opts := "--doctest-modules --no-qt-log"
 cov_opts := "--junitxml=junit/test-results.xml --cov=app --cov-report=xml --cov-report=html --cov-report=term-missing"
-shfmt_version := "v3.13.1"
+shfmt_version := "v3.14.1"
+markdownlint_version := "0.23.3"
+jscpd_version := "5.4.0"
 
 # ─── Default Target (lists all available recipes) ────────────────────────
 @default:
@@ -105,8 +107,13 @@ typecheck:
 pyright:
     uv run python -m pyright -p pyproject.toml .
 
-# Run ruff fixes
-ruff: ruff-fix ruff-format-fix
+# Check linting issues without modifying files (ruff check)
+ruff:
+    uv run ruff check {{ruff_config}} .
+
+# Check formatting issues without modifying files (ruff format --check)
+ruff-format:
+    uv run ruff format {{ruff_config}} . --check
 
 # Check and automatically fix linting issues (ruff check --fix)
 ruff-fix:
@@ -116,9 +123,28 @@ ruff-fix:
 ruff-format-fix:
     uv run ruff format {{ruff_config}} .
 
+# Check Markdown documentation issues (markdownlint-cli2)
+markdownlint:
+    npx --yes markdownlint-cli2@{{markdownlint_version}} "*.md" "docs/**/*.md"
+
 # Fix Markdown documentation issues (markdownlint-cli2 --fix)
 markdownlint-fix:
-    npx markdownlint-cli2@latest --fix
+    npx --yes markdownlint-cli2@{{markdownlint_version}} --fix "*.md" "docs/**/*.md"
+
+# Check shell script formatting issues (shfmt).
+# Unix only: on Windows, core.autocrlf=true checks out .sh files with CRLF and
+# shfmt rejects the whole file, so the check would always fail there. CI
+# enforces shfmt via super-linter on Linux, where the checkout is LF.
+[unix]
+shfmt:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    mapfile -t sh_files < <(fd -e sh --exclude .venv --exclude submodules)
+    if [ ${#sh_files[@]} -eq 0 ]; then
+        echo "shfmt: no shell scripts found"
+        exit 0
+    fi
+    shfmt -d "${sh_files[@]}"
 
 # Automatically fix shell script formatting issues (shfmt)
 [unix]
@@ -127,20 +153,20 @@ shfmt-fix:
 
 [windows]
 shfmt-fix:
-    $shfmt = Get-Command shfmt -ErrorAction SilentlyContinue; if (-not $shfmt) { $toolsDir = Join-Path $PWD ".tools"; New-Item -ItemType Directory -Force $toolsDir | Out-Null; $bin = Join-Path $toolsDir "shfmt.exe"; if (-not (Test-Path $bin)) { Write-Host "Downloading shfmt {{shfmt_version}}..."; Invoke-WebRequest -Uri "https://github.com/mvdan/sh/releases/download/{{shfmt_version}}/shfmt_{{shfmt_version}}_windows_amd64.exe" -OutFile $bin; Write-Host "Downloaded to $bin" }; $env:PATH += ";$toolsDir"; $shfmt = Get-Command shfmt }; Get-ChildItem -Recurse -Filter *.sh | Where-Object { $_.DirectoryName -notmatch '\\(\.venv|submodules)\\' } | ForEach-Object { & $shfmt -w $_.FullName }
+    $shfmt = Get-Command shfmt -ErrorAction SilentlyContinue; if (-not $shfmt) { $toolsDir = Join-Path $PWD ".tools"; New-Item -ItemType Directory -Force $toolsDir | Out-Null; $bin = Join-Path $toolsDir "shfmt.exe"; if (-not (Test-Path $bin)) { Write-Host "Downloading shfmt {{shfmt_version}}..."; Invoke-WebRequest -Uri "https://github.com/mvdan/sh/releases/download/{{shfmt_version}}/shfmt_{{shfmt_version}}_windows_amd64.exe" -OutFile $bin; Write-Host "Downloaded to shfmt" }; $env:PATH += ";$toolsDir"; $shfmt = Get-Command shfmt }; Get-ChildItem -Recurse -Filter *.sh | Where-Object { $_.DirectoryName -notmatch '\\(\.venv|submodules)\\' } | ForEach-Object { & $shfmt -w $_.FullName }
 
 # Run copy/paste detection (jscpd) using the project's .jscpd.json config
 jscpd:
-    npx --yes jscpd@latest . --config .jscpd.json
+    npx --yes jscpd@{{jscpd_version}} . --config .jscpd.json
 
 # Run all code quality checks: super-linter + typecheck + pyright
 [unix]
 check: super-lint typecheck pyright
     @echo "Use 'just fix' to automatically fix linting and formatting issues!"
 
-# Run all code quality checks available on Windows: typecheck + pyright + jscpd + deferred-import guard + layer guard
+# Run all code quality checks available on Windows: typecheck + pyright + jscpd + ruff + deferred-import guard + layer guard + i18n guard
 [windows]
-check: typecheck pyright jscpd deferred-imports layer-check i18n-check
+check: typecheck pyright jscpd ruff ruff-format deferred-imports layer-check i18n-check
     @echo "Use 'just fix' to automatically fix linting and formatting issues!"
 
 # Check for new function-local from app/ imports (circular-import regression guard)
@@ -156,7 +182,7 @@ i18n-check:
     uv run python check_i18n_extraction.py
 
 # Automatically fix linting and formatting issues (ruff-fix + ruff-format-fix + shfmt -w + markdown fixes)
-fix: ruff shfmt-fix markdownlint-fix
+fix: ruff-fix ruff-format-fix shfmt-fix markdownlint-fix
     @echo "Auto-fixes applied!"
 
 # Run full CI pipeline locally: all quality checks + tests with coverage
@@ -194,8 +220,8 @@ clean:
 
 [windows]
 clean:
-    Remove-Item -Recurse -Force -ErrorAction SilentlyContinue build, dist, *.egg-info, .pytest_cache, .ruff_cache, htmlcov, .coverage, coverage.xml, junit
-    Remove-Item -Force -ErrorAction SilentlyContinue locales/*.qm
+    Get-ChildItem -Force | Where-Object { $_.Name -in @("build", "dist", ".pytest_cache", ".mypy_cache", ".ruff_cache", "htmlcov", ".coverage", "coverage.xml", "junit") -or $_.Name -like "*.egg-info" } | Remove-Item -Recurse -Force
+    if (Test-Path locales) { Get-ChildItem locales -Filter *.qm | Remove-Item -Force }
     Get-ChildItem -Recurse -Directory -Filter __pycache__ | Remove-Item -Recurse -Force
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -285,7 +311,7 @@ build-help:
 # Stats / reporting
 # ═════════════════════════════════════════════════════════════════════════
 
-# Print file / LOC / test counts so §0/§1/§2 of Agent.md stay in sync.
+# Print file / LOC / test counts so §0/§1/§2 of AGENTS.md stay in sync.
 # Re-measure instead of trusting stale doc numbers (prevents count drift).
 stats:
     uv run python scripts/stats.py

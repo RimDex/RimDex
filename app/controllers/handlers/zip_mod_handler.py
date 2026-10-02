@@ -317,3 +317,4 @@ class ZipModHandler:
 
         finally:
             self._panel.mod_info_panel.info_panel_frame.show()
+            self._panel.disable_enable_widgets_signal.emit(True)

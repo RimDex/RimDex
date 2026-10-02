@@ -421,22 +421,23 @@ class Settings(QObject):
                 else:
                     # There was nothing to mitigate, so don't save the model to the file
                     mitigations = False
-                # Parse data from settings.json into the model
-                self._from_dict(data)
-                # Validate Steam integration configuration after loading
-                config_fixed = self._validate_steam_integration_config()
-                # Save the model to the file if there were mitigations or config fixes
-                if mitigations or config_fixed:
-                    self.save()
-                else:
-                    # Update .backup only if no mitigations/config fixing took place
-                    # This might prevent overwriting a good/better backup
-                    self.update_backup()
+            self._from_dict(data)
+            config_fixed = self._validate_steam_integration_config()
+            if mitigations or config_fixed:
+                self._save_after_load()
+            else:
+                self.update_backup()
 
         except FileNotFoundError:
-            self.save()
+            self._save_after_load()
         except JSONDecodeError:
             self.handle_corrupted_settings()
+
+    def _save_after_load(self) -> None:
+        try:
+            self.save()
+        except OSError as e:
+            logger.error(f"Failed to save settings during load: {e}")
 
     def save(self) -> None:
         if self.debug_logging_enabled:
