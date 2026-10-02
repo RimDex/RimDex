@@ -81,11 +81,7 @@ class MainWindowController(QObject):
             metadata_controller=self.metadata_controller, parent=self.main_window
         )
         dialog.download_requested.connect(
-            lambda pfid: (
-                self.main_window.main_content_panel._do_download_mods_with_steamcmd(
-                    [pfid]
-                )
-            )
+            self.main_window.main_content_panel._download_single_workshop_mod
         )
         selected_deps = dialog.show_dialog(deps_summary, missing_deps, dep_resolve)
 

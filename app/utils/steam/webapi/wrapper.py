@@ -44,6 +44,7 @@ getLogger("urllib3").setLevel(WARNING)
 BASE_URL = "https://steamcommunity.com"
 BASE_URL_STEAMFILES = "https://steamcommunity.com/sharedfiles/filedetails/?id="
 BASE_URL_WORKSHOP = "https://steamcommunity.com/workshop/filedetails/?id="
+_MAX_CHUNK_ATTEMPTS = 3
 
 
 class CollectionImport:
@@ -998,8 +999,29 @@ def ISteamRemoteStorage_GetPublishedFileDetails(
         for i, publishedfileid in enumerate(chunk):
             data[f"publishedfileids[{i}]"] = publishedfileid
 
+        request: requests.Response | None = None
         try:
-            request = http.post(url, data=data, timeout=(5, 60), retry=True)
+            for attempt in range(_MAX_CHUNK_ATTEMPTS):
+                try:
+                    request = http.post(url, data=data, timeout=(5, 60), retry=True)
+                    break
+                except requests.exceptions.ChunkedEncodingError:
+                    if attempt < _MAX_CHUNK_ATTEMPTS - 1:
+                        sleep(2**attempt)
+                        continue
+                    raise
+        except requests.exceptions.ChunkedEncodingError as e:
+            error_desc = f"{e.__class__.__name__}: {e}"
+            logger.error(
+                f"GetPublishedFileDetails chunk [{items_processed}/{total}]: "
+                f"{error_desc} after {_MAX_CHUNK_ATTEMPTS} attempts"
+            )
+            failed_pfids.extend(chunk)
+            errors.append(
+                f"{error_desc} for {chunk_size} mods after "
+                f"{_MAX_CHUNK_ATTEMPTS} attempts"
+            )
+            continue
         except Exception as e:
             error_desc = f"{e.__class__.__name__}: {e}"
             logger.error(
@@ -1007,6 +1029,9 @@ def ISteamRemoteStorage_GetPublishedFileDetails(
             )
             failed_pfids.extend(chunk)
             errors.append(f"{error_desc} for {chunk_size} mods")
+            continue
+
+        if request is None:
             continue
 
         if request.status_code >= 400:
