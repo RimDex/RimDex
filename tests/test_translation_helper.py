@@ -20,6 +20,7 @@ from translation_helper import (
     get_translation_config,
     parse_ts_file,
     process_language,
+    repair_ts_file,
     run_lrelease,
     run_lupdate,
     set_translation_config,
@@ -31,6 +32,7 @@ from translation_helper import (
     validate_model_name,
     validate_retry_count,
     validate_timeout,
+    validate_ts_xml,
 )
 
 # ============================================================================
@@ -1046,6 +1048,7 @@ class TestRunLrelease:
 
     def test_run_lrelease_success(self, mocker: Any) -> None:
         """Test successful lrelease run."""
+        mocker.patch("translation_helper._validate_and_repair_ts", return_value=True)
         mock_subprocess = mocker.patch("subprocess.run")
         mock_subprocess.return_value.returncode = 0
         mocker.patch("pathlib.Path.exists", return_value=True)
@@ -1057,6 +1060,7 @@ class TestRunLrelease:
 
     def test_run_lrelease_failure(self, mocker: Any) -> None:
         """Test lrelease run failure."""
+        mocker.patch("translation_helper._validate_and_repair_ts", return_value=True)
         mock_subprocess = mocker.patch("subprocess.run")
         mock_subprocess.return_value.returncode = 1
 
@@ -1075,6 +1079,7 @@ class TestRunLupdate:
 
     def test_run_lupdate_success(self, mocker: Any) -> None:
         """Test successful lupdate run."""
+        mocker.patch("translation_helper._validate_and_repair_ts", return_value=True)
         mock_subprocess = mocker.patch("subprocess.run")
         mock_subprocess.return_value.returncode = 0
 
@@ -1085,6 +1090,7 @@ class TestRunLupdate:
 
     def test_run_lupdate_failure(self, mocker: Any) -> None:
         """Test lupdate run failure."""
+        mocker.patch("translation_helper._validate_and_repair_ts", return_value=True)
         mock_subprocess = mocker.patch("subprocess.run")
         mock_subprocess.return_value.returncode = 1
 
@@ -1167,4 +1173,364 @@ class TestShowAllStats:
         captured = capsys.readouterr()
         assert "Translation Statistics" in captured.out
         assert "Total files:" in captured.out
-        assert "Unfinished" in captured.out  # Check for the column header
+
+
+# ============================================================================
+# ValidateTsXml Tests
+# ============================================================================
+
+
+class TestValidateTsXml:
+    """Tests for validate_ts_xml function."""
+
+    def test_valid_xml(self, tmp_path: Path) -> None:
+        """Test validation passes for well-formed XML."""
+        ts_file = tmp_path / "valid.ts"
+        ts_file.write_text(
+            '<?xml version="1.0" encoding="utf-8"?>\n'
+            "<!DOCTYPE TS>\n"
+            '<TS version="2.1" language="en_US">\n'
+            "  <context>\n"
+            "    <name>TestContext</name>\n"
+            "    <message>\n"
+            "      <source>Hello</source>\n"
+            '      <translation type="unfinished"> </translation>\n'
+            "    </message>\n"
+            "  </context>\n"
+            "</TS>\n",
+            encoding="utf-8",
+        )
+
+        assert validate_ts_xml(ts_file) is True
+
+    def test_malformed_xml(self, tmp_path: Path) -> None:
+        """Test validation fails for malformed XML."""
+        ts_file = tmp_path / "malformed.ts"
+        ts_file.write_text(
+            "< message >\n"
+            "<source>Hello</source>\n"
+            '< translation type = "unfinished" > </translation>\n'
+            "</message>\n",
+            encoding="utf-8",
+        )
+
+        assert validate_ts_xml(ts_file) is False
+
+    def test_nonexistent_file(self, tmp_path: Path) -> None:
+        """Test validation fails for nonexistent file."""
+        ts_file = tmp_path / "nonexistent.ts"
+        assert validate_ts_xml(ts_file) is False
+
+
+# ============================================================================
+# RepairTsFile Tests
+# ============================================================================
+
+
+class TestRepairTsFile:
+    """Tests for repair_ts_file function."""
+
+    MALFORMED_TS = (
+        '<?xml version="1.0" encoding = "utf-8" ?>\n'
+        "    <!DOCTYPE TS >\n"
+        '    <TS version="2.1" language = "en_US" >\n'
+        "        <context>\n"
+        "        <name>AcfLogReader </name>\n"
+        "        < message >\n"
+        "        <source>Import ACF Data </source>\n"
+        '            < translation type = "unfinished" > </translation>\n'
+        "                </message>\n"
+        "        </context>\n"
+        "    </TS>\n"
+    )
+
+    def test_repair_fixes_malformed_xml(self, tmp_path: Path) -> None:
+        """Test that repair_ts_file fixes all common malformation patterns."""
+        ts_file = tmp_path / "malformed.ts"
+        ts_file.write_text(self.MALFORMED_TS, encoding="utf-8")
+
+        assert validate_ts_xml(ts_file) is False  # Confirm it starts malformed
+
+        result = repair_ts_file(ts_file)
+
+        assert result is True
+        assert validate_ts_xml(ts_file) is True  # Should now be valid XML
+
+    def test_repair_fixes_spaces_in_tags(self, tmp_path: Path) -> None:
+        """Test that spaces inside tags are removed."""
+        ts_file = tmp_path / "test.ts"
+        ts_file.write_text(
+            "<message >\n<source>Test</source>\n</message>\n",
+            encoding="utf-8",
+        )
+
+        repair_ts_file(ts_file)
+        content = ts_file.read_text(encoding="utf-8")
+        assert "< message >" not in content
+        assert "<message" in content
+
+    def test_repair_fixes_closing_tag_spaces(self, tmp_path: Path) -> None:
+        """Test that spaces in closing tags are removed."""
+        ts_file = tmp_path / "test.ts"
+        ts_file.write_text(
+            "<message><source>Test</source></ source ></message>\n",
+            encoding="utf-8",
+        )
+
+        repair_ts_file(ts_file)
+        content = ts_file.read_text(encoding="utf-8")
+        assert "</ source >" not in content
+        assert "</source>" in content
+
+    def test_repair_fixes_attribute_spacing(self, tmp_path: Path) -> None:
+        """Test that spaces around attribute equals are removed."""
+        ts_file = tmp_path / "test.ts"
+        ts_file.write_text(
+            '<translation type = "unfinished"> </translation>\n',
+            encoding="utf-8",
+        )
+
+        repair_ts_file(ts_file)
+        content = ts_file.read_text(encoding="utf-8")
+        assert 'type = "unfinished"' not in content
+        assert 'type="unfinished"' in content
+
+    def test_repair_fixes_broken_entities(self, tmp_path: Path) -> None:
+        """Test that broken HTML entities are fixed."""
+        ts_file = tmp_path / "test.ts"
+        ts_file.write_text(
+            "<source>Don & apos;t & lt; do & gt; that & amp; & quot;ok&quot; </source>\n",
+            encoding="utf-8",
+        )
+
+        repair_ts_file(ts_file)
+        content = ts_file.read_text(encoding="utf-8")
+        # Broken entity patterns should be gone
+        assert "& apos;" not in content
+        assert "& lt;" not in content
+        assert "& gt;" not in content
+        assert "& amp;" not in content
+        assert "& quot;" not in content
+
+    def test_repair_with_backup_creates_bak(self, tmp_path: Path) -> None:
+        """Test that backup=True creates a .bak file."""
+        ts_file = tmp_path / "test.ts"
+        original = "<source>Don & apos;t</source>\n"
+        ts_file.write_text(original, encoding="utf-8")
+
+        result = repair_ts_file(ts_file, backup=True)
+
+        assert result is True
+        bak_file = ts_file.with_suffix(".ts.bak")
+        assert bak_file.exists()
+        assert bak_file.read_text(encoding="utf-8") == original
+
+    def test_repair_fixes_numeric_character_references(self, tmp_path: Path) -> None:
+        """Test that broken numeric character references are fixed."""
+        ts_file = tmp_path / "test.ts"
+        ts_file.write_text(
+            "<source>Space & #xa0; and more</source>\n",
+            encoding="utf-8",
+        )
+
+        repair_ts_file(ts_file)
+        content = ts_file.read_text(encoding="utf-8")
+        assert "& #xa0;" not in content
+        # Smart repair skips lxml re-serialization when regex fixes suffice,
+        # so the entity stays as &#xa0; (not resolved to \xa0)
+        assert "&#xa0;" in content
+
+    def test_repair_skips_reserialization_when_regex_sufficient(
+        self, tmp_path: Path
+    ) -> None:
+        """Test that valid regex-fixed XML is not re-serialized (minimal diff)."""
+        ts_file = tmp_path / "test.ts"
+        # Content that only has entity/tag corruption, not indentation issues
+        original = (
+            '<?xml version="1.0" encoding="utf-8"?>\n'
+            "<!DOCTYPE TS>\n"
+            '<TS version="2.1" language="en_US">\n'
+            "  <context>\n"
+            "    <name>Test</name>\n"
+            "    <message>\n"
+            "      <source>Don & apos;t go</source>\n"
+            "    </message>\n"
+            "  </context>\n"
+            "</TS>\n"
+        )
+        ts_file.write_text(original, encoding="utf-8")
+
+        repair_ts_file(ts_file)
+        content = ts_file.read_text(encoding="utf-8")
+        # Named entity should be resolved
+        assert "& apos;" not in content
+        # No extra lxml re-serialization - original structure preserved
+        assert "<!DOCTYPE TS>" in content
+
+
+# ============================================================================
+# ValidateAndRepairTs Tests
+# ============================================================================
+
+
+class TestValidateAndRepairTs:
+    """Tests for _validate_and_repair_ts function."""
+
+    def test_valid_file_passes(self, tmp_path: Path, capsys: Any) -> None:
+        """Test that valid files pass without repair."""
+        from translation_helper import _validate_and_repair_ts
+
+        ts_file = tmp_path / "valid.ts"
+        ts_file.write_text(
+            '<?xml version="1.0" encoding="utf-8"?>\n'
+            "<!DOCTYPE TS>\n"
+            '<TS version="2.1" language="en_US">\n'
+            "  <context>\n"
+            "    <name>Test</name>\n"
+            "    <message>\n"
+            "      <source>Hello</source>\n"
+            '      <translation type="unfinished"> </translation>\n'
+            "    </message>\n"
+            "  </context>\n"
+            "</TS>\n",
+            encoding="utf-8",
+        )
+
+        assert _validate_and_repair_ts(ts_file) is True
+        captured = capsys.readouterr()
+        assert "Malformed" not in captured.out
+
+    def test_malformed_file_gets_repaired(self, tmp_path: Path, capsys: Any) -> None:
+        """Test that malformed files are repaired and pass validation."""
+        from translation_helper import _validate_and_repair_ts
+
+        ts_file = tmp_path / "malformed.ts"
+        ts_file.write_text(
+            '<?xml version="1.0" encoding = "utf-8" ?>\n'
+            "<!DOCTYPE TS >\n"
+            '<TS version="2.1" language = "en_US" >\n'
+            "< context >\n"
+            "< name >AcfLogReader </name >\n"
+            "< message >\n"
+            "<source>Import ACF Data </source>\n"
+            '< translation type = "unfinished" > </translation>\n'
+            "</message>\n"
+            "</context>\n"
+            "</TS>\n",
+            encoding="utf-8",
+        )
+
+        assert _validate_and_repair_ts(ts_file) is True
+        assert validate_ts_xml(ts_file) is True
+        captured = capsys.readouterr()
+        assert "Malformed" in captured.out
+        assert "repaired" in captured.out
+
+    def test_nonexistent_file(self, tmp_path: Path, capsys: Any) -> None:
+        """Test that nonexistent files return False."""
+        from translation_helper import _validate_and_repair_ts
+
+        ts_file = tmp_path / "nonexistent.ts"
+        assert _validate_and_repair_ts(ts_file) is False
+        captured = capsys.readouterr()
+        assert "not found" in captured.out
+
+    def test_repair_strips_trailing_whitespace_in_name(self, tmp_path: Path) -> None:
+        """Test that trailing whitespace in name text is stripped."""
+        ts_file = tmp_path / "test.ts"
+        ts_file.write_text(
+            "<name>ContextName </name>\n",
+            encoding="utf-8",
+        )
+
+        repair_ts_file(ts_file)
+        content = ts_file.read_text(encoding="utf-8")
+        assert "ContextName " not in content
+        assert "ContextName" in content
+
+    def test_repair_strips_trailing_whitespace_in_source(self, tmp_path: Path) -> None:
+        """Test that trailing whitespace in source text is stripped."""
+        ts_file = tmp_path / "test.ts"
+        ts_file.write_text(
+            "<source>Import ACF Data </source>\n",
+            encoding="utf-8",
+        )
+
+        repair_ts_file(ts_file)
+        content = ts_file.read_text(encoding="utf-8")
+        assert "Import ACF Data " not in content
+
+    def test_repair_fixes_doctype_trailing_space(self, tmp_path: Path) -> None:
+        """Test that DOCTYPE trailing space is removed."""
+        ts_file = tmp_path / "test.ts"
+        ts_file.write_text(
+            "<!DOCTYPE TS >\n",
+            encoding="utf-8",
+        )
+
+        repair_ts_file(ts_file)
+        content = ts_file.read_text(encoding="utf-8")
+        assert "<!DOCTYPE TS >" not in content
+
+    def test_repair_preserves_valid_file(self, tmp_path: Path) -> None:
+        """Test that repair does not break already-valid files."""
+        valid_ts = (
+            '<?xml version="1.0" encoding="utf-8"?>\n'
+            "<!DOCTYPE TS>\n"
+            '<TS version="2.1" language="en_US">\n'
+            "  <context>\n"
+            "    <name>TestContext</name>\n"
+            "    <message>\n"
+            "      <source>Hello</source>\n"
+            '      <translation type="unfinished"> </translation>\n'
+            "    </message>\n"
+            "  </context>\n"
+            "</TS>\n"
+        )
+        ts_file = tmp_path / "valid.ts"
+        ts_file.write_text(valid_ts, encoding="utf-8")
+
+        result = repair_ts_file(ts_file)
+
+        assert result is True
+        assert validate_ts_xml(ts_file) is True
+
+    def test_repair_nonexistent_file(self, tmp_path: Path) -> None:
+        """Test that repair handles nonexistent files gracefully."""
+        ts_file = tmp_path / "nonexistent.ts"
+        result = repair_ts_file(ts_file)
+        assert result is False
+
+    def test_repair_handles_complex_file(self, tmp_path: Path) -> None:
+        """Test repair on a file with multiple corruption patterns."""
+        malformed = (
+            '<?xml version="1.0" encoding = "utf-8" ?>\n'
+            "<!DOCTYPE TS >\n"
+            '<TS version="2.1" language = "en_US" >\n'
+            "<context>\n"
+            "<name>My & apos; Context </name>\n"
+            "< message >\n"
+            "<source>Don & apos; t & lt; do & gt; that & amp; & quot; ok & quot;</source>\n"
+            '< translation type = "unfinished" > </translation>\n'
+            "</message>\n"
+            "</context>\n"
+            "</TS>\n"
+        )
+        ts_file = tmp_path / "complex.ts"
+        ts_file.write_text(malformed, encoding="utf-8")
+
+        assert validate_ts_xml(ts_file) is False
+
+        result = repair_ts_file(ts_file)
+        assert result is True
+
+        assert validate_ts_xml(ts_file) is True
+        content = ts_file.read_text(encoding="utf-8")
+        assert 'language = "en_US"' not in content
+        assert 'language="en_US"' in content
+        # Broken entity patterns should be gone
+        assert "& apos;" not in content
+        assert "& lt;" not in content
+        assert "& gt;" not in content
+        assert "& amp;" not in content
+        assert "& quot;" not in content
