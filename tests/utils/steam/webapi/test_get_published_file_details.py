@@ -1,6 +1,7 @@
 from typing import Any
 from unittest.mock import MagicMock, patch
 
+import pytest
 import requests
 
 from app.utils.steam.webapi.wrapper import (
@@ -95,6 +96,53 @@ class TestGetPublishedFileDetailsRetry:
         )
         assert metadata == []
         assert set(failed_pfids) == set(PFIDS)
+
+    @pytest.mark.parametrize(
+        "error",
+        [
+            requests.exceptions.ChunkedEncodingError(
+                "Connection broken: IncompleteRead(0 bytes read, 141 more expected)"
+            )
+        ],
+    )
+    @patch("app.utils.steam.webapi.wrapper.sleep")
+    @patch("app.utils.steam.webapi.wrapper.http.post")
+    def test_retries_dropped_chunk_then_succeeds(
+        self,
+        mock_post: MagicMock,
+        mock_sleep: MagicMock,
+        error: requests.exceptions.RequestException,
+    ) -> None:
+        """First attempt fails with a dropped response body, second succeeds."""
+        mock_post.side_effect = [
+            error,
+            _make_mock_response(200, VALID_RESPONSE_JSON),
+        ]
+        metadata, failed_pfids, _errors = ISteamRemoteStorage_GetPublishedFileDetails(
+            PFIDS
+        )
+        assert len(metadata) == 3
+        assert failed_pfids == []
+        assert mock_post.call_count == 2
+        mock_sleep.assert_called_once_with(1)
+
+    @patch("app.utils.steam.webapi.wrapper.sleep")
+    @patch("app.utils.steam.webapi.wrapper.http.post")
+    def test_chunked_encoding_error_gives_up_after_attempts(
+        self, mock_post: MagicMock, mock_sleep: MagicMock
+    ) -> None:
+        """A permanently dropped response body fails the whole chunk."""
+        mock_post.side_effect = requests.exceptions.ChunkedEncodingError(
+            "Connection broken: IncompleteRead(0 bytes read, 141 more expected)"
+        )
+        metadata, failed_pfids, errors = ISteamRemoteStorage_GetPublishedFileDetails(
+            PFIDS
+        )
+        assert metadata == []
+        assert set(failed_pfids) == set(PFIDS)
+        assert len(errors) == 1
+        assert mock_post.call_count == 3
+        assert mock_sleep.call_count == 2
 
     @patch("app.utils.steam.webapi.wrapper.http.post")
     def test_http_503_records_failure(self, mock_post: MagicMock) -> None:

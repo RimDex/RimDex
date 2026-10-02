@@ -26,9 +26,16 @@ while (elements.length > 0) {
 """
 
 _CHANGE_TARGET_A = """
-var elements = document.getElementsByTagName("a");
-for (var i = 0, l = elements.length; i < l; i++) {
-    elements[i].target = "_self";
+var linkSelectors = [
+    ".workshopItem a",
+    ".collectionItem a",
+    'a[href*="filedetails/?id="]'
+];
+for (var s = 0; s < linkSelectors.length; s++) {
+    var elements = document.querySelectorAll(linkSelectors[s]);
+    for (var i = 0, l = elements.length; i < l; i++) {
+        elements[i].target = "_self";
+    }
 }
 """
 

@@ -45,6 +45,7 @@ class DownloadListManager:
         """Add a mod to the download list.  Sets *title* on the label and
         tooltip; when *title* is ``None`` it falls back to the browser's
         page title."""
+        publishedfileid = str(publishedfileid)
         if publishedfileid in self.tracking:
             logger.debug(f"Duplicate PFID skipped: {publishedfileid}")
             page_title = self._resolve_page_title()
@@ -111,7 +112,34 @@ class DownloadListManager:
 
     def get_mods(self) -> list[str]:
         """Return a snapshot of currently tracked published file IDs."""
-        return list(self.tracking)
+        return [str(publishedfileid) for publishedfileid in self.tracking]
+
+    def get_download_list_snapshot(self) -> dict[str, str]:
+        """Return the queued mods as a PFID-to-title mapping."""
+        snapshot: dict[str, str] = {}
+        for index in range(self._list.count()):
+            item = self._list.item(index)
+            if item is None:
+                continue
+            raw_publishedfileid = item.data(Qt.ItemDataRole.UserRole)
+            if raw_publishedfileid is None:
+                continue
+            publishedfileid = str(raw_publishedfileid)
+            widget = self._list.itemWidget(item)
+            title = widget.text() if isinstance(widget, QLabel) else publishedfileid
+            snapshot[publishedfileid] = title
+        return snapshot
+
+    def restore_download_list(self, snapshot: dict[str, str]) -> None:
+        """Restore queued mods from a PFID-to-title mapping."""
+        for publishedfileid, title in dict(snapshot).items():
+            self.add_mod(str(publishedfileid), title)
+
+    def remove_mod_if_queued(self, publishedfileid: str) -> None:
+        """Remove a queued mod when it is present."""
+        normalized_publishedfileid = str(publishedfileid)
+        if normalized_publishedfileid in self.tracking:
+            self.remove_mod(normalized_publishedfileid)
 
     def context_menu(self, point: QPoint) -> None:
         """Show the right-click context menu for a download-list item."""

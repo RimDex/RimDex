@@ -98,7 +98,7 @@ class MissingModsPrompt(BaseModsPanel):
         self._reconfigure_table_sorting(sorting_enabled=True)
 
         # TODO(#3): let user configure window launch state and size. Single
-        # tracked issue for all panels — see Agent.md §8.3 (was duplicated 4x).
+        # tracked issue for all panels — see AGENTS.md §8.3 (was duplicated 4x).
         self.showNormal()
 
     def _validate_packageids(self, packageids: list[str]) -> list[str]:

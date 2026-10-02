@@ -19,12 +19,12 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
-      - uses: actions/checkout@main
+      - uses: actions/checkout@v7
         with:
           submodules: recursive
           token: ${{ secrets.RIMDEX_TOKEN }}
       - name: Setup Python
-        uses: actions/setup-python@main
+        uses: actions/setup-python@v7
         with:
           python-version-file: "pyproject.toml"
 
