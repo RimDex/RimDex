@@ -54,7 +54,7 @@ cov-gate: dev-setup
 # ═══════════════════════════════════════════════════════════════════════════
 
 # Container image for super-linter (matches CI version)
-superlinter_image := "ghcr.io/super-linter/super-linter:slim-v8.6.0"
+superlinter_image := "ghcr.io/super-linter/super-linter:slim-v9.0.0"
 
 # Run super-linter locally via container (ruff, ruff-format, jscpd, bash,
 # json, yaml, checkov, gitleaks). Mypy/Pyright run natively because they
@@ -93,7 +93,7 @@ super-lint:
         -e VALIDATE_GITLEAKS=true \
         -e PYTHON_RUFF_CONFIG_FILE=pyproject.toml \
         -e PYTHON_RUFF_FORMAT_CONFIG_FILE=pyproject.toml \
-        -e FILTER_REGEX_EXCLUDE="LICENSE.md|super-linter-output/|github_conf/" \
+        -e FILTER_REGEX_EXCLUDE="LICENSE.md|super-linter-output/|github_conf/|(^|/)justfile$" \
         -e IGNORE_GITIGNORED_FILES=true \
         -v "$(pwd)":/tmp/lint \
         -v "${GIT_COMMON_DIR}:${GIT_COMMON_DIR}" \
