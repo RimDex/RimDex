@@ -47,7 +47,16 @@ jobs:
             MG_HEAD=$(python -c "import json,os; print(json.load(open(os.environ['GITHUB_EVENT_PATH']))['merge_group']['head_sha'])")
             CHANGED=$(git diff --name-only "$MG_BASE"..."$MG_HEAD")
           else
-            CHANGED=$(git diff --name-only "$PUSH_BEFORE" "$PUSH_SHA")
+            # A force-push or history rewrite leaves github.event.before pointing at
+            # a commit that is no longer reachable, which makes git diff exit 128 and
+            # fails the whole job. Fall back to this push's own parent, which the
+            # fetch-depth: 0 checkout always has.
+            BASE="$PUSH_BEFORE"
+            if [[ -z "$BASE" ]] || ! git cat-file -e "${BASE}^{commit}" 2>/dev/null; then
+              echo "before commit '$BASE' is unreachable; diffing against HEAD^ instead"
+              BASE="$PUSH_SHA^"
+            fi
+            CHANGED=$(git diff --name-only "$BASE" "$PUSH_SHA")
           fi
 
           APP_CHANGED=$(echo "$CHANGED" \
