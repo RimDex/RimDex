@@ -3,11 +3,12 @@ import sys
 from pathlib import Path
 
 from loguru import logger
-from lxml import etree, objectify
+from lxml import objectify
 from platformdirs import PlatformDirs
 
 from app.core.constants import DEFAULT_USER_RULES
 from app.io.json_utils import atomic_json_dump
+from app.io.safe_xml import safe_xml_parser
 
 
 class AppInfo:
@@ -90,7 +91,7 @@ class AppInfo:
         self._app_version = "Unknown version"
         version_file = str(self._application_folder / "version.xml")
         if os.path.exists(version_file):
-            root = objectify.parse(version_file, parser=etree.XMLParser(recover=True))
+            root = objectify.parse(version_file, parser=safe_xml_parser(recover=True))
             ver = root.find("version")
             if ver is not None and ver.text is not None:
                 self._app_version = ver.text

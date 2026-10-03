@@ -9,7 +9,8 @@ from bs4 import BeautifulSoup
 from bs4.builder import LXMLTreeBuilderForXML  # type: ignore[attr-defined]
 from defusedxml.ElementTree import parse as safe_et_parse
 from loguru import logger
-from lxml import etree as _lxml_etree
+
+from app.io.safe_xml import safe_xml_parser
 
 
 def etree_to_dict(t: ET.Element) -> dict[str, Any]:
@@ -115,11 +116,7 @@ def xml_path_to_json(path: str) -> dict[str, Any]:
         logger.debug("Trying to parse with BeautifulSoup as a fallback")
         try:
             with __open_file_maybe_compressed(path) as f:
-                builder = LXMLTreeBuilderForXML(
-                    parser=_lxml_etree.XMLParser(
-                        resolve_entities=False, no_network=True, load_dtd=False
-                    )
-                )
+                builder = LXMLTreeBuilderForXML(parser=safe_xml_parser())
                 soup = BeautifulSoup(f.read(), builder=builder)
             # Find and remove empty tags
             empty_tags = soup.find_all(

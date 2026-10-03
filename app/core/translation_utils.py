@@ -20,6 +20,7 @@ from typing import Any
 import lxml.etree as ET
 from loguru import logger
 
+from app.io.safe_xml import safe_xml_parser
 from app.models.translation import (
     HTML_TAG_RE,
     LOCALES_DIR,
@@ -156,7 +157,7 @@ def validate_translation(language: str | None = None) -> tuple[list[str], int]:
             continue
 
         try:
-            tree = ET.parse(str(ts_file))
+            tree = ET.parse(str(ts_file), parser=safe_xml_parser())
             root = tree.getroot()
             issues: list[str] = []
             made_changes = False
@@ -399,7 +400,7 @@ async def translate_language_batch(
     failed = 0
 
     try:
-        tree = ET.parse(str(ts_file))
+        tree = ET.parse(str(ts_file), parser=safe_xml_parser())
         unfinished = find_unfinished_translations(tree)
 
         if not unfinished:
