@@ -289,6 +289,10 @@
         <translation> Vapor </translation>
     </message>
     <message>
+        <source>Save</source>
+        <translation>Ahorrar</translation>
+    </message>
+    <message>
         <source>Compare Databases</source>
         <translation> Comparar bases de datos </translation>
     </message>
@@ -299,6 +303,13 @@
     <message>
         <source>Build Database</source>
         <translation> Construir base de datos </translation>
+    </message>
+</context>
+<context>
+    <name>DownloadListManager</name>
+    <message>
+        <source>Remove mod from list</source>
+        <translation>Eliminar mod de la lista</translation>
     </message>
 </context>
 <context>
@@ -1139,6 +1150,18 @@ Manage mods installed from GitHub releases.</source>
     <message>
         <source>This action cannot be undone.</source>
         <translation> Esta acción no se puede deshacer.</translation>
+    </message>
+    <message>
+        <source>An error occurred while compressing instance folder: {e}</source>
+        <translation>Se produjo un error al comprimir la carpeta de la instancia: {e}</translation>
+    </message>
+    <message>
+        <source>Error compressing instance</source>
+        <translation>Error al comprimir la instancia</translation>
+    </message>
+    <message>
+        <source>Please check the logs for more information.</source>
+        <translation>Consulte los registros para obtener más información.</translation>
     </message>
 </context>
 <context>
@@ -2259,6 +2282,14 @@ Please select your preferred mod variant in the table below. You can also open e
     <message>
         <source>In latest save</source>
         <translation> En la última salvación </translation>
+    </message>
+    <message>
+        <source>Recently updated</source>
+        <translation>Actualizado recientemente</translation>
+    </message>
+    <message>
+        <source>Updated {time_ago}. Click to open the Workshop changelog.</source>
+        <translation>Actualizado {time_ago}. Haga clic para abrir el registro de cambios del Taller.</translation>
     </message>
 </context>
 <context>

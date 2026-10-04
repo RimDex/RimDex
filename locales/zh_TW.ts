@@ -289,6 +289,10 @@
         <translation> 蒸氣 </translation>
     </message>
     <message>
+        <source>Save</source>
+        <translation>節省</translation>
+    </message>
+    <message>
         <source>Compare Databases</source>
         <translation> 比較資料庫 </translation>
     </message>
@@ -299,6 +303,13 @@
     <message>
         <source>Build Database</source>
         <translation> 建立資料庫 </translation>
+    </message>
+</context>
+<context>
+    <name>DownloadListManager</name>
+    <message>
+        <source>Remove mod from list</source>
+        <translation>從清單中刪除模組</translation>
     </message>
 </context>
 <context>
@@ -1139,6 +1150,18 @@ Manage mods installed from GitHub releases.</source>
     <message>
         <source>This action cannot be undone.</source>
         <translation> 此操作無法撤銷。</translation>
+    </message>
+    <message>
+        <source>An error occurred while compressing instance folder: {e}</source>
+        <translation>An error occurred while compressing instance folder: {e}</translation>
+    </message>
+    <message>
+        <source>Error compressing instance</source>
+        <translation>壓縮實例時出錯</translation>
+    </message>
+    <message>
+        <source>Please check the logs for more information.</source>
+        <translation>Please check the logs for more information.</translation>
     </message>
 </context>
 <context>
@@ -2259,6 +2282,14 @@ Please select your preferred mod variant in the table below. You can also open e
     <message>
         <source>In latest save</source>
         <translation> 在最新存檔中 </translation>
+    </message>
+    <message>
+        <source>Recently updated</source>
+        <translation>最近更新</translation>
+    </message>
+    <message>
+        <source>Updated {time_ago}. Click to open the Workshop changelog.</source>
+        <translation>更新於 {time_ago}。點擊以開啟創意工坊變更日誌。</translation>
     </message>
 </context>
 <context>

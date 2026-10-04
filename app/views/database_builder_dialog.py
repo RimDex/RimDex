@@ -116,6 +116,10 @@ class DatabaseBuilderDialog(QDialog):
         item_layout = QHBoxLayout()
         main_layout.addLayout(item_layout)
 
+        self.db_builder_save_settings_button = QPushButton(self.tr("Save"))
+        self.db_builder_save_settings_button.setObjectName("primaryButton")
+        item_layout.addWidget(self.db_builder_save_settings_button)
+
         item_layout.addStretch()
 
         self.db_builder_compare_databases_button = QPushButton(

@@ -61,7 +61,14 @@ class MissingModPropertiesPanel(BaseModsPanel):
 
         # Build button configurations
         button_configs = self._get_base_button_configs()
-        self._extend_button_configs_with_steam_actions(button_configs)
+        # Mods here may have no usable Published File ID, so the Steam
+        # unsubscribe/resubscribe deletion variants are suppressed.
+        self._extend_button_configs_with_steam_actions(
+            button_configs, include_delete=False
+        )
+        button_configs.append(
+            self._get_delete_button_config(enable_delete_and_unsubscribe=False)
+        )
 
         # Add button to add selected mods to ignore list
         button_configs.append(

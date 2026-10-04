@@ -289,6 +289,10 @@
         <translation> Dampf </translation>
     </message>
     <message>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
         <source>Compare Databases</source>
         <translation> Vergleichen Sie Datenbanken </translation>
     </message>
@@ -299,6 +303,13 @@
     <message>
         <source>Build Database</source>
         <translation> Datenbank erstellen </translation>
+    </message>
+</context>
+<context>
+    <name>DownloadListManager</name>
+    <message>
+        <source>Remove mod from list</source>
+        <translation>Mod aus Liste entfernen</translation>
     </message>
 </context>
 <context>
@@ -1139,6 +1150,18 @@ Manage mods installed from GitHub releases.</source>
     <message>
         <source>This action cannot be undone.</source>
         <translation> Diese Aktion kann nicht rückgängig gemacht werden.</translation>
+    </message>
+    <message>
+        <source>An error occurred while compressing instance folder: {e}</source>
+        <translation>Beim Komprimieren des Instanzordners ist ein Fehler aufgetreten: {e}</translation>
+    </message>
+    <message>
+        <source>Error compressing instance</source>
+        <translation>Fehler beim Komprimieren der Instanz</translation>
+    </message>
+    <message>
+        <source>Please check the logs for more information.</source>
+        <translation>Weitere Informationen finden Sie in den Protokollen.</translation>
     </message>
 </context>
 <context>
@@ -2259,6 +2282,14 @@ Please select your preferred mod variant in the table below. You can also open e
     <message>
         <source>In latest save</source>
         <translation> Im letzten Speicher </translation>
+    </message>
+    <message>
+        <source>Recently updated</source>
+        <translation>Kürzlich aktualisiert</translation>
+    </message>
+    <message>
+        <source>Updated {time_ago}. Click to open the Workshop changelog.</source>
+        <translation>Aktualisiert vor {time_ago}. Klicken Sie hier, um das Workshop-Änderungsprotokoll zu öffnen.</translation>
     </message>
 </context>
 <context>

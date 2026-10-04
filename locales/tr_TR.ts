@@ -289,6 +289,10 @@
         <translation> Buhar </translation>
     </message>
     <message>
+        <source>Save</source>
+        <translation>Kaydetmek</translation>
+    </message>
+    <message>
         <source>Compare Databases</source>
         <translation> Veritabanlarını Karşılaştırın </translation>
     </message>
@@ -299,6 +303,13 @@
     <message>
         <source>Build Database</source>
         <translation> Veritabanı Oluştur </translation>
+    </message>
+</context>
+<context>
+    <name>DownloadListManager</name>
+    <message>
+        <source>Remove mod from list</source>
+        <translation>Modu listeden kaldır</translation>
     </message>
 </context>
 <context>
@@ -1139,6 +1150,18 @@ Manage mods installed from GitHub releases.</source>
     <message>
         <source>This action cannot be undone.</source>
         <translation> Bu eylem geri alınamaz.</translation>
+    </message>
+    <message>
+        <source>An error occurred while compressing instance folder: {e}</source>
+        <translation>Örnek klasörü sıkıştırılırken bir hata oluştu: {e}</translation>
+    </message>
+    <message>
+        <source>Error compressing instance</source>
+        <translation>Örnek sıkıştırılırken hata oluştu</translation>
+    </message>
+    <message>
+        <source>Please check the logs for more information.</source>
+        <translation>Daha fazla bilgi için lütfen günlükleri kontrol edin.</translation>
     </message>
 </context>
 <context>
@@ -2259,6 +2282,14 @@ Please select your preferred mod variant in the table below. You can also open e
     <message>
         <source>In latest save</source>
         <translation> En son kaydetmede </translation>
+    </message>
+    <message>
+        <source>Recently updated</source>
+        <translation>Yakın zamanda güncellendi</translation>
+    </message>
+    <message>
+        <source>Updated {time_ago}. Click to open the Workshop changelog.</source>
+        <translation>{time_ago} güncellendi. Atölye değişiklik günlüğünü açmak için tıklayın.</translation>
     </message>
 </context>
 <context>

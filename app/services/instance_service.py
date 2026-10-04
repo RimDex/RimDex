@@ -303,17 +303,33 @@ class InstanceService:
         )
         logger.info(f"Selected path: {output_path}")
         if output_path:
-            EventBus().do_threaded_loading_animation.emit(
-                str(AppInfo().theme_data_folder / "default-icons" / "rimdex.gif"),
-                partial(
-                    instance_controller.compress_to_archive,
-                    output_path,
-                ),
-                QCoreApplication.translate(
-                    "InstanceService",
-                    "Compressing [{instance_name}] instance folder to archive...",
-                ).format(instance_name=instance_name),
-            )
+            try:
+                EventBus().do_threaded_loading_animation.emit(
+                    str(AppInfo().theme_data_folder / "default-icons" / "rimdex.gif"),
+                    partial(
+                        instance_controller.compress_to_archive,
+                        output_path,
+                    ),
+                    QCoreApplication.translate(
+                        "InstanceService",
+                        "Compressing [{instance_name}] instance folder to archive...",
+                    ).format(instance_name=instance_name),
+                )
+            except Exception as e:
+                show_fatal_error(
+                    title=QCoreApplication.translate(
+                        "InstanceService", "Error compressing instance"
+                    ),
+                    text=QCoreApplication.translate(
+                        "InstanceService",
+                        "An error occurred while compressing instance folder: {e}",
+                    ).format(e=e),
+                    information=QCoreApplication.translate(
+                        "InstanceService",
+                        "Please check the logs for more information.",
+                    ),
+                    details=format_exc(),
+                )
         else:
             logger.warning("Backup cancelled: User cancelled selection...")
             return

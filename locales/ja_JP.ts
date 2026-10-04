@@ -289,6 +289,10 @@
         <translation> スチーム </translation>
     </message>
     <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
         <source>Compare Databases</source>
         <translation> データベースの比較 </translation>
     </message>
@@ -299,6 +303,13 @@
     <message>
         <source>Build Database</source>
         <translation> データベースの構築 </translation>
+    </message>
+</context>
+<context>
+    <name>DownloadListManager</name>
+    <message>
+        <source>Remove mod from list</source>
+        <translation>リストからMODを削除</translation>
     </message>
 </context>
 <context>
@@ -1139,6 +1150,18 @@ Manage mods installed from GitHub releases.</source>
     <message>
         <source>This action cannot be undone.</source>
         <translation> この操作は元に戻すことができません。</translation>
+    </message>
+    <message>
+        <source>An error occurred while compressing instance folder: {e}</source>
+        <translation>インスタンス フォルダーの圧縮中にエラーが発生しました: {e}</translation>
+    </message>
+    <message>
+        <source>Error compressing instance</source>
+        <translation>インスタンスの圧縮中にエラーが発生しました</translation>
+    </message>
+    <message>
+        <source>Please check the logs for more information.</source>
+        <translation>詳細についてはログを確認してください。</translation>
     </message>
 </context>
 <context>
@@ -2259,6 +2282,14 @@ Please select your preferred mod variant in the table below. You can also open e
     <message>
         <source>In latest save</source>
         <translation> 最新の保存で </translation>
+    </message>
+    <message>
+        <source>Recently updated</source>
+        <translation>最近更新された</translation>
+    </message>
+    <message>
+        <source>Updated {time_ago}. Click to open the Workshop changelog.</source>
+        <translation>{time_ago}に更新されました。クリックしてワークショップの変更ログを開きます。</translation>
     </message>
 </context>
 <context>

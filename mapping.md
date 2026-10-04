@@ -512,6 +512,7 @@ RimDex/
 │   │   │       └── ModConfig.xml
 │   │   ├── .gitignore
 │   │   ├── appworkshop_294100.acf
+│   │   ├── new_workshop_hub_page.html
 │   │   └── new_workshop_page.html
 │   ├── git/
 │   │   ├── __init__.py
@@ -585,6 +586,7 @@ RimDex/
 │   │   │   ├── test_db_builder_thread.py
 │   │   │   ├── test_setup_web_channel_script.py
 │   │   │   ├── test_steam_browser_downloader_list.py
+│   │   │   ├── test_steam_browser_page_modes.py
 │   │   │   ├── test_steam_browser_regex.py
 │   │   │   ├── test_steamcmd_wrapper.py
 │   │   │   └── test_workshop_utils.py
@@ -634,6 +636,7 @@ RimDex/
 │   ├── windows/
 │   │   ├── conftest.py
 │   │   ├── test_github_mods_panel.py
+│   │   ├── test_missing_dependencies_dialog.py
 │   │   ├── test_runner_panel.py
 │   │   └── test_runner_panel_regex.py
 │   ├── __init__.py

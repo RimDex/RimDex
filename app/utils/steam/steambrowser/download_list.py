@@ -1,7 +1,7 @@
 from collections.abc import Callable
 
 from loguru import logger
-from PySide6.QtCore import QPoint, Qt
+from PySide6.QtCore import QCoreApplication, QPoint, Qt
 from PySide6.QtWidgets import QLabel, QListWidget, QListWidgetItem, QMenu
 
 from app.core.text_utils import extract_page_title_steam_browser
@@ -150,8 +150,10 @@ class DownloadListManager:
         pfid = item.data(Qt.ItemDataRole.UserRole)
         if pfid is None:
             return
-        menu = QMenu()
-        action = menu.addAction("Remove mod from list")
+        menu = QMenu(self._list)
+        action = menu.addAction(
+            QCoreApplication.translate("DownloadListManager", "Remove mod from list")
+        )
         action.triggered.connect(lambda pfid=pfid: self.remove_mod(str(pfid)))
         menu.exec_(self._list.mapToGlobal(point))
 

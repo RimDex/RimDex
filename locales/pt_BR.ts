@@ -289,6 +289,10 @@
         <translation> Vapor </translation>
     </message>
     <message>
+        <source>Save</source>
+        <translation>Salvar</translation>
+    </message>
+    <message>
         <source>Compare Databases</source>
         <translation> Comparar bancos de dados </translation>
     </message>
@@ -299,6 +303,13 @@
     <message>
         <source>Build Database</source>
         <translation> Construir banco de dados </translation>
+    </message>
+</context>
+<context>
+    <name>DownloadListManager</name>
+    <message>
+        <source>Remove mod from list</source>
+        <translation>Remover mod da lista</translation>
     </message>
 </context>
 <context>
@@ -1139,6 +1150,18 @@ Manage mods installed from GitHub releases.</source>
     <message>
         <source>This action cannot be undone.</source>
         <translation> Esta ação não pode ser desfeita.</translation>
+    </message>
+    <message>
+        <source>An error occurred while compressing instance folder: {e}</source>
+        <translation>Ocorreu um erro ao compactar a pasta da instância: {e}</translation>
+    </message>
+    <message>
+        <source>Error compressing instance</source>
+        <translation>Erro ao compactar instância</translation>
+    </message>
+    <message>
+        <source>Please check the logs for more information.</source>
+        <translation>Por favor, verifique os registros para obter mais informações.</translation>
     </message>
 </context>
 <context>
@@ -2259,6 +2282,14 @@ Please select your preferred mod variant in the table below. You can also open e
     <message>
         <source>In latest save</source>
         <translation> No salvamento mais recente </translation>
+    </message>
+    <message>
+        <source>Recently updated</source>
+        <translation>Atualizado recentemente</translation>
+    </message>
+    <message>
+        <source>Updated {time_ago}. Click to open the Workshop changelog.</source>
+        <translation>Atualizado há {time_ago}. Clique para abrir o changelog do Workshop.</translation>
     </message>
 </context>
 <context>

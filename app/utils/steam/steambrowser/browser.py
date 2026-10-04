@@ -49,6 +49,98 @@ CHROME_USER_AGENT = (
 )
 
 
+def parse_publishedfileid_from_url(
+    url: str,
+    *,
+    url_prefix_sharedfiles: str,
+    url_prefix_workshop: str,
+    searchtext_string: str,
+) -> str | None:
+    """Extract a Steam publishedfileid from a workshop URL.
+
+    :return: The publishedfileid, or ``None`` when the URL does not contain
+        one that survives normalisation.
+    """
+    publishedfileid: str | None = None
+    if url_prefix_sharedfiles in url:
+        publishedfileid = url.split(url_prefix_sharedfiles, 1)[1]
+    elif url_prefix_workshop in url:
+        publishedfileid = url.split(url_prefix_workshop, 1)[1]
+    else:
+        return None
+    if searchtext_string in publishedfileid:
+        publishedfileid = publishedfileid.split(searchtext_string)[0]
+    publishedfileid = publishedfileid.split("#")[0].split("&")[0].split("?")[0]
+    publishedfileid = publishedfileid.split("/")[0].strip()
+    return publishedfileid or None
+
+
+def resolve_workshop_page_mode(
+    current_url: str,
+    *,
+    url_prefix_steam: str,
+    url_prefix_sharedfiles: str,
+    url_prefix_workshop: str,
+    section_readytouseitems: str,
+    section_collections: str,
+) -> str:
+    """Classify the Steam workshop page for targeted JS injection.
+
+    :return: One of ``"hub"``, ``"browse"``, ``"detail"`` or ``"other"``.
+    """
+    if url_prefix_steam not in current_url:
+        return "other"
+
+    is_workshop_hub = (
+        "/app/294100/workshop" in current_url
+        and "/workshop/browse" not in current_url
+        and "filedetails" not in current_url
+    )
+    is_collections_page = section_collections in current_url
+    is_browse_grid = (
+        section_readytouseitems in current_url
+        or "/workshop/browse" in current_url
+        or "/myworkshopfiles" in current_url
+        or (not is_collections_page and "section=" in current_url)
+    )
+    is_item_page = url_prefix_sharedfiles in current_url
+    is_collection_page = url_prefix_workshop in current_url
+
+    if is_browse_grid:
+        return "browse"
+    if is_workshop_hub:
+        return "hub"
+    if is_item_page or is_collection_page:
+        return "detail"
+    return "other"
+
+
+def toolbar_add_to_list_visible(
+    current_url: str,
+    *,
+    url_prefix_steam: str,
+    url_prefix_sharedfiles: str,
+    url_prefix_workshop: str,
+    searchtext_string: str,
+) -> bool:
+    """Whether the toolbar Add to list action applies to the current page URL."""
+    if url_prefix_steam not in current_url:
+        return False
+    is_item_page = url_prefix_sharedfiles in current_url
+    is_collection_page = url_prefix_workshop in current_url
+    if not (is_item_page or is_collection_page):
+        return False
+    return (
+        parse_publishedfileid_from_url(
+            current_url,
+            url_prefix_sharedfiles=url_prefix_sharedfiles,
+            url_prefix_workshop=url_prefix_workshop,
+            searchtext_string=searchtext_string,
+        )
+        is not None
+    )
+
+
 class SteamBrowser(QWidget):
     """
     A generic panel used to browse Workshop content — downloader included.
@@ -108,6 +200,7 @@ class SteamBrowser(QWidget):
         )
         self.section_readytouseitems = "section=readytouseitems"
         self.section_collections = "section=collections"
+        self._current_page_mode = "other"
 
         # ------------------------------------------------------------------
         # Persistent web profile
@@ -399,11 +492,13 @@ class SteamBrowser(QWidget):
                 )
 
     def _parse_pfid_from_url(self) -> str | None:
-        if self.url_prefix_sharedfiles in self.current_url:
-            pfid = self.current_url.split(self.url_prefix_sharedfiles, 1)[1]
-        elif self.url_prefix_workshop in self.current_url:
-            pfid = self.current_url.split(self.url_prefix_workshop, 1)[1]
-        else:
+        pfid = parse_publishedfileid_from_url(
+            self.current_url,
+            url_prefix_sharedfiles=self.url_prefix_sharedfiles,
+            url_prefix_workshop=self.url_prefix_workshop,
+            searchtext_string=self.searchtext_string,
+        )
+        if pfid is None:
             logger.error(
                 f"Unable to parse publishedfileid from url: {self.current_url}"
             )
@@ -415,10 +510,26 @@ class SteamBrowser(QWidget):
                 ),
                 information=f"Url: {self.current_url}",
             )
-            return None
-        if self.searchtext_string in pfid:
-            pfid = pfid.split(self.searchtext_string)[0]
-        return pfid.split("#")[0].split("&")[0]
+        return pfid
+
+    def _resolve_page_mode(self, url: str) -> str:
+        return resolve_workshop_page_mode(
+            url,
+            url_prefix_steam=self.url_prefix_steam,
+            url_prefix_sharedfiles=self.url_prefix_sharedfiles,
+            url_prefix_workshop=self.url_prefix_workshop,
+            section_readytouseitems=self.section_readytouseitems,
+            section_collections=self.section_collections,
+        )
+
+    def _sync_location_from_js(self, url: str) -> None:
+        """Mirror a History-API navigation performed inside the page."""
+        if not url or url == self.current_url:
+            return
+        self.current_url = url
+        if self.location.text() != url:
+            self.location.setText(url)
+        self._refresh_mod_badges()
 
     def _add_collection(self, publishedfileid: str) -> None:
         collection_mods = self._compile_collection_datas(publishedfileid)
@@ -596,6 +707,10 @@ class SteamBrowser(QWidget):
         self.setWindowTitle(self.current_title)
         self.location.setText(self.current_url)
 
+        # Update the Add to list action before any early return so it is
+        # hidden again when navigating away from a mod/collection page.
+        self._sync_add_to_list_visibility()
+
         # Only proceed with injections on Steam pages
         if self.url_prefix_steam not in self.current_url:
             return
@@ -606,35 +721,30 @@ class SteamBrowser(QWidget):
         self.page_scripts.remove_install_button()
         self.page_scripts.change_target_to_self()
 
+        page_mode = self._resolve_page_mode(self.current_url)
+        self._current_page_mode = page_mode
         installed_mods = self._get_installed_mods_list()
         added_mods = self._get_added_mods_list()
-        self.page_scripts.inject_badge_scripts(installed_mods, added_mods)
-
-        # Determine page type
-        is_item_page = self.url_prefix_sharedfiles in self.current_url
-        is_collection_page = self.url_prefix_workshop in self.current_url
-        is_collections_page = self.section_collections in self.current_url
-        is_items_page = self.section_readytouseitems in self.current_url or (
-            not is_collections_page and "section=" in self.current_url
+        inject_delay_ms = 1200 if not ok else 300
+        self.page_scripts.inject_badge_scripts(
+            installed_mods, added_mods, page_mode, inject_delay_ms
         )
 
-        if not (is_item_page or is_collection_page or is_items_page):
+        if page_mode in ("browse", "hub", "other"):
             return
 
-        self._setup_item_or_collection_page(is_item_page, is_collection_page)
+        self._setup_item_or_collection_page(page_mode == "detail")
 
-    def _setup_item_or_collection_page(
-        self, is_item_page: bool, is_collection_page: bool
-    ) -> None:
+    def _setup_item_or_collection_page(self, is_item_page: bool) -> None:
         assert self.page_scripts is not None
         self.page_scripts.remove_subscribe_area()
         self.page_scripts.remove_collection_subscribe()
         self.page_scripts.remove_subscribe_buttons()
         self.page_scripts.inject_collection_buttons()
 
-        self.nav_bar.addAction(self.add_to_list_button)
+        self._sync_add_to_list_visibility()
 
-        if not (is_item_page or is_collection_page):
+        if not is_item_page:
             return
 
         pfid = self._parse_pfid_from_url()
@@ -643,6 +753,41 @@ class SteamBrowser(QWidget):
 
         if self._is_mod_installed(pfid):
             self.page_scripts.inject_installed_indicator()
+
+    def _sync_add_to_list_visibility(self) -> None:
+        if toolbar_add_to_list_visible(
+            self.current_url,
+            url_prefix_steam=self.url_prefix_steam,
+            url_prefix_sharedfiles=self.url_prefix_sharedfiles,
+            url_prefix_workshop=self.url_prefix_workshop,
+            searchtext_string=self.searchtext_string,
+        ):
+            if self.add_to_list_button not in self.nav_bar.actions():
+                self.nav_bar.addAction(self.add_to_list_button)
+            return
+        self.nav_bar.removeAction(self.add_to_list_button)
+
+    def _refresh_mod_badges(self) -> None:
+        """Re-evaluate the page mode and refresh every injected badge.
+
+        Needed after an in-page History-API navigation, because Steam swaps the
+        DOM without triggering a document load.
+        """
+        if self.web_view is None or self.page_scripts is None:
+            return
+        page_mode = self._resolve_page_mode(self.current_url)
+        if page_mode != self._current_page_mode:
+            self._current_page_mode = page_mode
+            self.page_scripts.inject_badge_scripts(
+                self._get_installed_mods_list(),
+                self._get_added_mods_list(),
+                page_mode,
+            )
+            return
+        if page_mode == "browse":
+            self.page_scripts.refresh_badge_scripts()
+        elif page_mode == "hub":
+            self.page_scripts.refresh_hub_buttons()
 
     # ------------------------------------------------------------------
     # Helpers

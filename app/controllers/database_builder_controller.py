@@ -36,6 +36,7 @@ class DatabaseBuilderController(QObject):
         self.dialog.db_builder_build_database_button.clicked.connect(
             self._on_build_database
         )
+        self.dialog.db_builder_save_settings_button.clicked.connect(self._on_save)
 
     def show(self) -> None:
         self._update_view_from_model()
@@ -69,6 +70,10 @@ class DatabaseBuilderController(QObject):
         )
         self.settings.steam_apikey = self.dialog.db_builder_steam_api_key.text()
         self.settings.save()
+
+    @Slot()
+    def _on_save(self) -> None:
+        self._save_settings()
 
     @Slot()
     def _on_download_all_via_steamcmd(self) -> None:

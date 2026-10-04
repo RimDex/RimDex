@@ -64,13 +64,14 @@ class ColumnsMixin(TrMixin, BaseModsPanelSurface):
         ]
 
     def _extend_button_configs_with_steam_actions(
-        self, button_configs: list[ButtonConfig]
+        self, button_configs: list[ButtonConfig], include_delete: bool = True
     ) -> list[ButtonConfig]:
         """
         Extend button configurations with Steam client actions if integration is enabled.
 
         Args:
             button_configs: List of button configurations to extend.
+            include_delete: Append the standard delete configuration.
 
         Returns:
             Extended list of button configurations.
@@ -83,9 +84,20 @@ class ColumnsMixin(TrMixin, BaseModsPanelSurface):
                     pfid_column=ColumnIndex.PUBLISHED_FILE_ID.value,
                 ),
             )
-        button_configs.append(self._get_delete_button_config())
+        if include_delete:
+            button_configs.append(self._get_delete_button_config())
         return button_configs
 
-    def _get_delete_button_config(self) -> ButtonConfig:
-        """Return a standard delete button configuration used by all panels."""
-        return ButtonConfig(button_type=ButtonType.DELETE)
+    def _get_delete_button_config(
+        self, enable_delete_and_unsubscribe: bool = True
+    ) -> ButtonConfig:
+        """Return a standard delete button configuration used by all panels.
+
+        :param enable_delete_and_unsubscribe: Offer the Steam unsubscribe /
+            resubscribe variants in the deletion menu.
+        """
+        return ButtonConfig(
+            button_type=ButtonType.DELETE,
+            enable_delete_and_unsubscribe=enable_delete_and_unsubscribe,
+            enable_delete_and_resubscribe=enable_delete_and_unsubscribe,
+        )

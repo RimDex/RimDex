@@ -643,6 +643,8 @@ class MainContent(QObject):
         )
         self.mods_panel.active_mods_list.invalidate_save_comparison()
         self.mods_panel.inactive_mods_list.invalidate_save_comparison()
+        self.mods_panel.active_mods_list.repolish_all_items()
+        self.mods_panel.inactive_mods_list.repolish_all_items()
         logger.info(
             f"Finished inserting mod data into active [{len(active_mods_uuids)}] and inactive [{len(inactive_mods_uuids)}] mod lists"
         )

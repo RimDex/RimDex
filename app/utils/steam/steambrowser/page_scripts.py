@@ -1,8 +1,8 @@
 import json
 from pathlib import Path
-from string import Template
 from typing import Any
 
+from loguru import logger
 from PySide6.QtWebEngineCore import QWebEnginePage, QWebEngineScript
 
 from app.core.app_info import AppInfo
@@ -12,6 +12,35 @@ from .badge_state import BadgeState
 
 def _noop(*_: Any) -> None:
     """Shared no-op callback for ``runJavaScript``."""
+
+
+def build_web_channel_script(
+    *,
+    installed_mods: list[str],
+    added_mods: list[str],
+    page_mode: str,
+    script_path: Path,
+    inject_delay_ms: int = 300,
+) -> str:
+    """Render ``setup_web_channel_script.js`` by marker replacement.
+
+    Marker replacement (``@name@``) is used instead of ``string.Template``
+    because the script contains JS template literals, whose ``${...}``
+    sequences would be mistaken for placeholders.
+    """
+    raw_script = script_path.read_text(encoding="utf-8")
+    js_badge_state = {member.name: member.value for member in BadgeState}
+    replacements = {
+        "@badge_state_js@": json.dumps(js_badge_state),
+        "@page_mode@": page_mode,
+        "@installed_mods@": json.dumps(installed_mods),
+        "@added_mods@": json.dumps(added_mods),
+        "@inject_delay_ms@": str(inject_delay_ms),
+    }
+    script = raw_script
+    for marker, value in replacements.items():
+        script = script.replace(marker, value)
+    return script
 
 
 # ---------------------------------------------------------------------------
@@ -156,22 +185,40 @@ class PageScriptManager:
         self,
         installed_mods: list[str],
         added_mods: list[str],
+        page_mode: str,
+        inject_delay_ms: int = 300,
     ) -> None:
         """Read the external ``setup_web_channel_script.js`` template,
-        substitute the current mod lists, and inject it."""
-        template_path = Path(AppInfo().setup_web_channel_script_file)
-        raw = template_path.read_text(encoding="utf-8")
-        tmpl = Template(raw)
-        js_badge_state = {m.name: m.value for m in BadgeState}
-        script = tmpl.substitute(
-            installed_mods=json.dumps(installed_mods),
-            added_mods=json.dumps(added_mods),
-            badge_state_js=json.dumps(js_badge_state),
-        )
+        substitute the current mod lists and page mode, and inject it."""
+        try:
+            script = build_web_channel_script(
+                installed_mods=installed_mods,
+                added_mods=added_mods,
+                page_mode=page_mode,
+                script_path=Path(AppInfo().setup_web_channel_script_file),
+                inject_delay_ms=inject_delay_ms,
+            )
+        except Exception as exc:
+            logger.error(f"Failed to inject workshop badge script: {exc}")
+            return
         # Also make the list available on ``window`` so other inline
         # scripts (e.g. collection buttons) can reference it.
         self._run(f"window.installedMods = {json.dumps(installed_mods)};")
         self._run(script)
+
+    def refresh_badge_scripts(self) -> None:
+        """Re-badge the current grid after an in-page navigation."""
+        self._run(
+            "if (typeof window.updateAllModBadges === 'function') "
+            "{ window.updateAllModBadges(); }"
+        )
+
+    def refresh_hub_buttons(self) -> None:
+        """Re-inject the hub add-buttons after an in-page navigation."""
+        self._run(
+            "if (typeof window.rimdexInjectHubAddButtons === 'function') "
+            "{ window.rimdexInjectHubAddButtons(); }"
+        )
 
     # -- Item / collection page scripts -----------------------------------
 

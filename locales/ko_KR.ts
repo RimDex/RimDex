@@ -289,6 +289,10 @@
         <translation> 증기 </translation>
     </message>
     <message>
+        <source>Save</source>
+        <translation>구하다</translation>
+    </message>
+    <message>
         <source>Compare Databases</source>
         <translation> 데이터베이스 비교 </translation>
     </message>
@@ -299,6 +303,13 @@
     <message>
         <source>Build Database</source>
         <translation> 데이터베이스 구축 </translation>
+    </message>
+</context>
+<context>
+    <name>DownloadListManager</name>
+    <message>
+        <source>Remove mod from list</source>
+        <translation>목록에서 모드 제거</translation>
     </message>
 </context>
 <context>
@@ -1139,6 +1150,18 @@ Manage mods installed from GitHub releases.</source>
     <message>
         <source>This action cannot be undone.</source>
         <translation> 이 작업은 취소할 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>An error occurred while compressing instance folder: {e}</source>
+        <translation>인스턴스 폴더를 압축하는 동안 오류가 발생했습니다: {e}</translation>
+    </message>
+    <message>
+        <source>Error compressing instance</source>
+        <translation>인스턴스를 압축하는 중 오류가 발생했습니다.</translation>
+    </message>
+    <message>
+        <source>Please check the logs for more information.</source>
+        <translation>자세한 내용은 로그를 확인하세요.</translation>
     </message>
 </context>
 <context>
@@ -2259,6 +2282,14 @@ Please select your preferred mod variant in the table below. You can also open e
     <message>
         <source>In latest save</source>
         <translation> 최신 세이브에서 </translation>
+    </message>
+    <message>
+        <source>Recently updated</source>
+        <translation>최근 업데이트됨</translation>
+    </message>
+    <message>
+        <source>Updated {time_ago}. Click to open the Workshop changelog.</source>
+        <translation>{time_ago}에 업데이트되었습니다. 창작마당 변경 로그를 열려면 클릭하세요.</translation>
     </message>
 </context>
 <context>

@@ -211,6 +211,10 @@ class ModDeletionMenu(QMenu):
         )
         return answer == QMessageBox.StandardButton.Yes
 
+    def _get_selected_mod_count(self) -> int:
+        """Get the count of currently selected mods."""
+        return len(self.get_selected_mod_metadata())
+
     def _show_no_mods_selected_message(self) -> None:
         """Show message when no mods are selected."""
         show_information(

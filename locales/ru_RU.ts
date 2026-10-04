@@ -289,6 +289,10 @@
         <translation> Пар </translation>
     </message>
     <message>
+        <source>Save</source>
+        <translation>Сохранять</translation>
+    </message>
+    <message>
         <source>Compare Databases</source>
         <translation> Сравнить базы данных </translation>
     </message>
@@ -299,6 +303,13 @@
     <message>
         <source>Build Database</source>
         <translation> Создать базу данных </translation>
+    </message>
+</context>
+<context>
+    <name>DownloadListManager</name>
+    <message>
+        <source>Remove mod from list</source>
+        <translation>Удалить мод из списка</translation>
     </message>
 </context>
 <context>
@@ -1139,6 +1150,18 @@ Manage mods installed from GitHub releases.</source>
     <message>
         <source>This action cannot be undone.</source>
         <translation> Это действие невозможно отменить.</translation>
+    </message>
+    <message>
+        <source>An error occurred while compressing instance folder: {e}</source>
+        <translation>Произошла ошибка при сжатии папки экземпляра: {e}.</translation>
+    </message>
+    <message>
+        <source>Error compressing instance</source>
+        <translation>Ошибка сжатия экземпляра</translation>
+    </message>
+    <message>
+        <source>Please check the logs for more information.</source>
+        <translation>Пожалуйста, проверьте журналы для получения дополнительной информации.</translation>
     </message>
 </context>
 <context>
@@ -2259,6 +2282,14 @@ Please select your preferred mod variant in the table below. You can also open e
     <message>
         <source>In latest save</source>
         <translation> В последнем сохранении </translation>
+    </message>
+    <message>
+        <source>Recently updated</source>
+        <translation>Недавно обновлено</translation>
+    </message>
+    <message>
+        <source>Updated {time_ago}. Click to open the Workshop changelog.</source>
+        <translation>Обновлено {time_go}. Нажмите, чтобы открыть журнал изменений Мастерской.</translation>
     </message>
 </context>
 <context>

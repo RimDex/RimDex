@@ -289,6 +289,10 @@
         <translation type="unfinished"> </translation>
     </message>
     <message>
+        <source>Save</source>
+        <translation type="unfinished"> </translation>
+    </message>
+    <message>
         <source>Compare Databases</source>
         <translation type="unfinished"> </translation>
     </message>
@@ -299,6 +303,13 @@
     <message>
         <source>Build Database</source>
         <translation type="unfinished"> </translation>
+    </message>
+</context>
+<context>
+    <name>DownloadListManager</name>
+    <message>
+        <source>Remove mod from list</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1129,6 +1140,18 @@ Manage mods installed from GitHub releases.</source>
     <message>
         <source>This action cannot be undone.</source>
         <translation type="unfinished"> </translation>
+    </message>
+    <message>
+        <source>An error occurred while compressing instance folder: {e}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error compressing instance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please check the logs for more information.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2236,6 +2259,14 @@ Please select your preferred mod variant in the table below. You can also open e
     <message>
         <source>No translation found - This mod does not have a translation installed</source>
         <translation type="unfinished"> </translation>
+    </message>
+    <message>
+        <source>Recently updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Updated {time_ago}. Click to open the Workshop changelog.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

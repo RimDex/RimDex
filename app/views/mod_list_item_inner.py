@@ -25,6 +25,8 @@ from PySide6.QtWidgets import (
 
 from app.controllers.metadata_controller import MetadataController
 from app.core.fs_utils import format_file_size
+from app.core.text_utils import get_relative_time
+from app.core.ui_helpers import open_url_browser
 from app.models.metadata.metadata_structure import AboutXmlMod, ModType
 from app.models.settings import Settings
 from app.mods.aux_db_utils import auxdb_get_mod_tags
@@ -138,7 +140,8 @@ class ModListItemInner(QWidget):
         self.new_icon_label.setPixmap(ModListIcons.new_icon().pixmap(QSize(20, 20)))
         self.new_icon_label.setToolTip(self.tr("Not in latest save"))
         self.new_icon_label.setHidden(True)
-        self.updated_icon_label = QLabel()
+        self.updated_icon_label = ClickableQLabel()
+        self.updated_icon_label.clicked.connect(self.__on_updated_icon_clicked)
         self.updated_icon_label.setPixmap(
             ModListIcons.updated_icon().pixmap(QSize(20, 20))
         )
@@ -264,6 +267,15 @@ class ModListItemInner(QWidget):
             package_id,
             self.path,
         )
+
+    def __on_updated_icon_clicked(self) -> None:
+        mod = self.metadata_controller.get_mod(self.path)
+        publishedfileid = getattr(mod, "published_file_id", None)
+        if publishedfileid:
+            open_url_browser(
+                "https://steamcommunity.com/sharedfiles/filedetails/changelog/"
+                f"{publishedfileid}"
+            )
 
     def _resize_text_after_icon_toggle(self, icon_count: int = -1) -> None:
         event = QResizeEvent(self.size(), self.size())
@@ -540,10 +552,20 @@ class ModListItemInner(QWidget):
             self.main_label.style().polish(self.main_label)
 
         is_recently_updated = bool(item_data.__dict__.get("is_recently_updated", False))
-        if self.settings.mod_list_updated_indicator:
-            self.updated_icon_label.setHidden(not is_recently_updated)
+        if self.settings.mod_list_updated_indicator and is_recently_updated:
+            updated_timestamp = item_data.__dict__.get("updated_timestamp")
+            if updated_timestamp:
+                self.updated_icon_label.setToolTip(
+                    self.tr(
+                        "Updated {time_ago}. Click to open the Workshop changelog."
+                    ).format(time_ago=get_relative_time(updated_timestamp))
+                )
+            else:
+                self.updated_icon_label.setToolTip(self.tr("Recently updated"))
+            self.updated_icon_label.setHidden(False)
         else:
             self.updated_icon_label.setHidden(True)
+            self.updated_icon_label.setToolTip("")
 
         # Startup impact label (both lists) depends on the setting
         startup_impact_was_hidden = self.startup_impact_label.isHidden()

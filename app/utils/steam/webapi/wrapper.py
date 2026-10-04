@@ -45,6 +45,11 @@ BASE_URL = "https://steamcommunity.com"
 BASE_URL_STEAMFILES = "https://steamcommunity.com/sharedfiles/filedetails/?id="
 BASE_URL_WORKSHOP = "https://steamcommunity.com/workshop/filedetails/?id="
 _MAX_CHUNK_ATTEMPTS = 3
+_RETRYABLE_REQUEST_ERRORS = (
+    requests.exceptions.Timeout,
+    requests.exceptions.ConnectionError,
+    requests.exceptions.ChunkedEncodingError,
+)
 
 
 class CollectionImport:
@@ -546,6 +551,14 @@ class DynamicQuery(QObject):
         # Steamworks batches run AFTER all Web API rounds complete (sequential)
         steamworks_all_results: dict[int, list[int]] = {}
 
+        # Persist the Web API results before the Steamworks phase so freshly
+        # downloaded metadata survives a pool-init failure or a crash.
+        if self.output_database_path:
+            try:
+                atomic_json_dump(query, self.output_database_path, indent=4)
+            except Exception as e:
+                logger.warning(f"Failed to save database: {e}")
+
         if self.get_appid_deps:
             self._steam_pool_ready.wait()
 
@@ -587,13 +600,6 @@ class DynamicQuery(QObject):
             self._emit_message(
                 "\nAppID dependency retrieval disabled. Skipping Steamworks API call(s)!"
             )
-
-        # Save Web API data to disk
-        if self.output_database_path and not self.get_appid_deps:
-            try:
-                atomic_json_dump(query, self.output_database_path, indent=4)
-            except Exception as e:
-                logger.warning(f"Failed to save database: {e}")
 
         # Notify & return
         total = len(query["database"])
@@ -1005,12 +1011,12 @@ def ISteamRemoteStorage_GetPublishedFileDetails(
                 try:
                     request = http.post(url, data=data, timeout=(5, 60), retry=True)
                     break
-                except requests.exceptions.ChunkedEncodingError:
+                except _RETRYABLE_REQUEST_ERRORS:
                     if attempt < _MAX_CHUNK_ATTEMPTS - 1:
                         sleep(2**attempt)
                         continue
                     raise
-        except requests.exceptions.ChunkedEncodingError as e:
+        except _RETRYABLE_REQUEST_ERRORS as e:
             error_desc = f"{e.__class__.__name__}: {e}"
             logger.error(
                 f"GetPublishedFileDetails chunk [{items_processed}/{total}]: "

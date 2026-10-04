@@ -289,6 +289,10 @@
         <translation> Vapeur </translation>
     </message>
     <message>
+        <source>Save</source>
+        <translation>Sauvegarder</translation>
+    </message>
+    <message>
         <source>Compare Databases</source>
         <translation> Comparer les bases de données </translation>
     </message>
@@ -299,6 +303,13 @@
     <message>
         <source>Build Database</source>
         <translation> Créer une base de données </translation>
+    </message>
+</context>
+<context>
+    <name>DownloadListManager</name>
+    <message>
+        <source>Remove mod from list</source>
+        <translation>Supprimer le mod de la liste</translation>
     </message>
 </context>
 <context>
@@ -1139,6 +1150,18 @@ Manage mods installed from GitHub releases.</source>
     <message>
         <source>This action cannot be undone.</source>
         <translation> Cette action ne peut pas être annulée.</translation>
+    </message>
+    <message>
+        <source>An error occurred while compressing instance folder: {e}</source>
+        <translation>Une erreur s'est produite lors de la compression du dossier d'instance : {e}</translation>
+    </message>
+    <message>
+        <source>Error compressing instance</source>
+        <translation>Erreur lors de la compression de l'instance</translation>
+    </message>
+    <message>
+        <source>Please check the logs for more information.</source>
+        <translation>Veuillez consulter les journaux pour plus d'informations.</translation>
     </message>
 </context>
 <context>
@@ -2259,6 +2282,14 @@ Please select your preferred mod variant in the table below. You can also open e
     <message>
         <source>In latest save</source>
         <translation> Dans la dernière sauvegarde </translation>
+    </message>
+    <message>
+        <source>Recently updated</source>
+        <translation>Récemment mis à jour</translation>
+    </message>
+    <message>
+        <source>Updated {time_ago}. Click to open the Workshop changelog.</source>
+        <translation>Mise à jour {time_ago}. Cliquez pour ouvrir le journal des modifications de l'atelier.</translation>
     </message>
 </context>
 <context>

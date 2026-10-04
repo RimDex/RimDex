@@ -162,7 +162,22 @@ pins its own versions and dependabot owns bumps (see Boundaries). Only `app/` an
   restructure guards (`check_deferred_imports.py`, `check_layer_violations.py`,
   `check_i18n_extraction.py`), the i18n workflow, and the Definition of Done. When syncing
   upstream convention changes, apply them as a diff and keep every RimDex-only section.
-- **`locales/`.** Malformed XML; blocks `just i18n-update` and `just i18n-compile`.
+- **`locales/`.** Malformed XML; blocks `just i18n-update` and `just i18n-compile`. The
+  committed `.ts` files also carry **no `<location>` elements**, so `just i18n-update`
+  rewrites all 11 files (~17k-line diff) even when only one string changed. Extract into a
+  scratch copy and splice only the new `<message>` blocks instead. See `TODO.md`
+  § "Notes for future syncs".
+- **Missing-dependencies dialog is modal by design.** RimSort uses
+  `Qt.WindowModality.NonModal` + a local `QEventLoop`; RimDex uses `self.exec()`.
+  Deliberately accepted: `exec()` is the conventional modal choice and the
+  `workshop_restore_target` handoff and download-button enablement it depends on are
+  covered by `tests/windows/test_missing_dependencies_dialog.py`. Do not "fix" this.
+- **`setup_web_channel_script.js` uses `@marker@` substitution, not `string.Template`.**
+  The script contains JS template literals whose `${...}` sequences `Template` misreads.
+  Ported from upstream with `rimsort` → `rimdex` renames (`@badge_state_js@`,
+  `@page_mode@`, `@inject_delay_ms@`, `@installed_mods@`, `@added_mods@`). Page modes are
+  resolved by `resolve_workshop_page_mode` in `app/utils/steam/steambrowser/browser.py`
+  (`hub` / `browse` / `detail` / `other`).
 - **Quality gate.** `just check` on Windows omits `super-lint` (Unix/container only), so
   `markdownlint`, `bash`, `json` and `yaml` rules are only enforced in CI.
 - **Suppression budget.** `# type: ignore` is documented as 17 in §8.7 but the tree
