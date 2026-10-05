@@ -40,7 +40,10 @@ ENV/
 !.vscode/launch.json
 !.vscode/settings.json
 .ropeproject/
-.continue/
+# CocoIndex Code (ccc)
+.cocoindex_code/
+# Kilo Code
+.kilo/
 
 # Nuitka / build
 *.build/
@@ -72,5 +75,3 @@ MagicMock/
 
 # Development tooling
 .tools/
-# CocoIndex Code (ccc)
-/.cocoindex_code/
